@@ -1,0 +1,30 @@
+/*
+ * @Descripttion: elementUI主题可变参数更改
+ * @Author: HuiSir<q273250950>
+ * @Date: 2020-01-10 15:05:30
+ * @LastEditors: Please set LastEditors
+ */
+ 
+ /* primary主题色 */
+ $--color-primary: #409EFF !default;
+ 
+ /* iconfont路径, 这里必须申明 */
+ $--font-path: '~element-ui/lib/theme-chalk/fonts';
+ 
+ @import "~element-ui/packages/theme-chalk/src/index";
+
+ /* 重构样式 */
+
+ //抽屉
+ .el-drawer__wrapper{
+     width:280px;
+     height:calc(100% - 50px);
+     top:50px;
+     left:calc(100% - 280px);
+     .el-drawer{
+         width: calc(100% - 20px)!important;
+         box-shadow: 0 6px 15px 5px rgba(255, 255, 255, 0.3);
+     }
+ }
+
+ 
