@@ -11,20 +11,16 @@
  /* iconfont路径, 这里必须申明 */
  $--font-path: '~element-ui/lib/theme-chalk/fonts';
  
- @import "~element-ui/packages/theme-chalk/src/index";
-
- /* 重构样式 */
+ @import "~element-ui/packages/theme-chalk/src/index"; 
 
  //抽屉
- .el-drawer__wrapper{
-     width:280px;
-     height:calc(100% - 50px);
-     top:50px;
-     left:calc(100% - 280px);
-     .el-drawer{
-         width: calc(100% - 20px)!important;
-         box-shadow: 0 6px 15px 5px rgba(255, 255, 255, 0.3);
-     }
- }
-
- 
+.el-drawer__wrapper {
+    width: 300px;
+    height: calc(100% - 50px);
+    top: 50px;
+    left: calc(100% - 300px);
+    .el-drawer {
+        width: calc(100% - 36px) !important;
+        box-shadow: 0 6px 15px 5px rgba(255, 255, 255, 0.3);
+    }
+}

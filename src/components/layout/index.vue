@@ -2,13 +2,16 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-09 17:48:49
+ * @LastEditTime: 2020-09-10 11:49:13
 -->
 <template>
     <el-container>
         <el-header class="header"
                    height="50px">
             <h1>大数据视图生成器1.0.0</h1>
+            <div class="right">
+                配置栏 <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
+            </div>
         </el-header>
 
         <el-container class="content">
@@ -33,7 +36,9 @@
 export default {
     name: 'layout',
     data() {
-        return { asideState: true }
+        return {
+            asideState: true,
+        }
     },
     methods: {},
 }
@@ -47,11 +52,14 @@ $boder-color: #999;
     background: $menu-bg;
     line-height: 50px;
     padding: 0 15px;
+    color: $menu-color;
     h1 {
-        color: $menu-color;
         margin: 0;
         font-size: 20px;
         display: inline-block;
+    }
+    .right {
+        float: right;
     }
 }
 .content {

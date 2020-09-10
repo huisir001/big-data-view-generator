@@ -2,38 +2,37 @@
  * @Description: 工作台
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-09 18:32:36
+ * @LastEditTime: 2020-09-10 13:45:03
 -->
 <template>
-    <div class="platform">
+    <div class="platform"
+         ref="platform">
         <!-- 网格 -->
         <div class="grid"></div>
-        <!-- 预览层 -->
-        <div class="view">
-            <el-button @click="drawer = true"
-                       type="primary"
-                       style="margin-left: 16px;">
-                点我打开
-            </el-button>
-        </div>
-        <el-drawer title="样式配置栏"
-                   direction="rtl"
-                   :close-on-press-escape="false"
-                   :wrapperClosable="false"
-                   :modal="false"
-                   :visible.sync="drawer">
-            <span>我来啦!</span>
-        </el-drawer>
+        <!-- 视图面板层 -->
+        <ViewPanel />
+        <!-- 缩略图层 -->
+        <Thumbnail :platformSize="[width,height]" />
+        <!-- 配置项侧栏 -->
+        <OptionPanel />
     </div>
 </template>
 
 <script>
+import ViewPanel from './inc/viewPanel'
+import OptionPanel from './inc/optionPanel'
+import Thumbnail from './inc/thumbnail'
+import autoResize from '../mixin/autoResize'
 export default {
     name: 'platform',
+    mixins: [autoResize],
+    components: {
+        ViewPanel,
+        OptionPanel,
+        Thumbnail,
+    },
     data() {
-        return {
-            drawer: false,
-        }
+        return {}
     },
 }
 </script>
@@ -42,6 +41,7 @@ export default {
     height: 100%;
     background-color: #2a2e33;
     position: relative;
+    overflow: hidden;
     .grid {
         position: absolute;
         width: 100%;
@@ -51,15 +51,7 @@ export default {
         background-image: linear-gradient(to top, transparent 19px, #444 20px),
             linear-gradient(to left, transparent 19px, #444 20px);
         background-size: 20px 20px;
-    }
-    .view {
-        position: absolute;
-        width: calc(100% - 15px);
-        height: calc(100% - 15px);
-        top: 0;
-        left: 0;
-        // border: 1px dashed #409eff;
-        // background-image: url(../../assets/img/bg.jpg);
+        z-index: 10;
     }
 }
 </style>
