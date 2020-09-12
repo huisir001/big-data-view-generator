@@ -2,17 +2,15 @@
  * @Description: 侧边栏
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-10 18:17:53
+ * @LastEditTime: 2020-09-12 18:21:53
 -->
 <template>
     <div class="asideCont">
         侧边栏
         <div class="asideItem"
              ref="asideItem"
-             @mousemove="asideItemMove"
              @mousedown="asideItemDown"
-             @mouseup="asideItemDown"
-             @mouseleave="asideItemLeave"></div>
+             @mouseup="asideItemDown"></div>
     </div>
 </template>
 
@@ -21,25 +19,52 @@ export default {
     name: 'asideCont',
     data() {
         return {
+            bodyMouseEnter: false,
             asideItemEnter: false,
-            asideItemOffset: [0, 0],
+            curMouseOffset: [0, 0],
+            cloneItem: null,
         }
     },
     methods: {
-        asideItemDown({ type, offsetX, offsetY }) {
+        asideItemDown({ type, clientX, clientY, offsetX, offsetY, target }) {
             this.asideItemEnter = type == 'mousedown'
-            this.asideItemOffset = [offsetX, offsetY]
-            let { left, top } = this.$refs.asideItem.getBoundingClientRect() //相对屏幕位置
+            this.curMouseOffset = [offsetX, offsetY]
+            this.cloneItem = target.cloneNode(true) // 克隆元素（拖拽时跟随鼠标效果）
+            this.cloneItem.style = `position: absolute;
+                                    left:${clientX - offsetX}px;
+                                    top:${clientY - offsetY}px;   
+                                    opacity:.5; 
+                                `
+            document.body.appendChild(this.cloneItem)
         },
-        asideItemMove({ offsetX, offsetY }) {
+    },
+    mounted() {
+        /* body 鼠标事件绑定 */
+        let dom = document.body
+        dom.onmousedown = () => {
+            this.bodyMouseEnter = true
+        }
+        dom.onmouseup = () => {
+            // 状态还原
             if (this.asideItemEnter) {
-                console.log(offsetX, offsetY)
+                this.bodyMouseEnter = false
+                this.asideItemEnter = false
+                // 移除克隆dom
+                this.cloneItem.remove()
+                // 清内存
+                this.cloneItem = null
             }
-        },
-        //鼠标区域离开
-        asideItemLeave() {
-            this.asideItemEnter = false
-        },
+        }
+        dom.onmousemove = ({ clientX, clientY }) => {
+            const { bodyMouseEnter, asideItemEnter, curMouseOffset } = this
+            if (asideItemEnter && bodyMouseEnter) {
+                // 克隆元素跟随
+                this.cloneItem.style.left = `${clientX - curMouseOffset[0]}px`
+                this.cloneItem.style.top = `${clientY - curMouseOffset[1]}px`
+            }
+            // 阻止默认事件
+            return false
+        }
     },
 }
 </script>

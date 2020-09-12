@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-10 18:20:03
+ * @LastEditTime: 2020-09-12 17:59:34
 -->
 <template>
     <div class="viewPanel"
@@ -37,10 +37,7 @@ export default {
             }
         },
         viewItemStyle() {
-            return {
-                left: '-100px',
-                top: 0,
-            }
+            return {}
         },
     },
 }
@@ -61,13 +58,6 @@ export default {
         top: 0;
         left: 0;
         z-index: 11;
-        .viewItem {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: chartreuse;
-            z-index: 12;
-        }
     }
 }
 </style>
