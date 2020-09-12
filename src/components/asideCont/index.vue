@@ -2,7 +2,7 @@
  * @Description: 侧边栏
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-12 18:21:53
+ * @LastEditTime: 2020-09-12 18:25:27
 -->
 <template>
     <div class="asideCont">
@@ -76,9 +76,5 @@ export default {
     width: 100px;
     height: 100px;
     background: #ff0;
-}
-#aaa {
-    opacity: 0.5;
-    position: absolute;
 }
 </style>
