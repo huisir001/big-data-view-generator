@@ -2,7 +2,7 @@
  * @Description: 侧边栏
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-14 09:50:13
+ * @LastEditTime: 2020-09-14 18:23:43
 -->
 <template>
     <div class="asideCont">
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('system')
 export default {
     name: 'asideCont',
     data() {
@@ -24,6 +26,9 @@ export default {
             curMouseOffset: [0, 0],
             cloneItem: null,
         }
+    },
+    computed: {
+        ...mapState(['viewPanelDomRect']), //操作面板信息
     },
     methods: {
         asideItemDown({ type, clientX, clientY, offsetX, offsetY, target }) {
@@ -56,11 +61,32 @@ export default {
             }
         }
         dom.onmousemove = ({ clientX, clientY }) => {
-            const { bodyMouseEnter, asideItemEnter, curMouseOffset } = this
+            const {
+                bodyMouseEnter,
+                asideItemEnter,
+                curMouseOffset,
+                viewPanelDomRect,
+            } = this
             if (asideItemEnter && bodyMouseEnter) {
                 // 克隆元素跟随
-                this.cloneItem.style.left = `${clientX - curMouseOffset[0]}px`
-                this.cloneItem.style.top = `${clientY - curMouseOffset[1]}px`
+                let [_left, _top] = [
+                    clientX - curMouseOffset[0],
+                    clientY - curMouseOffset[1],
+                ]
+                this.cloneItem.style.left = `${_left}px`
+                this.cloneItem.style.top = `${_top}px`
+                //判断是否移入视图操作面板
+                const { width, height, x, y } = viewPanelDomRect
+                if (
+                    _left >= x &&
+                    _top >= y &&
+                    _left <= x + width &&
+                    _top <= y + height
+                ) {
+                    console.log(111)
+                } else {
+                    console.log(222)
+                }
             }
             // 阻止默认事件
             return false
