@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-12 17:59:34
+ * @LastEditTime: 2020-09-14 11:10:59
 -->
 <template>
     <div class="viewPanel"
@@ -16,14 +16,16 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('system')
+const { mapState: mapStateSystem } = createNamespacedHelpers('system')
+const { mapState: mapStateLayer } = createNamespacedHelpers('layer')
 export default {
     name: 'viewPanel',
     data() {
         return {}
     },
     computed: {
-        ...mapState(['screenSize', 'viewPanelPos', 'viewPanelScale']),
+        ...mapStateSystem(['screenSize', 'viewPanelPos', 'viewPanelScale']),
+        ...mapStateLayer(['layers']), //图层信息
         viewPanelStyle() {
             const { screenSize, viewPanelPos, viewPanelScale } = this
             return {

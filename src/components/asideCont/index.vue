@@ -2,13 +2,13 @@
  * @Description: 侧边栏
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-12 18:25:27
+ * @LastEditTime: 2020-09-14 09:50:13
 -->
 <template>
     <div class="asideCont">
         侧边栏
         <div class="asideItem"
-             ref="asideItem"
+             compName="lineChart"
              @mousedown="asideItemDown"
              @mouseup="asideItemDown"></div>
     </div>
