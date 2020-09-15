@@ -2,7 +2,7 @@
  * @Description: 缩略图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-10 18:29:04
+ * @LastEditTime: 2020-09-15 14:20:07
 -->
 <template>
     <div class="thumbnail"
@@ -47,21 +47,34 @@ export default {
         }
     },
     computed: {
-        ...mapState(['screenSize', 'viewPanelPos']),
+        ...mapState(['screenSize', 'viewPanelPos', 'viewPanelScale']),
+        //操作区域实际尺寸
+        viewPanelSize() {
+            const { screenSize, viewPanelScale } = this
+            return [
+                screenSize[0] * viewPanelScale,
+                screenSize[1] * viewPanelScale,
+            ]
+        },
         //缩略图缩略倍数
         thumbnailSizeScale() {
             return Math.max(this.screenSize[0] / 250, this.screenSize[1] / 150)
         },
         //缩略图样式
         thumbnailStyle() {
-            const { screenSize, isMin, thumbnailSizeScale, platformSize } = this
+            const {
+                viewPanelSize,
+                isMin,
+                thumbnailSizeScale,
+                platformSize,
+            } = this
             let temp = []
-            screenSize[0] < platformSize[0]
+            viewPanelSize[0] < platformSize[0]
                 ? (temp[0] = platformSize[0])
-                : (temp[0] = screenSize[0])
-            screenSize[1] < platformSize[1]
+                : (temp[0] = viewPanelSize[0])
+            viewPanelSize[1] < platformSize[1]
                 ? (temp[1] = platformSize[1])
-                : (temp[1] = screenSize[1])
+                : (temp[1] = viewPanelSize[1])
             return {
                 width: temp[0] / thumbnailSizeScale + 2 + 'px',
                 height: temp[1] / thumbnailSizeScale + 2 + 'px',
@@ -72,12 +85,7 @@ export default {
         },
         //滑块样式
         sliderStyle() {
-            const {
-                screenSize,
-                platformSize,
-                sliderPos,
-                thumbnailSizeScale,
-            } = this
+            const { platformSize, sliderPos, thumbnailSizeScale } = this
             return {
                 width: platformSize[0] / thumbnailSizeScale + 'px',
                 height: platformSize[1] / thumbnailSizeScale + 'px',
@@ -89,7 +97,7 @@ export default {
     watch: {
         sliderPos(val) {
             const {
-                screenSize,
+                viewPanelSize,
                 platformSize,
                 setViewPanelPos,
                 thumbnailSizeScale,
@@ -98,19 +106,19 @@ export default {
             val[0] < 0 && (val[0] = 0)
             val[1] < 0 && (val[1] = 0)
             const maxLeft =
-                    screenSize[0] < platformSize[0]
+                    viewPanelSize[0] < platformSize[0]
                         ? 0
                         : Math.abs(
-                              screenSize[0] / thumbnailSizeScale +
+                              viewPanelSize[0] / thumbnailSizeScale +
                                   2 -
                                   platformSize[0] / thumbnailSizeScale -
                                   2
                           ),
                 maxTop =
-                    screenSize[1] < platformSize[1]
+                    viewPanelSize[1] < platformSize[1]
                         ? 0
                         : Math.abs(
-                              screenSize[1] / thumbnailSizeScale +
+                              viewPanelSize[1] / thumbnailSizeScale +
                                   2 -
                                   platformSize[1] / thumbnailSizeScale -
                                   2

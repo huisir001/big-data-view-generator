@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-14 18:29:43
+ * @LastEditTime: 2020-09-15 11:58:03
 -->
 <template>
     <div class="viewPanel"
@@ -16,6 +16,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import autoResize from '@/components/mixin/autoResize'
 const {
     mapState: mapStateSystem,
     mapMutations: mapMutationSystem,
@@ -23,6 +24,7 @@ const {
 const { mapState: mapStateLayer } = createNamespacedHelpers('layer')
 export default {
     name: 'viewPanel',
+    mixins: [autoResize],
     data() {
         return {}
     },
@@ -44,12 +46,18 @@ export default {
             return {}
         },
     },
-    mounted() {
-        //更新视图操作面板实际参数
-        this.setViewPanelDomRect()
-    },
     methods: {
         ...mapMutationSystem(['setViewPanelDomRect']),
+        afterAutoResizeMixinInit() {
+            //初始化钩子
+            //更新视图操作面板实际参数
+            this.setViewPanelDomRect()
+        },
+        onResize() {
+            //dom变化及窗口调整钩子
+            //更新视图操作面板实际参数
+            this.setViewPanelDomRect()
+        },
     },
 }
 </script>

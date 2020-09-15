@@ -24,3 +24,33 @@
         box-shadow: 0 6px 15px 5px rgba(255, 255, 255, 0.3);
     }
 }
+
+//折叠面板
+$menu-bg: #212528;
+$font-color: #fff;
+$font-color2:#cde4fd;
+$boder-color: #999;
+.el-collapse {
+    border-top: 1px solid $boder-color;
+    border-bottom: 1px solid $boder-color;
+}
+.el-collapse-item__header {
+    height: 40px;
+    line-height: 40px;
+    background-color: $menu-bg;
+    color: $font-color2;
+    font-size: 14px;
+    border-bottom: 1px solid $boder-color;
+    padding: 0 2px 0 15px;
+}
+.el-collapse-item__wrap {
+    background-color: $menu-bg;
+    border-bottom: 1px solid $boder-color;
+}
+.el-collapse-item__content {
+    padding: 15px;
+    border-top: 1px dashed #383e44;
+    color: $font-color;
+    font-size: 12px;
+    font-weight: 400;
+}

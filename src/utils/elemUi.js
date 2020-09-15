@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-09-10 11:15:40
+ * @LastEditTime: 2020-09-15 18:02:09
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -13,13 +13,15 @@ import {
   Main,
   Drawer,
   Switch,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Menu,
-  Submenu,
-  MenuItem,
-  MenuItemGroup,
+  Collapse,
+  CollapseItem,
+  // Dropdown,
+  // DropdownMenu,
+  // DropdownItem,
+  // Menu,
+  // Submenu,
+  // MenuItem,
+  // MenuItemGroup,
   Button,
   Message,
   MessageBox,
@@ -33,13 +35,15 @@ Vue.use(Container)
   .use(Main)
   .use(Drawer)
   .use(Switch)
-  .use(Dropdown)
-  .use(DropdownMenu)
-  .use(DropdownItem)
-  .use(Menu)
-  .use(Submenu)
-  .use(MenuItem)
-  .use(MenuItemGroup)
+  .use(Collapse)
+  .use(CollapseItem)
+  // .use(Dropdown)
+  // .use(DropdownMenu)
+  // .use(DropdownItem)
+  // .use(Menu)
+  // .use(Submenu)
+  // .use(MenuItem)
+  // .use(MenuItemGroup)
   .use(Button)
   .use(Loading.directive) //指令方式加载loading(在组件上使用v-loading)
 //.use(Message)

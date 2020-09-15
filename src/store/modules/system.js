@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-14 18:16:09
+ * @LastEditTime: 2020-09-15 11:53:14
  */
 export default {
   namespaced: true,
@@ -19,8 +19,6 @@ export default {
     },
     setViewPanelPos(state, pos) {
       state.viewPanelPos = pos
-      //更新视图操作面板实际参数
-      this.commit('system/setViewPanelDomRect')
     },
     setViewPanelScale(state, num) {
       state.viewPanelScale = Math.round((state.viewPanelScale + num) * 10) / 10
@@ -41,11 +39,6 @@ export default {
           type: 'warning'
         })
       }
-      //更新视图操作面板实际参数(dom更新有延迟，这里姑且50毫秒足够)
-      let Timer = setTimeout(() => {
-        this.commit('system/setViewPanelDomRect')
-        clearTimeout(Timer)
-      }, 50)
     },
     setViewPanelDomRect(state) {
       //更新视图操作面板实际参数

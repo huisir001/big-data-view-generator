@@ -2,27 +2,28 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-10 11:49:13
+ * @LastEditTime: 2020-09-15 18:49:06
 -->
 <template>
     <el-container>
-        <el-header class="header"
-                   height="50px">
+        <el-aside :class="`aside ${asideState || 'hide'}`"
+                  width="250px">
             <h1>大数据视图生成器1.0.0</h1>
-            <div class="right">
-                配置栏 <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
-            </div>
-        </el-header>
-
+            <!-- 侧边栏 -->
+            <slot name="aside"></slot>
+        </el-aside>
         <el-container class="content">
-            <el-aside :width="asideState?'250px':'48px'"
-                      class="aside">
-                <!-- 抽屉按钮 -->
-                <i :class="[asideState?'el-icon-s-fold':'el-icon-s-unfold','aside-take-btn']"
-                   @click="asideState=!asideState"></i>
-                <!-- 侧边栏 -->
-                <slot name="aside"></slot>
-            </el-aside>
+            <el-header class="header"
+                       height="50px">
+                <div class="left">
+                    <!-- 抽屉按钮 -->
+                    <i :class="[asideState?'el-icon-s-fold':'el-icon-s-unfold','aside-take-btn']"
+                       @click="asideState=!asideState"></i>
+                </div>
+                <div class="right">
+                    配置栏 <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
+                </div>
+            </el-header>
             <el-main class="main-box">
                 <!-- 工作台 -->
                 <slot name="main"></slot>
@@ -48,39 +49,45 @@ export default {
 $menu-bg: #212528;
 $menu-color: #fff;
 $boder-color: #999;
-.header {
-    background: $menu-bg;
-    line-height: 50px;
-    padding: 0 15px;
+$header-height: 50px;
+.aside {
+    position: relative;
+    height: 100vh;
     color: $menu-color;
+    background: $menu-bg;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: 0.5s;
+    z-index: 1;
+    &.hide {
+        margin-left: -250px;
+    }
     h1 {
         margin: 0;
+        padding: 0 15px;
         font-size: 20px;
-        display: inline-block;
-    }
-    .right {
-        float: right;
+        height: $header-height;
+        line-height: $header-height;
     }
 }
 .content {
-    height: calc(100vh - 50px);
-    .aside {
-        position: relative;
-        height: 100%;
-        color: $menu-color;
-        font-size: 18px;
-        border-top: 1px solid $boder-color;
+    height: 100vh;
+    .header {
         background: $menu-bg;
-        padding: 15px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        transition: 0.5s;
-        .aside-take-btn {
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 15px;
-            cursor: pointer;
+        line-height: $header-height;
+        padding: 0 15px 0 0;
+        color: $menu-color;
+        border-left: 1px solid $boder-color;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1;
+        .left {
+            .aside-take-btn {
+                padding: 0 15px;
+                font-size: 18px;
+                line-height: 50px;
+                cursor: pointer;
+            }
         }
     }
     .main-box {
