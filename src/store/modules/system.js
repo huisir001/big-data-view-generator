@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-16 16:40:49
+ * @LastEditTime: 2020-09-16 17:52:37
  */
 export default {
   namespaced: true,
@@ -12,7 +12,8 @@ export default {
     viewPanelPos: [60, 60], //视图层位置(左上顶点left,top)
     viewPanelScale: 1, //视图层缩放
     platformPos: [0, 0], //工作台位置
-    viewPanelDomRect: null //视图操作层实际参数getBoundingClientRect（尺寸、位置）
+    viewPanelDomRect: null, //视图操作层实际参数getBoundingClientRect（尺寸、位置）
+    curkeydownCodes: [] //当前键盘按下的按键
   },
   mutations: {
     setOptionPanel(state) {
@@ -51,6 +52,13 @@ export default {
         .querySelector('.viewPanel')
         .getBoundingClientRect()
       state.viewPanelDomRect = { width, height, x, y }
+    },
+    //更新按键
+    setCurkeydownCodes(state, keyCode) {
+      let codes = state.curkeydownCodes
+      codes.includes(keyCode)
+        ? codes.splice(codes.indexOf(keyCode), 1)
+        : state.curkeydownCodes.push(keyCode)
     }
   },
   getters: {},

@@ -2,7 +2,7 @@
  * @Description: 可视区
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-16 16:39:14
+ * @LastEditTime: 2020-09-16 17:49:46
 -->
 <template>
     <!-- 可视区域 -->
@@ -29,7 +29,7 @@ import OptionPanel from './inc/optionPanel'
 import Thumbnail from './inc/thumbnail'
 import autoResize from '../mixin/autoResize'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('system')
+const { mapState, mapMutations } = createNamespacedHelpers('system')
 export default {
     name: 'visualArea',
     mixins: [autoResize],
@@ -39,7 +39,7 @@ export default {
         Thumbnail,
     },
     computed: {
-        ...mapState(['screenSize', 'platformPos']),
+        ...mapState(['screenSize', 'platformPos', 'curkeydownCodes']),
         //工作台尺寸
         platformSize() {
             let { width, height, screenSize } = this
@@ -47,6 +47,19 @@ export default {
                 myHeight = screenSize[1] * 1.5 + 230
             return [myWidth, myHeight]
         },
+    },
+    mounted() {
+        document.onkeydown = ({ keyCode }) => {
+            if (!this.curkeydownCodes.includes(keyCode)) {
+                this.setCurkeydownCodes(keyCode)
+            }
+        }
+        document.onkeyup = ({ keyCode }) => {
+            this.setCurkeydownCodes(keyCode)
+        }
+    },
+    methods: {
+        ...mapMutations(['setCurkeydownCodes']),
     },
 }
 </script>

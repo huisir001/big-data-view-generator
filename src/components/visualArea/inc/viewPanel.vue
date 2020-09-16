@@ -2,16 +2,23 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-16 10:08:49
+ * @LastEditTime: 2020-09-16 18:45:56
 -->
 <template>
     <div class="viewPanel"
          :style="viewPanelStyle">
+        <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
              class="viewItem"
              :key="index"
-             :id="item.id"
+             :ref="item.id"
+             :data-id="item.id"
              :data-type="item.type"
+             @click="layerSelect(item)"
+             @mousemove="layerMove"
+             @mousedown="layerDown"
+             @mouseup="layerDown"
+             @mouseleave="layerLeave"
              :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`"></div>
     </div>
 </template>
@@ -23,15 +30,27 @@ const {
     mapState: mapStateSystem,
     mapMutations: mapMutationSystem,
 } = createNamespacedHelpers('system')
-const { mapState: mapStateLayer } = createNamespacedHelpers('layer')
+const {
+    mapState: mapStateLayer,
+    mapMutations: mapMutationLayer,
+} = createNamespacedHelpers('layer')
 export default {
     name: 'viewPanel',
     mixins: [autoResize],
     data() {
-        return {}
+        return {
+            activeLayers: [], //已激活图层（已选定）
+            layerMouseEnter: false,
+            layerMouseOffset: [0, 0],
+        }
     },
     computed: {
-        ...mapStateSystem(['screenSize', 'viewPanelPos', 'viewPanelScale']), //系统信息
+        ...mapStateSystem([
+            'screenSize',
+            'viewPanelPos',
+            'viewPanelScale',
+            'curkeydownCodes',
+        ]), //系统信息
         ...mapStateLayer(['layers']), //图层信息
         viewPanelStyle() {
             const { screenSize, viewPanelPos, viewPanelScale } = this
@@ -44,21 +63,71 @@ export default {
                 // backgroundImage: 'url(assets/img/bg.jpg)',
             }
         },
-        viewItemStyle() {
-            return {}
-        },
     },
     methods: {
         ...mapMutationSystem(['setViewPanelDomRect']),
+        ...mapMutationLayer(['setLayer']),
+        //初始化钩子
         afterAutoResizeMixinInit() {
-            //初始化钩子
             //更新视图操作面板实际参数
             this.setViewPanelDomRect()
         },
+        //dom变化及窗口调整钩子
         onResize() {
-            //dom变化及窗口调整钩子
             //更新视图操作面板实际参数
             this.setViewPanelDomRect()
+        },
+        //图层选定
+        layerSelect(layer) {
+            //新增选定图层
+            //按住ctrl单击为多选
+            const { curkeydownCodes } = this
+            if (curkeydownCodes.includes(17)) {
+                this.activeLayers.push(layer)
+            } else {
+                this.activeLayers = [layer]
+            }
+            //选定样式
+            for (let ref in this.$refs) {
+                this.activeLayers.map((item) => item.id).includes(ref)
+                    ? (this.$refs[ref][0].className = 'viewItem act')
+                    : (this.$refs[ref][0].className = 'viewItem')
+            }
+        },
+
+        /* 图层拖拽 */
+        layerDown({ type, offsetX, offsetY, target }) {
+            if (
+                this.activeLayers
+                    .map((item) => item.id)
+                    .includes(target.dataset.id)
+            ) {
+                this.layerMouseEnter = type == 'mousedown'
+                this.layerMouseOffset = [offsetX, offsetY]
+            }
+            return false
+        },
+        layerMove({ offsetX, offsetY }) {
+            let {
+                layerMouseEnter,
+                layerMouseOffset,
+                activeLayers,
+                setLayer,
+            } = this
+            if (layerMouseEnter) {
+                activeLayers.forEach((item) => {
+                    item.pos = [
+                        item.pos[0] + offsetX - layerMouseOffset[0],
+                        item.pos[1] + offsetY - layerMouseOffset[1],
+                    ]
+                    setLayer(item)
+                })
+            }
+            return false
+        },
+        layerLeave() {
+            this.layerMouseEnter = false
+            return false
         },
     },
 }
@@ -76,8 +145,31 @@ export default {
         position: absolute;
         background: red;
         border: 1px solid yellow;
+        @mixin act {
+            content: '';
+            display: block;
+            position: absolute;
+        }
+        $border-act: 1px dashed #0ff;
         &.act {
+            border: $border-act;
             opacity: 0.5;
+            &::before {
+                @include act;
+                width: 1px;
+                height: 200vh;
+                border-left: $border-act;
+                left: -1px;
+                bottom: -100vh;
+            }
+            &::after {
+                @include act;
+                width: 200vw;
+                height: 1px;
+                border-top: $border-act;
+                top: -1px;
+                right: -100vw;
+            }
         }
     }
 }
