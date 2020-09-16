@@ -2,15 +2,17 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-15 11:58:03
+ * @LastEditTime: 2020-09-16 10:08:49
 -->
 <template>
     <div class="viewPanel"
          :style="viewPanelStyle">
-        <div class="contBox">
-            <div class="viewItem"
-                 :style="viewItemStyle"></div>
-        </div>
+        <div v-for="(item,index) in layers"
+             class="viewItem"
+             :key="index"
+             :id="item.id"
+             :data-type="item.type"
+             :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`"></div>
     </div>
 </template>
 
@@ -64,21 +66,19 @@ export default {
 <style lang="scss" scoped>
 .viewPanel {
     position: absolute;
-    border-color: #409eff;
-    border-style: dashed;
-    border-width: 2px;
     background-image: url(../../../assets/img/bg.jpg);
     background-position: center top;
     background-size: cover;
     background-repeat: no-repeat;
     transform-origin: 0 0 0; //缩放参考点
-    .contBox {
+    box-shadow: #000 0 0 30px 0;
+    .viewItem {
         position: absolute;
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
-        top: -2px;
-        left: -2px;
-        z-index: 11;
+        background: red;
+        border: 1px solid yellow;
+        &.act {
+            opacity: 0.5;
+        }
     }
 }
 </style>

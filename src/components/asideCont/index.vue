@@ -2,15 +2,47 @@
  * @Description: 侧边栏
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-15 18:57:42
+ * @LastEditTime: 2020-09-16 09:34:23
 -->
 <template>
     <div class="asideCont">
         <h2>组件库</h2>
         <el-collapse v-model="cpActiveName"
                      accordion>
-            <el-collapse-item title="一致性 Consistency"
+            <el-collapse-item title="柱状图/条形图"
                               name="1"
+                              class="collapseItem">
+                <div class="asideItem"
+                     data-type="lineChart"
+                     @mousedown="asideItemDown"
+                     @mouseup="asideItemDown"></div>
+            </el-collapse-item>
+            <el-collapse-item title="折线图/曲线图"
+                              name="2"
+                              class="collapseItem">
+                <div class="asideItem"
+                     data-type="lineChart"
+                     @mousedown="asideItemDown"
+                     @mouseup="asideItemDown"></div>
+            </el-collapse-item>
+            <el-collapse-item title="饼状图/扇形图"
+                              name="3"
+                              class="collapseItem">
+                <div class="asideItem"
+                     data-type="lineChart"
+                     @mousedown="asideItemDown"
+                     @mouseup="asideItemDown"></div>
+            </el-collapse-item>
+            <el-collapse-item title="柱线复合图"
+                              name="4"
+                              class="collapseItem">
+                <div class="asideItem"
+                     data-type="lineChart"
+                     @mousedown="asideItemDown"
+                     @mouseup="asideItemDown"></div>
+            </el-collapse-item>
+            <el-collapse-item title="雷达图"
+                              name="5"
                               class="collapseItem">
                 <div class="asideItem"
                      data-type="lineChart"
@@ -35,7 +67,7 @@ export default {
             cloneItemMoveInPane: false, //克隆元素移入操作面板状态
             curMouseOffset: [0, 0],
             cloneItem: null,
-            cpActiveName: 1, //折叠面板当前激活项
+            cpActiveName: '1', //折叠面板当前激活项
         }
     },
     computed: {
@@ -84,8 +116,11 @@ export default {
                         addLayer({
                             id: `L-${getRanId()}`,
                             type: cloneItem.getAttribute('data-type'), //组件类型
-                            left: (cx - vx) / viewPanelScale, //组件相对于实际视图的位置
-                            top: (cy - vy) / viewPanelScale,
+                            pos: [
+                                //组件相对于实际视图的位置
+                                (cx - vx) / viewPanelScale,
+                                (cy - vy) / viewPanelScale,
+                            ],
                         })
                     }
                     // 移除克隆dom
@@ -188,7 +223,7 @@ $actColor: #3c4650;
             height: 1px;
             border-top: $border-act;
             top: -1px;
-            right: -100vh;
+            right: -100vw;
         }
     }
 }

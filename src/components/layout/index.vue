@@ -2,13 +2,13 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-15 18:49:06
+ * @LastEditTime: 2020-09-16 16:55:00
 -->
 <template>
     <el-container>
         <el-aside :class="`aside ${asideState || 'hide'}`"
                   width="250px">
-            <h1>大数据视图生成器1.0.0</h1>
+            <h1>大数据视图生成器1.0</h1>
             <!-- 侧边栏 -->
             <slot name="aside"></slot>
         </el-aside>
@@ -25,6 +25,28 @@
                 </div>
             </el-header>
             <el-main class="main-box">
+                <!-- x刻度尺 -->
+                <div class="ruler-top"
+                     :style="rulerTopStyle">
+                    <!-- 60像素刻度线 -->
+                    <div v-for="(_,i) in parseInt(screenSize[0]*viewPanelScale/60+1)"
+                         :key="i"
+                         class="l">
+                        <span>{{parseInt(i*60/viewPanelScale)}}</span>
+                        <!-- 均分10份 -->
+                        <div class="s"></div>
+                    </div>
+                </div>
+                <!-- y刻度尺 -->
+                <div class="ruler-left"
+                     :style="rulerLeftStyle">
+                    <div v-for="(_,i) in parseInt(screenSize[1]*viewPanelScale/60+1)"
+                         :key="i"
+                         class="l">
+                        <span>{{parseInt(i*60/viewPanelScale)}}</span>
+                        <div class="s"></div>
+                    </div>
+                </div>
                 <!-- 工作台 -->
                 <slot name="main"></slot>
             </el-main>
@@ -34,12 +56,27 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('system')
 export default {
     name: 'layout',
     data() {
         return {
             asideState: true,
         }
+    },
+    computed: {
+        ...mapState(['screenSize', 'platformPos', 'viewPanelScale']),
+        rulerTopStyle() {
+            return {
+                left: this.platformPos[0] + 'px',
+            }
+        },
+        rulerLeftStyle() {
+            return {
+                top: this.platformPos[1] + 'px',
+            }
+        },
     },
     methods: {},
 }
@@ -60,7 +97,7 @@ $header-height: 50px;
     transition: 0.5s;
     z-index: 1;
     &.hide {
-        margin-left: -250px;
+        margin-left: -251px;
     }
     h1 {
         margin: 0;
@@ -95,6 +132,82 @@ $header-height: 50px;
         border: 1px solid $boder-color;
         border-right: 0;
         border-bottom: 0;
+        position: relative;
+        overflow: hidden;
+        @mixin ruler {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            display: flex;
+            background: #000;
+            color: #7a8286;
+            font-size: 12px;
+            .l {
+                border-color: #3f4346;
+                line-height: 25px;
+                position: relative;
+                /* 禁止选择文字 */
+                -webkit-touch-callout: none;
+                user-select: none;
+                .s {
+                    position: absolute;
+                    background-size: 6px 6px;
+                }
+            }
+        }
+        .ruler-top {
+            @include ruler;
+            height: 25px;
+            padding-left: 60px;
+            .l {
+                width: 60px;
+                height: 100%;
+                border-left: 1px solid;
+                padding-left: 3px;
+                .s {
+                    width: 100%;
+                    height: 5px;
+                    bottom: 0;
+                    left: 0;
+                    background-image: linear-gradient(
+                        to left,
+                        transparent 5px,
+                        #5a6064 6px
+                    );
+                }
+            }
+        }
+        .ruler-left {
+            @include ruler;
+            flex-direction: column;
+            width: 25px;
+            padding-top: 60px;
+            .l {
+                height: 60px;
+                width: 100%;
+                border-top: 1px solid;
+                padding-top: 3px;
+                .s {
+                    height: 100%;
+                    width: 5px;
+                    right: 0;
+                    top: 0;
+                    background-image: linear-gradient(
+                        to top,
+                        transparent 5px,
+                        #5a6064 6px
+                    );
+                }
+                span {
+                    display: inline-block;
+                    width: 25px;
+                    height: 25px;
+                    transform: rotate(90deg);
+                    transform-origin: center;
+                }
+            }
+        }
     }
 }
 </style>
