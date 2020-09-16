@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-16 17:52:37
+ * @LastEditTime: 2020-09-16 23:38:34
  */
 export default {
   namespaced: true,
@@ -13,7 +13,9 @@ export default {
     viewPanelScale: 1, //视图层缩放
     platformPos: [0, 0], //工作台位置
     viewPanelDomRect: null, //视图操作层实际参数getBoundingClientRect（尺寸、位置）
-    curkeydownCodes: [] //当前键盘按下的按键
+    curkeydownCodes: [], //当前键盘按下的按键
+    showLayerMenu: false, //显示图层菜单
+    layerMenuPos: [0, 0] //图层菜单位置
   },
   mutations: {
     setOptionPanel(state) {
@@ -59,6 +61,14 @@ export default {
       codes.includes(keyCode)
         ? codes.splice(codes.indexOf(keyCode), 1)
         : state.curkeydownCodes.push(keyCode)
+    },
+    //图层菜单显隐
+    setShowLayerMenu(state) {
+      state.showLayerMenu = !state.showLayerMenu
+    },
+    //设置图层菜单位置
+    setLayerMenuPos(state, pos) {
+      state.layerMenuPos = pos
     }
   },
   getters: {},

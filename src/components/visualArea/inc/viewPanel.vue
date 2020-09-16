@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-16 23:02:16
+ * @LastEditTime: 2020-09-16 23:40:35
 -->
 <template>
     <div class="viewPanel"
@@ -10,17 +10,18 @@
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
              class="viewItem"
-             title="左键选定图层，ctrl+左键多选"
              :key="index"
              :ref="item.id"
              :data-id="item.id"
              :data-index="index"
              :data-type="item.type"
-             @mousemove="layerMove"
-             @mousedown="layerDown"
-             @mouseup="layerDown"
-             @mouseleave="layerLeave"
-             :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`"></div>
+             @mousemove.prevent="layerMove"
+             @mousedown.prevent="layerDown"
+             @mouseup.prevent="layerDown"
+             @mouseleave.prevent="layerLeave"
+             @contextmenu.prevent="layerMenu"
+             :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
+        </div>
     </div>
 </template>
 
@@ -66,7 +67,11 @@ export default {
         },
     },
     methods: {
-        ...mapMutationSystem(['setViewPanelDomRect']),
+        ...mapMutationSystem([
+            'setViewPanelDomRect',
+            'setShowLayerMenu',
+            'setLayerMenuPos',
+        ]),
         ...mapMutationLayer(['setLayer']),
         //初始化钩子
         afterAutoResizeMixinInit() {
@@ -108,7 +113,8 @@ export default {
         },
 
         /* 图层事件绑定 */
-        layerDown({ type, offsetX, offsetY, target }) {
+        layerDown({ type, button, offsetX, offsetY, target }) {
+            if (button != 0) return false //非鼠标左键return
             const { index } = target.dataset
             //状态改变
             this.layerMouseEnter = type == 'mousedown'
@@ -116,7 +122,6 @@ export default {
             this.layerMouseEnter && this.layerSelect(this.layers[index])
             //记录鼠标位置
             this.layerMouseOffset = [offsetX, offsetY]
-            return false
         },
         layerMove({ offsetX, offsetY }) {
             let {
@@ -134,11 +139,15 @@ export default {
                     setLayer(item)
                 })
             }
-            return false
         },
         layerLeave() {
             this.layerMouseEnter = false
-            return false
+        },
+        //右键菜单事件
+        layerMenu({ clientX, clientY }) {
+            const { setShowLayerMenu, setLayerMenuPos } = this
+            setShowLayerMenu()
+            setLayerMenuPos([clientX, clientY])
         },
     },
 }

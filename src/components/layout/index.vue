@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-16 16:55:00
+ * @LastEditTime: 2020-09-16 23:36:24
 -->
 <template>
     <el-container>
@@ -51,7 +51,13 @@
                 <slot name="main"></slot>
             </el-main>
         </el-container>
-
+        <!-- 右键菜单 -->
+        <div v-show="showLayerMenu"
+             class="layermenu"
+             :style="`left:${layerMenuPos[0]}px;top:${layerMenuPos[1]}px;`">
+            <div>复制</div>
+            <div>粘贴</div>
+        </div>
     </el-container>
 </template>
 
@@ -66,7 +72,13 @@ export default {
         }
     },
     computed: {
-        ...mapState(['screenSize', 'platformPos', 'viewPanelScale']),
+        ...mapState([
+            'screenSize',
+            'platformPos',
+            'viewPanelScale',
+            'showLayerMenu',
+            'layerMenuPos',
+        ]),
         rulerTopStyle() {
             return {
                 left: this.platformPos[0] + 'px',
@@ -208,6 +220,16 @@ $header-height: 50px;
                 }
             }
         }
+    }
+}
+.layermenu {
+    position: absolute;
+    z-index: 999;
+    background: #fff;
+    padding: 5px 0;
+    div {
+        font-size: 18px;
+        padding: 5px 10px;
     }
 }
 </style>
