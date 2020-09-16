@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-16 18:45:56
+ * @LastEditTime: 2020-09-16 22:52:29
 -->
 <template>
     <div class="viewPanel"
@@ -10,11 +10,12 @@
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
              class="viewItem"
+             title="左键选定图层，ctrl+左键多选或取消"
              :key="index"
              :ref="item.id"
              :data-id="item.id"
+             :data-index="index"
              :data-type="item.type"
-             @click="layerSelect(item)"
              @mousemove="layerMove"
              @mousedown="layerDown"
              @mouseup="layerDown"
@@ -82,8 +83,18 @@ export default {
             //新增选定图层
             //按住ctrl单击为多选
             const { curkeydownCodes } = this
+            const hasLyIndex = this.activeLayers
+                .map((item) => item.id)
+                .indexOf(layer.id)
             if (curkeydownCodes.includes(17)) {
-                this.activeLayers.push(layer)
+                //若无 则push
+                if (hasLyIndex >= 0) {
+                    this.activeLayers.splice(hasLyIndex, 1)
+                } else {
+                    this.activeLayers
+                        .map((item) => item.id)
+                        .includes(layer.id) || this.activeLayers.push(layer)
+                }
             } else {
                 this.activeLayers = [layer]
             }
@@ -95,16 +106,15 @@ export default {
             }
         },
 
-        /* 图层拖拽 */
+        /* 图层事件绑定 */
         layerDown({ type, offsetX, offsetY, target }) {
-            if (
-                this.activeLayers
-                    .map((item) => item.id)
-                    .includes(target.dataset.id)
-            ) {
-                this.layerMouseEnter = type == 'mousedown'
-                this.layerMouseOffset = [offsetX, offsetY]
-            }
+            const { index } = target.dataset
+            //状态改变
+            this.layerMouseEnter = type == 'mousedown'
+            //图层选择
+            this.layerMouseEnter && this.layerSelect(this.layers[index])
+            //记录鼠标位置
+            this.layerMouseOffset = [offsetX, offsetY]
             return false
         },
         layerMove({ offsetX, offsetY }) {
