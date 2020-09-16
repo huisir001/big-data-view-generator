@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-16 22:52:29
+ * @LastEditTime: 2020-09-16 22:55:36
 -->
 <template>
     <div class="viewPanel"
@@ -89,7 +89,7 @@ export default {
             if (curkeydownCodes.includes(17)) {
                 //若无 则push
                 if (hasLyIndex >= 0) {
-                    this.activeLayers.splice(hasLyIndex, 1)
+                    this.activeLayers.splice(hasLyIndex, 1) //若有-删除图层
                 } else {
                     this.activeLayers
                         .map((item) => item.id)
