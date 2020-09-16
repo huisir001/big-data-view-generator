@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-16 22:55:36
+ * @LastEditTime: 2020-09-16 23:02:16
 -->
 <template>
     <div class="viewPanel"
@@ -10,7 +10,7 @@
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
              class="viewItem"
-             title="左键选定图层，ctrl+左键多选或取消"
+             title="左键选定图层，ctrl+左键多选"
              :key="index"
              :ref="item.id"
              :data-id="item.id"
@@ -89,7 +89,8 @@ export default {
             if (curkeydownCodes.includes(17)) {
                 //若无 则push
                 if (hasLyIndex >= 0) {
-                    this.activeLayers.splice(hasLyIndex, 1) //若有-删除图层
+                    // this.activeLayers.splice(hasLyIndex, 1) //若有-删除图层(多图层拖拽时会删除，故bug)
+                    return
                 } else {
                     this.activeLayers
                         .map((item) => item.id)
@@ -155,6 +156,7 @@ export default {
         position: absolute;
         background: red;
         border: 1px solid yellow;
+        cursor: grab;
         @mixin act {
             content: '';
             display: block;
