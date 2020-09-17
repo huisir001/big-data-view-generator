@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-17 09:43:48
+ * @LastEditTime: 2020-09-17 09:56:36
 -->
 <template>
     <div class="viewPanel"
@@ -73,7 +73,7 @@ export default {
             'setShowLayerMenu',
             'setLayerMenuPos',
         ]),
-        ...mapActionSystem(['bodyAddEventListener']),
+        ...mapActionSystem(['domAddEventListener']),
         ...mapMutationLayer(['setLayer']),
         //初始化钩子
         afterAutoResizeMixinInit() {
@@ -153,9 +153,9 @@ export default {
         },
     },
     mounted() {
-        //body添加事件-左键按下隐藏右键菜单
-        const { bodyAddEventListener, setShowLayerMenu } = this
-        bodyAddEventListener({
+        //document添加事件-左键按下隐藏右键菜单
+        const { domAddEventListener, setShowLayerMenu } = this
+        domAddEventListener({
             evType: 'onmousedown',
             func({ button }) {
                 if (button != 0) return false //非鼠标左键return

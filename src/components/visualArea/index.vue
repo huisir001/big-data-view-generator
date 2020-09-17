@@ -2,7 +2,7 @@
  * @Description: 可视区
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-16 17:49:46
+ * @LastEditTime: 2020-09-17 10:05:12
 -->
 <template>
     <!-- 可视区域 -->
@@ -29,7 +29,7 @@ import OptionPanel from './inc/optionPanel'
 import Thumbnail from './inc/thumbnail'
 import autoResize from '../mixin/autoResize'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations } = createNamespacedHelpers('system')
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers('system')
 export default {
     name: 'visualArea',
     mixins: [autoResize],
@@ -49,17 +49,26 @@ export default {
         },
     },
     mounted() {
-        document.onkeydown = ({ keyCode }) => {
-            if (!this.curkeydownCodes.includes(keyCode)) {
+        //document添加全局事件
+        const { domAddEventListener } = this
+        domAddEventListener({
+            evType: 'onkeydown',
+            func: ({ keyCode }) => {
+                if (!this.curkeydownCodes.includes(keyCode)) {
+                    this.setCurkeydownCodes(keyCode)
+                }
+            },
+        })
+        domAddEventListener({
+            evType: 'onkeyup',
+            func: ({ keyCode }) => {
                 this.setCurkeydownCodes(keyCode)
-            }
-        }
-        document.onkeyup = ({ keyCode }) => {
-            this.setCurkeydownCodes(keyCode)
-        }
+            },
+        })
     },
     methods: {
         ...mapMutations(['setCurkeydownCodes']),
+        ...mapActions(['domAddEventListener']),
     },
 }
 </script>

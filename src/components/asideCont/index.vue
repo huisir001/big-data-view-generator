@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         ...mapMutationsLayer(['addLayer']), //新增图层
-        ...mapActionSystem(['bodyAddEventListener']), //body添加监听事件
+        ...mapActionSystem(['domAddEventListener']), //body添加监听事件
         asideItemDown({
             type,
             button,
@@ -182,20 +182,20 @@ export default {
     mounted() {
         /* body 鼠标事件绑定 */
         const {
-            bodyAddEventListener,
+            domAddEventListener,
             domMousedown,
             domMousemove,
             domMouseup,
         } = this
-        bodyAddEventListener({
+        domAddEventListener({
             evType: 'onmousedown',
             func: domMousedown,
         })
-        bodyAddEventListener({
+        domAddEventListener({
             evType: 'onmousemove',
             func: domMousemove,
         })
-        bodyAddEventListener({
+        domAddEventListener({
             evType: 'onmouseup',
             func: domMouseup,
         })

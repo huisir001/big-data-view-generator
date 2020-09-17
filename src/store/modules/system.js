@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-17 09:53:28
+ * @LastEditTime: 2020-09-17 09:58:07
  */
 export default {
   namespaced: true,
@@ -16,7 +16,7 @@ export default {
     curkeydownCodes: [], //当前键盘按下的按键
     showLayerMenu: false, //显示图层菜单
     layerMenuPos: [0, 0], //图层菜单位置
-    bodyEventFncs: {
+    domEventFncs: {
       //document.body上添加的事件(避免多个事件覆盖或重复)
       onmousedown: [],
       onmouseup: [],
@@ -77,23 +77,23 @@ export default {
       state.layerMenuPos = pos
     },
     //设置body事件
-    setBodyEventFncs(state, { evType, func }) {
+    setDomEventFncs(state, { evType, func }) {
       //无方法添加方法
-      if (state.bodyEventFncs[evType]) {
-        state.bodyEventFncs[evType].includes(func) ||
-          state.bodyEventFncs[evType].push(func)
+      if (state.domEventFncs[evType]) {
+        state.domEventFncs[evType].includes(func) ||
+          state.domEventFncs[evType].push(func)
       } else {
-        state.bodyEventFncs[evType] = [func]
+        state.domEventFncs[evType] = [func]
       }
     }
   },
   actions: {
-    //body添加监听事件
-    bodyAddEventListener({ state, commit }, { evType, func }) {
-      commit('setBodyEventFncs', { evType, func }) //设置body事件
-      document.body[evType] = e => {
+    //document添加监听事件
+    domAddEventListener({ state, commit }, { evType, func }) {
+      commit('setDomEventFncs', { evType, func }) //设置body事件
+      document[evType] = e => {
         //执行所有方法
-        state.bodyEventFncs[evType].forEach(func => {
+        state.domEventFncs[evType].forEach(func => {
           func(e)
         })
         //阻止默认事件
