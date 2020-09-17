@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-17 09:40:25
+ * @LastEditTime: 2020-09-17 09:53:28
  */
 export default {
   namespaced: true,
@@ -78,6 +78,7 @@ export default {
     },
     //设置body事件
     setBodyEventFncs(state, { evType, func }) {
+      //无方法添加方法
       if (state.bodyEventFncs[evType]) {
         state.bodyEventFncs[evType].includes(func) ||
           state.bodyEventFncs[evType].push(func)
