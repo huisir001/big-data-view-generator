@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-17 09:58:07
+ * @LastEditTime: 2020-09-17 17:42:08
  */
 export default {
   namespaced: true,
@@ -15,7 +15,10 @@ export default {
     viewPanelDomRect: null, //视图操作层实际参数getBoundingClientRect（尺寸、位置）
     curkeydownCodes: [], //当前键盘按下的按键
     showLayerMenu: false, //显示图层菜单
-    layerMenuPos: [0, 0], //图层菜单位置
+    layerMenu: {
+      pos: [0, 0], //图层菜单位置
+      layer: null //当前图层
+    },
     domEventFncs: {
       //document.body上添加的事件(避免多个事件覆盖或重复)
       onmousedown: [],
@@ -72,11 +75,11 @@ export default {
     setShowLayerMenu(state, bool) {
       state.showLayerMenu = bool
     },
-    //设置图层菜单位置
-    setLayerMenuPos(state, pos) {
-      state.layerMenuPos = pos
+    //设置图层菜单
+    setLayerMenu(state, data) {
+      state.layerMenu = data
     },
-    //设置body事件
+    //设置dom事件
     setDomEventFncs(state, { evType, func }) {
       //无方法添加方法
       if (state.domEventFncs[evType]) {

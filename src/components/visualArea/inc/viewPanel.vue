@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-17 09:56:36
+ * @LastEditTime: 2020-09-17 19:24:24
 -->
 <template>
     <div class="viewPanel"
@@ -66,12 +66,38 @@ export default {
                 // backgroundImage: 'url(assets/img/bg.jpg)',
             }
         },
+        //反序列化图层(避免watch中监听的图层新旧图层参数一致)
+        layersString() {
+            return JSON.stringify(this.layers)
+        },
+    },
+    watch: {
+        layersString(newStr, oldStr) {
+            //有layers删除的话，更新activeLayers已激活图层
+            const newLayers = JSON.parse(newStr),
+                oldLayers = JSON.parse(oldStr)
+            if (newLayers.length < oldLayers.length) {
+                //求差集
+                let diff = oldLayers.filter(
+                    ({ id }) => !newLayers.map((item) => item.id).includes(id)
+                )[0]
+
+                //已激活图层中是否有删除的图层
+                let delindex = this.activeLayers
+                    .map((item) => item.id)
+                    .indexOf(diff.id)
+                if (delindex >= 0) {
+                    //删除已激活图层中的删除的图层
+                    this.activeLayers.splice(delindex, 1)
+                }
+            }
+        },
     },
     methods: {
         ...mapMutationSystem([
             'setViewPanelDomRect',
             'setShowLayerMenu',
-            'setLayerMenuPos',
+            'setLayerMenu',
         ]),
         ...mapActionSystem(['domAddEventListener']),
         ...mapMutationLayer(['setLayer']),
@@ -108,9 +134,12 @@ export default {
             }
             //选定样式
             for (let ref in this.$refs) {
-                this.activeLayers.map((item) => item.id).includes(ref)
-                    ? (this.$refs[ref][0].className = 'viewItem act')
-                    : (this.$refs[ref][0].className = 'viewItem')
+                if (this.$refs[ref].length != 0) {
+                    //已删除的图层这里没更新，排除一下
+                    this.activeLayers.map((item) => item.id).includes(ref)
+                        ? (this.$refs[ref][0].className = 'viewItem act')
+                        : (this.$refs[ref][0].className = 'viewItem')
+                }
             }
         },
 
@@ -146,10 +175,15 @@ export default {
             this.layerMouseEnter = false
         },
         //右键菜单事件
-        layerMenu({ clientX, clientY }) {
-            const { setShowLayerMenu, setLayerMenuPos } = this
+        layerMenu({ clientX, clientY, target }) {
+            const { setShowLayerMenu, setLayerMenu, layers } = this
+            //显示菜单
             setShowLayerMenu(true)
-            setLayerMenuPos([clientX, clientY])
+            //设置当前菜单
+            setLayerMenu({
+                pos: [clientX, clientY],
+                layer: layers[target.dataset.index],
+            })
         },
     },
     mounted() {

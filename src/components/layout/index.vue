@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-17 08:52:35
+ * @LastEditTime: 2020-09-17 18:44:22
 -->
 <template>
     <el-container>
@@ -51,20 +51,25 @@
                 <slot name="main"></slot>
             </el-main>
         </el-container>
-        <!-- 右键菜单 -->
+        <!-- 图层右键菜单 -->
         <div v-show="showLayerMenu"
              class="layermenu"
              :style="`left:${layerMenuPos[0]}px;top:${layerMenuPos[1]}px;`"
              @contextmenu.prevent>
-            <div>复制</div>
-            <div>粘贴</div>
+            <div v-for="(item,index) in layermenuOptions"
+                 :key="index"
+                 :class="{disabled:item.disabled}"
+                 @mousedown="touchLayermenu(item)">
+                <span :class="item.icon"></span> {{item.name}}
+            </div>
         </div>
     </el-container>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('system')
+const { mapState: mapStateSystem } = createNamespacedHelpers('system')
+const { mapMutations: mapMutationsLayer } = createNamespacedHelpers('layer')
 export default {
     name: 'layout',
     data() {
@@ -73,25 +78,163 @@ export default {
         }
     },
     computed: {
-        ...mapState([
+        ...mapStateSystem([
             'screenSize',
             'platformPos',
             'viewPanelScale',
             'showLayerMenu',
-            'layerMenuPos',
+            'layerMenu',
         ]),
+        //标尺样式
         rulerTopStyle() {
             return {
                 left: this.platformPos[0] + 'px',
             }
         },
+        //左标尺样式
         rulerLeftStyle() {
             return {
                 top: this.platformPos[1] + 'px',
             }
         },
+        //菜单位置
+        layerMenuPos() {
+            //菜单位置适应（防止被遮挡）
+            let pos = this.layerMenu.pos,
+                refSize = [110, 31 * this.layermenuOptions.length + 1],
+                bodySize = [
+                    document.body.clientWidth,
+                    document.body.clientHeight,
+                ]
+
+            let left =
+                    pos[0] + refSize[0] > bodySize[0]
+                        ? pos[0] - refSize[0]
+                        : pos[0],
+                top =
+                    pos[1] + refSize[1] > bodySize[1]
+                        ? pos[1] - refSize[1]
+                        : pos[1]
+
+            return [left, top]
+        },
+        //图层菜单数据
+        layermenuOptions() {
+            const {
+                layerMenu,
+                delLayer,
+                moveupLayer,
+                movedownLayer,
+                toTopLayer,
+                toBotLayer,
+            } = this
+            return [
+                {
+                    id: 1,
+                    name: '复制',
+                    icon: 'el-icon-document-copy',
+                    disabled: false,
+                    func() {},
+                },
+                {
+                    id: 2,
+                    name: '锁定',
+                    icon: 'el-icon-lock',
+                    disabled: false,
+                    func() {},
+                },
+                {
+                    id: 3,
+                    name: '解锁',
+                    icon: 'el-icon-unlock',
+                    disabled: true,
+                    func() {},
+                },
+                {
+                    id: 4,
+                    name: '置顶',
+                    icon: 'el-icon-upload2',
+                    disabled: false,
+                    func() {
+                        toTopLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    id: 5,
+                    name: '置底',
+                    icon: 'el-icon-download',
+                    disabled: false,
+                    func() {
+                        toBotLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    id: 6,
+                    name: '删除',
+                    icon: 'el-icon-delete',
+                    disabled: false,
+                    func: () => {
+                        this.$confirm(
+                            '此操作将永久删除该图层, 是否继续?',
+                            '提示',
+                            {
+                                confirmButtonText: '确定删除',
+                                cancelButtonText: '取消',
+                                type: 'warning',
+                            }
+                        )
+                            .then(() => {
+                                //执行删除
+                                delLayer(layerMenu.layer)
+                                //提示
+                                this.$message({
+                                    type: 'success',
+                                    message: '删除成功!',
+                                })
+                            })
+                            .catch(() => {
+                                this.$message({
+                                    type: 'info',
+                                    message: '已取消删除',
+                                })
+                            })
+                    },
+                },
+                {
+                    id: 7,
+                    name: '上移一层',
+                    icon: 'el-icon-top',
+                    disabled: false,
+                    func() {
+                        moveupLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    id: 8,
+                    name: '下移一层',
+                    icon: 'el-icon-bottom',
+                    disabled: false,
+                    func() {
+                        movedownLayer(layerMenu.layer)
+                    },
+                },
+            ]
+        },
     },
-    methods: {},
+    methods: {
+        ...mapMutationsLayer([
+            'delLayer',
+            'moveupLayer',
+            'movedownLayer',
+            'toTopLayer',
+            'toBotLayer',
+        ]),
+        //图层菜单执行
+        touchLayermenu({ disabled, func }) {
+            if (disabled) return
+            func()
+        },
+    },
 }
 </script>
 
@@ -225,12 +368,31 @@ $header-height: 50px;
 }
 .layermenu {
     position: absolute;
+    width: 110px;
+    color: #bcc9d4;
+    background: #27343e;
+    border: 1px solid #3a4659;
     z-index: 999;
-    background: #fff;
-    padding: 5px 0;
+    cursor: pointer;
     div {
-        font-size: 18px;
+        font-size: 14px;
         padding: 5px 10px;
+        border-bottom: 1px solid #3a4659;
+        &:last-child {
+            border-bottom: 0;
+        }
+        &:hover {
+            color: #0081fd;
+            background: #191f23;
+        }
+        &.disabled {
+            color: #bcc9d440;
+            cursor: not-allowed;
+            &:hover {
+                color: #bcc9d440;
+                background: transparent;
+            }
+        }
     }
 }
 </style>
