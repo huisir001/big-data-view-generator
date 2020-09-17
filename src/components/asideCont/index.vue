@@ -2,7 +2,7 @@
  * @Description: 侧边栏
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-17 09:50:00
+ * @LastEditTime: 2020-09-17 23:16:14
 -->
 <template>
     <div class="asideCont">
@@ -55,7 +55,6 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import { getRanId } from '@/utils/myUtils'
 const {
     mapState: mapStateSystem,
     mapActions: mapActionSystem,
@@ -123,7 +122,6 @@ export default {
                     const { x: cx, y: cy } = cloneItem.getBoundingClientRect() //克隆元素位置
                     const { x: vx, y: vy } = viewPanelDomRect //视图操作面板位置
                     addLayer({
-                        id: `L-${getRanId()}`,
                         type: cloneItem.getAttribute('data-type'), //组件类型
                         pos: [
                             //组件相对于实际视图的位置

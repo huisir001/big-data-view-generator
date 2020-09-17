@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-17 18:44:22
+ * @LastEditTime: 2020-09-17 23:56:03
 -->
 <template>
     <el-container>
@@ -69,7 +69,10 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState: mapStateSystem } = createNamespacedHelpers('system')
-const { mapMutations: mapMutationsLayer } = createNamespacedHelpers('layer')
+const {
+    mapState: mapStateLayer,
+    mapMutations: mapMutationsLayer,
+} = createNamespacedHelpers('layer')
 export default {
     name: 'layout',
     data() {
@@ -84,7 +87,9 @@ export default {
             'viewPanelScale',
             'showLayerMenu',
             'layerMenu',
+            'viewPanelDomRect',
         ]),
+        ...mapStateLayer(['copyLayer']),
         //标尺样式
         rulerTopStyle() {
             return {
@@ -127,31 +132,48 @@ export default {
                 movedownLayer,
                 toTopLayer,
                 toBotLayer,
+                setCopyLayer,
+                pasteLayer,
+                copyLayer,
+                viewPanelDomRect,
             } = this
             return [
                 {
-                    id: 1,
                     name: '复制',
                     icon: 'el-icon-document-copy',
                     disabled: false,
-                    func() {},
+                    func() {
+                        setCopyLayer({
+                            ...layerMenu.layer, //这样操作防止粘贴时影响原图层（同一栈）
+                        })
+                    },
                 },
                 {
-                    id: 2,
+                    name: '粘贴',
+                    icon: 'el-icon-document-copy',
+                    disabled: !copyLayer,
+                    func() {
+                        //存在复制图层时，粘贴，传入粘贴实际位置
+                        copyLayer &&
+                            pasteLayer([
+                                layerMenu.pos[0] - viewPanelDomRect.x,
+                                layerMenu.pos[1] - viewPanelDomRect.y,
+                            ])
+                    },
+                },
+                {
                     name: '锁定',
                     icon: 'el-icon-lock',
                     disabled: false,
                     func() {},
                 },
                 {
-                    id: 3,
                     name: '解锁',
                     icon: 'el-icon-unlock',
                     disabled: true,
                     func() {},
                 },
                 {
-                    id: 4,
                     name: '置顶',
                     icon: 'el-icon-upload2',
                     disabled: false,
@@ -160,7 +182,6 @@ export default {
                     },
                 },
                 {
-                    id: 5,
                     name: '置底',
                     icon: 'el-icon-download',
                     disabled: false,
@@ -169,7 +190,6 @@ export default {
                     },
                 },
                 {
-                    id: 6,
                     name: '删除',
                     icon: 'el-icon-delete',
                     disabled: false,
@@ -201,7 +221,6 @@ export default {
                     },
                 },
                 {
-                    id: 7,
                     name: '上移一层',
                     icon: 'el-icon-top',
                     disabled: false,
@@ -210,7 +229,6 @@ export default {
                     },
                 },
                 {
-                    id: 8,
                     name: '下移一层',
                     icon: 'el-icon-bottom',
                     disabled: false,
@@ -228,6 +246,8 @@ export default {
             'movedownLayer',
             'toTopLayer',
             'toBotLayer',
+            'setCopyLayer',
+            'pasteLayer',
         ]),
         //图层菜单执行
         touchLayermenu({ disabled, func }) {
@@ -387,7 +407,7 @@ $header-height: 50px;
         }
         &.disabled {
             color: #bcc9d440;
-            cursor: not-allowed;
+            cursor: default;
             &:hover {
                 color: #bcc9d440;
                 background: transparent;
