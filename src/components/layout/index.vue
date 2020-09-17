@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-16 23:36:24
+ * @LastEditTime: 2020-09-17 08:52:35
 -->
 <template>
     <el-container>
@@ -54,7 +54,8 @@
         <!-- 右键菜单 -->
         <div v-show="showLayerMenu"
              class="layermenu"
-             :style="`left:${layerMenuPos[0]}px;top:${layerMenuPos[1]}px;`">
+             :style="`left:${layerMenuPos[0]}px;top:${layerMenuPos[1]}px;`"
+             @contextmenu.prevent>
             <div>复制</div>
             <div>粘贴</div>
         </div>

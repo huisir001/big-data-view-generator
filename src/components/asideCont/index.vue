@@ -2,7 +2,7 @@
  * @Description: 侧边栏
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-16 09:34:23
+ * @LastEditTime: 2020-09-17 09:50:00
 -->
 <template>
     <div class="asideCont">
@@ -56,7 +56,10 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import { getRanId } from '@/utils/myUtils'
-const { mapState: mapStateSystem } = createNamespacedHelpers('system')
+const {
+    mapState: mapStateSystem,
+    mapActions: mapActionSystem,
+} = createNamespacedHelpers('system')
 const { mapMutations: mapMutationsLayer } = createNamespacedHelpers('layer')
 export default {
     name: 'asideCont',
@@ -75,7 +78,17 @@ export default {
     },
     methods: {
         ...mapMutationsLayer(['addLayer']), //新增图层
-        asideItemDown({ type, clientX, clientY, offsetX, offsetY, target }) {
+        ...mapActionSystem(['bodyAddEventListener']), //body添加监听事件
+        asideItemDown({
+            type,
+            button,
+            clientX,
+            clientY,
+            offsetX,
+            offsetY,
+            target,
+        }) {
+            if (button != 0) return false //非鼠标左键return
             this.asideItemEnter = type == 'mousedown'
             this.curMouseOffset = [offsetX, offsetY]
             this.cloneItem = target.cloneNode(true) // 克隆元素（拖拽时跟随鼠标效果）
@@ -87,100 +100,105 @@ export default {
                                 `
             document.body.appendChild(this.cloneItem)
         },
-        domMousedown(dom) {
-            dom.onmousedown = () => {
-                this.bodyMouseEnter = true
+        domMousedown({ button }) {
+            if (button != 0) return false //非鼠标左键return
+            this.bodyMouseEnter = true
+        },
+        domMouseup({ button }) {
+            if (button != 0) return false //非鼠标左键return
+            // 状态还原
+            const {
+                asideItemEnter,
+                cloneItemMoveInPane,
+                viewPanelDomRect,
+                cloneItem,
+                addLayer,
+                viewPanelScale,
+            } = this
+            if (asideItemEnter) {
+                this.bodyMouseEnter = false
+                this.asideItemEnter = false
+                //确认移入组件-新增图层
+                if (cloneItemMoveInPane) {
+                    const { x: cx, y: cy } = cloneItem.getBoundingClientRect() //克隆元素位置
+                    const { x: vx, y: vy } = viewPanelDomRect //视图操作面板位置
+                    addLayer({
+                        id: `L-${getRanId()}`,
+                        type: cloneItem.getAttribute('data-type'), //组件类型
+                        pos: [
+                            //组件相对于实际视图的位置
+                            (cx - vx) / viewPanelScale,
+                            (cy - vy) / viewPanelScale,
+                        ],
+                    })
+                }
+                // 移除克隆dom
+                this.cloneItem.remove()
+                // 清内存
+                this.cloneItem = null
             }
         },
-        domMouseup(dom) {
-            dom.onmouseup = () => {
-                // 状态还原
-                const {
-                    asideItemEnter,
-                    cloneItemMoveInPane,
-                    viewPanelDomRect,
-                    cloneItem,
-                    addLayer,
-                    viewPanelScale,
-                } = this
-                if (asideItemEnter) {
-                    this.bodyMouseEnter = false
-                    this.asideItemEnter = false
-                    //确认移入组件-新增图层
-                    if (cloneItemMoveInPane) {
-                        const {
-                            x: cx,
-                            y: cy,
-                        } = cloneItem.getBoundingClientRect() //克隆元素位置
-                        const { x: vx, y: vy } = viewPanelDomRect //视图操作面板位置
-                        addLayer({
-                            id: `L-${getRanId()}`,
-                            type: cloneItem.getAttribute('data-type'), //组件类型
-                            pos: [
-                                //组件相对于实际视图的位置
-                                (cx - vx) / viewPanelScale,
-                                (cy - vy) / viewPanelScale,
-                            ],
-                        })
-                    }
-                    // 移除克隆dom
-                    this.cloneItem.remove()
-                    // 清内存
-                    this.cloneItem = null
+        domMousemove({ button, clientX, clientY }) {
+            if (button != 0) return false //非鼠标左键return
+            const {
+                bodyMouseEnter,
+                asideItemEnter,
+                curMouseOffset,
+                viewPanelDomRect,
+            } = this
+            if (asideItemEnter && bodyMouseEnter) {
+                // 克隆元素跟随
+                let [_left, _top] = [
+                    clientX - curMouseOffset[0],
+                    clientY - curMouseOffset[1],
+                ]
+                this.cloneItem.style.left = `${_left}px`
+                this.cloneItem.style.top = `${_top}px`
+                //判断是否移入视图操作面板
+                const { width, height, x, y } = viewPanelDomRect
+                if (
+                    _left >= x &&
+                    _top >= y &&
+                    _left <= x + width &&
+                    _top <= y + height
+                ) {
+                    //移入时克隆元素添加轴线
+                    this.cloneItem.className = 'asideItem act'
+                    //层级改变
+                    this.cloneItem.style['z-index'] = 0
+                    //状态改变
+                    this.cloneItemMoveInPane = true
+                } else {
+                    //移出时恢复class
+                    this.cloneItem.className = 'asideItem'
+                    //层级恢复
+                    this.cloneItem.style['z-index'] = 2
+                    //状态改变
+                    this.cloneItemMoveInPane = false
                 }
-            }
-        },
-        domMousemove(dom) {
-            dom.onmousemove = ({ clientX, clientY }) => {
-                const {
-                    bodyMouseEnter,
-                    asideItemEnter,
-                    curMouseOffset,
-                    viewPanelDomRect,
-                } = this
-                if (asideItemEnter && bodyMouseEnter) {
-                    // 克隆元素跟随
-                    let [_left, _top] = [
-                        clientX - curMouseOffset[0],
-                        clientY - curMouseOffset[1],
-                    ]
-                    this.cloneItem.style.left = `${_left}px`
-                    this.cloneItem.style.top = `${_top}px`
-                    //判断是否移入视图操作面板
-                    const { width, height, x, y } = viewPanelDomRect
-                    if (
-                        _left >= x &&
-                        _top >= y &&
-                        _left <= x + width &&
-                        _top <= y + height
-                    ) {
-                        //移入时克隆元素添加轴线
-                        this.cloneItem.className = 'asideItem act'
-                        //层级改变
-                        this.cloneItem.style['z-index'] = 0
-                        //状态改变
-                        this.cloneItemMoveInPane = true
-                    } else {
-                        //移出时恢复class
-                        this.cloneItem.className = 'asideItem'
-                        //层级恢复
-                        this.cloneItem.style['z-index'] = 2
-                        //状态改变
-                        this.cloneItemMoveInPane = false
-                    }
-                }
-                // 阻止默认事件
-                return false
             }
         },
     },
     mounted() {
         /* body 鼠标事件绑定 */
-        const Dom = document.body
-        const { domMousedown, domMousemove, domMouseup } = this
-        domMousedown(Dom)
-        domMousemove(Dom)
-        domMouseup(Dom)
+        const {
+            bodyAddEventListener,
+            domMousedown,
+            domMousemove,
+            domMouseup,
+        } = this
+        bodyAddEventListener({
+            evType: 'onmousedown',
+            func: domMousedown,
+        })
+        bodyAddEventListener({
+            evType: 'onmousemove',
+            func: domMousemove,
+        })
+        bodyAddEventListener({
+            evType: 'onmouseup',
+            func: domMouseup,
+        })
     },
 }
 </script>

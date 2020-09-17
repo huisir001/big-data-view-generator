@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-16 23:38:34
+ * @LastEditTime: 2020-09-17 09:40:25
  */
 export default {
   namespaced: true,
@@ -15,7 +15,13 @@ export default {
     viewPanelDomRect: null, //视图操作层实际参数getBoundingClientRect（尺寸、位置）
     curkeydownCodes: [], //当前键盘按下的按键
     showLayerMenu: false, //显示图层菜单
-    layerMenuPos: [0, 0] //图层菜单位置
+    layerMenuPos: [0, 0], //图层菜单位置
+    bodyEventFncs: {
+      //document.body上添加的事件(避免多个事件覆盖或重复)
+      onmousedown: [],
+      onmouseup: [],
+      onmousemove: []
+    }
   },
   mutations: {
     setOptionPanel(state) {
@@ -63,14 +69,37 @@ export default {
         : state.curkeydownCodes.push(keyCode)
     },
     //图层菜单显隐
-    setShowLayerMenu(state) {
-      state.showLayerMenu = !state.showLayerMenu
+    setShowLayerMenu(state, bool) {
+      state.showLayerMenu = bool
     },
     //设置图层菜单位置
     setLayerMenuPos(state, pos) {
       state.layerMenuPos = pos
+    },
+    //设置body事件
+    setBodyEventFncs(state, { evType, func }) {
+      if (state.bodyEventFncs[evType]) {
+        state.bodyEventFncs[evType].includes(func) ||
+          state.bodyEventFncs[evType].push(func)
+      } else {
+        state.bodyEventFncs[evType] = [func]
+      }
     }
   },
-  getters: {},
-  actions: {}
+  actions: {
+    //body添加监听事件
+    bodyAddEventListener({ state, commit }, { evType, func }) {
+      commit('setBodyEventFncs', { evType, func }) //设置body事件
+      document.body[evType] = e => {
+        //执行所有方法
+        state.bodyEventFncs[evType].forEach(func => {
+          func(e)
+        })
+        //阻止默认事件
+        e.preventDefault()
+        return false
+      }
+    }
+  },
+  getters: {}
 }

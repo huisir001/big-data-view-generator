@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-16 23:40:35
+ * @LastEditTime: 2020-09-17 09:43:48
 -->
 <template>
     <div class="viewPanel"
@@ -31,6 +31,7 @@ import autoResize from '@/components/mixin/autoResize'
 const {
     mapState: mapStateSystem,
     mapMutations: mapMutationSystem,
+    mapActions: mapActionSystem,
 } = createNamespacedHelpers('system')
 const {
     mapState: mapStateLayer,
@@ -72,6 +73,7 @@ export default {
             'setShowLayerMenu',
             'setLayerMenuPos',
         ]),
+        ...mapActionSystem(['bodyAddEventListener']),
         ...mapMutationLayer(['setLayer']),
         //初始化钩子
         afterAutoResizeMixinInit() {
@@ -146,9 +148,20 @@ export default {
         //右键菜单事件
         layerMenu({ clientX, clientY }) {
             const { setShowLayerMenu, setLayerMenuPos } = this
-            setShowLayerMenu()
+            setShowLayerMenu(true)
             setLayerMenuPos([clientX, clientY])
         },
+    },
+    mounted() {
+        //body添加事件-左键按下隐藏右键菜单
+        const { bodyAddEventListener, setShowLayerMenu } = this
+        bodyAddEventListener({
+            evType: 'onmousedown',
+            func({ button }) {
+                if (button != 0) return false //非鼠标左键return
+                setShowLayerMenu(false) //隐藏图层右键菜单
+            },
+        })
     },
 }
 </script>
