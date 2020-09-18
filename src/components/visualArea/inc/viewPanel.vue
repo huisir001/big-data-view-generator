@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-18 17:36:17
+ * @LastEditTime: 2020-09-18 18:12:17
 -->
 <template>
     <div class="viewPanel"
@@ -233,14 +233,17 @@ export default {
         //     })
         // },
         //蓝图面板右键菜单事件
-        blueprintCtxMenu({ clientX, clientY }) {
-            const { setShowLayerMenu, setLayerMenu } = this
+        blueprintCtxMenu({ clientX, clientY, target }) {
+            const { setShowLayerMenu, setLayerMenu, layers } = this
             //显示菜单
             setShowLayerMenu(true)
-            //设置当前菜单
+            //设置当前菜单(判断当前右键事件是在图层上点击还是面板上)
             setLayerMenu({
                 pos: [clientX, clientY],
-                layer: null,
+                layer:
+                    target.dataset.index == undefined
+                        ? null
+                        : layers[target.dataset.index],
             })
         },
     },
@@ -284,14 +287,14 @@ export default {
             &::before {
                 @include act;
                 width: 1px;
-                height: 100vh;
+                height: 1000vh;
                 border-left: $border-act;
                 left: -1px;
                 bottom: 0;
             }
             &::after {
                 @include act;
-                width: 100vw;
+                width: 1000vw;
                 height: 1px;
                 border-top: $border-act;
                 top: -1px;

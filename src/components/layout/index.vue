@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-18 15:05:25
+ * @LastEditTime: 2020-09-18 18:08:29
 -->
 <template>
     <el-container>
@@ -89,7 +89,7 @@ export default {
             'layerMenu',
             'viewPanelDomRect',
         ]),
-        ...mapStateLayer(['copyLayer']),
+        ...mapStateLayer(['copyLayer', 'activeLayers']),
         //标尺样式
         rulerTopStyle() {
             return {
@@ -137,12 +137,13 @@ export default {
                 copyLayer,
                 viewPanelDomRect,
                 setLayer,
+                activeLayers,
             } = this
             return [
                 {
                     name: '复制',
                     icon: 'el-icon-document-copy',
-                    disabled: false,
+                    disabled: activeLayers.length == 0, //在面板上右键时，判断当前是否有选定图层,
                     func() {
                         setCopyLayer({
                             ...layerMenu.layer, //这样操作防止粘贴时影响原图层（同一栈）
@@ -168,7 +169,7 @@ export default {
                     disabled:
                         layerMenu.layer != null
                             ? layerMenu.layer.locked
-                            : false,
+                            : activeLayers.length == 0, //在面板上右键时，判断当前是否有选定图层
                     func() {
                         let newLayer = {
                             //这样操作防止直接修改内存
@@ -194,25 +195,9 @@ export default {
                     },
                 },
                 {
-                    name: '置顶',
-                    icon: 'el-icon-upload2',
-                    disabled: false,
-                    func() {
-                        toTopLayer(layerMenu.layer)
-                    },
-                },
-                {
-                    name: '置底',
-                    icon: 'el-icon-download',
-                    disabled: false,
-                    func() {
-                        toBotLayer(layerMenu.layer)
-                    },
-                },
-                {
                     name: '删除',
                     icon: 'el-icon-delete',
-                    disabled: false,
+                    disabled: activeLayers.length == 0,
                     func: () => {
                         this.$confirm(
                             '此操作将永久删除该图层, 是否继续?',
@@ -241,9 +226,25 @@ export default {
                     },
                 },
                 {
+                    name: '置顶',
+                    icon: 'el-icon-upload2',
+                    disabled: activeLayers.length == 0,
+                    func() {
+                        toTopLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    name: '置底',
+                    icon: 'el-icon-download',
+                    disabled: activeLayers.length == 0,
+                    func() {
+                        toBotLayer(layerMenu.layer)
+                    },
+                },
+                {
                     name: '上移一层',
                     icon: 'el-icon-top',
-                    disabled: false,
+                    disabled: activeLayers.length == 0,
                     func() {
                         moveupLayer(layerMenu.layer)
                     },
@@ -251,9 +252,18 @@ export default {
                 {
                     name: '下移一层',
                     icon: 'el-icon-bottom',
-                    disabled: false,
+                    disabled: activeLayers.length == 0,
                     func() {
                         movedownLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    name: '取消选定',
+                    icon: 'el-icon-document-delete',
+                    disabled: !layerMenu.layer,
+                    func() {
+                        console.log(111)
+                        // movedownLayer(layerMenu.layer)
                     },
                 },
             ]
@@ -272,7 +282,7 @@ export default {
         ]),
         //图层菜单执行
         touchLayermenu({ disabled, func }) {
-            if (disabled) return
+            if (disabled) return //不可选状态不执行
             func()
         },
     },
