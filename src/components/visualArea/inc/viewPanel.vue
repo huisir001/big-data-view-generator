@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-18 16:29:08
+ * @LastEditTime: 2020-09-18 17:36:17
 -->
 <template>
     <div class="viewPanel"
@@ -44,7 +44,10 @@ export default {
         return {
             layerMouseEnter: false, //是否按下鼠标
             layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
-            layerMouseOffset: [0, 0],
+            layerMouseOffset: [0, 0], //鼠标相对于图层的位置
+            layerMoveState: false, //鼠标按下拖动状态
+            // layerMouseDownTime: 0, //鼠标按下计时
+            // layerMouseUpTime: 0, //鼠标抬起计时
         }
     },
     computed: {
@@ -119,11 +122,21 @@ export default {
         layerSelect(layer) {
             //新增选定图层
             //按住ctrl单击为多选
-            const { curkeydownCodes, setActiveLayers, deleteActiveLayer } = this
+            const {
+                curkeydownCodes,
+                setActiveLayers,
+                deleteActiveLayer,
+                layerMouseEnter,
+            } = this
+
             if (curkeydownCodes.includes(17)) {
-                //若无则push
-                this.activeLayers.includes(layer.id) ||
-                    setActiveLayers([...this.activeLayers, layer.id])
+                //多选时，鼠标抬起为选定，单选时鼠标按下即为选定
+                //取消选定时，判断是否有拖动，没拖动的话则取消选定
+                if (!layerMouseEnter) {
+                    this.activeLayers.includes(layer.id)
+                        ? this.layerMoveState || this.deleteActiveLayer(layer)
+                        : setActiveLayers([...this.activeLayers, layer.id])
+                }
             } else {
                 //如果没有选定，则选定，如果已选定，则无效
                 this.activeLayers.includes(layer.id) ||
@@ -168,8 +181,14 @@ export default {
             this.layerMouseEnter = type == 'mousedown'
             //鼠标按键改变
             this.layerMouseButton = button
+            //鼠标事件计时
+            // this.layerMouseEnter
+            //     ? (this.layerMouseDownTime = Date.now())
+            //     : (this.layerMouseUpTime = Date.now())
+            //鼠标按下重置拖动状态
+            this.layerMouseEnter && (this.layerMoveState = false)
             //图层选择
-            this.layerMouseEnter && this.layerSelect(this.layers[index])
+            this.layerSelect(this.layers[index])
             //记录鼠标位置
             this.layerMouseOffset = [offsetX, offsetY]
         },
@@ -181,8 +200,11 @@ export default {
                 setLayer,
                 layers,
             } = this
-            //只有按下+左键才能拖动
+            //只有按下+左键才能拖动，右键不可
             if (layerMouseEnter && this.layerMouseButton == 0) {
+                //拖动指示
+                this.layerMoveState = true
+                //改变图层位置
                 activeLayers.forEach((_id) => {
                     //赋值另一个变量，防止操作出错
                     let item = {
@@ -262,18 +284,18 @@ export default {
             &::before {
                 @include act;
                 width: 1px;
-                height: 1000vh;
+                height: 100vh;
                 border-left: $border-act;
                 left: -1px;
-                bottom: -500vh;
+                bottom: 0;
             }
             &::after {
                 @include act;
-                width: 1000vw;
+                width: 100vw;
                 height: 1px;
                 border-top: $border-act;
                 top: -1px;
-                right: -500vw;
+                right: 0;
             }
         }
     }
