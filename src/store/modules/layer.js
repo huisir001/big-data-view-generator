@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-09-17 23:58:56
+ * @LastEditTime: 2020-09-18 13:40:39
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -31,8 +31,9 @@ export default {
     //新增图层
     addLayer(state, layer) {
       layer.id = `L-${getRanId()}` //赋值id，若已有id会被覆盖
+      layer.locked = false //解锁图层
       const NewLayer = {
-        zIndex: 500, //默认层级
+        zIndex: 99, //默认层级
         width: 300, //默认宽高
         height: 200,
         ...layer

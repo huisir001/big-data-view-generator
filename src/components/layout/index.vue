@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-17 23:56:03
+ * @LastEditTime: 2020-09-18 10:41:26
 -->
 <template>
     <el-container>
@@ -136,6 +136,7 @@ export default {
                 pasteLayer,
                 copyLayer,
                 viewPanelDomRect,
+                setLayer,
             } = this
             return [
                 {
@@ -150,7 +151,7 @@ export default {
                 },
                 {
                     name: '粘贴',
-                    icon: 'el-icon-document-copy',
+                    icon: 'el-icon-files',
                     disabled: !copyLayer,
                     func() {
                         //存在复制图层时，粘贴，传入粘贴实际位置
@@ -164,14 +165,33 @@ export default {
                 {
                     name: '锁定',
                     icon: 'el-icon-lock',
-                    disabled: false,
-                    func() {},
+                    disabled:
+                        layerMenu.layer != null
+                            ? layerMenu.layer.locked
+                            : false,
+                    func() {
+                        let newLayer = {
+                            //这样操作防止直接修改内存
+                            ...layerMenu.layer,
+                        }
+                        newLayer.locked = true
+                        setLayer(newLayer)
+                    },
                 },
                 {
                     name: '解锁',
                     icon: 'el-icon-unlock',
-                    disabled: true,
-                    func() {},
+                    disabled:
+                        layerMenu.layer !== null
+                            ? !layerMenu.layer.locked
+                            : true,
+                    func() {
+                        let newLayer = {
+                            ...layerMenu.layer,
+                        }
+                        newLayer.locked = false
+                        setLayer(newLayer)
+                    },
                 },
                 {
                     name: '置顶',
@@ -248,6 +268,7 @@ export default {
             'toBotLayer',
             'setCopyLayer',
             'pasteLayer',
+            'setLayer',
         ]),
         //图层菜单执行
         touchLayermenu({ disabled, func }) {

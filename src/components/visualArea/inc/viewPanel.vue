@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-17 19:24:24
+ * @LastEditTime: 2020-09-18 13:55:29
 -->
 <template>
     <div class="viewPanel"
@@ -16,8 +16,8 @@
              :data-index="index"
              :data-type="item.type"
              @mousemove.prevent="layerMove"
-             @mousedown.prevent="layerDown"
-             @mouseup.prevent="layerDown"
+             @mousedown.prevent="layerClick"
+             @mouseup.prevent="layerClick"
              @mouseleave.prevent="layerLeave"
              @contextmenu.prevent="layerMenu"
              :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
@@ -42,7 +42,7 @@ export default {
     mixins: [autoResize],
     data() {
         return {
-            activeLayers: [], //已激活图层（已选定）
+            activeLayers: [], //已激活图层（已选定）,只存图层id，避免图层改变同时改变
             layerMouseEnter: false,
             layerMouseOffset: [0, 0],
         }
@@ -53,6 +53,7 @@ export default {
             'viewPanelPos',
             'viewPanelScale',
             'curkeydownCodes',
+            'showLayerMenu',
         ]), //系统信息
         ...mapStateLayer(['layers']), //图层信息
         viewPanelStyle() {
@@ -78,18 +79,21 @@ export default {
                 oldLayers = JSON.parse(oldStr)
             if (newLayers.length < oldLayers.length) {
                 //求差集
-                let diff = oldLayers.filter(
+                let diff = oldLayers.find(
                     ({ id }) => !newLayers.map((item) => item.id).includes(id)
-                )[0]
-
-                //已激活图层中是否有删除的图层
-                let delindex = this.activeLayers
-                    .map((item) => item.id)
-                    .indexOf(diff.id)
-                if (delindex >= 0) {
-                    //删除已激活图层中的删除的图层
-                    this.activeLayers.splice(delindex, 1)
-                }
+                )
+                this.deleteActiveLayer(diff)
+            }
+            //有图层上锁的话，移除选定图层
+            if (newLayers.length == oldLayers.length) {
+                //求上锁差集
+                let diff = oldLayers.find(
+                    ({ id, locked }, index) =>
+                        newLayers[index].id == id &&
+                        newLayers[index].locked != locked
+                )
+                //有上锁图层的话执行删除，无上锁图层的话考虑是配置项变动或拖拽（位置变动）
+                diff && this.deleteActiveLayer(diff)
             }
         },
     },
@@ -116,37 +120,52 @@ export default {
             //新增选定图层
             //按住ctrl单击为多选
             const { curkeydownCodes } = this
-            const hasLyIndex = this.activeLayers
-                .map((item) => item.id)
-                .indexOf(layer.id)
+            const hasLyIndex = this.activeLayers.indexOf(layer.id)
             if (curkeydownCodes.includes(17)) {
                 //若无 则push
                 if (hasLyIndex >= 0) {
                     // this.activeLayers.splice(hasLyIndex, 1) //若有-删除图层(多图层拖拽时会删除，故bug)
                     return
                 } else {
-                    this.activeLayers
-                        .map((item) => item.id)
-                        .includes(layer.id) || this.activeLayers.push(layer)
+                    this.activeLayers.includes(layer.id) ||
+                        this.activeLayers.push(layer.id)
                 }
             } else {
-                this.activeLayers = [layer]
+                this.activeLayers = [layer.id]
             }
             //选定样式
             for (let ref in this.$refs) {
+                //已删除的图层这里没更新，排除一下
                 if (this.$refs[ref].length != 0) {
-                    //已删除的图层这里没更新，排除一下
-                    this.activeLayers.map((item) => item.id).includes(ref)
+                    this.activeLayers.includes(ref)
                         ? (this.$refs[ref][0].className = 'viewItem act')
                         : (this.$refs[ref][0].className = 'viewItem')
                 }
             }
         },
+        //删除选定图层
+        deleteActiveLayer(layer) {
+            //已激活图层中是否有删除的图层
+            let delindex = this.activeLayers.indexOf(layer.id)
+            if (delindex >= 0) {
+                //删除已激活图层中的删除的图层
+                this.activeLayers.splice(delindex, 1)
+                //选定样式
+                for (let ref in this.$refs) {
+                    //已删除的图层这里没更新，排除一下
+                    if (this.$refs[ref].length != 0) {
+                        this.activeLayers.includes(ref)
+                            ? (this.$refs[ref][0].className = 'viewItem act')
+                            : (this.$refs[ref][0].className = 'viewItem')
+                    }
+                }
+            }
+        },
 
         /* 图层事件绑定 */
-        layerDown({ type, button, offsetX, offsetY, target }) {
-            if (button != 0) return false //非鼠标左键return
+        layerClick({ type, button, offsetX, offsetY, target }) {
             const { index } = target.dataset
+            if (button != 0 || this.layers[index].locked) return false //非鼠标左键及上锁图层return
             //状态改变
             this.layerMouseEnter = type == 'mousedown'
             //图层选择
@@ -160,9 +179,14 @@ export default {
                 layerMouseOffset,
                 activeLayers,
                 setLayer,
+                layers,
             } = this
             if (layerMouseEnter) {
-                activeLayers.forEach((item) => {
+                activeLayers.forEach((_id) => {
+                    //赋值另一个变量，防止操作出错
+                    let item = {
+                        ...layers.find(({ id }) => id == _id),
+                    }
                     item.pos = [
                         item.pos[0] + offsetX - layerMouseOffset[0],
                         item.pos[1] + offsetY - layerMouseOffset[1],
@@ -189,10 +213,11 @@ export default {
     mounted() {
         //document添加事件-左键按下隐藏右键菜单
         const { domAddEventListener, setShowLayerMenu } = this
+        let self = this
         domAddEventListener({
             evType: 'onmousedown',
             func({ button }) {
-                if (button != 0) return false //非鼠标左键return
+                if (button != 0 || !self.showLayerMenu) return false //非鼠标左键或菜单非激活return
                 setShowLayerMenu(false) //隐藏图层右键菜单
             },
         })
