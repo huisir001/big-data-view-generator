@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-18 18:08:29
+ * @LastEditTime: 2020-09-18 22:55:59
 -->
 <template>
     <el-container>
@@ -89,7 +89,7 @@ export default {
             'layerMenu',
             'viewPanelDomRect',
         ]),
-        ...mapStateLayer(['copyLayer', 'activeLayers']),
+        ...mapStateLayer(['layers', 'copyLayer', 'activeLayers']),
         //标尺样式
         rulerTopStyle() {
             return {
@@ -132,6 +132,7 @@ export default {
                 movedownLayer,
                 toTopLayer,
                 toBotLayer,
+                layers,
                 setCopyLayer,
                 pasteLayer,
                 copyLayer,
@@ -143,8 +144,9 @@ export default {
                 {
                     name: '复制',
                     icon: 'el-icon-document-copy',
-                    disabled: activeLayers.length == 0, //在面板上右键时，判断当前是否有选定图层,
+                    disabled: !layerMenu.layer, //在图层上右键激活
                     func() {
+                        //只能复制一个图层不能复制多个
                         setCopyLayer({
                             ...layerMenu.layer, //这样操作防止粘贴时影响原图层（同一栈）
                         })
@@ -156,11 +158,10 @@ export default {
                     disabled: !copyLayer,
                     func() {
                         //存在复制图层时，粘贴，传入粘贴实际位置
-                        copyLayer &&
-                            pasteLayer([
-                                layerMenu.pos[0] - viewPanelDomRect.x,
-                                layerMenu.pos[1] - viewPanelDomRect.y,
-                            ])
+                        pasteLayer([
+                            layerMenu.pos[0] - viewPanelDomRect.x,
+                            layerMenu.pos[1] - viewPanelDomRect.y,
+                        ])
                     },
                 },
                 {
@@ -171,12 +172,15 @@ export default {
                             ? layerMenu.layer.locked
                             : activeLayers.length == 0, //在面板上右键时，判断当前是否有选定图层
                     func() {
-                        let newLayer = {
-                            //这样操作防止直接修改内存
-                            ...layerMenu.layer,
-                        }
-                        newLayer.locked = true
-                        setLayer(newLayer)
+                        //可以锁定多个图层
+                        //找到已选定的图层
+                        layers.forEach((item) => {
+                            if (activeLayers.includes(item.id)) {
+                                let newLayer = { ...item } //这样操作防止直接修改内存
+                                newLayer.locked = true
+                                setLayer(newLayer)
+                            }
+                        })
                     },
                 },
                 {
@@ -187,6 +191,7 @@ export default {
                             ? !layerMenu.layer.locked
                             : true,
                     func() {
+                        //只能解锁一个图层
                         let newLayer = {
                             ...layerMenu.layer,
                         }
@@ -195,12 +200,46 @@ export default {
                     },
                 },
                 {
-                    name: '删除',
+                    name: '置顶',
+                    icon: 'el-icon-upload2',
+                    disabled: !layerMenu.layer || layerMenu.layer.locked, //补充条件：非锁定图层
+                    func() {
+                        //层级移动只能移动一个图层，不能移动多个
+                        toTopLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    name: '置底',
+                    icon: 'el-icon-download',
+                    disabled: !layerMenu.layer || layerMenu.layer.locked,
+                    func() {
+                        toBotLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    name: '上移一层',
+                    icon: 'el-icon-top',
+                    disabled: !layerMenu.layer || layerMenu.layer.locked,
+                    func() {
+                        moveupLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    name: '下移一层',
+                    icon: 'el-icon-bottom',
+                    disabled: !layerMenu.layer || layerMenu.layer.locked,
+                    func() {
+                        movedownLayer(layerMenu.layer)
+                    },
+                },
+                {
+                    name: '删除选定',
                     icon: 'el-icon-delete',
                     disabled: activeLayers.length == 0,
                     func: () => {
+                        //可以删除多个图层
                         this.$confirm(
-                            '此操作将永久删除该图层, 是否继续?',
+                            '此操作将永久删除已选定的图层, 是否继续?',
                             '提示',
                             {
                                 confirmButtonText: '确定删除',
@@ -209,8 +248,14 @@ export default {
                             }
                         )
                             .then(() => {
+                                //找到已选定的图层
+                                let lys = layers.filter(({ id }) =>
+                                    activeLayers.includes(id)
+                                )
                                 //执行删除
-                                delLayer(layerMenu.layer)
+                                lys.forEach((item) => {
+                                    delLayer(item)
+                                })
                                 //提示
                                 this.$message({
                                     type: 'success',
@@ -226,41 +271,11 @@ export default {
                     },
                 },
                 {
-                    name: '置顶',
-                    icon: 'el-icon-upload2',
-                    disabled: activeLayers.length == 0,
-                    func() {
-                        toTopLayer(layerMenu.layer)
-                    },
-                },
-                {
-                    name: '置底',
-                    icon: 'el-icon-download',
-                    disabled: activeLayers.length == 0,
-                    func() {
-                        toBotLayer(layerMenu.layer)
-                    },
-                },
-                {
-                    name: '上移一层',
-                    icon: 'el-icon-top',
-                    disabled: activeLayers.length == 0,
-                    func() {
-                        moveupLayer(layerMenu.layer)
-                    },
-                },
-                {
-                    name: '下移一层',
-                    icon: 'el-icon-bottom',
-                    disabled: activeLayers.length == 0,
-                    func() {
-                        movedownLayer(layerMenu.layer)
-                    },
-                },
-                {
                     name: '取消选定',
                     icon: 'el-icon-document-delete',
-                    disabled: !layerMenu.layer,
+                    disabled:
+                        !layerMenu.layer ||
+                        !activeLayers.includes(layerMenu.layer.id), //需补充条件（当前图层已选定）
                     func() {
                         console.log(111)
                         // movedownLayer(layerMenu.layer)

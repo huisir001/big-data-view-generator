@@ -2,12 +2,12 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-18 18:12:17
+ * @LastEditTime: 2020-09-18 23:07:08
 -->
 <template>
     <div class="viewPanel"
          :style="viewPanelStyle"
-         @contextmenu.prevent="blueprintCtxMenu">
+         @contextmenu.prevent="layerCtxMenu">
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
              class="viewItem"
@@ -82,21 +82,27 @@ export default {
                 oldLayers = JSON.parse(oldStr)
             if (newLayers.length < oldLayers.length) {
                 //求差集
-                let diff = oldLayers.find(
-                    ({ id }) => !newLayers.map((item) => item.id).includes(id)
-                )
-                this.deleteActiveLayer(diff)
+                oldLayers.forEach((item) => {
+                    if (!newLayers.map(({ id }) => id).includes(item.id)) {
+                        this.deleteActiveLayer(item)
+                    }
+                })
             }
+
+            /* 这里有bug  选定图层改为 图层组中添加某个参数后可移除这里 */
+
             //有图层上锁的话，移除选定图层
             if (newLayers.length == oldLayers.length) {
-                //求上锁差集
-                let diff = oldLayers.find(
-                    ({ id, locked }, index) =>
-                        newLayers[index].id == id &&
-                        newLayers[index].locked != locked
-                )
-                //有上锁图层的话执行删除，无上锁图层的话考虑是配置项变动或拖拽（位置变动）
-                diff && this.deleteActiveLayer(diff)
+                //求上锁差集(可能有多个上锁)
+                oldLayers.forEach((item, index) => {
+                    if (
+                        newLayers[index].id == item.id &&
+                        newLayers[index].locked != item.locked
+                    ) {
+                        //有上锁图层的话执行删除，无上锁图层的话考虑是配置项变动或拖拽（位置变动）
+                        this.deleteActiveLayer(item)
+                    }
+                })
             }
         },
     },
@@ -118,6 +124,7 @@ export default {
             //更新视图操作面板实际参数
             this.setViewPanelDomRect()
         },
+        /* 这里有bug  选定图层改为 图层组中添加某个参数后可重构这里 */
         //图层选定
         layerSelect(layer) {
             //新增选定图层
@@ -152,7 +159,8 @@ export default {
                 }
             }
         },
-        //删除选定图层
+        /* 这里有bug  选定图层改为 图层组中添加某个参数后可重构这里 */
+        //取消选定图层
         deleteActiveLayer(layer) {
             //已激活图层中是否有删除的图层
             let delindex = this.activeLayers.indexOf(layer.id)
@@ -222,18 +230,7 @@ export default {
             this.layerMouseEnter = false
         },
         //图层右键菜单事件
-        // layerMenu({ clientX, clientY, target }) {
-        //     const { setShowLayerMenu, setLayerMenu, layers } = this
-        //     //显示菜单
-        //     setShowLayerMenu(true)
-        //     //设置当前菜单
-        //     setLayerMenu({
-        //         pos: [clientX, clientY],
-        //         layer: layers[target.dataset.index],
-        //     })
-        // },
-        //蓝图面板右键菜单事件
-        blueprintCtxMenu({ clientX, clientY, target }) {
+        layerCtxMenu({ clientX, clientY, target }) {
             const { setShowLayerMenu, setLayerMenu, layers } = this
             //显示菜单
             setShowLayerMenu(true)
