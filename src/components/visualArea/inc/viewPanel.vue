@@ -2,11 +2,12 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-18 13:55:29
+ * @LastEditTime: 2020-09-18 15:31:41
 -->
 <template>
     <div class="viewPanel"
-         :style="viewPanelStyle">
+         :style="viewPanelStyle"
+         @contextmenu.prevent="blueprintCtxMenu">
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
              class="viewItem"
@@ -19,7 +20,6 @@
              @mousedown.prevent="layerClick"
              @mouseup.prevent="layerClick"
              @mouseleave.prevent="layerLeave"
-             @contextmenu.prevent="layerMenu"
              :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
         </div>
     </div>
@@ -43,7 +43,8 @@ export default {
     data() {
         return {
             activeLayers: [], //已激活图层（已选定）,只存图层id，避免图层改变同时改变
-            layerMouseEnter: false,
+            layerMouseEnter: false, //是否按下鼠标
+            layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0],
         }
     },
@@ -131,7 +132,9 @@ export default {
                         this.activeLayers.push(layer.id)
                 }
             } else {
-                this.activeLayers = [layer.id]
+                //如果没有选定，则选定，如果已选定，则无效
+                this.activeLayers.includes(layer.id) ||
+                    (this.activeLayers = [layer.id])
             }
             //选定样式
             for (let ref in this.$refs) {
@@ -161,13 +164,14 @@ export default {
                 }
             }
         },
-
         /* 图层事件绑定 */
         layerClick({ type, button, offsetX, offsetY, target }) {
             const { index } = target.dataset
-            if (button != 0 || this.layers[index].locked) return false //非鼠标左键及上锁图层return
+            if (this.layers[index].locked) return false //上锁图层return
             //状态改变
             this.layerMouseEnter = type == 'mousedown'
+            //鼠标按键改变
+            this.layerMouseButton = button
             //图层选择
             this.layerMouseEnter && this.layerSelect(this.layers[index])
             //记录鼠标位置
@@ -181,7 +185,8 @@ export default {
                 setLayer,
                 layers,
             } = this
-            if (layerMouseEnter) {
+            //只有按下+左键才能拖动
+            if (layerMouseEnter && this.layerMouseButton == 0) {
                 activeLayers.forEach((_id) => {
                     //赋值另一个变量，防止操作出错
                     let item = {
@@ -198,15 +203,26 @@ export default {
         layerLeave() {
             this.layerMouseEnter = false
         },
-        //右键菜单事件
-        layerMenu({ clientX, clientY, target }) {
-            const { setShowLayerMenu, setLayerMenu, layers } = this
+        //图层右键菜单事件
+        // layerMenu({ clientX, clientY, target }) {
+        //     const { setShowLayerMenu, setLayerMenu, layers } = this
+        //     //显示菜单
+        //     setShowLayerMenu(true)
+        //     //设置当前菜单
+        //     setLayerMenu({
+        //         pos: [clientX, clientY],
+        //         layer: layers[target.dataset.index],
+        //     })
+        // },
+        //蓝图面板右键菜单事件
+        blueprintCtxMenu({ clientX, clientY }) {
+            const { setShowLayerMenu, setLayerMenu } = this
             //显示菜单
             setShowLayerMenu(true)
             //设置当前菜单
             setLayerMenu({
                 pos: [clientX, clientY],
-                layer: layers[target.dataset.index],
+                layer: null,
             })
         },
     },
