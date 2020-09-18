@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-18 15:31:41
+ * @LastEditTime: 2020-09-18 16:29:08
 -->
 <template>
     <div class="viewPanel"
@@ -42,7 +42,6 @@ export default {
     mixins: [autoResize],
     data() {
         return {
-            activeLayers: [], //已激活图层（已选定）,只存图层id，避免图层改变同时改变
             layerMouseEnter: false, //是否按下鼠标
             layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0],
@@ -56,7 +55,7 @@ export default {
             'curkeydownCodes',
             'showLayerMenu',
         ]), //系统信息
-        ...mapStateLayer(['layers']), //图层信息
+        ...mapStateLayer(['layers', 'activeLayers']), //图层信息,已选定图层
         viewPanelStyle() {
             const { screenSize, viewPanelPos, viewPanelScale } = this
             return {
@@ -75,7 +74,7 @@ export default {
     },
     watch: {
         layersString(newStr, oldStr) {
-            //有layers删除的话，更新activeLayers已激活图层
+            //有layers删除的话，更新已激活图层
             const newLayers = JSON.parse(newStr),
                 oldLayers = JSON.parse(oldStr)
             if (newLayers.length < oldLayers.length) {
@@ -105,7 +104,7 @@ export default {
             'setLayerMenu',
         ]),
         ...mapActionSystem(['domAddEventListener']),
-        ...mapMutationLayer(['setLayer']),
+        ...mapMutationLayer(['setLayer', 'setActiveLayers']), //修改图层，设置选定图层
         //初始化钩子
         afterAutoResizeMixinInit() {
             //更新视图操作面板实际参数
@@ -120,21 +119,15 @@ export default {
         layerSelect(layer) {
             //新增选定图层
             //按住ctrl单击为多选
-            const { curkeydownCodes } = this
-            const hasLyIndex = this.activeLayers.indexOf(layer.id)
+            const { curkeydownCodes, setActiveLayers, deleteActiveLayer } = this
             if (curkeydownCodes.includes(17)) {
-                //若无 则push
-                if (hasLyIndex >= 0) {
-                    // this.activeLayers.splice(hasLyIndex, 1) //若有-删除图层(多图层拖拽时会删除，故bug)
-                    return
-                } else {
-                    this.activeLayers.includes(layer.id) ||
-                        this.activeLayers.push(layer.id)
-                }
+                //若无则push
+                this.activeLayers.includes(layer.id) ||
+                    setActiveLayers([...this.activeLayers, layer.id])
             } else {
                 //如果没有选定，则选定，如果已选定，则无效
                 this.activeLayers.includes(layer.id) ||
-                    (this.activeLayers = [layer.id])
+                    setActiveLayers([layer.id])
             }
             //选定样式
             for (let ref in this.$refs) {
@@ -150,9 +143,12 @@ export default {
         deleteActiveLayer(layer) {
             //已激活图层中是否有删除的图层
             let delindex = this.activeLayers.indexOf(layer.id)
+            const { setActiveLayers } = this
             if (delindex >= 0) {
                 //删除已激活图层中的删除的图层
-                this.activeLayers.splice(delindex, 1)
+                let tempArr = [...this.activeLayers]
+                tempArr.splice(delindex, 1)
+                setActiveLayers(tempArr)
                 //选定样式
                 for (let ref in this.$refs) {
                     //已删除的图层这里没更新，排除一下
@@ -266,18 +262,18 @@ export default {
             &::before {
                 @include act;
                 width: 1px;
-                height: 200vh;
+                height: 1000vh;
                 border-left: $border-act;
                 left: -1px;
-                bottom: -100vh;
+                bottom: -500vh;
             }
             &::after {
                 @include act;
-                width: 200vw;
+                width: 1000vw;
                 height: 1px;
                 border-top: $border-act;
                 top: -1px;
-                right: -100vw;
+                right: -500vw;
             }
         }
     }

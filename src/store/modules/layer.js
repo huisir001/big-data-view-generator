@@ -2,24 +2,16 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-09-18 15:06:23
+ * @LastEditTime: 2020-09-18 16:04:20
  */
 import { getRanId } from '@/utils/myUtils'
 
 export default {
   namespaced: true,
   state: {
-    layers: [
-      // {
-      //   id: 'L-dasdaskld121',
-      //   type: 'lineChart',
-      //   width: 300,
-      //   height: 200,
-      //   pos:[12,15],
-      //   zIndex: 12
-      // }
-    ],
-    copyLayer: null
+    layers: [], //所有图层
+    copyLayer: null, //已复制图层（剪贴板）
+    activeLayers: [] //已激活图层（选定图层，只存图层id）
   },
   mutations: {
     //修改某个图层
@@ -92,6 +84,10 @@ export default {
       this.commit('layer/addLayer', state.copyLayer)
       //清空复制的图层
       state.copyLayer = null
+    },
+    //选择图层
+    setActiveLayers(state, layerIds) {
+      state.activeLayers = layerIds
     }
   },
   getters: {},
