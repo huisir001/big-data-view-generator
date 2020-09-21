@@ -1,12 +1,12 @@
 <!--
- * @Description: 视图面板
+ * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-21 11:57:08
+ * @LastEditTime: 2020-09-21 16:13:34
 -->
 <template>
-    <div class="viewPanel"
-         :style="viewPanelStyle"
+    <div class="blueprint"
+         :style="blueprintStyle"
          @contextmenu.prevent="layerCtxMenu">
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
@@ -38,7 +38,7 @@ const {
     mapMutations: mapMutationLayer,
 } = createNamespacedHelpers('layer')
 export default {
-    name: 'viewPanel',
+    name: 'Blueprint',
     mixins: [autoResize],
     data() {
         return {
@@ -51,20 +51,20 @@ export default {
     computed: {
         ...mapStateSystem([
             'screenSize',
-            'viewPanelPos',
-            'viewPanelScale',
+            'blueprintPos',
+            'blueprintScale',
             'curkeydownCodes',
             'showLayerMenu',
         ]), //系统信息
         ...mapStateLayer(['layers']), //图层信息,已选定图层
-        viewPanelStyle() {
-            const { screenSize, viewPanelPos, viewPanelScale } = this
+        blueprintStyle() {
+            const { screenSize, blueprintPos, blueprintScale } = this
             return {
                 width: screenSize[0] + 'px',
                 height: screenSize[1] + 'px',
-                left: viewPanelPos[0] + 'px',
-                top: viewPanelPos[1] + 'px',
-                transform: `scale(${viewPanelScale})`,
+                left: blueprintPos[0] + 'px',
+                top: blueprintPos[1] + 'px',
+                transform: `scale(${blueprintScale})`,
                 // backgroundImage: 'url(assets/img/bg.jpg)',
             }
         },
@@ -75,7 +75,7 @@ export default {
     },
     methods: {
         ...mapMutationSystem([
-            'setViewPanelDomRect',
+            'setBlueprintDomRect',
             'setShowLayerMenu',
             'setLayerMenu',
         ]),
@@ -84,12 +84,12 @@ export default {
         //初始化钩子
         afterAutoResizeMixinInit() {
             //更新视图操作面板实际参数
-            this.setViewPanelDomRect()
+            this.setBlueprintDomRect()
         },
         //dom变化及窗口调整钩子
         onResize() {
             //更新视图操作面板实际参数
-            this.setViewPanelDomRect()
+            this.setBlueprintDomRect()
         },
         //改变图层选定状态
         setActiveLayer(layer, isAct) {
@@ -206,7 +206,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.viewPanel {
+.blueprint {
     position: absolute;
     background-image: url(../../../assets/img/bg.jpg);
     background-position: center top;
@@ -218,7 +218,7 @@ export default {
         position: absolute;
         background: red;
         border: 1px solid yellow;
-        cursor: grab;
+        cursor: move;
         @mixin act {
             content: '';
             display: block;
@@ -227,7 +227,8 @@ export default {
         $border-act: 1px dashed #0ff;
         &.act {
             border: $border-act;
-            opacity: 0.5;
+            background-color: rgba(115, 170, 229, 0.5);
+            opacity: 0.9;
             &::before {
                 @include act;
                 width: 1px;

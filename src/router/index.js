@@ -2,25 +2,25 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2020-09-09 17:20:18
+ * @LastEditTime: 2020-09-21 15:22:44
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/views/home'
+import EditPanel from '@/views/EditPanel'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/EditPanel'
   },
   {
-    path: '/home',
-    name: 'home',
-    component: Home,
+    path: '/EditPanel',
+    name: 'EditPanel',
+    component: EditPanel,
     meta: {
-      title: '首页'
+      title: '编辑面板'
     }
   }
   // {
