@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-21 11:12:11
+ * @LastEditTime: 2020-09-21 11:51:14
 -->
 <template>
     <el-container>
@@ -127,6 +127,10 @@ export default {
         activeLayers() {
             return this.layers.filter((item) => item.active)
         },
+        //隐藏图层
+        hiddenLayers() {
+            return this.layers.filter((item) => !item.show)
+        },
         //图层菜单数据
         layermenuOptions() {
             const {
@@ -143,6 +147,7 @@ export default {
                 viewPanelDomRect,
                 setLayer,
                 activeLayers,
+                hiddenLayers,
             } = this
             return [
                 {
@@ -278,12 +283,23 @@ export default {
                 },
                 {
                     name: '隐藏选定',
-                    icon: 'el-icon-document-delete',
+                    icon: 'el-icon-view not',
                     disabled: activeLayers.length == 0, //有选定图层
                     func() {
                         activeLayers.forEach((item) => {
                             item.show = false
                             item.active = false //取消选定
+                            setLayer(item)
+                        })
+                    },
+                },
+                {
+                    name: '显示所有',
+                    icon: 'el-icon-view',
+                    disabled: hiddenLayers.length == 0, //有选定图层
+                    func() {
+                        hiddenLayers.forEach((item) => {
+                            item.show = true
                             setLayer(item)
                         })
                     },
@@ -465,6 +481,13 @@ $header-height: 50px;
                 color: #bcc9d440;
                 background: transparent;
             }
+        }
+        .el-icon-view.not::after {
+            content: '—';
+            font-size: 12px;
+            transform: rotate(-45deg) translate(-11px, -6px);
+            display: inline-block;
+            width: 0;
         }
     }
 }
