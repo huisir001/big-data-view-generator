@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-21 10:48:27
+ * @LastEditTime: 2020-09-21 11:12:11
 -->
 <template>
     <el-container>
@@ -274,6 +274,18 @@ export default {
                                     message: '已取消删除',
                                 })
                             })
+                    },
+                },
+                {
+                    name: '隐藏选定',
+                    icon: 'el-icon-document-delete',
+                    disabled: activeLayers.length == 0, //有选定图层
+                    func() {
+                        activeLayers.forEach((item) => {
+                            item.show = false
+                            item.active = false //取消选定
+                            setLayer(item)
+                        })
                     },
                 },
             ]

@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-21 10:34:32
+ * @LastEditTime: 2020-09-21 11:14:52
 -->
 <template>
     <div class="viewPanel"
@@ -10,6 +10,7 @@
          @contextmenu.prevent="layerCtxMenu">
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
+             v-show="item.show"
              :class="{viewItem:true,act:item.active}"
              :key="index"
              :ref="item.id"
@@ -121,7 +122,11 @@ export default {
                 }
             } else {
                 //如果没有选定，则选定，如果已选定，则无效
-                if (!this.activeLayers.find((item) => item.id == layer.id)) {
+                //只有按下才选定，抬起不选定
+                if (
+                    !this.activeLayers.find((item) => item.id == layer.id) &&
+                    layerMouseEnter
+                ) {
                     //单选时只选定一个，取消其他选定的图层
                     activeLayers.forEach((item) => {
                         setActiveLayer(item, false)

@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-09-21 10:12:54
+ * @LastEditTime: 2020-09-21 10:54:04
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -25,6 +25,7 @@ export default {
       layer.locked = false //解锁图层
       layer.active = false //是否选定，默认未选定
       const NewLayer = {
+        show: true, //图层显隐，默认显示
         zIndex: 99, //默认层级
         width: 300, //默认宽
         height: 200, //默认高
