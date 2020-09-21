@@ -2,7 +2,7 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-21 15:31:56
+ * @LastEditTime: 2020-09-21 18:33:52
 -->
 <template>
     <el-container>

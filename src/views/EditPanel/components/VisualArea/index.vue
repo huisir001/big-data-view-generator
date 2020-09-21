@@ -2,7 +2,7 @@
  * @Description: 可视区
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-18 11:47:40
+ * @LastEditTime: 2020-09-21 18:01:57
 -->
 <template>
     <!-- 可视区域 -->
@@ -17,17 +17,18 @@
             <!-- 缩略图层 -->
             <Thumbnail :visualAreaSize="[width,height]"
                        :platformSize="platformSize" />
+            <!-- 图层列表侧栏 -->
+            <slot name="layerList"></slot>
             <!-- 配置项侧栏 -->
-            <OptionPanel />
+            <slot name="options"></slot>
         </div>
     </div>
 </template>
 
 <script>
-import ViewPanel from './inc/viewPanel'
-import OptionPanel from './inc/optionPanel'
-import Thumbnail from './inc/thumbnail'
-import autoResize from '../mixin/autoResize'
+import ViewPanel from './Blueprint'
+import Thumbnail from './Thumbnail'
+import autoResize from '@/mixin/autoResize'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers('system')
 export default {
@@ -35,7 +36,6 @@ export default {
     mixins: [autoResize],
     components: {
         ViewPanel,
-        OptionPanel,
         Thumbnail,
     },
     computed: {

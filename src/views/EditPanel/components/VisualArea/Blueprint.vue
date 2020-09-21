@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-21 16:13:34
+ * @LastEditTime: 2020-09-21 17:52:21
 -->
 <template>
     <div class="blueprint"
@@ -208,7 +208,7 @@ export default {
 <style lang="scss" scoped>
 .blueprint {
     position: absolute;
-    background-image: url(../../../assets/img/bg.jpg);
+    background-image: url(../../../../assets/img/bg.jpg);
     background-position: center top;
     background-size: cover;
     background-repeat: no-repeat;
