@@ -2,7 +2,7 @@
  * @Description: 全局布局
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-18 22:55:59
+ * @LastEditTime: 2020-09-21 10:48:27
 -->
 <template>
     <el-container>
@@ -89,7 +89,7 @@ export default {
             'layerMenu',
             'viewPanelDomRect',
         ]),
-        ...mapStateLayer(['layers', 'copyLayer', 'activeLayers']),
+        ...mapStateLayer(['layers', 'copyLayer']),
         //标尺样式
         rulerTopStyle() {
             return {
@@ -122,6 +122,10 @@ export default {
                         : pos[1]
 
             return [left, top]
+        },
+        //选定图层
+        activeLayers() {
+            return this.layers.filter((item) => item.active)
         },
         //图层菜单数据
         layermenuOptions() {
@@ -175,9 +179,14 @@ export default {
                         //可以锁定多个图层
                         //找到已选定的图层
                         layers.forEach((item) => {
-                            if (activeLayers.includes(item.id)) {
+                            if (
+                                activeLayers
+                                    .map(({ id }) => id)
+                                    .includes(item.id)
+                            ) {
                                 let newLayer = { ...item } //这样操作防止直接修改内存
                                 newLayer.locked = true
+                                newLayer.active = false //上锁后移除选定
                                 setLayer(newLayer)
                             }
                         })
@@ -248,12 +257,9 @@ export default {
                             }
                         )
                             .then(() => {
-                                //找到已选定的图层
-                                let lys = layers.filter(({ id }) =>
-                                    activeLayers.includes(id)
-                                )
+                                //已选定的图层
                                 //执行删除
-                                lys.forEach((item) => {
+                                activeLayers.forEach((item) => {
                                     delLayer(item)
                                 })
                                 //提示
@@ -268,17 +274,6 @@ export default {
                                     message: '已取消删除',
                                 })
                             })
-                    },
-                },
-                {
-                    name: '取消选定',
-                    icon: 'el-icon-document-delete',
-                    disabled:
-                        !layerMenu.layer ||
-                        !activeLayers.includes(layerMenu.layer.id), //需补充条件（当前图层已选定）
-                    func() {
-                        console.log(111)
-                        // movedownLayer(layerMenu.layer)
                     },
                 },
             ]

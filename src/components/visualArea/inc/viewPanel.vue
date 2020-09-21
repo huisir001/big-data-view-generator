@@ -2,7 +2,7 @@
  * @Description: 视图面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-18 23:07:08
+ * @LastEditTime: 2020-09-21 10:34:32
 -->
 <template>
     <div class="viewPanel"
@@ -10,7 +10,7 @@
          @contextmenu.prevent="layerCtxMenu">
         <!-- 图层渲染 -->
         <div v-for="(item,index) in layers"
-             class="viewItem"
+             :class="{viewItem:true,act:item.active}"
              :key="index"
              :ref="item.id"
              :data-id="item.id"
@@ -46,8 +46,6 @@ export default {
             layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0], //鼠标相对于图层的位置
             layerMoveState: false, //鼠标按下拖动状态
-            // layerMouseDownTime: 0, //鼠标按下计时
-            // layerMouseUpTime: 0, //鼠标抬起计时
         }
     },
     computed: {
@@ -58,7 +56,7 @@ export default {
             'curkeydownCodes',
             'showLayerMenu',
         ]), //系统信息
-        ...mapStateLayer(['layers', 'activeLayers']), //图层信息,已选定图层
+        ...mapStateLayer(['layers']), //图层信息,已选定图层
         viewPanelStyle() {
             const { screenSize, viewPanelPos, viewPanelScale } = this
             return {
@@ -70,40 +68,9 @@ export default {
                 // backgroundImage: 'url(assets/img/bg.jpg)',
             }
         },
-        //反序列化图层(避免watch中监听的图层新旧图层参数一致)
-        layersString() {
-            return JSON.stringify(this.layers)
-        },
-    },
-    watch: {
-        layersString(newStr, oldStr) {
-            //有layers删除的话，更新已激活图层
-            const newLayers = JSON.parse(newStr),
-                oldLayers = JSON.parse(oldStr)
-            if (newLayers.length < oldLayers.length) {
-                //求差集
-                oldLayers.forEach((item) => {
-                    if (!newLayers.map(({ id }) => id).includes(item.id)) {
-                        this.deleteActiveLayer(item)
-                    }
-                })
-            }
-
-            /* 这里有bug  选定图层改为 图层组中添加某个参数后可移除这里 */
-
-            //有图层上锁的话，移除选定图层
-            if (newLayers.length == oldLayers.length) {
-                //求上锁差集(可能有多个上锁)
-                oldLayers.forEach((item, index) => {
-                    if (
-                        newLayers[index].id == item.id &&
-                        newLayers[index].locked != item.locked
-                    ) {
-                        //有上锁图层的话执行删除，无上锁图层的话考虑是配置项变动或拖拽（位置变动）
-                        this.deleteActiveLayer(item)
-                    }
-                })
-            }
+        //选定图层
+        activeLayers() {
+            return this.layers.filter((item) => item.active)
         },
     },
     methods: {
@@ -113,7 +80,7 @@ export default {
             'setLayerMenu',
         ]),
         ...mapActionSystem(['domAddEventListener']),
-        ...mapMutationLayer(['setLayer', 'setActiveLayers']), //修改图层，设置选定图层
+        ...mapMutationLayer(['setLayer']), //修改图层，设置选定图层
         //初始化钩子
         afterAutoResizeMixinInit() {
             //更新视图操作面板实际参数
@@ -124,60 +91,43 @@ export default {
             //更新视图操作面板实际参数
             this.setViewPanelDomRect()
         },
-        /* 这里有bug  选定图层改为 图层组中添加某个参数后可重构这里 */
+        //改变图层选定状态
+        setActiveLayer(layer, isAct) {
+            let newLayer = { ...layer }
+            newLayer.active = isAct
+            this.setLayer(newLayer)
+        },
         //图层选定
         layerSelect(layer) {
             //新增选定图层
             //按住ctrl单击为多选
             const {
                 curkeydownCodes,
-                setActiveLayers,
-                deleteActiveLayer,
+                setLayer,
                 layerMouseEnter,
+                activeLayers,
+                setActiveLayer,
             } = this
 
             if (curkeydownCodes.includes(17)) {
                 //多选时，鼠标抬起为选定，单选时鼠标按下即为选定
                 //取消选定时，判断是否有拖动，没拖动的话则取消选定
                 if (!layerMouseEnter) {
-                    this.activeLayers.includes(layer.id)
-                        ? this.layerMoveState || this.deleteActiveLayer(layer)
-                        : setActiveLayers([...this.activeLayers, layer.id])
+                    if (this.activeLayers.find((item) => item.id == layer.id)) {
+                        this.layerMoveState || setActiveLayer(layer, false)
+                    } else {
+                        setActiveLayer(layer, true)
+                    }
                 }
             } else {
                 //如果没有选定，则选定，如果已选定，则无效
-                this.activeLayers.includes(layer.id) ||
-                    setActiveLayers([layer.id])
-            }
-            //选定样式
-            for (let ref in this.$refs) {
-                //已删除的图层这里没更新，排除一下
-                if (this.$refs[ref].length != 0) {
-                    this.activeLayers.includes(ref)
-                        ? (this.$refs[ref][0].className = 'viewItem act')
-                        : (this.$refs[ref][0].className = 'viewItem')
-                }
-            }
-        },
-        /* 这里有bug  选定图层改为 图层组中添加某个参数后可重构这里 */
-        //取消选定图层
-        deleteActiveLayer(layer) {
-            //已激活图层中是否有删除的图层
-            let delindex = this.activeLayers.indexOf(layer.id)
-            const { setActiveLayers } = this
-            if (delindex >= 0) {
-                //删除已激活图层中的删除的图层
-                let tempArr = [...this.activeLayers]
-                tempArr.splice(delindex, 1)
-                setActiveLayers(tempArr)
-                //选定样式
-                for (let ref in this.$refs) {
-                    //已删除的图层这里没更新，排除一下
-                    if (this.$refs[ref].length != 0) {
-                        this.activeLayers.includes(ref)
-                            ? (this.$refs[ref][0].className = 'viewItem act')
-                            : (this.$refs[ref][0].className = 'viewItem')
-                    }
+                if (!this.activeLayers.find((item) => item.id == layer.id)) {
+                    //单选时只选定一个，取消其他选定的图层
+                    activeLayers.forEach((item) => {
+                        setActiveLayer(item, false)
+                    })
+                    //选定当前图层
+                    setActiveLayer(layer, true)
                 }
             }
         },
@@ -189,10 +139,6 @@ export default {
             this.layerMouseEnter = type == 'mousedown'
             //鼠标按键改变
             this.layerMouseButton = button
-            //鼠标事件计时
-            // this.layerMouseEnter
-            //     ? (this.layerMouseDownTime = Date.now())
-            //     : (this.layerMouseUpTime = Date.now())
             //鼠标按下重置拖动状态
             this.layerMouseEnter && (this.layerMoveState = false)
             //图层选择
@@ -213,11 +159,7 @@ export default {
                 //拖动指示
                 this.layerMoveState = true
                 //改变图层位置
-                activeLayers.forEach((_id) => {
-                    //赋值另一个变量，防止操作出错
-                    let item = {
-                        ...layers.find(({ id }) => id == _id),
-                    }
+                activeLayers.forEach((item) => {
                     item.pos = [
                         item.pos[0] + offsetX - layerMouseOffset[0],
                         item.pos[1] + offsetY - layerMouseOffset[1],
@@ -226,6 +168,7 @@ export default {
                 })
             }
         },
+        //鼠标离开图层
         layerLeave() {
             this.layerMouseEnter = false
         },

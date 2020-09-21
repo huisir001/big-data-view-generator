@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-09-18 22:12:15
+ * @LastEditTime: 2020-09-21 10:12:54
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -10,8 +10,7 @@ export default {
   namespaced: true,
   state: {
     layers: [], //所有图层
-    copyLayer: null, //已复制图层（剪贴板）
-    activeLayers: [] //已激活图层（选定图层，只存图层id）
+    copyLayer: null //已复制图层（剪贴板）
   },
   mutations: {
     //修改某个图层
@@ -24,10 +23,11 @@ export default {
     addLayer(state, layer) {
       layer.id = `L-${getRanId()}` //赋值id，若已有id会被覆盖
       layer.locked = false //解锁图层
+      layer.active = false //是否选定，默认未选定
       const NewLayer = {
         zIndex: 99, //默认层级
-        width: 300, //默认宽高
-        height: 200,
+        width: 300, //默认宽
+        height: 200, //默认高
         ...layer
       }
       state.layers.push(NewLayer)
@@ -84,10 +84,6 @@ export default {
       this.commit('layer/addLayer', state.copyLayer)
       //清空复制的图层
       state.copyLayer = null
-    },
-    //选择图层
-    setActiveLayers(state, layerIds) {
-      state.activeLayers = layerIds
     }
   },
   getters: {},
