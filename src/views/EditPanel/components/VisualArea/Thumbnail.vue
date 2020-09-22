@@ -2,7 +2,7 @@
  * @Description: 缩略图/导览图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-21 16:17:09
+ * @LastEditTime: 2020-09-22 09:47:10
 -->
 <template>
     <div class="thumbnail"
@@ -14,19 +14,19 @@
                @click="isMin=!isMin"></i>
             <i class="el-icon-zoom-in"
                title="放大"
-               @click="setViewPanelScale(.1)"></i>
+               @click="setBlueprintScale(.1)"></i>
             <i class="el-icon-zoom-out"
                title="缩小"
-               @click="setViewPanelScale(-.1)"></i>
+               @click="setBlueprintScale(-.1)"></i>
             <i class="el-icon-refresh-left"
                title="还原"
-               @click="setViewPanelScale(0)"></i>
+               @click="setBlueprintScale(0)"></i>
         </div>
         <!-- 操作面板区 -->
         <div class="viewBox"
              :style="viewBoxStyle"></div>
         <!-- 缩放比例 -->
-        <div class="scaleTxt">{{parseInt(viewPanelScale*100)}}%</div>
+        <div class="scaleTxt">{{parseInt(blueprintScale*100)}}%</div>
         <!-- 悬浮快用于点击事件 -->
         <div class="floatBox"
              @click="floatBoxClick"></div>
@@ -57,17 +57,17 @@ export default {
     computed: {
         ...mapState([
             'screenSize',
-            'viewPanelPos',
-            'viewPanelScale',
+            'blueprintPos',
+            'blueprintScale',
             'optionPanelShow',
             'platformPos',
         ]),
         //操作区域实际尺寸
-        viewPanelSize() {
-            const { screenSize, viewPanelScale } = this
+        blueprintSize() {
+            const { screenSize, blueprintScale } = this
             return [
-                screenSize[0] * viewPanelScale,
-                screenSize[1] * viewPanelScale,
+                screenSize[0] * blueprintScale,
+                screenSize[1] * blueprintScale,
             ]
         },
         //缩略图缩略倍数
@@ -78,7 +78,7 @@ export default {
         //缩略图样式
         thumbnailStyle() {
             const {
-                viewPanelSize,
+                blueprintSize,
                 isMin,
                 thumbnailSizeScale,
                 platformSize,
@@ -95,12 +95,12 @@ export default {
         },
         //操作面板区样式
         viewBoxStyle() {
-            const { viewPanelPos, viewPanelSize, thumbnailSizeScale } = this
+            const { blueprintPos, blueprintSize, thumbnailSizeScale } = this
             return {
-                width: viewPanelSize[0] / thumbnailSizeScale + 'px',
-                height: viewPanelSize[1] / thumbnailSizeScale + 'px',
-                left: viewPanelPos[0] / thumbnailSizeScale + 'px',
-                top: viewPanelPos[1] / thumbnailSizeScale + 'px',
+                width: blueprintSize[0] / thumbnailSizeScale + 'px',
+                height: blueprintSize[1] / thumbnailSizeScale + 'px',
+                left: blueprintPos[0] / thumbnailSizeScale + 'px',
+                top: blueprintPos[1] / thumbnailSizeScale + 'px',
             }
         },
         //滑块尺寸
@@ -129,7 +129,7 @@ export default {
         },
     },
     methods: {
-        ...mapMutations(['setViewPanelScale', 'setPlatformPos']),
+        ...mapMutations(['setBlueprintScale', 'setPlatformPos']),
         //鼠标按下抬起
         sliderDown({ type, offsetX, offsetY }) {
             this.sliderMouseEnter = type == 'mousedown'

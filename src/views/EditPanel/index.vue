@@ -1,25 +1,37 @@
 <!--
- * @Description: 首页
+ * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-21 18:41:02
+ * @LastEditTime: 2020-09-22 16:28:30
 -->
 <template>
     <div @contextmenu.prevent>
         <Layout>
             <!-- 侧边栏 -->
             <template v-slot:aside>
+                <!-- 可用组件库 -->
                 <CompLibrary />
             </template>
+            <!-- 顶栏 -->
+            <template v-slot:head>
+                <Header />
+            </template>
             <template v-slot:main>
+                <!-- 操作可视区 -->
                 <VisualArea>
+                    <!-- 图层列表 -->
                     <!-- <template v-slot:layerList>
                         <LayerList />
                     </template> -->
+                    <!-- 配置项面板 -->
                     <template v-slot:options>
                         <OptionsPanel />
                     </template>
                 </VisualArea>
+            </template>
+            <!-- 右键菜单 -->
+            <template v-slot:layerCtxMenu>
+                <LayerCtxMenu />
             </template>
         </Layout>
     </div>
@@ -27,22 +39,24 @@
 
 <script>
 import {
-    // Header,
     Layout,
+    Header,
     CompLibrary,
     // LayerList,
     OptionsPanel,
     VisualArea,
+    LayerCtxMenu,
 } from './components'
 export default {
     name: 'EditPanel',
     components: {
-        // Header,
         Layout,
+        Header,
         CompLibrary,
         // LayerList,
         OptionsPanel,
         VisualArea,
+        LayerCtxMenu,
     },
 }
 </script>

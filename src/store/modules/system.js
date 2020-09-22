@@ -2,21 +2,23 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-18 15:01:07
+ * @LastEditTime: 2020-09-22 16:25:45
  */
 export default {
   namespaced: true,
   state: {
+    title: '大数据视图生成器1.0', //标题
+    asideShow: true, //侧边栏开关
     optionPanelShow: true, //配置栏开关
     screenSize: [1920, 1080], //视图层尺寸(默认1920*1080)
-    viewPanelPos: [60, 60], //视图层位置(左上顶点left,top)
-    viewPanelScale: 1, //视图层缩放
+    blueprintPos: [60, 60], //视图层位置(左上顶点left,top)
+    blueprintScale: 1, //视图层缩放
     platformPos: [0, 0], //工作台位置
-    viewPanelDomRect: null, //视图操作层实际参数getBoundingClientRect（尺寸、位置）
+    blueprintDomRect: null, //视图操作层实际参数getBoundingClientRect（尺寸、位置）
     curkeydownCodes: [], //当前键盘按下的按键
-    showLayerMenu: false, //显示图层菜单
-    layerMenu: {
-      pos: [0, 0], //图层菜单位置
+    showLayerCtxMenu: false, //显示图层右键菜单
+    layerCtxMenu: {
+      pos: [0, 0], //图层右键菜单位置
       layer: null //当前图层
     },
     domEventFncs: {
@@ -27,26 +29,29 @@ export default {
     }
   },
   mutations: {
+    setAsideShow(state) {
+      state.asideShow = !state.asideShow
+    },
     setOptionPanel(state) {
       state.optionPanelShow = !state.optionPanelShow
     },
-    setViewPanelPos(state, pos) {
-      state.viewPanelPos = pos
+    setBlueprintPos(state, pos) {
+      state.blueprintPos = pos
     },
-    setViewPanelScale(state, num) {
-      state.viewPanelScale = Math.round((state.viewPanelScale + num) * 10) / 10
+    setBlueprintScale(state, num) {
+      state.blueprintScale = Math.round((state.blueprintScale + num) * 10) / 10
       if (num == 0) {
-        state.viewPanelScale = 1
+        state.blueprintScale = 1
       }
-      if (state.viewPanelScale < 0.1) {
-        state.viewPanelScale = 0.1
+      if (state.blueprintScale < 0.1) {
+        state.blueprintScale = 0.1
         this._vm.$message({
           message: '不能再继续缩小了',
           type: 'warning'
         })
       }
-      if (state.viewPanelScale > 1.5) {
-        state.viewPanelScale = 1.5
+      if (state.blueprintScale > 1.5) {
+        state.blueprintScale = 1.5
         this._vm.$message({
           message: '不能再继续放大了',
           type: 'warning'
@@ -57,12 +62,12 @@ export default {
       //设置工作台位置
       state.platformPos = pos
     },
-    setViewPanelDomRect(state) {
+    setBlueprintDomRect(state) {
       //更新视图操作面板实际参数
       const { width, height, x, y } = document
-        .querySelector('.viewPanel')
+        .querySelector('.blueprint')
         .getBoundingClientRect()
-      state.viewPanelDomRect = { width, height, x, y }
+      state.blueprintDomRect = { width, height, x, y }
     },
     //更新按键
     setCurkeydownCodes(state, keyCode) {
@@ -71,13 +76,13 @@ export default {
         ? codes.splice(codes.indexOf(keyCode), 1)
         : state.curkeydownCodes.push(keyCode)
     },
-    //图层菜单显隐
-    setShowLayerMenu(state, bool) {
-      state.showLayerMenu = bool
+    //图层右键菜单显隐
+    setShowLayerCtxMenu(state, bool) {
+      state.showLayerCtxMenu = bool
     },
-    //设置图层菜单
-    setLayerMenu(state, data) {
-      state.layerMenu = data
+    //设置图层右键菜单
+    setLayerCtxMenu(state, data) {
+      state.layerCtxMenu = data
     },
     //设置dom事件
     setDomEventFncs(state, { evType, func }) {

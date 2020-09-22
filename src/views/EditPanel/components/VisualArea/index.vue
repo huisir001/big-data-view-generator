@@ -2,18 +2,18 @@
  * @Description: 可视区
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-21 18:01:57
+ * @LastEditTime: 2020-09-22 10:34:00
 -->
 <template>
     <!-- 可视区域 -->
     <div class="visualArea">
+        <!-- 刻度尺 -->
+        <Ruler />
         <!-- 工作台 -->
         <div class="platform"
              :style="`width:${platformSize[0]}px;height:${platformSize[1]}px;left:${platformPos[0]}px;top:${platformPos[1]}px`">
-            <!-- 网格 -->
-            <div class="grid"></div>
             <!-- 视图面板层 -->
-            <ViewPanel />
+            <Blueprint />
             <!-- 缩略图层 -->
             <Thumbnail :visualAreaSize="[width,height]"
                        :platformSize="platformSize" />
@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import ViewPanel from './Blueprint'
+import Ruler from './Ruler'
+import Blueprint from './Blueprint'
 import Thumbnail from './Thumbnail'
 import autoResize from '@/mixin/autoResize'
 import { createNamespacedHelpers } from 'vuex'
@@ -35,7 +36,8 @@ export default {
     name: 'visualArea',
     mixins: [autoResize],
     components: {
-        ViewPanel,
+        Ruler,
+        Blueprint,
         Thumbnail,
     },
     computed: {
@@ -81,20 +83,10 @@ export default {
     .platform {
         background-color: #2a2e33;
         position: absolute;
-        .grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background-image: linear-gradient(
-                    to top,
-                    transparent 14px,
-                    #444 15px
-                ),
-                linear-gradient(to left, transparent 14px, #444 15px);
-            background-size: 15px 15px;
-        }
+        /* 网格 */
+        background-image: linear-gradient(to top, transparent 11px, #444 12px),
+            linear-gradient(to left, transparent 11px, #444 12px);
+        background-size: 12px 12px;
     }
 }
 </style>

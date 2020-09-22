@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-21 17:52:21
+ * @LastEditTime: 2020-09-22 11:54:51
 -->
 <template>
     <div class="blueprint"
@@ -27,7 +27,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import autoResize from '@/components/mixin/autoResize'
+import autoResize from '@/mixin/autoResize'
 const {
     mapState: mapStateSystem,
     mapMutations: mapMutationSystem,
@@ -54,7 +54,7 @@ export default {
             'blueprintPos',
             'blueprintScale',
             'curkeydownCodes',
-            'showLayerMenu',
+            'showLayerCtxMenu',
         ]), //系统信息
         ...mapStateLayer(['layers']), //图层信息,已选定图层
         blueprintStyle() {
@@ -76,8 +76,8 @@ export default {
     methods: {
         ...mapMutationSystem([
             'setBlueprintDomRect',
-            'setShowLayerMenu',
-            'setLayerMenu',
+            'setShowLayerCtxMenu',
+            'setLayerCtxMenu',
         ]),
         ...mapActionSystem(['domAddEventListener']),
         ...mapMutationLayer(['setLayer']), //修改图层，设置选定图层
@@ -178,11 +178,11 @@ export default {
         },
         //图层右键菜单事件
         layerCtxMenu({ clientX, clientY, target }) {
-            const { setShowLayerMenu, setLayerMenu, layers } = this
+            const { setShowLayerCtxMenu, setLayerCtxMenu, layers } = this
             //显示菜单
-            setShowLayerMenu(true)
+            setShowLayerCtxMenu(true)
             //设置当前菜单(判断当前右键事件是在图层上点击还是面板上)
-            setLayerMenu({
+            setLayerCtxMenu({
                 pos: [clientX, clientY],
                 layer:
                     target.dataset.index == undefined
@@ -193,13 +193,13 @@ export default {
     },
     mounted() {
         //document添加事件-左键按下隐藏右键菜单
-        const { domAddEventListener, setShowLayerMenu } = this
+        const { domAddEventListener, setShowLayerCtxMenu } = this
         let self = this
         domAddEventListener({
             evType: 'onmousedown',
             func({ button }) {
-                if (button != 0 || !self.showLayerMenu) return false //非鼠标左键或菜单非激活return
-                setShowLayerMenu(false) //隐藏图层右键菜单
+                if (button != 0 || !self.showLayerCtxMenu) return false //非鼠标左键或菜单非激活return
+                setShowLayerCtxMenu(false) //隐藏图层右键菜单
             },
         })
     },
