@@ -32,7 +32,6 @@
 
 //折叠面板
 $font-color: #fff;
-$font-color2:#cde4fd;
 .el-collapse {
     border-top: 1px solid $boder-color;
     border-bottom: 1px solid $boder-color;
@@ -41,7 +40,7 @@ $font-color2:#cde4fd;
     height: 40px;
     line-height: 40px;
     background-color: $menu-bg;
-    color: $font-color2;
+    color: $font-color;
     font-size: 14px;
     border-bottom: 1px solid $boder-color;
     padding: 0 2px 0 15px;
@@ -56,4 +55,17 @@ $font-color2:#cde4fd;
     color: $font-color;
     font-size: 12px;
     font-weight: 400;
+}
+
+//标签页
+.el-tabs__header {
+    background: #3c4650;
+    border-top: 1px solid $boder-color;
+    margin: 0;
+}
+.el-tabs__item {
+    color: $font-color;
+    &.is-active,&:hover {
+        color: #91c0f4;
+    }
 }

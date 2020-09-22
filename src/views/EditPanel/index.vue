@@ -2,15 +2,18 @@
  * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-22 16:28:30
+ * @LastEditTime: 2020-09-22 17:33:29
 -->
 <template>
     <div @contextmenu.prevent>
         <Layout>
-            <!-- 侧边栏 -->
-            <template v-slot:aside>
-                <!-- 可用组件库 -->
+            <!-- 可用组件库 -->
+            <template v-slot:compLibrary>
                 <CompLibrary />
+            </template>
+            <!-- 图层管理 -->
+            <template v-slot:layerList>
+                <LayerList />
             </template>
             <!-- 顶栏 -->
             <template v-slot:head>
@@ -19,10 +22,6 @@
             <template v-slot:main>
                 <!-- 操作可视区 -->
                 <VisualArea>
-                    <!-- 图层列表 -->
-                    <!-- <template v-slot:layerList>
-                        <LayerList />
-                    </template> -->
                     <!-- 配置项面板 -->
                     <template v-slot:options>
                         <OptionsPanel />
@@ -42,7 +41,7 @@ import {
     Layout,
     Header,
     CompLibrary,
-    // LayerList,
+    LayerList,
     OptionsPanel,
     VisualArea,
     LayerCtxMenu,
@@ -53,7 +52,7 @@ export default {
         Layout,
         Header,
         CompLibrary,
-        // LayerList,
+        LayerList,
         OptionsPanel,
         VisualArea,
         LayerCtxMenu,

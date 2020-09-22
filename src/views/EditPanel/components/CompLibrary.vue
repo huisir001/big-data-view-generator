@@ -2,11 +2,10 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-22 09:42:10
+ * @LastEditTime: 2020-09-22 18:36:07
 -->
 <template>
     <div class="compLibrary">
-        <h2>组件库</h2>
         <el-collapse v-model="cpActiveName"
                      accordion>
             <el-collapse-item title="柱状图/条形图"
@@ -185,18 +184,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$actColor: #3c4650;
-.compLibrary {
-    border-top: 1px solid #999;
-    h2 {
-        margin: 0;
-        font-size: 14px;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        background: $actColor;
-    }
-}
 .compItem {
     width: 100px;
     height: 100px;

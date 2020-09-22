@@ -2,7 +2,7 @@
  * @Description: 可视区
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-22 10:34:00
+ * @LastEditTime: 2020-09-22 17:24:55
 -->
 <template>
     <!-- 可视区域 -->
@@ -17,8 +17,6 @@
             <!-- 缩略图层 -->
             <Thumbnail :visualAreaSize="[width,height]"
                        :platformSize="platformSize" />
-            <!-- 图层列表侧栏 -->
-            <slot name="layerList"></slot>
             <!-- 配置项侧栏 -->
             <slot name="options"></slot>
         </div>

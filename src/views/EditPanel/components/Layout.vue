@@ -2,7 +2,7 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-22 16:26:01
+ * @LastEditTime: 2020-09-22 18:55:58
 -->
 <template>
     <el-container>
@@ -10,7 +10,18 @@
                   width="250px">
             <h1>{{title}}</h1>
             <!-- 侧边栏 -->
-            <slot name="aside"></slot>
+            <el-tabs v-model="asideTabAcName"
+                     @tab-click="asideTabClick"
+                     :stretch="true">
+                <el-tab-pane label="组件库"
+                             name="comp">
+                    <slot name="compLibrary"></slot>
+                </el-tab-pane>
+                <el-tab-pane label="图层管理"
+                             name="layer">
+                    <slot name="layerList"></slot>
+                </el-tab-pane>
+            </el-tabs>
         </el-aside>
         <el-container class="content">
             <el-header class="head-box"
@@ -33,8 +44,18 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('system')
 export default {
     name: 'Layout',
+    data() {
+        return {
+            asideTabAcName: 'comp',
+        }
+    },
     computed: {
         ...mapState(['title', 'asideShow']),
+    },
+    methods: {
+        asideTabClick() {
+            console.log(1)
+        },
     },
 }
 </script>
