@@ -2,18 +2,18 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-22 18:55:58
+ * @LastEditTime: 2020-09-23 15:03:07
 -->
 <template>
     <el-container>
         <el-aside :class="`aside ${asideShow || 'hide'}`"
-                  width="250px">
+                  width="245px">
             <h1>{{title}}</h1>
             <!-- 侧边栏 -->
             <el-tabs v-model="asideTabAcName"
                      @tab-click="asideTabClick"
                      :stretch="true">
-                <el-tab-pane label="组件库"
+                <el-tab-pane label="可用组件"
                              name="comp">
                     <slot name="compLibrary"></slot>
                 </el-tab-pane>
@@ -75,7 +75,7 @@ $header-height: 50px;
     transition: 0.5s;
     z-index: 1;
     &.hide {
-        margin-left: -251px;
+        margin-left: -246px;
     }
     h1 {
         margin: 0;

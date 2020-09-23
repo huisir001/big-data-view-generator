@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-09-22 17:28:13
+ * @LastEditTime: 2020-09-23 17:41:42
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -17,6 +17,9 @@ import {
   CollapseItem,
   Tabs,
   TabPane,
+  // Card,
+  // Row,
+  // Col,
   // Dropdown,
   // DropdownMenu,
   // DropdownItem,
@@ -41,6 +44,9 @@ Vue.use(Container)
   .use(CollapseItem)
   .use(Tabs)
   .use(TabPane)
+  // .use(Card)
+  // .use(Row)
+  // .use(Col)
   // .use(Dropdown)
   // .use(DropdownMenu)
   // .use(DropdownItem)

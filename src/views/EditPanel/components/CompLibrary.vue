@@ -2,41 +2,35 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-22 18:36:07
+ * @LastEditTime: 2020-09-23 19:34:43
 -->
 <template>
     <div class="compLibrary">
         <el-collapse v-model="cpActiveName"
                      accordion>
-            <el-collapse-item title="柱状图/条形图"
-                              name="1"
-                              class="collapseItem">
-                <div class="compItem"
-                     data-type="lineChart"
-                     @mousedown="compItemDown"
-                     @mouseup="compItemDown"></div>
-            </el-collapse-item>
-            <el-collapse-item title="折线图/曲线图"
-                              name="2"
-                              class="collapseItem">
-            </el-collapse-item>
-            <el-collapse-item title="饼状图/扇形图"
-                              name="3"
-                              class="collapseItem">
-            </el-collapse-item>
-            <el-collapse-item title="柱线复合图"
-                              name="4"
-                              class="collapseItem">
-            </el-collapse-item>
-            <el-collapse-item title="雷达图"
-                              name="5"
-                              class="collapseItem">
+            <el-collapse-item v-for="(item,index) in compList"
+                              :key="index"
+                              :title="item.category"
+                              :name="index+1">
+                <div class="collapseItem">
+                    <div class="compItem"
+                         v-for="(comp,i) in item.list"
+                         :key="i"
+                         :data-type="comp.type"
+                         :data-title="comp.title"
+                         @mousedown="compItemDown"
+                         @mouseup="compItemDown">
+                        <div class="title">{{comp.title}}</div>
+                        <img :src="comp.pic">
+                    </div>
+                </div>
             </el-collapse-item>
         </el-collapse>
     </div>
 </template>
 
 <script>
+import compList from '@/config/compList'
 import { createNamespacedHelpers } from 'vuex'
 const {
     mapState: mapStateSystem,
@@ -47,6 +41,7 @@ export default {
     name: 'CompLibrary',
     data() {
         return {
+            compList, //组件库数据
             bodyMouseEnter: false, //body层鼠标按下
             compItemEnter: false, //侧边组件item层鼠标按下
             cloneItemMoveInPane: false, //克隆元素移入操作面板状态
@@ -77,6 +72,7 @@ export default {
             this.cloneItem.style = `position: absolute;
                                     left:${clientX - offsetX}px;
                                     top:${clientY - offsetY}px;   
+                                    margin:0;
                                     opacity:.5; 
                                     z-index:2;
                                 `
@@ -106,6 +102,7 @@ export default {
                     const { x: vx, y: vy } = blueprintDomRect //视图操作面板位置
                     addLayer({
                         type: cloneItem.getAttribute('data-type'), //组件类型
+                        title: cloneItem.getAttribute('data-title'), //组件标题
                         pos: [
                             //组件相对于实际视图的位置
                             (cx - vx) / blueprintScale,
@@ -184,10 +181,21 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.collapseItem {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
 .compItem {
     width: 100px;
     height: 100px;
-    background: #ff0;
+    background: #212528;
+    margin-top: 15px;
+    cursor: move;
+    &:nth-child(1),
+    &:nth-child(2) {
+        margin: 0;
+    }
     @mixin act {
         content: '';
         display: block;
@@ -212,6 +220,9 @@ export default {
             top: -1px;
             right: -100vw;
         }
+    }
+    img {
+        width: 100%;
     }
 }
 </style>

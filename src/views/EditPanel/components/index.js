@@ -2,7 +2,7 @@
  * @Description:导出组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-21 15:25:53
- * @LastEditTime: 2020-09-22 16:19:36
+ * @LastEditTime: 2020-09-23 10:20:49
  */
 export { default as Header } from './Header' //头部
 export { default as Layout } from './Layout' //布局
