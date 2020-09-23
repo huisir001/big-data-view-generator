@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-23 19:34:43
+ * @LastEditTime: 2020-09-23 23:30:33
 -->
 <template>
     <div class="compLibrary">
@@ -18,8 +18,8 @@
                          :key="i"
                          :data-type="comp.type"
                          :data-title="comp.title"
-                         @mousedown="compItemDown"
-                         @mouseup="compItemDown">
+                         @mousedown.prevent="compItemDown"
+                         @mouseup.prevent="compItemDown">
                         <div class="title">{{comp.title}}</div>
                         <img :src="comp.pic">
                     </div>
@@ -70,10 +70,10 @@ export default {
             this.curMouseOffset = [offsetX, offsetY]
             this.cloneItem = target.cloneNode(true) // 克隆元素（拖拽时跟随鼠标效果）
             this.cloneItem.style = `position: absolute;
-                                    left:${clientX - offsetX}px;
-                                    top:${clientY - offsetY}px;   
+                                    left:${clientX - offsetX - 1}px;
+                                    top:${clientY - offsetY - 1}px;   
                                     margin:0;
-                                    opacity:.5; 
+                                    opacity:.8; 
                                     z-index:2;
                                 `
             document.body.appendChild(this.cloneItem)
@@ -114,6 +114,8 @@ export default {
                 this.cloneItem.remove()
                 // 清内存
                 this.cloneItem = null
+                //状态恢复
+                this.cloneItemMoveInPane = false
             }
         },
         domMousemove({ button, clientX, clientY }) {
@@ -187,11 +189,22 @@ export default {
     flex-wrap: wrap;
 }
 .compItem {
+    position: relative;
     width: 100px;
     height: 100px;
-    background: #212528;
+    background: #161f28;
+    border: 1px solid #33434f;
     margin-top: 15px;
     cursor: move;
+    border-radius: 2px;
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
     &:nth-child(1),
     &:nth-child(2) {
         margin: 0;
@@ -217,12 +230,21 @@ export default {
             width: 200vw;
             height: 1px;
             border-top: $border-act;
+            left: auto;
             top: -1px;
             right: -100vw;
         }
     }
+    .title {
+        padding: 7px 8px;
+        background: #33434f;
+        color: #fff;
+        font-size: 12px;
+        line-height: 1;
+    }
     img {
         width: 100%;
+        height: calc(100% - 26px);
     }
 }
 </style>
