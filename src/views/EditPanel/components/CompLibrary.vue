@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-24 11:31:09
+ * @LastEditTime: 2020-09-24 13:49:45
 -->
 <template>
     <div class="compLibrary">
@@ -239,16 +239,16 @@ export default {
         }
     }
     .title {
-        padding: 7px 8px;
+        padding: 6px 8px;
         background: #33434f;
         color: #fff;
         font-size: 12px;
         line-height: 1;
     }
     img {
-        width: 100%;
-        height: calc(100% - 26px);
-        padding: 8px;
+        width: 84px;
+        height: 60px;
+        margin: 7px;
     }
 }
 </style>

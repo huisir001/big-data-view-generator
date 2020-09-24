@@ -2,7 +2,7 @@
  * @Description: 组件列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-09-23 17:07:54
+ * @LastEditTime: 2020-09-24 14:53:46
  */
 export default [
   {
@@ -22,6 +22,16 @@ export default [
         title: '饼图',
         type: 'pieChart',
         pic: require('@/assets/img/compList/pie.png')
+      },
+      {
+        title: '仪表盘',
+        type: 'gaugeChart',
+        pic: require('@/assets/img/compList/gauge.png')
+      },
+      {
+        title: '雷达图',
+        type: 'radarChart',
+        pic: require('@/assets/img/compList/radar.png')
       }
     ]
   },
