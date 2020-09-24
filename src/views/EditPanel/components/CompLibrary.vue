@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-23 23:30:33
+ * @LastEditTime: 2020-09-24 11:31:09
 -->
 <template>
     <div class="compLibrary">
@@ -195,7 +195,9 @@ export default {
     background: #161f28;
     border: 1px solid #33434f;
     margin-top: 15px;
-    cursor: move;
+    cursor: url(../../../assets/img/move_arrow.cur),
+        url(../../../assets/img/move_arrow.ico),
+        url(../../../assets/img/move_arrow.png), move;
     border-radius: 2px;
     &::after {
         content: '';
@@ -216,7 +218,8 @@ export default {
     }
     $border-act: 1px dashed #0ff;
     &.act {
-        border: $border-act;
+        border-right: $border-act;
+        border-bottom: $border-act;
         &::before {
             @include act;
             width: 1px;
@@ -245,6 +248,7 @@ export default {
     img {
         width: 100%;
         height: calc(100% - 26px);
+        padding: 8px;
     }
 }
 </style>

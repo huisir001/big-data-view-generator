@@ -2,7 +2,7 @@
  * @Description:vue配置文件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:45:17
- * @LastEditTime: 2020-09-09 14:33:52
+ * @LastEditTime: 2020-09-24 10:40:07
  */
 const MYCONFIG = {
   //初始化配置
@@ -24,5 +24,7 @@ module.exports = {
       args[0].screenHeight = MYCONFIG.screenHeight
       return args
     })
+    /* 配置图片文件支持 */
+    config.module.rule('images').test(/\.(png|jpe?g|gif|webp|ico|cur)(\?.*)?$/)
   }
 }
