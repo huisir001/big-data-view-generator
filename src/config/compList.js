@@ -2,7 +2,7 @@
  * @Description: 组件列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-09-24 14:53:46
+ * @LastEditTime: 2020-09-24 16:00:46
  */
 export default [
   {
@@ -32,6 +32,16 @@ export default [
         title: '雷达图',
         type: 'radarChart',
         pic: require('@/assets/img/compList/radar.png')
+      },
+      {
+        title: '散点图',
+        type: 'scatterChart',
+        pic: require('@/assets/img/compList/scatter.png')
+      },
+      {
+        title: '柱线双Y轴',
+        type: 'twoYAxisChart',
+        pic: require('@/assets/img/compList/twoYAxis.png')
       }
     ]
   },
