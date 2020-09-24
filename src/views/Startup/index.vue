@@ -2,7 +2,7 @@
  * @Description: 启动页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月24日 18:08:41
- * @LastEditTime: 2020-09-24 19:08:06
+ * @LastEditTime: 2020-09-24 19:16:58
 -->
 <template>
     <div class="startup"
@@ -16,7 +16,7 @@
                        @click="$router.push('Preview')"
                        round>作 品 预 览</el-button>
             <el-button type="primary"
-                       @click="$router.push('EditPanel')"
+                       @click="workEdit"
                        round>作 品 编 辑</el-button>
         </div>
         <footer>Copyright © 2020 by HuiSir</footer>
@@ -26,6 +26,28 @@
 <script>
 export default {
     name: 'Startup',
+    methods: {
+        workEdit() {
+            this.$confirm('请选择已保存的作品（文件后缀为.work）', '选择作品', {
+                confirmButtonText: '选择文件',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+                .then(() => {
+                    //读取文件操作
+                    //...
+                    //loading
+                    this.$loading({
+                        text: '读取中',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)',
+                    })
+                    //跳转传参
+                    this.$router.push('EditPanel')
+                })
+                .catch(() => {})
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>
