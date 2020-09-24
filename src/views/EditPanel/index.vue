@@ -2,7 +2,7 @@
  * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-22 17:33:29
+ * @LastEditTime: 2020-09-24 18:05:57
 -->
 <template>
     <div @contextmenu.prevent>
@@ -59,5 +59,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped>
-</style>
