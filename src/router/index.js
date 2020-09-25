@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2020-09-25 14:57:17
+ * @LastEditTime: 2020-09-25 18:33:07
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -31,15 +31,15 @@ const routes = [
     meta: {
       title: '编辑面板'
     }
+  },
+  {
+    path: '/Preview',
+    name: 'Preview',
+    meta: {
+      title: '预览页面'
+    },
+    component: () => import('@/views/Preview')
   }
-  // {
-  //   path: '/lineCharts',
-  //   name: 'lineCharts',
-  //   meta: {
-  //     title: '折线图'
-  //   },
-  //   component: () => import('@/views/demo/lineCharts.vue')
-  // },
 ]
 
 const router = new VueRouter({
