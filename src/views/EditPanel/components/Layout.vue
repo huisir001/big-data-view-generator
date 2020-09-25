@@ -2,7 +2,7 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-23 15:03:07
+ * @LastEditTime: 2020-09-25 18:25:10
 -->
 <template>
     <el-container>
@@ -72,7 +72,7 @@ $header-height: 50px;
     background: $menu-bg;
     overflow-x: hidden;
     overflow-y: auto;
-    transition: 0.5s;
+    transition: 0.3s;
     z-index: 1;
     &.hide {
         margin-left: -246px;
