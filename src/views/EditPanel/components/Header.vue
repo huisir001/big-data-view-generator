@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2020-09-22 16:23:00
+ * @LastEditTime: 2020-09-26 00:47:26
 -->
 <template>
     <div class="header">
@@ -14,6 +14,7 @@
         </div>
         <!-- 右侧菜单 -->
         <div class="right">
+            <span @click="$router.push('Preview')">预览</span>
             配置栏 <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
         </div>
     </div>

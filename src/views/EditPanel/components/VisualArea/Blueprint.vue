@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-25 18:06:11
+ * @LastEditTime: 2020-09-26 01:15:45
 -->
 <template>
     <div class="blueprint"
@@ -12,7 +12,7 @@
         <div v-for="(item,index) in layers"
              v-show="item.show"
              :key="index"
-             :class="{viewItem:true,act:item.active}"
+             :class="{viewItem:true,act:item.active,locked:item.locked}"
              :data-index="index"
              @mousemove.prevent="layerMove"
              @mousedown.prevent="layerClick"
@@ -81,6 +81,16 @@ export default {
         //选定图层
         activeLayers() {
             return this.layers.filter((item) => item.active)
+        },
+        //layer string
+        layerString() {
+            return JSON.stringify(this.layers)
+        },
+    },
+    watch: {
+        layerString(data) {
+            //实时存储
+            sessionStorage.setItem(`layers`, data)
         },
     },
     methods: {
@@ -244,6 +254,15 @@ export default {
         }
         &:hover {
             @include act;
+        }
+        &.locked {
+            border: none;
+            cursor: default;
+            &:hover {
+                border: none;
+                background-color: transparent;
+                opacity: 1;
+            }
         }
         &.act {
             @include act;
