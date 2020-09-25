@@ -2,16 +2,16 @@
  * @Description: 标准雷达图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月31日 10:59:20
- * @LastEditTime: 2020-09-07 16:45:32
+ * @LastEditTime: 2020-09-25 15:11:14
 -->
 <template>
     <div style="width:100%;height:100%"></div>
 </template>
 
 <script>
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'radarChart',
+    name: 'RadarChart',
     mixins: [common],
     props: {
         title: String, //标题，可有可无
@@ -19,7 +19,7 @@ export default {
         titleDiy: Object, //自定义标题格式
         radius: String, //雷达图大小，默认60%
         center: Array, //雷达图位置，默认['50%', '55%']
-		max:Number, //最大值
+        max: Number, //最大值
         maxValOffset: Number, //雷达图最大值偏移量，默认100
         showLegend: Boolean, //是否显示图例，默认不显示
         showAxisLabel: Boolean, //是否显示刻度值
@@ -72,9 +72,10 @@ export default {
                     },
                     indicator: cats.map((item, index) => {
                         item = { name: item }
-                        item.max = this.max ||
-                            (Math.max.apply(null, allDatas) +
-                            (this.maxValOffset || 100))
+                        item.max =
+                            this.max ||
+                            Math.max.apply(null, allDatas) +
+                                (this.maxValOffset || 100)
                         this.showAxisLabel &&
                             index > 0 &&
                             (item.axisLabel = { show: false }) //只显示一侧刻度

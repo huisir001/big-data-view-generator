@@ -202,7 +202,7 @@ import autoResize from '../../mixins/autoResize'
 import { getRanId, colorToRgba } from '@/utils/myUtils'
 
 export default {
-    name: 'borderBox11',
+    name: 'BorderBox11',
     mixins: [autoResize],
     props: {
         color: {

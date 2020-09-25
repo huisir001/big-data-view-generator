@@ -2,16 +2,16 @@
  * @Description: 标准仪表盘（当前只支持单表盘单指针图表）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月19日 12:00:03
- * @LastEditTime: 2020-09-07 14:48:58
+ * @LastEditTime: 2020-09-25 15:07:01
 -->
 <template>
     <div style="width:100%;height:100%"></div>
 </template>
 
 <script>
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'gaugeChart',
+    name: 'GaugeChart',
     mixins: [common],
     props: {
         title: String, //标题，可有可无

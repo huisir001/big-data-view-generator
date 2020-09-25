@@ -2,7 +2,7 @@
  * @Description: 环形进度图1
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月1日 17:01:10
- * @LastEditTime: 2020-09-07 16:54:26
+ * @LastEditTime: 2020-09-25 15:05:32
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -10,9 +10,9 @@
 
 <script>
 import echarts from 'echarts'
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'progressChart1',
+    name: 'ProgressChart1',
     mixins: [common],
     props: {
         title: String, //标题

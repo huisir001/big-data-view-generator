@@ -2,16 +2,16 @@
  * @Description: 双Y轴图表（暂支持柱图、线图，只支持数据轴双轴，不支持横向图）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-14 09:56:39
- * @LastEditTime: 2020-09-07 16:52:46
+ * @LastEditTime: 2020-09-25 15:11:43
 -->
 <template>
     <div style="width:100%;height:100%"></div>
 </template>
 
 <script>
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'twoYAxis',
+    name: 'TwoYAxis',
     mixins: [common],
     props: {
         twoYAxisOptions: Object, //类型及分轴配置，必传

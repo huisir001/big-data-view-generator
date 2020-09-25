@@ -43,7 +43,7 @@
 import autoResize from '../../mixins/autoResize'
 
 export default {
-    name: 'borderBox2',
+    name: 'BorderBox2',
     mixins: [autoResize],
     props: {
         color: {

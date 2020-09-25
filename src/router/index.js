@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2020-09-24 18:10:25
+ * @LastEditTime: 2020-09-25 14:57:17
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'

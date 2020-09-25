@@ -10,9 +10,9 @@
 
 <script>
 import echarts from 'echarts'
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'progressChart2',
+    name: 'ProgressChart2',
     mixins: [common],
     props: {
         title: String, //标题

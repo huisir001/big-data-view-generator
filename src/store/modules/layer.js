@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-09-23 16:13:33
+ * @LastEditTime: 2020-09-25 17:55:48
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -25,7 +25,8 @@ export default {
       layer.id = `L-${ranId}` //赋值id，若已有id会被覆盖
       layer.title += `_${ranId}` //图层初始标题用id区分
       layer.locked = false //解锁图层
-      layer.active = false //是否选定，默认未选定
+      state.layers.forEach(item => item.active && (item.active = false)) //移除之前已选定图层
+      layer.active = true //是否选定，默认刚新增的图层是选定的
       const NewLayer = {
         show: true, //图层显隐，默认显示
         zIndex: 99, //默认层级
@@ -33,6 +34,7 @@ export default {
         height: 200, //默认高
         ...layer
       }
+      //新增
       state.layers.push(NewLayer)
     },
     //删除图层

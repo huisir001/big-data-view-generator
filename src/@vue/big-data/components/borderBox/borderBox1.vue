@@ -2,7 +2,7 @@
  * @Description: 边框组件1
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月3日 16:07:04
- * @LastEditTime: 2020-09-25 11:07:48
+ * @LastEditTime: 2020-09-25 15:02:11
 -->
 <template>
     <div class="border-box-1">
@@ -59,7 +59,7 @@
 import autoResize from '../../mixins/autoResize'
 
 export default {
-    name: 'borderBox1',
+    name: 'BorderBox1',
     mixins: [autoResize],
     props: {
         color: {

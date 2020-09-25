@@ -2,10 +2,10 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-09-07 17:29:30
+ * @LastEditTime: 2020-09-25 14:24:03
  */
 import echarts from 'echarts'
-import '@/utils/echarts.theme' //自定义主题mytheme
+import '../utils/echarts.theme' //自定义主题mytheme
 import autoResize from './autoResize'
 
 export default {

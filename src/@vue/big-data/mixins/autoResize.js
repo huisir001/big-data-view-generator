@@ -2,12 +2,12 @@
  * @Description: resize及DOM样式变动监听器
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-02 17:32:53
- * @LastEditTime: 2020-09-04 10:27:43
+ * @LastEditTime: 2020-09-25 14:23:53
  */
 import {
   debounce, //防抖
   observerDomRestyle //监听DOM样式变动
-} from '@/utils/myUtils'
+} from '../utils/myUtils'
 
 export default {
   data() {

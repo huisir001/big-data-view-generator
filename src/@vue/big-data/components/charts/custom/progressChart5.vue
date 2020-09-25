@@ -10,9 +10,9 @@
 
 <script>
 import echarts from 'echarts'
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'progressChart5',
+    name: 'ProgressChart5',
     mixins: [common],
     props: {
         colors: Array, //自定义颜色

@@ -2,16 +2,16 @@
  * @Description: 标准散点图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月31日 16:59:34
- * @LastEditTime: 2020-09-07 16:47:40
+ * @LastEditTime: 2020-09-25 15:11:31
 -->
 <template>
     <div style="width:100%;height:100%"></div>
 </template>
 
 <script>
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'scatterChart',
+    name: 'ScatterChart',
     mixins: [common],
     props: {
         title: String, //标题，可有可无

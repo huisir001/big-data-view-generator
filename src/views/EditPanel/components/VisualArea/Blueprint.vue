@@ -2,25 +2,31 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-22 11:54:51
+ * @LastEditTime: 2020-09-25 18:06:11
 -->
 <template>
     <div class="blueprint"
          :style="blueprintStyle"
          @contextmenu.prevent="layerCtxMenu">
-        <!-- 图层渲染 -->
+        <!-- 图层渲染(采用动态组件) -->
         <div v-for="(item,index) in layers"
              v-show="item.show"
-             :class="{viewItem:true,act:item.active}"
              :key="index"
-             :data-id="item.id"
+             :class="{viewItem:true,act:item.active}"
              :data-index="index"
-             :data-type="item.type"
              @mousemove.prevent="layerMove"
              @mousedown.prevent="layerClick"
              @mouseup.prevent="layerClick"
              @mouseleave.prevent="layerLeave"
              :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
+            <!-- 位置标线 -->
+            <template v-if="item.active">
+                <div class="posLine-x"></div>
+                <div class="posLine-y"></div>
+            </template>
+            <!-- 组件 -->
+            <component :is="item.type"
+                       :staticData="aaa"></component>
         </div>
     </div>
 </template>
@@ -46,6 +52,10 @@ export default {
             layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0], //鼠标相对于图层的位置
             layerMoveState: false, //鼠标按下拖动状态
+            aaa: {
+                xAxis: ['罗娜', '田明', '贾平', '彭刚', '张洋', '叶丽'],
+                series: [{ data: [683, 542, 864, 279, 885, 916] }],
+            },
         }
     },
     computed: {
@@ -216,29 +226,37 @@ export default {
     box-shadow: #000 0 0 30px 0;
     .viewItem {
         position: absolute;
-        background: red;
-        border: 1px solid yellow;
         cursor: move;
-        @mixin act {
-            content: '';
-            display: block;
-            position: absolute;
-        }
+        border: 1px solid rgba(117, 242, 247, 0.2);
         $border-act: 1px dashed #0ff;
-        &.act {
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+        @mixin act {
             border: $border-act;
             background-color: rgba(115, 170, 229, 0.5);
             opacity: 0.9;
-            &::before {
-                @include act;
+        }
+        &:hover {
+            @include act;
+        }
+        &.act {
+            @include act;
+            .posLine-x {
+                position: absolute;
                 width: 1px;
                 height: 1000vh;
                 border-left: $border-act;
                 left: -1px;
                 bottom: 0;
             }
-            &::after {
-                @include act;
+            .posLine-y {
+                position: absolute;
                 width: 1000vw;
                 height: 1px;
                 border-top: $border-act;

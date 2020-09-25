@@ -2,7 +2,7 @@
  * @Description: 图层右键菜单(右键菜单)
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:19:54
- * @LastEditTime: 2020-09-22 11:49:26
+ * @LastEditTime: 2020-09-25 18:16:21
 -->
 <template>
     <div v-show="showLayerCtxMenu"
@@ -213,6 +213,17 @@ export default {
                     },
                 },
                 {
+                    name: '取消选定',
+                    icon: 'el-icon-thumb not',
+                    disabled: activeLayers.length == 0, //有选定图层
+                    func() {
+                        activeLayers.forEach((item) => {
+                            item.active = false //取消选定
+                            setLayer(item)
+                        })
+                    },
+                },
+                {
                     name: '隐藏选定',
                     icon: 'el-icon-view not',
                     disabled: activeLayers.length == 0, //有选定图层
@@ -285,7 +296,7 @@ export default {
                 background: transparent;
             }
         }
-        .el-icon-view.not::after {
+        [class^='el-icon-'].not::after {
             content: '—';
             font-size: 12px;
             transform: rotate(-45deg) translate(-11px, -6px);

@@ -2,7 +2,7 @@
  * @Description: 标准地图(当前只支持单数据地图)
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月28日 15:18:18
- * @LastEditTime: 2020-09-07 14:51:53
+ * @LastEditTime: 2020-09-25 15:07:30
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -10,9 +10,9 @@
 
 <script>
 import echarts from 'echarts'
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'mapChart',
+    name: 'MapChart',
     mixins: [common],
     props: {
         mapType: String, //必传，地申明图类型（多个地图不能重复）

@@ -2,7 +2,11 @@
  * @Description: 组件列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-09-24 16:00:46
+ * @LastEditTime: 2020-09-25 16:54:02
+ */
+
+/*
+ * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
  */
 export default [
   {
@@ -10,37 +14,37 @@ export default [
     list: [
       {
         title: '柱状图',
-        type: 'barChart',
+        type: 'BarChart',
         pic: require('@/assets/img/compList/bar.png')
       },
       {
         title: '折线图',
-        type: 'lineChart',
+        type: 'LineChart',
         pic: require('@/assets/img/compList/line.png')
       },
       {
         title: '饼图',
-        type: 'pieChart',
+        type: 'PieChart',
         pic: require('@/assets/img/compList/pie.png')
       },
       {
         title: '仪表盘',
-        type: 'gaugeChart',
+        type: 'GaugeChart',
         pic: require('@/assets/img/compList/gauge.png')
       },
       {
         title: '雷达图',
-        type: 'radarChart',
+        type: 'RadarChart',
         pic: require('@/assets/img/compList/radar.png')
       },
       {
         title: '散点图',
-        type: 'scatterChart',
+        type: 'ScatterChart',
         pic: require('@/assets/img/compList/scatter.png')
       },
       {
         title: '柱线双Y轴',
-        type: 'twoYAxisChart',
+        type: 'TwoYAxis',
         pic: require('@/assets/img/compList/twoYAxis.png')
       }
     ]

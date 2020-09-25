@@ -2,16 +2,16 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2020-09-07 14:47:49
+ * @LastEditTime: 2020-09-25 15:07:17
 -->
 <template>
     <div style="width:100%;height:100%"></div>
 </template>
 
 <script>
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'lineChart',
+    name: 'LineChart',
     mixins: [common],
     props: {
         title: String, //标题，可有可无

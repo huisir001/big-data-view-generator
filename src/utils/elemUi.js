@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-09-23 17:41:42
+ * @LastEditTime: 2020-09-25 14:57:31
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置

@@ -2,16 +2,16 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-09-07 16:43:41
+ * @LastEditTime: 2020-09-25 15:10:59
 -->
 <template>
     <div style="width:100%;height:100%"></div>
 </template>
 
 <script>
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'pieChart',
+    name: 'PieChart',
     mixins: [common],
     props: {
         title: String, //标题，可有可无
@@ -27,7 +27,7 @@ export default {
         labelInsideCats: Array, //标签在饼图内部的项目类型（一般嵌套图的内部的饼图标签显示在饼图内，这里若为嵌套图，已默认配置，故无需配置）
         selectedCats: Array, //默认选中的项目类型
         roseType: String, //是否为南丁格尔玫瑰图及其格式
-		labelLineLength:Number,	//标线引出线长度
+        labelLineLength: Number, //标线引出线长度
     },
     data() {
         return {}
@@ -59,11 +59,11 @@ export default {
                             ? this.labelFmt[index]
                             : this.labelFmt, //字符串模板
                 }
-				item.labelLine = {
-					normal:{  
-						length:this.labelLineLength || 10  //标线引出线长度,默认10
-					}  
-				}
+                item.labelLine = {
+                    normal: {
+                        length: this.labelLineLength || 10, //标线引出线长度,默认10
+                    },
+                }
                 item.itemStyle = {
                     emphasis: {
                         label: {

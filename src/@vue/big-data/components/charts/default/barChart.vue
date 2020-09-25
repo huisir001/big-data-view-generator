@@ -2,16 +2,16 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-09-07 14:47:56
+ * @LastEditTime: 2020-09-25 15:06:39
 -->
 <template>
     <div style="width:100%;height:100%"></div>
 </template>
 
 <script>
-import common from '@/components/mixin/charts.common'
+import common from '../../../mixins/charts.common'
 export default {
-    name: 'barChart',
+    name: 'BarChart',
     mixins: [common],
     props: {
         title: String, //标题，可有可无
@@ -40,10 +40,11 @@ export default {
         hideValAxisLine: Boolean, //隐藏数据轴轴线（申明即隐藏）
         hideValSplitLine: Boolean, //隐藏数据轴刻度分隔线（申明即隐藏）
         hideCatAxisLine: Boolean, //隐藏类型轴轴线（申明即隐藏）
-		catLabelRowLen:{ //类型轴类型名称每行字数（多少字换行）
-			type:Number,
-			default:4
-		}
+        catLabelRowLen: {
+            //类型轴类型名称每行字数（多少字换行）
+            type: Number,
+            default: 4,
+        },
     },
     data() {
         return {}
@@ -76,7 +77,7 @@ export default {
                             //数据标签
                             show: this.label,
                             position: this.labelPosition || 'top',
-							formatter: '{c}' + (this.valEnding || ''),
+                            formatter: '{c}' + (this.valEnding || ''),
                             textStyle: {
                                 fontSize: 10,
                             },
@@ -148,7 +149,8 @@ export default {
                         return item
                             .split('')
                             .map((v, i) => {
-                                if (i > 0 && (i + 1) % this.catLabelRowLen == 0) return v + '\n'
+                                if (i > 0 && (i + 1) % this.catLabelRowLen == 0)
+                                    return v + '\n'
                                 else return v
                             })
                             .join('')
