@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-26 01:15:45
+ * @LastEditTime: 2020-09-27 18:04:46
 -->
 <template>
     <div class="blueprint"
@@ -54,7 +54,10 @@ export default {
             layerMoveState: false, //鼠标按下拖动状态
             aaa: {
                 xAxis: ['罗娜', '田明', '贾平', '彭刚', '张洋', '叶丽'],
-                series: [{ data: [683, 542, 864, 279, 885, 916] }],
+                series: [
+                    { name: '名称', data: [683, 542, 864, 279, 885, 916] },
+                    { name: '名称2', data: [68, 54, 86, 27, 88, 91] },
+                ],
             },
         }
     },

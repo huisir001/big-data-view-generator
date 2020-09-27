@@ -2,10 +2,11 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2020-09-08 14:14:12
+ * @LastEditTime: 2020-09-27 14:36:09
  */
+
 //延时防抖
-export function debounce(callback, delay) {
+export const debounce = (callback, delay) => {
   let timeout
   return function(...args) {
     clearTimeout(timeout)
@@ -16,7 +17,7 @@ export function debounce(callback, delay) {
 }
 
 //监听DOM样式变化
-export function observerDomRestyle(dom, callback) {
+export const observerDomRestyle = (dom, callback) => {
   //兼容IE11
   const MutationObserver =
     window.MutationObserver ||
@@ -32,7 +33,7 @@ export function observerDomRestyle(dom, callback) {
 }
 
 //生成不重复ID
-export function getRanId(randomLength = 5) {
+export const getRanId = (randomLength = 5) => {
   return Number(
     Math.random()
       .toString()
@@ -41,7 +42,7 @@ export function getRanId(randomLength = 5) {
 }
 
 //16进制颜色转为RGBA格式
-export function colorToRgba(sHex, alpha = 1) {
+export const colorToRgba = (sHex, alpha = 1) => {
   // 十六进制颜色值的正则表达式
   const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/
   let sColor = sHex.toLowerCase()
@@ -61,5 +62,39 @@ export function colorToRgba(sHex, alpha = 1) {
     return 'rgba(' + sColorChange.join(',') + ',' + alpha + ')'
   } else {
     return sHex
+  }
+}
+
+//对象数据验证
+//typeObj:{a:Object,b:Boolean,c:[Number,String]}
+//testObj:{a:1,b:true}
+export const ObjVerify = (typeObj, testObj) => {
+  //循环判断
+  for (key in testObj) {
+    let item = testObj[key],
+      curType = typeObj[key]
+
+    //多个类型（数组）
+    if (curType instanceof Array) {
+      let temp = []
+      curType.forEach(type => {
+        temp.push(item.constructor == type)
+      })
+      if (!temp.includes(true)) {
+        //错误提示
+        console.error(
+          `[Object type error]: type check failed for prop ${key}. Expected ${curType
+            .map(item => item.name)
+            .join('/')}, got ${item.constructor.name}.`
+        )
+      }
+    }
+    //单个类型
+    else if (item.constructor != curType) {
+      //错误提示
+      console.error(
+        `[Object type error]: type check failed for prop ${key}. Expected ${curType.name}, got ${item.constructor.name}.`
+      )
+    }
   }
 }
