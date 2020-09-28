@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-09-27 17:59:06
+ * @LastEditTime: 2020-09-28 14:29:25
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -12,7 +12,7 @@ class Config {
   constructor(options = {}) {
     const optionsTypeObj = {
       chartData: [Object, Array], //图表数据
-      title: String, //标题，可有可无
+      title: String, //标题，可有可无,若没有则为""
       valEnding: String, //值的结尾，比如"%"，默认为空
       xName: String, //x轴名，可有可无
       yName: String, //y轴名，可有可无
@@ -20,6 +20,7 @@ class Config {
       top: String, //上边距
       right: String, //右边距
       bottom: String, //下边距
+      showLegend: Boolean, //显示图例
       barWidth: String, //柱粗
       stack: [Array, Boolean], //是否堆叠，堆叠的项目有哪些，stack为true时所有柱子都堆叠在一柱上，且不考虑堆叠的类型名
       horizontal: Boolean, //是否横向，声明即横向
@@ -40,19 +41,23 @@ class Config {
       showCatAxisLine: Boolean, //显示类型轴轴线
       catLabelRowLen: Number //类型轴类型名称每行字数（多少字换行）
     }
+
+    //类型验证
+    ObjVerify(optionsTypeObj, options)
+
     //默认配置
     this.defaultOptions = {
-      chartData: mockData,
-      title: '标准柱状图',
+      [Object.keys(options).length == 0 && 'chartData']: mockData, //没有配置项时给一个预览数据
       valEnding: '',
       xName: '',
       yName: '',
       barWidth: '20%',
+      labelPosition: 'top',
+      showLegend: true,
       stack: false,
+      label: false,
       horizontal: false,
       barBorderRadius: 0,
-      label: false,
-      labelPosition: 'top',
       axisDegreeScope: {},
       showValAxisLabel: true,
       showValAxisLine: true,
@@ -60,8 +65,6 @@ class Config {
       showCatAxisLine: true,
       catLabelRowLen: 4
     }
-    //类型验证
-    ObjVerify(optionsTypeObj, options)
     this.options = Object.assign(this.defaultOptions, options)
   }
 

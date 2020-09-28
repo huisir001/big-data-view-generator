@@ -2,7 +2,7 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2020-09-27 09:49:40
+ * @LastEditTime: 2020-09-28 10:53:59
 -->
 <template>
     <div class="container">
@@ -14,9 +14,7 @@
                  class="viewItem"
                  :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
                 <!-- 组件 -->
-                <component :is="item.type"
-                           title="标准多柱"
-                           :staticData="aaa"></component>
+                <component :is="item.type"></component>
             </div>
         </div>
     </div>
@@ -33,13 +31,6 @@ export default {
         return {
             layers: JSON.parse(sessionStorage.getItem(`layers`)),
             transform: 'scale(1) translate(-50%,-50%)',
-            aaa: {
-                xAxis: ['罗娜', '田明', '贾平', '彭刚', '张洋', '叶丽'],
-                series: [
-                    { name: '名称', data: [683, 542, 864, 279, 885, 916] },
-                    { name: '名称2', data: [68, 54, 86, 27, 88, 91] },
-                ],
-            },
         }
     },
     computed: {

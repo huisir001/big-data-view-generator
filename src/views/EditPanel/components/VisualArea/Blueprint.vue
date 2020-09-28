@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-27 18:04:46
+ * @LastEditTime: 2020-09-28 11:58:04
 -->
 <template>
     <div class="blueprint"
@@ -25,8 +25,7 @@
                 <div class="posLine-y"></div>
             </template>
             <!-- 组件 -->
-            <component :is="item.type"
-                       :staticData="aaa"></component>
+            <component :is="item.type"></component>
         </div>
     </div>
 </template>
@@ -52,13 +51,6 @@ export default {
             layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0], //鼠标相对于图层的位置
             layerMoveState: false, //鼠标按下拖动状态
-            aaa: {
-                xAxis: ['罗娜', '田明', '贾平', '彭刚', '张洋', '叶丽'],
-                series: [
-                    { name: '名称', data: [683, 542, 864, 279, 885, 916] },
-                    { name: '名称2', data: [68, 54, 86, 27, 88, 91] },
-                ],
-            },
         }
     },
     computed: {
