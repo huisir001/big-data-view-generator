@@ -2,7 +2,7 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-09-28 14:51:25
+ * @LastEditTime: 2020-09-29 18:02:02
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme
@@ -25,11 +25,8 @@ export default {
     }
   },
   computed: {
-    myConfig() {
-      return new this.Config(this.options)
-    },
-    chartData() {
-      return this.myConfig.options.chartData
+    myOptions() {
+      return new this.Config(this.options).options
     },
     jsonStrOptions() {
       //转下字符串以防无法监听
@@ -42,7 +39,6 @@ export default {
     }
   },
   mounted() {
-    // this.$emit('getDefaultOptions', this.myConfig.defaultOptions)
     this.initChart() //初始化chart
   },
   methods: {
@@ -71,9 +67,9 @@ export default {
 
     /* chart渲染 */
     chartRender() {
-      const { myChart, getEchartsOptions, chartData } = this
+      const { myChart, getEchartsOptions } = this
       myChart.hideLoading()
-      myChart.setOption(getEchartsOptions(chartData))
+      myChart.setOption(getEchartsOptions())
     },
 
     /* 窗口缩放后重新调整图标尺寸 */
