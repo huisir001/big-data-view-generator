@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-09-28 14:29:25
+ * @LastEditTime: 2020-09-29 17:50:17
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -45,9 +45,15 @@ class Config {
     //类型验证
     ObjVerify(optionsTypeObj, options)
 
+    //数据为必传项，这里验证一下
+    const optionsLen = Object.keys(options).length
+    if (optionsLen > 0 && !options.chartData) {
+      throw new Error('Lack of data, Please send "chartData".')
+    }
+
     //默认配置
     this.defaultOptions = {
-      [Object.keys(options).length == 0 && 'chartData']: mockData, //没有配置项时给一个预览数据
+      [optionsLen == 0 && 'chartData']: mockData, //没有配置项时给一个预览数据
       valEnding: '',
       xName: '',
       yName: '',
