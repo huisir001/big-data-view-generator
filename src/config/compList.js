@@ -2,9 +2,9 @@
  * @Description: 组件列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-09-29 18:18:26
+ * @LastEditTime: 2020-09-29 18:20:24
  */
-import barchart from './defaultOptions/barchart'
+import barChart from './defaultOptions/barChart'
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
  */
@@ -16,7 +16,7 @@ export default [
         title: '柱状图',
         type: 'BarChart',
         pic: require('@/assets/img/compList/bar.png'),
-        defaultOptions: barchart
+        defaultOptions: barChart
       },
       {
         title: '折线图',
