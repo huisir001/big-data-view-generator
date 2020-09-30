@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-09-25 14:57:31
+ * @LastEditTime: 2020-09-30 16:30:26
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -17,6 +17,10 @@ import {
   CollapseItem,
   Tabs,
   TabPane,
+  Form,
+  FormItem,
+  Input,
+  InputNumber,
   // Card,
   // Row,
   // Col,
@@ -44,6 +48,10 @@ Vue.use(Container)
   .use(CollapseItem)
   .use(Tabs)
   .use(TabPane)
+  .use(Form)
+  .use(FormItem)
+  .use(Input)
+  .use(InputNumber)
   // .use(Card)
   // .use(Row)
   // .use(Col)

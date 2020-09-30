@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-09-28 14:26:46
+ * @LastEditTime: 2020-09-30 16:19:08
 -->
 <template>
     <div class="compLibrary">
@@ -18,6 +18,8 @@
                          :key="i"
                          :data-type="comp.type"
                          :data-title="comp.title"
+                         :data-index="i"
+                         :data-category="item.category"
                          @mousedown.prevent="compItemDown"
                          @mouseup.prevent="compItemDown">
                         <div class="title">{{comp.title}}</div>
@@ -108,6 +110,12 @@ export default {
                             (cx - vx) / blueprintScale,
                             (cy - vy) / blueprintScale,
                         ],
+                        defaultOptions: this.compList.find(
+                            (item) =>
+                                item.category ==
+                                cloneItem.getAttribute('data-category')
+                        ).list[cloneItem.getAttribute('data-index')]
+                            .defaultOptions,
                     })
                 }
                 // 移除克隆dom

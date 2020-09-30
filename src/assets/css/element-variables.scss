@@ -25,9 +25,12 @@
     .el-drawer {
         width: 100% !important;
         background-color:  $menu-bg;
-        border-top: 1px solid $boder-color;
         border-left: 1px solid $boder-color;
     }
+}
+.el-drawer__header{
+    margin-bottom: 0;
+    padding: 0;
 }
 
 //折叠面板

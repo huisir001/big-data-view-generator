@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-09-30 11:39:46
+ * @LastEditTime: 2020-09-30 16:43:56
 -->
 <template>
     <el-form-item :label="param.label"
@@ -25,9 +25,7 @@ export default {
     data() {
         return {}
     },
-    mounted() {
-        console.log(this.param)
-    },
+    mounted() {},
     computed: {},
     methods: {},
 }

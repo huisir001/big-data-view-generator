@@ -14,6 +14,6 @@ export default {
   title: {
     compType: 'input',
     label: '图表标题',
-    value: ``
+    value: `2121`
   }
 }
