@@ -2,9 +2,9 @@
  * @Description: 组件列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-09-29 18:20:24
+ * @LastEditTime: 2020-09-30 09:43:55
  */
-import barChart from './defaultOptions/barChart'
+import barChart from './defaultOptions/charts/barChart'
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
  */
