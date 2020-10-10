@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-09-28 14:27:08
+ * @LastEditTime: 2020-10-10 17:42:09
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -91,6 +91,11 @@ export default {
       state.copyLayer = null
     }
   },
-  getters: {},
+  getters: {
+    //选定图层
+    activeLayers: state => state.layers.filter(item => item.active),
+    //转string 防止watch监听失效
+    layerString: state => JSON.stringify(state.layers)
+  },
   actions: {}
 }

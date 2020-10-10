@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-28 11:58:04
+ * @LastEditTime: 2020-10-10 17:47:11
 -->
 <template>
     <div class="blueprint"
@@ -41,6 +41,7 @@ const {
 const {
     mapState: mapStateLayer,
     mapMutations: mapMutationLayer,
+    mapGetters: mapGettersLayer,
 } = createNamespacedHelpers('layer')
 export default {
     name: 'Blueprint',
@@ -62,6 +63,7 @@ export default {
             'showLayerCtxMenu',
         ]), //系统信息
         ...mapStateLayer(['layers']), //图层信息,已选定图层
+        ...mapGettersLayer(['activeLayers', 'layerString']), //选定图层、layer string
         blueprintStyle() {
             const { screenSize, blueprintPos, blueprintScale } = this
             return {
@@ -72,14 +74,6 @@ export default {
                 transform: `scale(${blueprintScale})`,
                 // backgroundImage: 'url(assets/img/bg.jpg)',
             }
-        },
-        //选定图层
-        activeLayers() {
-            return this.layers.filter((item) => item.active)
-        },
-        //layer string
-        layerString() {
-            return JSON.stringify(this.layers)
         },
     },
     watch: {

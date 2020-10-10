@@ -2,7 +2,7 @@
  * @Description: 配置项面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 10:55:08
- * @LastEditTime: 2020-09-30 16:41:27
+ * @LastEditTime: 2020-10-10 17:05:07
 -->
 <template>
     <el-drawer direction="rtl"
@@ -30,7 +30,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import FormOptions from '@/components/FormOptions'
+import FormOptions from '@/components/FormOptions' //图层配置栏-表单项组件
 const {
     mapState: mapStateLayer,
     mapMutations: mapMutationLayer,
