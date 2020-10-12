@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-10-10 17:47:11
+ * @LastEditTime: 2020-10-12 11:29:10
 -->
 <template>
     <div class="blueprint"
@@ -24,8 +24,9 @@
                 <div class="posLine-x"></div>
                 <div class="posLine-y"></div>
             </template>
-            <!-- 组件 -->
-            <component :is="item.type"></component>
+            <!-- 动态组件 -->
+            <component :is="item.type"
+                       :options="item.compOptions"></component>
         </div>
     </div>
 </template>

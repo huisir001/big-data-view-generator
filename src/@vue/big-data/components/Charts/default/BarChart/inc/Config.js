@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-09-29 17:50:17
+ * @LastEditTime: 2020-10-12 17:45:40
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -45,10 +45,13 @@ class Config {
     //类型验证
     ObjVerify(optionsTypeObj, options)
 
-    //数据为必传项，这里验证一下
+    //数据为必传项，这里验证一下(当父组件传options参数的时候)
+    //若未传options参数，这里不验证，直接给默认值
     const optionsLen = Object.keys(options).length
     if (optionsLen > 0 && !options.chartData) {
-      throw new Error('Lack of data, Please send "chartData".')
+      throw new Error(
+        'Lack of data, Please send "chartData" in parent component.'
+      )
     }
 
     //默认配置

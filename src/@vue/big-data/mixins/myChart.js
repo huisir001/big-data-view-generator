@@ -2,7 +2,7 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-09-29 18:02:02
+ * @LastEditTime: 2020-10-12 17:48:49
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme

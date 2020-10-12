@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2020-09-22 16:25:45
+ * @LastEditTime: 2020-10-12 17:03:16
  */
 export default {
   namespaced: true,
@@ -105,8 +105,8 @@ export default {
           func(e)
         })
         //阻止默认事件
-        e.preventDefault()
-        return false
+        // e.preventDefault()
+        // return false
       }
     }
   },

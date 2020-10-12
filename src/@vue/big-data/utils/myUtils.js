@@ -2,7 +2,7 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2020-09-27 14:36:09
+ * @LastEditTime: 2020-10-12 09:52:51
  */
 
 //延时防抖
@@ -70,9 +70,17 @@ export const colorToRgba = (sHex, alpha = 1) => {
 //testObj:{a:1,b:true}
 export const ObjVerify = (typeObj, testObj) => {
   //循环判断
-  for (key in testObj) {
+  for (let key in testObj) {
     let item = testObj[key],
       curType = typeObj[key]
+
+    //错误提示(不存在此参数)
+    if (!curType) {
+      console.error(
+        `[Object type error]: type check failed for prop "${key}". prop do not exist in the current chart.`
+      )
+      return
+    }
 
     //多个类型（数组）
     if (curType instanceof Array) {
@@ -83,9 +91,9 @@ export const ObjVerify = (typeObj, testObj) => {
       if (!temp.includes(true)) {
         //错误提示
         console.error(
-          `[Object type error]: type check failed for prop ${key}. Expected ${curType
+          `[Object type error]: type check failed for prop "${key}". Expected "${curType
             .map(item => item.name)
-            .join('/')}, got ${item.constructor.name}.`
+            .join('/')}", got "${item.constructor.name}".`
         )
       }
     }
@@ -93,7 +101,7 @@ export const ObjVerify = (typeObj, testObj) => {
     else if (item.constructor != curType) {
       //错误提示
       console.error(
-        `[Object type error]: type check failed for prop ${key}. Expected ${curType.name}, got ${item.constructor.name}.`
+        `[Object type error]: type check failed for prop "${key}". Expected "${curType.name}", got "${item.constructor.name}".`
       )
     }
   }

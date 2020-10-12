@@ -2,16 +2,18 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-10-10 18:02:46
+ * @LastEditTime: 2020-10-12 16:09:33
  */
-export default {
-  chartData: {
+export default [
+  {
+    key: 'chartData',
     compType: 'input',
     label: '图表数据值',
     inputType: 'textarea'
   },
-  title: {
+  {
+    key: 'title',
     compType: 'input',
     label: '图表标题'
   }
-}
+]
