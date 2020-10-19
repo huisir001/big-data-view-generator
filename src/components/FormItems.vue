@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-10-19 17:03:33
+ * @LastEditTime: 2020-10-19 17:46:17
 -->
 <template>
     <el-form-item :label="formItemOption.label"
@@ -14,6 +14,9 @@
                       :placeholder="formItemOption.placeholder || ''"
                       :disabled="formItemOption.disabled || false"
                       :type="formItemOption.inputType || 'text'"
+                      :maxlength="formItemOption.maxlength || false"
+                      resize="none"
+                      show-word-limit
                       :autosize="{ minRows: 3, maxRows:10 }"></el-input>
         </template>
     </el-form-item>
@@ -36,7 +39,7 @@ export default {
                     const compOptionVal = activeLayer.compOptions[optionKey]
                     return activeLayer &&
                         stringifyOptionKeys.includes(optionKey)
-                        ? JSON.stringify(compOptionVal)
+                        ? JSON.stringify(compOptionVal, null, 2) //格式化json，2个空格缩进
                         : compOptionVal
                 } catch (error) {
                     console.error(

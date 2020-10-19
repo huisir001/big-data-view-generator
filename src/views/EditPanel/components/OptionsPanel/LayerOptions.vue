@@ -2,10 +2,10 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-10-12 17:26:52
+ * @LastEditTime: 2020-10-19 17:30:09
 -->
 <template>
-    <div>
+    <div class="layerOptionsBox">
         <template v-if="activeLayers.length==1">
             <FormItems v-for="(item,index) in activeLayers[0].formControlOptions"
                        :key="index"
@@ -30,3 +30,8 @@ export default {
     },
 }
 </script>
+<style lang="scss" scoped>
+.layerOptionsBox {
+    padding: 15px;
+}
+</style>
