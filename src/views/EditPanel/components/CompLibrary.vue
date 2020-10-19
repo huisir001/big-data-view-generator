@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-10-12 11:19:31
+ * @LastEditTime: 2020-10-19 17:02:02
 -->
 <template>
     <div class="compLibrary">
@@ -106,6 +106,7 @@ export default {
                     const curCompListItem = this.compList.find(
                         (item) => item.category == getAttr('data-category')
                     ).list[getAttr('data-index')]
+
                     addLayer({
                         type: getAttr('data-type'), //组件类型
                         title: getAttr('data-title'), //组件标题
@@ -114,7 +115,9 @@ export default {
                             (cx - vx) / blueprintScale,
                             (cy - vy) / blueprintScale,
                         ],
-                        compOptions: curCompListItem.compOptions, //组件实际参数
+                        compOptions: JSON.parse(
+                            JSON.stringify(curCompListItem.compOptions) //字符串中转，防止对象引用而影响数据修改后引用对象随之修改的bug
+                        ), //组件实际参数
                         formControlOptions: curCompListItem.formControlOptions, //控制面板表单参数
                     })
                 }

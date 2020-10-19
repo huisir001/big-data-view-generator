@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-10-12 17:51:46
+ * @LastEditTime: 2020-10-19 17:03:33
 -->
 <template>
     <el-form-item :label="formItemOption.label"
@@ -19,7 +19,6 @@
     </el-form-item>
 </template>
 <script>
-/* 待解决问题：修改form表单只修改对应的图层非所有图层、表单中的数据只显示原始数据，非图表重构数据 */
 export default {
     name: 'FormItems',
     props: ['optionKey', 'formItemOption', 'activeLayer'],
@@ -32,20 +31,33 @@ export default {
     computed: {
         formModelVal: {
             get() {
-                const { optionKey, activeLayer, stringifyOptionKeys } = this
-                const compOptionVal = activeLayer.compOptions[optionKey]
-                return activeLayer && stringifyOptionKeys.includes(optionKey)
-                    ? JSON.stringify(compOptionVal)
-                    : compOptionVal
+                try {
+                    const { optionKey, activeLayer, stringifyOptionKeys } = this
+                    const compOptionVal = activeLayer.compOptions[optionKey]
+                    return activeLayer &&
+                        stringifyOptionKeys.includes(optionKey)
+                        ? JSON.stringify(compOptionVal)
+                        : compOptionVal
+                } catch (error) {
+                    console.error(
+                        '[Options error]: Check the content format in the configuration form is correct.'
+                    )
+                }
             },
             set(value) {
-                const { optionKey, activeLayer, stringifyOptionKeys } = this
-                const optionVal =
-                    activeLayer && stringifyOptionKeys.includes(optionKey)
-                        ? JSON.parse(value)
-                        : value
-                this.activeLayer.compOptions[optionKey] = optionVal
-                this.$store.commit('layer/setLayer', this.activeLayer)
+                try {
+                    const { optionKey, activeLayer, stringifyOptionKeys } = this
+                    const optionVal =
+                        activeLayer && stringifyOptionKeys.includes(optionKey)
+                            ? JSON.parse(value)
+                            : value
+                    this.activeLayer.compOptions[optionKey] = optionVal
+                    this.$store.commit('layer/setLayer', this.activeLayer)
+                } catch (error) {
+                    console.error(
+                        '[Options error]: Check the content format in the configuration form is correct.'
+                    )
+                }
             },
         },
     },

@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-10-12 17:41:40
+ * @LastEditTime: 2020-10-19 15:46:44
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -54,13 +54,16 @@ export default {
                 showLegend,
             } = this.myOptions
 
-            let { xAxis, series } = chartData
+            const { xAxis, series } = chartData
+
+            //使用字符串方式对对象进行复制（非引用）,以防止图层状态中的option数据易值
+            let mySeries = JSON.parse(JSON.stringify(series))
 
             //所有数据 方便计算最大值
             let allDatas = []
 
             //配置柱图格式
-            series.forEach((item) => {
+            mySeries.forEach((item) => {
                 allDatas = allDatas.concat(item.data)
                 item.type = 'bar'
                 item.barWidth = barWidth
@@ -175,7 +178,7 @@ export default {
                         splitLine: { show: showValSplitLine }, //刻度分割线
                     },
                 ],
-                series,
+                series: mySeries,
                 [dataZoom && 'dataZoom']: [
                     //这里默认只支持单个滚动条
                     {

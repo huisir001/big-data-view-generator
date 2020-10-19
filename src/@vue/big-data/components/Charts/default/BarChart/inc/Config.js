@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-10-12 17:45:40
+ * @LastEditTime: 2020-10-19 15:33:52
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -74,6 +74,7 @@ class Config {
       showCatAxisLine: true,
       catLabelRowLen: 4
     }
+
     this.options = Object.assign(this.defaultOptions, options)
   }
 
