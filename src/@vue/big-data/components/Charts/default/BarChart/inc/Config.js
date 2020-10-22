@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-10-19 15:33:52
+ * @LastEditTime: 2020-10-22 11:46:00
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'

@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-10-19 15:46:44
+ * @LastEditTime: 2020-10-22 11:55:24
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -131,7 +131,13 @@ export default {
                                   10 +
                               valEnding.length * 10), //纵向柱图根据最大值位数计算宽度
                     y: top || (title ? 70 : 50),
-                    x2: right || (dataZoom && dataZoom.yAxisIndex ? 48 : 10),
+                    x2:
+                        right ||
+                        (dataZoom && dataZoom.yAxisIndex
+                            ? 48
+                            : xName
+                            ? 30
+                            : 10),
                     y2: bottom || (dataZoom && dataZoom.xAxisIndex ? 45 : 30),
                 },
                 //是否横向判断
@@ -168,6 +174,9 @@ export default {
                                   .map((word) => word + '\n')
                                   .join('') //纵排x轴名称
                             : yName,
+                        nameTextStyle: {
+                            align: 'right', //y轴名称位置
+                        },
                         axisLabel: {
                             //刻度
                             show: showValAxisLabel, //数据轴刻度是否显示

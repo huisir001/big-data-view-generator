@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-10-12 16:24:51
+ * @LastEditTime: 2020-10-22 11:58:57
  */
 import common from './common'
 export default {
@@ -16,5 +16,11 @@ export default {
       { name: '产品4', data: [238, 722, 785, 182] }
     ]
   },
+  xName: '',
+  yName: '',
+  left: '',
+  top: '',
+  right: '',
+  bottom: '',
   ...common
 }
