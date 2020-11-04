@@ -2,14 +2,16 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-10-22 12:00:03
+ * @LastEditTime: 2020-11-04 11:24:04
  */
 export default [
   {
     key: 'chartData',
     compType: 'input',
     label: '图表数据值',
-    inputType: 'textarea'
+    inputType: 'textarea',
+    readonly: true,
+    showBtnGroup: true
   },
   {
     key: 'title',

@@ -2,11 +2,12 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-10-19 17:30:09
+ * @LastEditTime: 2020-11-04 14:42:54
 -->
 <template>
     <div class="layerOptionsBox">
         <template v-if="activeLayers.length==1">
+            <!-- 表单项，activeLayer为当前编辑图层（第一个已激活图层，暂不支持多图层编辑） -->
             <FormItems v-for="(item,index) in activeLayers[0].formControlOptions"
                        :key="index"
                        :formItemOption="item"
@@ -18,7 +19,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import FormItems from '@/components/FormItems' //图层配置栏-表单项组件
+import FormItems from './inc/FormItems' //图层配置栏-表单项组件
 const { mapGetters } = createNamespacedHelpers('layer')
 export default {
     name: 'LayerOptions',

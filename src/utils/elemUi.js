@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-09-30 16:30:26
+ * @LastEditTime: 2020-11-04 11:00:31
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -32,6 +32,7 @@ import {
   // MenuItem,
   // MenuItemGroup,
   Button,
+  ButtonGroup,
   Message,
   MessageBox,
   Loading
@@ -63,6 +64,7 @@ Vue.use(Container)
   // .use(MenuItem)
   // .use(MenuItemGroup)
   .use(Button)
+  .use(ButtonGroup)
   .use(Loading.directive) //指令方式加载loading(在组件上使用v-loading)
 //.use(Message)
 //.use(MessageBox)

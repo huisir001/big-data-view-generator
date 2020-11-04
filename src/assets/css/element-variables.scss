@@ -51,7 +51,7 @@
 .el-input .el-input__count .el-input__count-inner,.el-textarea .el-input__count { //字数限制样式
     background: transparent;
 }
-.el-textarea.el-input--small.el-input--suffix{
+.el-textarea{
     /* 设置滚动条的样式 */
 	::-webkit-scrollbar{
         width: 8px;
@@ -70,6 +70,12 @@
     ::-webkit-scrollbar-thumb:window-inactive {
         background:#202a32;
     }
+}
+//禁用表单
+.el-textarea.is-disabled .el-textarea__inner {
+    background-color: #33434f;
+    border-color: #000000;
+    color: #d7dde9;
 }
 
 //折叠面板
@@ -109,5 +115,33 @@ $font-color: #fff;
     color: $font-color;
     &.is-active,&:hover {
         color: #91c0f4;
+    }
+}
+
+//按钮
+.el-button--mini {
+    padding: 3px 8px;
+}
+.el-button--info,.el-button--info:active,.el-button--info:focus {
+    color: #FFFFFF;
+    background-color: #1c252c;
+    background: #1c252c;
+    border-color: #989ca4;
+}
+
+//弹框
+.myMessageBox {
+    background-color: #212528;
+    width: 500px;
+    .el-message-box__title {
+        color: #b1b4bc;
+    }
+    .el-message-box__content {
+        padding: 8px 15px;
+        color: #979aa3;
+        .el-textarea__inner{
+            height: 200px;
+            resize:none;
+        }
     }
 }

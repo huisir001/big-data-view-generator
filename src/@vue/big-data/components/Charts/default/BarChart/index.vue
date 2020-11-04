@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-10-22 11:55:24
+ * @LastEditTime: 2020-11-04 10:13:03
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -112,7 +112,9 @@ export default {
                 },
                 legend: {
                     show: showLegend,
-                    right: 35,
+                    right:
+                        right ||
+                        (dataZoom && dataZoom.yAxisIndex ? 48 : xName ? 25 : 8),
                     y: title ? 37 : 10,
                 },
                 [visualMap && 'visualMap']: visualMap, //视觉映射
