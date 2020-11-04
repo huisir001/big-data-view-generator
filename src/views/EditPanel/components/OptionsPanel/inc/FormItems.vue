@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-04 16:54:21
+ * @LastEditTime: 2020-11-04 17:12:08
 -->
 <template>
     <el-form-item :label="formItemOption.label"
@@ -105,7 +105,7 @@ export default {
         },
         //编辑
         formItemEdit() {
-            this.$alert('请确保代码格式正确', '数据代码编辑', {
+            this.$alert('请确保 JSON格式 及 数据结构 正确', '数据代码编辑', {
                 customClass: 'myMessageBox',
                 showCancelButton: true,
                 confirmButtonText: '确定',
