@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-04 10:13:03
+ * @LastEditTime: 2020-11-05 11:35:55
 -->
 <template>
     <div style="width:100%;height:100%"></div>
