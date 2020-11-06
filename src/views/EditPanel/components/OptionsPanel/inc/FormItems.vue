@@ -2,11 +2,11 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-06 11:46:58
+ * @LastEditTime: 2020-11-06 17:15:00
 -->
 <template>
     <el-form-item :label="formItemOption.label"
-                  class="formOptions">
+                  :class="`formOptions${formItemOption.labelOnTop && ' labelOnTop'}`">
         <!-- 输入框 -->
         <template v-if="formItemOption.compType=='input'">
             <el-input class="inputBox"
@@ -46,6 +46,67 @@
                        :step="formItemOption.step || 1"></el-slider>
             <div class="sliderValLabel">{{formModelVal}}</div>
         </template>
+
+        <!-- 开关 -->
+        <template v-if="formItemOption.compType=='switch'">
+            <el-switch v-model="formModelVal"
+                       active-color="#409EFF"
+                       inactive-color="#ff4949">
+            </el-switch>
+        </template>
+
+        <!-- 单颜色选择器 -->
+        <template v-if="formItemOption.compType=='color'">
+            <el-color-picker v-model="formModelVal"
+                             size="mini"></el-color-picker>
+        </template>
+
+        <!-- 多颜色选择器 -->
+        <template v-if="formItemOption.compType=='colors'">
+            <table class="formItemTable">
+                <thead>
+                    <tr>
+                        <th>基础</th>
+                        <th>渐变</th>
+                        <th>是否渐变</th>
+                        <th>渐变范围</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,index) in colorsTableData"
+                        :key="index">
+                        <td width="45">
+                            <el-color-picker v-model="item.color"
+                                             size="mini"></el-color-picker>
+                        </td>
+                        <td width="45">
+                            <el-color-picker v-model="item.gdColor"
+                                             size="mini"></el-color-picker>
+                        </td>
+                        <td>
+                            <el-switch v-model="item.isGradient"
+                                       active-color="#409EFF"
+                                       inactive-color="#ff4949">
+                            </el-switch>
+                        </td>
+                        <td>
+                            <el-slider v-model="item.gdScope"
+                                       range
+                                       show-stops
+                                       :step="0.1"
+                                       :max="1">
+                            </el-slider>
+                        </td>
+                        <td>
+                            <el-button size="mini"
+                                       type="danger"
+                                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
     </el-form-item>
 </template>
 <script>
@@ -55,6 +116,20 @@ export default {
     data() {
         return {
             stringifyOptionKeys: ['chartData'], //需要转字符串显示在表单中的参数项
+            colorsTableData: [
+                {
+                    color: '#409EFF',
+                    gdColor: '#ff4949',
+                    isGradient: false,
+                    gdScope: [0, 1],
+                },
+                {
+                    color: '#409EFF',
+                    gdColor: '#ff4949',
+                    isGradient: false,
+                    gdScope: [0, 1],
+                },
+            ],
         }
     },
     mounted() {},
@@ -191,5 +266,37 @@ export default {
     border: 1px solid #000000;
     border-radius: 2px;
     height: 24px;
+}
+</style>
+<style lang="scss">
+.labelOnTop {
+    display: flex;
+    flex-direction: column;
+    .el-form-item__content {
+        margin-left: 0 !important;
+    }
+}
+.formItemTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+    td,
+    th {
+        border: 1px solid #000;
+        color: #fff;
+        height: 30px;
+    }
+    thead th {
+        background-color: #33434f;
+        font-size: 12px;
+    }
+    tr {
+        background: #161f28;
+    }
+    .el-slider__runway {
+        width: calc(100% - 20px);
+        margin-left: 10px;
+    }
 }
 </style>

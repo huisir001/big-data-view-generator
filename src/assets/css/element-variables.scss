@@ -68,6 +68,13 @@
         background:#202a32;
     }
 }
+.el-form-item--small .el-form-item__content {
+    line-height: 18px;
+    //开关
+    &>.el-switch{
+        margin-top: 6px;
+    }
+}
 //滑块
 .el-slider__runway{
     height: 8px;
@@ -84,6 +91,16 @@
 .el-slider__button {
     width: 14px;
     height: 14px;
+}
+//颜色选择器
+.el-color-picker--mini {
+    height: 26px;
+    margin-top: 3px;
+}
+.el-color-picker--mini .el-color-picker__trigger {
+    height: 26px;
+    width: 26px;
+    padding: 2px;
 }
 
 //禁用表单

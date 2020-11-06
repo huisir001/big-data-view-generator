@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-11-06 10:08:11
+ * @LastEditTime: 2020-11-06 17:14:31
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -22,6 +22,9 @@ import {
   Input,
   InputNumber,
   Slider,
+  ColorPicker,
+  //   Table,
+  //   TableColumn,
   // Card,
   // Row,
   // Col,
@@ -56,6 +59,9 @@ Vue.use(Container)
   .use(Input)
   .use(InputNumber)
   .use(Slider)
+  .use(ColorPicker)
+  //   .use(Table)
+  //   .use(TableColumn)
   // .use(Card)
   // .use(Row)
   // .use(Col)
