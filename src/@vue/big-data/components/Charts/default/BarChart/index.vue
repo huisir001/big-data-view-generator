@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-05 11:35:55
+ * @LastEditTime: 2020-11-06 11:59:35
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -119,8 +119,9 @@ export default {
                 },
                 [visualMap && 'visualMap']: visualMap, //视觉映射
                 grid: {
+                    //这里的left+""避免left为数字0时判定为false
                     x:
-                        left ||
+                        left + '' ||
                         (horizontal
                             ? (Math.max.apply(
                                   null,
@@ -132,15 +133,17 @@ export default {
                                   1) *
                                   10 +
                               valEnding.length * 10), //纵向柱图根据最大值位数计算宽度
-                    y: top || (title ? 70 : 50),
+                    y: top + '' || (title ? 70 : 50),
                     x2:
-                        right ||
+                        right + '' ||
                         (dataZoom && dataZoom.yAxisIndex
                             ? 48
                             : xName
                             ? 30
                             : 10),
-                    y2: bottom || (dataZoom && dataZoom.xAxisIndex ? 45 : 30),
+                    y2:
+                        bottom + '' ||
+                        (dataZoom && dataZoom.xAxisIndex ? 45 : 30),
                 },
                 //是否横向判断
                 [horizontal ? 'yAxis' : 'xAxis']: {

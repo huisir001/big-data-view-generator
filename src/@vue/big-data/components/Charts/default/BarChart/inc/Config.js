@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-10-22 11:46:00
+ * @LastEditTime: 2020-11-06 10:27:14
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -16,10 +16,10 @@ class Config {
       valEnding: String, //值的结尾，比如"%"，默认为空
       xName: String, //x轴名，可有可无
       yName: String, //y轴名，可有可无
-      left: String, //左边距
-      top: String, //上边距
-      right: String, //右边距
-      bottom: String, //下边距
+      left: [String, Number], //左边距
+      top: [String, Number], //上边距
+      right: [String, Number], //右边距
+      bottom: [String, Number], //下边距
       showLegend: Boolean, //显示图例
       barWidth: String, //柱粗
       stack: [Array, Boolean], //是否堆叠，堆叠的项目有哪些，stack为true时所有柱子都堆叠在一柱上，且不考虑堆叠的类型名

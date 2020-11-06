@@ -2,13 +2,13 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-04 11:24:04
+ * @LastEditTime: 2020-11-06 11:35:11
  */
 export default [
   {
     key: 'chartData',
     compType: 'input',
-    label: '图表数据值',
+    label: '图表数据',
     inputType: 'textarea',
     readonly: true,
     showBtnGroup: true
@@ -30,26 +30,30 @@ export default [
   },
   {
     key: 'left',
-    compType: 'input',
+    compType: 'slider',
     label: '左边距',
-    inputType: 'number'
+    min: 0,
+    max: 200
   },
   {
     key: 'top',
-    compType: 'input',
+    compType: 'slider',
     label: '上边距',
-    inputType: 'number'
+    min: 0,
+    max: 200
   },
   {
     key: 'right',
-    compType: 'input',
+    compType: 'slider',
     label: '右边距',
-    inputType: 'number'
+    min: 0,
+    max: 200
   },
   {
     key: 'bottom',
-    compType: 'input',
+    compType: 'slider',
     label: '下边距',
-    inputType: 'number'
+    min: 0,
+    max: 200
   }
 ]

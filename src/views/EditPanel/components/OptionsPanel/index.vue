@@ -2,7 +2,7 @@
  * @Description: 配置项面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 10:55:08
- * @LastEditTime: 2020-10-12 16:20:16
+ * @LastEditTime: 2020-11-06 11:39:24
 -->
 <template>
     <el-drawer direction="rtl"
@@ -16,7 +16,8 @@
                  :stretch="true">
             <el-tab-pane label="图层配置"
                          name="layerOption">
-                <el-form>
+                <el-form label-position="left"
+                         label-width="66px">
                     <LayerOptions></LayerOptions>
                 </el-form>
             </el-tab-pane>

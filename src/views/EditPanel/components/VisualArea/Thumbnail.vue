@@ -2,7 +2,7 @@
  * @Description: 缩略图/导览图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-09-22 09:47:10
+ * @LastEditTime: 2020-11-06 11:45:11
 -->
 <template>
     <div class="thumbnail"
@@ -90,7 +90,7 @@ export default {
                 bottom: isMin
                     ? platformSize[1] / -thumbnailSizeScale - 2 + 'px'
                     : '5px',
-                right: optionPanelShow ? '285px' : '5px',
+                right: optionPanelShow ? '325px' : '5px',
             }
         },
         //操作面板区样式

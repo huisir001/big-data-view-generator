@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-04 09:32:25
+ * @LastEditTime: 2020-11-06 11:54:49
  */
 import common from './common'
 export default {
@@ -17,9 +17,9 @@ export default {
   },
   xName: '',
   yName: '',
-  left: '',
-  top: '',
-  right: '',
-  bottom: '',
+  left: 26,
+  top: 0,
+  right: 0,
+  bottom: 0,
   ...common
 }

@@ -2,11 +2,12 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-04 17:12:08
+ * @LastEditTime: 2020-11-06 11:46:58
 -->
 <template>
     <el-form-item :label="formItemOption.label"
                   class="formOptions">
+        <!-- 输入框 -->
         <template v-if="formItemOption.compType=='input'">
             <el-input class="inputBox"
                       v-model="formModelVal"
@@ -34,6 +35,16 @@
                            title="编辑"
                            @click="formItemEdit"></el-button>
             </el-button-group>
+        </template>
+
+        <!-- 滑块 -->
+        <template v-if="formItemOption.compType=='slider'">
+            <el-slider v-model="formModelVal"
+                       :show-tooltip="false"
+                       :min="formItemOption.min || 0"
+                       :max="formItemOption.max || 100"
+                       :step="formItemOption.step || 1"></el-slider>
+            <div class="sliderValLabel">{{formModelVal}}</div>
         </template>
     </el-form-item>
 </template>
@@ -89,16 +100,18 @@ export default {
         formItemCopy() {
             this.$copyText(this.formModelVal).then(
                 (res) => {
-                    this.$message({
+                    this.$notify({
+                        title: '复制成功',
+                        message: '已将代码复制到了剪贴板',
                         type: 'success',
-                        message: '复制成功!',
                     })
                 },
                 (err) => {
                     console.error('[CopyText error]:', err)
-                    this.$message({
+                    this.$notify({
+                        title: '复制出错',
+                        message: '请到控制台查看具体报错信息',
                         type: 'error',
-                        message: '复制出错!',
                     })
                 }
             )
@@ -152,7 +165,7 @@ export default {
 .formItemBtnGroup {
     position: absolute;
     right: 15px;
-    top: 28px;
+    top: 6px;
     transition: 0.4s opacity;
     opacity: 0;
     &:hover {
@@ -163,5 +176,20 @@ export default {
     & + .formItemBtnGroup {
         opacity: 1;
     }
+}
+.sliderValLabel {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    line-height: 22px;
+    color: #fff;
+    font-size: 12px;
+    font-family: cursive;
+    width: 26px;
+    text-align: center;
+    background-color: #33434f;
+    border: 1px solid #000000;
+    border-radius: 2px;
+    height: 24px;
 }
 </style>

@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-11-04 11:00:31
+ * @LastEditTime: 2020-11-06 10:08:11
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -21,6 +21,7 @@ import {
   FormItem,
   Input,
   InputNumber,
+  Slider,
   // Card,
   // Row,
   // Col,
@@ -35,6 +36,7 @@ import {
   ButtonGroup,
   Message,
   MessageBox,
+  Notification,
   Loading
 } from 'element-ui'
 
@@ -53,6 +55,7 @@ Vue.use(Container)
   .use(FormItem)
   .use(Input)
   .use(InputNumber)
+  .use(Slider)
   // .use(Card)
   // .use(Row)
   // .use(Col)
@@ -77,7 +80,8 @@ Object.assign(Vue.prototype, {
   $alert: MessageBox.alert,
   $confirm: MessageBox.confirm,
   $prompt: MessageBox.prompt,
-  $message: Message
+  $message: Message,
+  $notify: Notification
 })
 
 //范例

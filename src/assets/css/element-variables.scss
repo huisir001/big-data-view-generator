@@ -16,12 +16,13 @@
 //变量
  $menu-bg: #212528;
  $boder-color: #999;
+ $input-bg:#33434f;
  //抽屉
 .el-drawer__wrapper {
-    width: 280px;
+    width: 320px;
     height: calc(100% - 50px);
     top: 50px;
-    left: calc(100% - 280px);
+    left: calc(100% - 320px);
     .el-drawer {
         width: 100% !important;
         background-color:  $menu-bg;
@@ -38,14 +39,10 @@
 .el-form-item__label{
     color:#fff;
     font-size: 13px;
-    margin-bottom: 8px;
-}
-.el-form-item--small .el-form-item__label {
-    line-height: 1;
 }
 .el-input__inner,.el-textarea__inner{
     color: #ffffff;
-    background-color: #33434f;
+    background-color:$input-bg;
     border: 1px solid #000000;
 }
 .el-input .el-input__count .el-input__count-inner,.el-textarea .el-input__count { //字数限制样式
@@ -71,9 +68,27 @@
         background:#202a32;
     }
 }
+//滑块
+.el-slider__runway{
+    height: 8px;
+    margin: 13px 0;
+    background-color: $input-bg;
+    width: calc(100% - 36px);
+    border: 1px solid #000000;
+}
+.el-slider__button-wrapper {
+    height: 20px;
+    width: 20px;
+    top: -8px;
+}
+.el-slider__button {
+    width: 14px;
+    height: 14px;
+}
+
 //禁用表单
 .el-textarea.is-disabled .el-textarea__inner {
-    background-color: #33434f;
+    background-color:$input-bg;
     border-color: #000000;
     color: #d7dde9;
 }
