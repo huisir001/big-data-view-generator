@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-13 16:24:35
+ * @LastEditTime: 2020-11-13 17:04:47
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -208,16 +208,22 @@ export default {
                 [colors && 'color']: colors.map((item) => {
                     //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
                     return item.isGradient
-                        ? new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                              {
-                                  offset: item.gdScope[0],
-                                  color: item.color || 'rgba(0,0,0,0)',
-                              },
-                              {
-                                  offset: item.gdScope[1],
-                                  color: item.gdColor || 'rgba(0,0,0,0)',
-                              },
-                          ])
+                        ? new echarts.graphic.LinearGradient(
+                              0,
+                              horizontal ? 0 : 1,
+                              horizontal ? 1 : 0,
+                              0,
+                              [
+                                  {
+                                      offset: item.gdScope[0],
+                                      color: item.color || 'rgba(0,0,0,0)',
+                                  },
+                                  {
+                                      offset: item.gdScope[1],
+                                      color: item.gdColor || 'rgba(0,0,0,0)',
+                                  },
+                              ]
+                          )
                         : item.color
                 }),
             }

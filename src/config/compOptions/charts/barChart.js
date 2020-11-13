@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-13 15:59:51
+ * @LastEditTime: 2020-11-13 17:01:51
  */
 import common from './common'
 export default {
@@ -22,6 +22,7 @@ export default {
   right: 28,
   bottom: 28,
   showLegend: true, //显示图例
+  horizontal: false, //是否横向
   colors: [
     {
       color: '#5ef5ff',

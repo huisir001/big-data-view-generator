@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-13 16:25:23
+ * @LastEditTime: 2020-11-13 17:01:13
  */
 export default [
   {
@@ -60,6 +60,11 @@ export default [
     key: 'showLegend',
     compType: 'switch',
     label: '显示图例'
+  },
+  {
+    key: 'horizontal',
+    compType: 'switch',
+    label: '是否横向'
   },
   {
     key: 'colors',
