@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-13 16:22:07
+ * @LastEditTime: 2020-11-13 17:07:41
 -->
 <template>
     <el-form-item :label="formItemOption.label"
@@ -51,7 +51,7 @@
         <template v-if="formItemOption.compType == 'switch'">
             <el-switch v-model="formModelVal"
                        active-color="#409EFF"
-                       inactive-color="#ff4949">
+                       inactive-color="#33434f">
             </el-switch>
         </template>
 
