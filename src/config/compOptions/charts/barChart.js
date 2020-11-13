@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-06 15:37:59
+ * @LastEditTime: 2020-11-13 15:59:51
  */
 import common from './common'
 export default {
@@ -23,16 +23,24 @@ export default {
   bottom: 28,
   showLegend: true, //显示图例
   colors: [
-    '#5ef5ff',
-    '#27bf99',
-    '#00BCD4',
-    '#2d8ebf',
-    '#1d88eb',
-    '#6268f2',
-    '#f2b3c9',
-    '#f58db2',
-    '#d0648a',
-    '#cc70af'
+    {
+      color: '#5ef5ff',
+      gdColor: null,
+      isGradient: false,
+      gdScope: [0, 1]
+    },
+    {
+      color: '#27bf99',
+      gdColor: null,
+      isGradient: false,
+      gdScope: [0, 1]
+    },
+    {
+      color: '#00BCD4',
+      gdColor: null,
+      isGradient: false,
+      gdScope: [0, 1]
+    }
   ],
   ...common
 }

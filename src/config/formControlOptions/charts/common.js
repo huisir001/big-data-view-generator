@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-06 17:13:49
+ * @LastEditTime: 2020-11-13 16:25:23
  */
 export default [
   {
@@ -64,13 +64,7 @@ export default [
   {
     key: 'colors',
     compType: 'colors',
-    label: '单柱颜色',
+    label: '颜色配置',
     labelOnTop: true //标签在上面
-  },
-  {
-    key: 'seriesColors',
-    compType: 'colors',
-    label: '多柱颜色',
-    labelOnTop: true
   }
 ]

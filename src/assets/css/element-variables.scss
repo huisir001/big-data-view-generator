@@ -4,176 +4,218 @@
  * @Date: 2020-01-10 15:05:30
  * @LastEditors: Please set LastEditors
  */
- 
- /* primary主题色 */
- $--color-primary: #409EFF !default;
- 
- /* iconfont路径, 这里必须申明 */
- $--font-path: '~element-ui/lib/theme-chalk/fonts';
- 
- @import "~element-ui/packages/theme-chalk/src/index"; 
+
+/* primary主题色 */
+$--color-primary: #409eff !default;
+
+/* iconfont路径, 这里必须申明 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import '~element-ui/packages/theme-chalk/src/index';
 
 //变量
- $menu-bg: #212528;
- $boder-color: #999;
- $input-bg:#33434f;
- //抽屉
+$menu-bg: #212528;
+$boder-color: #999;
+$input-bg: #33434f;
+//抽屉
 .el-drawer__wrapper {
-    width: 320px;
-    height: calc(100% - 50px);
-    top: 50px;
-    left: calc(100% - 320px);
-    .el-drawer {
-        width: 100% !important;
-        background-color:  $menu-bg;
-        border-left: 1px solid $boder-color;
-    }
+  width: 320px;
+  height: calc(100% - 50px);
+  top: 50px;
+  left: calc(100% - 320px);
+  .el-drawer {
+    width: 100% !important;
+    background-color: $menu-bg;
+    border-left: 1px solid $boder-color;
+  }
 }
-.el-drawer__header{
-    margin-bottom: 0;
-    padding: 0;
+.el-drawer__header {
+  margin-bottom: 0;
+  padding: 0;
 }
-
 
 //抽屉中表单样式
-.el-form-item__label{
-    color:#fff;
-    font-size: 13px;
+.el-form-item__label {
+  color: #fff;
+  font-size: 13px;
 }
-.el-input__inner,.el-textarea__inner{
-    color: #ffffff;
-    background-color:$input-bg;
-    border: 1px solid #000000;
+.el-input__inner,
+.el-textarea__inner {
+  color: #ffffff;
+  background-color: $input-bg;
+  border: 1px solid #000000;
 }
-.el-input .el-input__count .el-input__count-inner,.el-textarea .el-input__count { //字数限制样式
-    background: transparent;
+.el-input .el-input__count .el-input__count-inner,
+.el-textarea .el-input__count {
+  //字数限制样式
+  background: transparent;
 }
-.el-textarea{
-    /* 设置滚动条的样式 */
-	::-webkit-scrollbar{
-        width: 8px;
-    }
-    /*滚动槽*/
-    ::-webkit-scrollbar-track{
-        -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3) ;
-        border-radius: 8px;
-    }
-    /* 滚动条滑块 */
-    ::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background: rgba(0, 0, 0, 0.1);
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-    }
-    ::-webkit-scrollbar-thumb:window-inactive {
-        background:#202a32;
-    }
+.el-textarea {
+  /* 设置滚动条的样式 */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  /*滚动槽*/
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+  }
+  /* 滚动条滑块 */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: #202a32;
+  }
 }
 .el-form-item--small .el-form-item__content {
-    line-height: 18px;
-    //开关
-    &>.el-switch{
-        margin-top: 6px;
-    }
+  line-height: 18px;
+  //开关
+  & > .el-switch {
+    margin-top: 6px;
+  }
 }
 //滑块
-.el-slider__runway{
-    height: 8px;
-    margin: 13px 0;
-    background-color: $input-bg;
-    width: calc(100% - 36px);
-    border: 1px solid #000000;
+.el-slider__runway {
+  height: 8px;
+  margin: 13px 0;
+  background-color: $input-bg;
+  width: calc(100% - 36px);
+  border: 1px solid #000000;
 }
 .el-slider__button-wrapper {
-    height: 20px;
-    width: 20px;
-    top: -8px;
+  height: 20px;
+  width: 20px;
+  top: -8px;
 }
 .el-slider__button {
-    width: 14px;
-    height: 14px;
+  width: 14px;
+  height: 14px;
 }
 //颜色选择器
 .el-color-picker--mini {
-    height: 26px;
-    margin-top: 3px;
+  height: 26px;
+  margin-top: 3px;
 }
 .el-color-picker--mini .el-color-picker__trigger {
-    height: 26px;
-    width: 26px;
-    padding: 2px;
+  height: 26px;
+  width: 26px;
+  padding: 2px;
 }
 
 //禁用表单
 .el-textarea.is-disabled .el-textarea__inner {
-    background-color:$input-bg;
-    border-color: #000000;
-    color: #d7dde9;
+  background-color: $input-bg;
+  border-color: #000000;
+  color: #d7dde9;
 }
 
 //折叠面板
 $font-color: #fff;
 .el-collapse {
-    border-top: 1px solid $boder-color;
-    border-bottom: 1px solid $boder-color;
+  border-top: 1px solid $boder-color;
+  border-bottom: 1px solid $boder-color;
 }
 .el-collapse-item__header {
-    height: 40px;
-    line-height: 40px;
-    background-color: $menu-bg;
-    color: $font-color;
-    font-size: 14px;
-    border-bottom: 1px solid $boder-color;
-    padding: 0 2px 0 15px;
+  height: 40px;
+  line-height: 40px;
+  background-color: $menu-bg;
+  color: $font-color;
+  font-size: 14px;
+  border-bottom: 1px solid $boder-color;
+  padding: 0 2px 0 15px;
 }
 .el-collapse-item__wrap {
-    background-color: $menu-bg;
-    border-bottom: 1px solid $boder-color;
+  background-color: $menu-bg;
+  border-bottom: 1px solid $boder-color;
 }
 .el-collapse-item__content {
-    padding: 15px;
-    background: #000;
-    color: $font-color;
-    font-size: 12px;
-    font-weight: 400;
+  padding: 15px;
+  background: #000;
+  color: $font-color;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 //标签页
 .el-tabs__header {
-    background: #3c4650;
-    border-top: 1px solid $boder-color;
-    margin: 0;
+  background: #3c4650;
+  border-top: 1px solid $boder-color;
+  margin: 0;
 }
 .el-tabs__item {
-    color: $font-color;
-    &.is-active,&:hover {
-        color: #91c0f4;
+  color: $font-color;
+  &.is-active,
+  &:hover {
+    color: #91c0f4;
+  }
+}
+.el-tabs__content {
+  overflow: auto;
+  height: calc(100vh - 90px);
+  /* 设置滚动条的样式 */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar:window-inactive {
+    width: 8px;
+  }
+  /*滚动槽*/
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  /* 滚动条滑块 */
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: transparent;
+  }
+  &:hover {
+    /*滚动槽*/
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.1);
     }
+    /* 滚动条滑块 */
+    &::-webkit-scrollbar-thumb {
+      background: #425868;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+    &::-webkit-scrollbar-thumb:window-inactive {
+      background: #425868;
+    }
+  }
 }
 
 //按钮
 .el-button--mini {
-    padding: 3px 8px;
+  padding: 3px 8px;
 }
-.el-button--info,.el-button--info:active,.el-button--info:focus {
-    color: #FFFFFF;
-    background-color: #1c252c;
-    background: #1c252c;
-    border-color: #989ca4;
+.el-button--info,
+.el-button--info:active,
+.el-button--info:focus {
+  color: #ffffff;
+  background-color: #1c252c;
+  background: #1c252c;
+  border-color: #989ca4;
 }
 
 //弹框
 .myMessageBox {
-    background-color: #212528;
-    width: 500px;
-    .el-message-box__title {
-        color: #b1b4bc;
+  background-color: #212528;
+  width: 500px;
+  .el-message-box__title {
+    color: #b1b4bc;
+  }
+  .el-message-box__content {
+    padding: 8px 15px;
+    color: #979aa3;
+    .el-textarea__inner {
+      height: 200px;
+      resize: none;
     }
-    .el-message-box__content {
-        padding: 8px 15px;
-        color: #979aa3;
-        .el-textarea__inner{
-            height: 200px;
-            resize:none;
-        }
-    }
+  }
 }

@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-06 14:57:42
+ * @LastEditTime: 2020-11-13 16:24:35
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -11,6 +11,7 @@
 <script>
 import myChart from '../../../../mixins/myChart'
 import Config from './inc/Config'
+import echarts from 'echarts'
 export default {
     name: 'BarChart',
     mixins: [myChart],
@@ -30,7 +31,6 @@ export default {
                 label,
                 labelPosition,
                 valEnding,
-                seriesColors,
                 markPoint,
                 markLine,
                 markArea,
@@ -56,7 +56,7 @@ export default {
 
             const { xAxis, series } = chartData
 
-            //使用字符串方式对对象进行复制（非引用）,以防止图层状态中的option数据易值
+            //使用字符串方式对对象进行内存复制（非引用）,以防止图层状态中的option数据易值
             let mySeries = JSON.parse(JSON.stringify(series))
 
             //所有数据 方便计算最大值
@@ -87,12 +87,6 @@ export default {
                             textStyle: {
                                 fontSize: 10,
                             },
-                        },
-                        color: (e) => {
-                            return (
-                                //自定义柱子颜色
-                                seriesColors && seriesColors[e.dataIndex]
-                            )
                         },
                     },
                 }
@@ -211,7 +205,21 @@ export default {
                         // end: 50,    //minValueSpan/maxValueSpan  start/end 不要同时使用，故这里不设默认值，需要由父组件传参
                     },
                 ],
-                [colors && 'color']: colors, //自定义颜色
+                [colors && 'color']: colors.map((item) => {
+                    //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
+                    return item.isGradient
+                        ? new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                              {
+                                  offset: item.gdScope[0],
+                                  color: item.color || 'rgba(0,0,0,0)',
+                              },
+                              {
+                                  offset: item.gdScope[1],
+                                  color: item.gdColor || 'rgba(0,0,0,0)',
+                              },
+                          ])
+                        : item.color
+                }),
             }
         },
     },

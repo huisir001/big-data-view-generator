@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-11-06 10:27:14
+ * @LastEditTime: 2020-11-13 15:37:51
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -29,8 +29,7 @@ class Config {
       markPoint: Object, //气泡标注
       markLine: Object, //标线
       markArea: Object, //标域
-      colors: Array, //自定义同类柱子颜色
-      seriesColors: Array, //自定义不同柱子颜色
+      colors: Array, //自定义柱子颜色
       label: Boolean, //是否显示数据标签
       labelPosition: String, //数据标签位置,默认在柱子上方
       visualMap: Object, //视觉映射（改变某些数据区域的颜色）

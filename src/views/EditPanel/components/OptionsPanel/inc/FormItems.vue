@@ -2,13 +2,13 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-06 17:15:00
+ * @LastEditTime: 2020-11-13 16:22:07
 -->
 <template>
     <el-form-item :label="formItemOption.label"
                   :class="`formOptions${formItemOption.labelOnTop && ' labelOnTop'}`">
         <!-- 输入框 -->
-        <template v-if="formItemOption.compType=='input'">
+        <template v-if="formItemOption.compType == 'input'">
             <el-input class="inputBox"
                       v-model="formModelVal"
                       size="small"
@@ -20,7 +20,7 @@
                       :readonly="formItemOption.readonly || false"
                       resize="none"
                       show-word-limit
-                      :autosize="{ minRows: 3, maxRows:10 }"></el-input>
+                      :autosize="{ minRows: 3, maxRows: 10 }"></el-input>
             <!-- 操作按钮组 -->
             <el-button-group v-if="formItemOption.showBtnGroup"
                              class="formItemBtnGroup">
@@ -38,17 +38,17 @@
         </template>
 
         <!-- 滑块 -->
-        <template v-if="formItemOption.compType=='slider'">
+        <template v-if="formItemOption.compType == 'slider'">
             <el-slider v-model="formModelVal"
                        :show-tooltip="false"
                        :min="formItemOption.min || 0"
                        :max="formItemOption.max || 100"
                        :step="formItemOption.step || 1"></el-slider>
-            <div class="sliderValLabel">{{formModelVal}}</div>
+            <div class="sliderValLabel">{{ formModelVal }}</div>
         </template>
 
         <!-- 开关 -->
-        <template v-if="formItemOption.compType=='switch'">
+        <template v-if="formItemOption.compType == 'switch'">
             <el-switch v-model="formModelVal"
                        active-color="#409EFF"
                        inactive-color="#ff4949">
@@ -56,13 +56,13 @@
         </template>
 
         <!-- 单颜色选择器 -->
-        <template v-if="formItemOption.compType=='color'">
+        <template v-if="formItemOption.compType == 'color'">
             <el-color-picker v-model="formModelVal"
                              size="mini"></el-color-picker>
         </template>
 
         <!-- 多颜色选择器 -->
-        <template v-if="formItemOption.compType=='colors'">
+        <template v-if="formItemOption.compType == 'colors'">
             <table class="formItemTable">
                 <thead>
                     <tr>
@@ -74,7 +74,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item,index) in colorsTableData"
+                    <tr v-for="(item, index) in formModelVal"
                         :key="index">
                         <td width="45">
                             <el-color-picker v-model="item.color"
@@ -87,21 +87,28 @@
                         <td>
                             <el-switch v-model="item.isGradient"
                                        active-color="#409EFF"
-                                       inactive-color="#ff4949">
+                                       inactive-color="#33434f">
                             </el-switch>
                         </td>
                         <td>
                             <el-slider v-model="item.gdScope"
                                        range
-                                       show-stops
                                        :step="0.1"
-                                       :max="1">
+                                       :max="1"
+                                       :disabled="!item.isGradient">
                             </el-slider>
                         </td>
                         <td>
                             <el-button size="mini"
                                        type="danger"
-                                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                                       @click="deleteColor(index, item)">删除</el-button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <el-button size="mini"
+                                       type="primary"
+                                       @click="addColor">+ 新增</el-button>
                         </td>
                     </tr>
                 </tbody>
@@ -116,20 +123,6 @@ export default {
     data() {
         return {
             stringifyOptionKeys: ['chartData'], //需要转字符串显示在表单中的参数项
-            colorsTableData: [
-                {
-                    color: '#409EFF',
-                    gdColor: '#ff4949',
-                    isGradient: false,
-                    gdScope: [0, 1],
-                },
-                {
-                    color: '#409EFF',
-                    gdColor: '#ff4949',
-                    isGradient: false,
-                    gdScope: [0, 1],
-                },
-            ],
         }
     },
     mounted() {},
@@ -232,6 +225,19 @@ export default {
                     this.formModelVal = value
                 })
                 .catch(() => false)
+        },
+        //新增颜色列表
+        addColor() {
+            this.formModelVal.push({
+                color: '#409EFF',
+                gdColor: '#49FF83',
+                isGradient: false,
+                gdScope: [0, 1],
+            })
+        },
+        //删除单颜色
+        deleteColor(index) {
+            this.formModelVal.splice(index, 1)
         },
     },
 }

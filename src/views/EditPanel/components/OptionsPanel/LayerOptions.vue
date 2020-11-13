@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-11-04 14:42:54
+ * @LastEditTime: 2020-11-13 14:22:22
 -->
 <template>
     <div class="layerOptionsBox">
@@ -33,6 +33,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .layerOptionsBox {
-    padding: 15px;
+    padding: 15px 8px 15px 15px;
 }
 </style>
