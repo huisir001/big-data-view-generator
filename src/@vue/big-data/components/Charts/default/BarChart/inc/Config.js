@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-11-13 15:37:51
+ * @LastEditTime: 2020-11-16 15:03:17
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -30,6 +30,7 @@ class Config {
       markLine: Object, //标线
       markArea: Object, //标域
       colors: Array, //自定义柱子颜色
+      colorMode: String, //  颜色展示模式(分为`byLegend`和`byAxis`)
       label: Boolean, //是否显示数据标签
       labelPosition: String, //数据标签位置,默认在柱子上方
       visualMap: Object, //视觉映射（改变某些数据区域的颜色）
@@ -61,6 +62,7 @@ class Config {
       yName: '',
       barWidth: '20%',
       labelPosition: 'top',
+      colorMode: 'byLegend',
       showLegend: true,
       stack: false,
       label: false,

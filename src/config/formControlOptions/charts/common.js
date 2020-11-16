@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-13 17:01:13
+ * @LastEditTime: 2020-11-16 15:29:10
  */
 export default [
   {
@@ -71,5 +71,14 @@ export default [
     compType: 'colors',
     label: '颜色配置',
     labelOnTop: true //标签在上面
+  },
+  {
+    key: 'colorMode',
+    compType: 'radio',
+    label: '颜色模式',
+    options: [
+      { value: 'byLegend', label: '按图例' },
+      { value: 'byAxis', label: '按轴向' }
+    ]
   }
 ]

@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-13 17:07:41
+ * @LastEditTime: 2020-11-16 15:38:22
 -->
 <template>
     <el-form-item :label="formItemOption.label"
@@ -53,6 +53,18 @@
                        active-color="#409EFF"
                        inactive-color="#33434f">
             </el-switch>
+        </template>
+
+        <!-- 下拉选 -->
+        <template v-if="formItemOption.compType == 'radio'">
+            <el-select v-model="formModelVal"
+                       placeholder="请选择">
+                <el-option v-for="option in formItemOption.options"
+                           :key="option.value"
+                           :label="option.label"
+                           :value="option.value">
+                </el-option>
+            </el-select>
         </template>
 
         <!-- 单颜色选择器 -->

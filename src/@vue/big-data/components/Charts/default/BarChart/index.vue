@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-13 17:04:47
+ * @LastEditTime: 2020-11-16 15:04:34
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -51,6 +51,7 @@ export default {
                 showValSplitLine,
                 axisDegreeScope,
                 colors,
+                colorMode,
                 showLegend,
             } = this.myOptions
 
@@ -87,6 +88,34 @@ export default {
                             textStyle: {
                                 fontSize: 10,
                             },
+                        },
+                        [colorMode == 'byAxis' && 'color']: (e) => {
+                            //自定义单柱子颜色
+                            const colorItem = colors[e.dataIndex]
+                            if (colors && colorItem) {
+                                return colorItem.isGradient
+                                    ? new echarts.graphic.LinearGradient(
+                                          0,
+                                          horizontal ? 0 : 1,
+                                          horizontal ? 1 : 0,
+                                          0,
+                                          [
+                                              {
+                                                  offset: colorItem.gdScope[0],
+                                                  color:
+                                                      colorItem.color ||
+                                                      'rgba(0,0,0,0)',
+                                              },
+                                              {
+                                                  offset: colorItem.gdScope[1],
+                                                  color:
+                                                      colorItem.gdColor ||
+                                                      'rgba(0,0,0,0)',
+                                              },
+                                          ]
+                                      )
+                                    : colorItem.color
+                            }
                         },
                     },
                 }

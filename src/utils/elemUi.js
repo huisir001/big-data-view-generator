@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-11-06 17:14:31
+ * @LastEditTime: 2020-11-16 15:28:43
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -13,6 +13,8 @@ import {
   Main,
   Drawer,
   Switch,
+  Select,
+  Option,
   Collapse,
   CollapseItem,
   Tabs,
@@ -50,6 +52,8 @@ Vue.use(Container)
   .use(Main)
   .use(Drawer)
   .use(Switch)
+  .use(Select)
+  .use(Option)
   .use(Collapse)
   .use(CollapseItem)
   .use(Tabs)

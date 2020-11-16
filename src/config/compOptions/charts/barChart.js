@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-13 17:01:51
+ * @LastEditTime: 2020-11-16 15:06:01
  */
 import common from './common'
 export default {
@@ -43,5 +43,6 @@ export default {
       gdScope: [0, 1]
     }
   ],
+  colorMode: 'byLegend',
   ...common
 }

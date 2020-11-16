@@ -112,6 +112,25 @@ $input-bg: #33434f;
   color: #d7dde9;
 }
 
+//下拉选框
+.el-select-dropdown {
+  border: solid 1px #3a8ee6;
+  background-color: #161f28;
+}
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover {
+  background-color: #33434f;
+}
+.el-select-dropdown__item {
+  color: #547790;
+}
+.el-popper[x-placement^='top'] .popper__arrow::after {
+  border-top-color: #161f28;
+}
+.el-popper[x-placement^='top'] .popper__arrow {
+  border-top-color: #3a8ee6;
+}
+
 //折叠面板
 $font-color: #fff;
 .el-collapse {
