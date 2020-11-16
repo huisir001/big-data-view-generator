@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-10-19 14:58:03
+ * @LastEditTime: 2020-11-16 18:15:31
 -->
 <template>
     <div class="blueprint"
@@ -19,10 +19,20 @@
              @mouseup.prevent="layerClick"
              @mouseleave.prevent="layerLeave"
              :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
-            <!-- 位置标线 -->
+            <!-- 位置标线/缩放锚点 -->
             <template v-if="item.active">
                 <div class="posLine-x"></div>
                 <div class="posLine-y"></div>
+                <!-- 锚点 -->
+                <div v-for="anchor in 8"
+                     :key="anchor"
+                     :class="`anchor anchor-${anchor}`"
+                     :data-index="index"
+                     :data-anchor="anchor"
+                     @mousemove.stop.prevent="anchorMove"
+                     @mousedown.stop.prevent="anchorClick"
+                     @mouseup.stop.prevent="anchorClick"
+                     @mouseleave.stop.prevent="anchorLeave">{{anchor}}</div>
             </template>
             <!-- 动态组件 -->
             <component :is="item.type"
@@ -49,10 +59,16 @@ export default {
     mixins: [autoResize],
     data() {
         return {
+            /* 图层拖拽状态 */
             layerMouseEnter: false, //是否按下鼠标
             layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0], //鼠标相对于图层的位置
             layerMoveState: false, //鼠标按下拖动状态
+            /* resize锚点状态 */
+            anchorMouseEnter: false, //是否按下鼠标
+            anchorMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
+            anchorMouseOffset: [0, 0], //鼠标相对于图层的位置
+            anchorMoveState: false, //鼠标按下拖动状态
         }
     },
     computed: {
@@ -186,6 +202,48 @@ export default {
         layerLeave() {
             this.layerMouseEnter = false
         },
+        /* Resize锚点事件绑定 */
+        anchorClick({ type, button, offsetX, offsetY, target }) {
+            const { index } = target.dataset
+            if (this.layers[index].locked) return false //上锁图层return
+            //状态改变
+            this.anchorMouseEnter = type == 'mousedown'
+            //鼠标按键改变
+            this.anchorMouseButton = button
+            //鼠标按下重置拖动状态
+            this.anchorMouseEnter && (this.anchorMoveState = false)
+            //记录鼠标位置
+            this.anchorMouseOffset = [offsetX, offsetY]
+        },
+        anchorMove({ offsetX, offsetY, target }) {
+            const { index, anchor } = target.dataset
+            let {
+                anchorMouseEnter,
+                anchorMouseOffset,
+                anchorMouseButton,
+                setLayer,
+                layers,
+            } = this
+            let curLayer = layers[index] //当前图层
+
+            //只有按下+左键才能拖动，右键不可
+            if (anchorMouseEnter && anchorMouseButton == 0) {
+                //拖动指示
+                this.anchorMoveState = true
+
+                console.log(anchor)
+
+                //改变图层尺寸及位置
+                curLayer.width = curLayer.width + offsetX - anchorMouseOffset[0]
+                curLayer.height =
+                    curLayer.height + offsetY - anchorMouseOffset[1]
+                curLayer.compOptions.lastChangeTime = Date.now() //改变图表配置时间戳以便实时刷新图表
+                setLayer(curLayer)
+            }
+        },
+        anchorLeave() {
+            this.anchorMouseEnter = false
+        },
         //图层右键菜单事件
         layerCtxMenu({ clientX, clientY, target }) {
             const { setShowLayerCtxMenu, setLayerCtxMenu, layers } = this
@@ -271,6 +329,58 @@ export default {
                 border-top: $border-act;
                 top: -1px;
                 right: 0;
+            }
+            .anchor {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                border: 5px solid transparent;
+                background: #0ff;
+                border-radius: 50%;
+                &.anchor-1,
+                &.anchor-2,
+                &.anchor-3 {
+                    top: -5px;
+                }
+                &.anchor-1,
+                &.anchor-4,
+                &.anchor-6 {
+                    left: -5px;
+                }
+                &.anchor-2,
+                &.anchor-7 {
+                    left: calc(50% - 5px);
+                }
+                &.anchor-3,
+                &.anchor-5,
+                &.anchor-8 {
+                    right: -5px;
+                }
+                &.anchor-4,
+                &.anchor-5 {
+                    top: calc(50% - 5px);
+                }
+                &.anchor-6,
+                &.anchor-7,
+                &.anchor-8 {
+                    bottom: -5px;
+                }
+                &.anchor-3,
+                &.anchor-6 {
+                    cursor: ne-resize;
+                }
+                &.anchor-1,
+                &.anchor-8 {
+                    cursor: nw-resize;
+                }
+                &.anchor-2,
+                &.anchor-7 {
+                    cursor: n-resize;
+                }
+                &.anchor-4,
+                &.anchor-5 {
+                    cursor: w-resize;
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-11-16 15:03:17
+ * @LastEditTime: 2020-11-16 18:01:56
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -11,6 +11,7 @@ import mockData from './mockData'
 class Config {
   constructor(options = {}) {
     const optionsTypeObj = {
+      lastChangeTime: Number, //reset时间戳
       chartData: [Object, Array], //图表数据
       title: String, //标题，可有可无,若没有则为""
       valEnding: String, //值的结尾，比如"%"，默认为空

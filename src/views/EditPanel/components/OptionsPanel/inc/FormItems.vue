@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-16 15:38:22
+ * @LastEditTime: 2020-11-16 17:58:21
 -->
 <template>
     <el-form-item :label="formItemOption.label"
@@ -165,6 +165,7 @@ export default {
                             ? JSON.parse(value)
                             : value
                     this.activeLayer.compOptions[optionKey] = optionVal
+                    this.activeLayer.compOptions.lastChangeTime = Date.now() //改变时间戳
                     this.$store.commit('layer/setLayer', this.activeLayer)
                 } catch (error) {
                     //如果转义出错，说明转义的内容格式错误

@@ -2,7 +2,7 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-11-06 15:01:02
+ * @LastEditTime: 2020-11-16 18:14:46
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme
@@ -70,6 +70,7 @@ export default {
       const { myChart, getEchartsOptions } = this
       myChart.hideLoading()
       myChart.setOption(getEchartsOptions(), true)
+      myChart.resize()
     },
 
     /* 窗口缩放后重新调整图标尺寸 */
