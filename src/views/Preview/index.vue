@@ -2,7 +2,7 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2020-09-28 10:53:59
+ * @LastEditTime: 2020-11-16 11:51:20
 -->
 <template>
     <div class="container">
@@ -10,11 +10,13 @@
              :style="{width:screenSize[0]+'px',height:screenSize[1]+'px',transform}">
             <!-- 图层渲染(采用动态组件) -->
             <div v-for="(item,index) in layers"
+                 v-show="item.show"
                  :key="index"
                  class="viewItem"
                  :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
-                <!-- 组件 -->
-                <component :is="item.type"></component>
+                <!-- 动态组件 -->
+                <component :is="item.type"
+                           :options="item.compOptions"></component>
             </div>
         </div>
     </div>
