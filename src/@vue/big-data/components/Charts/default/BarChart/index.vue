@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-16 15:04:34
+ * @LastEditTime: 2020-11-17 11:01:52
 -->
 <template>
     <div style="width:100%;height:100%"></div>
@@ -234,27 +234,30 @@ export default {
                         // end: 50,    //minValueSpan/maxValueSpan  start/end 不要同时使用，故这里不设默认值，需要由父组件传参
                     },
                 ],
-                [colors && 'color']: colors.map((item) => {
-                    //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
-                    return item.isGradient
-                        ? new echarts.graphic.LinearGradient(
-                              0,
-                              horizontal ? 0 : 1,
-                              horizontal ? 1 : 0,
-                              0,
-                              [
-                                  {
-                                      offset: item.gdScope[0],
-                                      color: item.color || 'rgba(0,0,0,0)',
-                                  },
-                                  {
-                                      offset: item.gdScope[1],
-                                      color: item.gdColor || 'rgba(0,0,0,0)',
-                                  },
-                              ]
-                          )
-                        : item.color
-                }),
+                [colors && colorMode == 'byLegend' && 'color']: colors.map(
+                    (item) => {
+                        //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
+                        return item.isGradient
+                            ? new echarts.graphic.LinearGradient(
+                                  0,
+                                  horizontal ? 0 : 1,
+                                  horizontal ? 1 : 0,
+                                  0,
+                                  [
+                                      {
+                                          offset: item.gdScope[0],
+                                          color: item.color || 'rgba(0,0,0,0)',
+                                      },
+                                      {
+                                          offset: item.gdScope[1],
+                                          color:
+                                              item.gdColor || 'rgba(0,0,0,0)',
+                                      },
+                                  ]
+                              )
+                            : item.color
+                    }
+                ),
             }
         },
     },
