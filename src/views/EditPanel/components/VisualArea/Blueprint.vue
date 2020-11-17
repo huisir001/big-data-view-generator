@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-16 18:15:31
+ * @LastEditTime: 2020-11-17 18:10:46
 -->
 <template>
     <div class="blueprint"
@@ -59,12 +59,14 @@ export default {
     mixins: [autoResize],
     data() {
         return {
-            /* 图层拖拽状态 */
+            /* Dom层事件状态 */
+            domMouseEnter: false, //鼠标按下
+            /* 图层事件拖拽状态 */
             layerMouseEnter: false, //是否按下鼠标
             layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0], //鼠标相对于图层的位置
             layerMoveState: false, //鼠标按下拖动状态
-            /* resize锚点状态 */
+            /* resize锚点事件状态 */
             anchorMouseEnter: false, //是否按下鼠标
             anchorMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             anchorMouseOffset: [0, 0], //鼠标相对于图层的位置
@@ -258,17 +260,47 @@ export default {
                         : layers[target.dataset.index],
             })
         },
+
+        //全局鼠标按下
+        domMousedown({ button }) {
+            if (button != 0) return false //非鼠标左键return
+            const { showLayerCtxMenu, setShowLayerCtxMenu } = this
+            //如果菜单激活隐藏图层右键菜单
+            if (showLayerCtxMenu) {
+                this.setShowLayerCtxMenu(false) //隐藏图层右键菜单
+            }
+            console.log(1)
+            //状态改变
+            this.domMouseEnter = true
+        },
+        //全局鼠标抬起
+        domMouseup({ button }) {
+            if (button != 0) return false //非鼠标左键return
+            console.log(2)
+            //状态改变
+            this.domMouseEnter = false
+        },
     },
     mounted() {
-        //document添加事件-左键按下隐藏右键菜单
-        const { domAddEventListener, setShowLayerCtxMenu } = this
-        let self = this
+        //document添加事件
+        const {
+            domAddEventListener,
+            domMousedown,
+            domMousemove,
+            domMouseup,
+        } = this
+        //左键按下拖拽
         domAddEventListener({
             evType: 'onmousedown',
-            func({ button }) {
-                if (button != 0 || !self.showLayerCtxMenu) return false //非鼠标左键或菜单非激活return
-                setShowLayerCtxMenu(false) //隐藏图层右键菜单
-            },
+            func: domMousedown,
+        })
+        // domAddEventListener({
+        //     evType: 'onmousemove',
+        //     func: domMousemove,
+        // })
+        domAddEventListener({
+            evType: 'onmouseup',
+            func: domMouseup,
         })
     },
 }
