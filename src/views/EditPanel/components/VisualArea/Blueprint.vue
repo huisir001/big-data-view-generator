@@ -2,41 +2,46 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-17 18:10:46
+ * @LastEditTime: 2020-11-18 11:52:55
 -->
 <template>
-    <div class="blueprint"
-         :style="blueprintStyle"
-         @contextmenu.prevent="layerCtxMenu">
+    <div
+        class="blueprint"
+        :style="blueprintStyle"
+        @contextmenu.prevent="layerCtxMenu"
+    >
         <!-- 图层渲染(采用动态组件) -->
-        <div v-for="(item,index) in layers"
-             v-show="item.show"
-             :key="index"
-             :class="{viewItem:true,act:item.active,locked:item.locked}"
-             :data-index="index"
-             @mousemove.prevent="layerMove"
-             @mousedown.prevent="layerClick"
-             @mouseup.prevent="layerClick"
-             @mouseleave.prevent="layerLeave"
-             :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
+        <div
+            v-for="(item, index) in layers"
+            v-show="item.show"
+            :key="index"
+            :class="{ viewItem: true, act: item.active, locked: item.locked }"
+            :data-index="index"
+            @mousedown.prevent="layerClick"
+            @mouseup.prevent="layerClick"
+            :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`"
+        >
             <!-- 位置标线/缩放锚点 -->
             <template v-if="item.active">
                 <div class="posLine-x"></div>
                 <div class="posLine-y"></div>
                 <!-- 锚点 -->
-                <div v-for="anchor in 8"
-                     :key="anchor"
-                     :class="`anchor anchor-${anchor}`"
-                     :data-index="index"
-                     :data-anchor="anchor"
-                     @mousemove.stop.prevent="anchorMove"
-                     @mousedown.stop.prevent="anchorClick"
-                     @mouseup.stop.prevent="anchorClick"
-                     @mouseleave.stop.prevent="anchorLeave">{{anchor}}</div>
+                <div
+                    v-for="anchor in 8"
+                    :key="anchor"
+                    :class="`anchor anchor-${anchor}`"
+                    :data-index="index"
+                    :data-anchor="anchor"
+                    @mousemove.stop.prevent="anchorMove"
+                    @mousedown.stop.prevent="anchorClick"
+                    @mouseup.stop.prevent="anchorClick"
+                    @mouseleave.stop.prevent="anchorLeave"
+                >
+                    {{ anchor }}
+                </div>
             </template>
             <!-- 动态组件 -->
-            <component :is="item.type"
-                       :options="item.compOptions"></component>
+            <component :is="item.type" :options="item.compOptions"></component>
         </div>
     </div>
 </template>
@@ -63,7 +68,6 @@ export default {
             domMouseEnter: false, //鼠标按下
             /* 图层事件拖拽状态 */
             layerMouseEnter: false, //是否按下鼠标
-            layerMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
             layerMouseOffset: [0, 0], //鼠标相对于图层的位置
             layerMoveState: false, //鼠标按下拖动状态
             /* resize锚点事件状态 */
@@ -164,45 +168,21 @@ export default {
             }
         },
         /* 图层事件绑定 */
-        layerClick({ type, button, offsetX, offsetY, target }) {
+        layerClick({ type, button, target, clientX, clientY }) {
             const { index } = target.dataset
             if (this.layers[index].locked) return false //上锁图层return
             //状态改变
             this.layerMouseEnter = type == 'mousedown'
-            //鼠标按键改变
-            this.layerMouseButton = button
             //鼠标按下重置拖动状态
             this.layerMouseEnter && (this.layerMoveState = false)
             //图层选择
             this.layerSelect(this.layers[index])
             //记录鼠标位置
-            this.layerMouseOffset = [offsetX, offsetY]
-        },
-        layerMove({ offsetX, offsetY }) {
-            let {
-                layerMouseEnter,
-                layerMouseOffset,
-                activeLayers,
-                setLayer,
-                layers,
-            } = this
-            //只有按下+左键才能拖动，右键不可
-            if (layerMouseEnter && this.layerMouseButton == 0) {
-                //拖动指示
-                this.layerMoveState = true
-                //改变图层位置
-                activeLayers.forEach((item) => {
-                    item.pos = [
-                        item.pos[0] + offsetX - layerMouseOffset[0],
-                        item.pos[1] + offsetY - layerMouseOffset[1],
-                    ]
-                    setLayer(item)
-                })
-            }
-        },
-        //鼠标离开图层
-        layerLeave() {
-            this.layerMouseEnter = false
+            this.layerMouseOffset = [clientX, clientY]
+            //记录图层初始状态
+            this.initialActiveLayers = JSON.parse(
+                JSON.stringify(this.activeLayers)
+            )
         },
         /* Resize锚点事件绑定 */
         anchorClick({ type, button, offsetX, offsetY, target }) {
@@ -273,12 +253,42 @@ export default {
             //状态改变
             this.domMouseEnter = true
         },
+        //全局鼠标拖动
+        domMousemove({ button, clientX, clientY }) {
+            if (button != 0) return false //非鼠标左键return
+            let {
+                domMouseEnter,
+                layerMouseEnter,
+                layerMouseOffset,
+                initialActiveLayers,
+                activeLayers,
+                setLayer,
+            } = this
+            //图层拖动（改变位置）
+            if (layerMouseEnter && domMouseEnter) {
+                //拖动指示
+                this.layerMoveState = true
+                //改变图层位置
+                activeLayers.forEach((item, index) => {
+                    item.pos = [
+                        initialActiveLayers[index].pos[0] +
+                            clientX -
+                            layerMouseOffset[0],
+                        initialActiveLayers[index].pos[1] +
+                            clientY -
+                            layerMouseOffset[1],
+                    ]
+                    setLayer(item)
+                })
+            }
+        },
         //全局鼠标抬起
         domMouseup({ button }) {
             if (button != 0) return false //非鼠标左键return
             console.log(2)
             //状态改变
             this.domMouseEnter = false
+            this.layerMouseEnter = false
         },
     },
     mounted() {
@@ -294,10 +304,10 @@ export default {
             evType: 'onmousedown',
             func: domMousedown,
         })
-        // domAddEventListener({
-        //     evType: 'onmousemove',
-        //     func: domMousemove,
-        // })
+        domAddEventListener({
+            evType: 'onmousemove',
+            func: domMousemove,
+        })
         domAddEventListener({
             evType: 'onmouseup',
             func: domMouseup,
@@ -366,7 +376,6 @@ export default {
                 position: absolute;
                 width: 10px;
                 height: 10px;
-                border: 5px solid transparent;
                 background: #0ff;
                 border-radius: 50%;
                 &.anchor-1,
