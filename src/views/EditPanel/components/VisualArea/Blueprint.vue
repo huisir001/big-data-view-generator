@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-18 18:16:42
+ * @LastEditTime: 2020-11-18 18:25:18
 -->
 <template>
     <div
@@ -205,6 +205,7 @@ export default {
                 width: copyLayer.width,
                 height: copyLayer.height,
             }
+            //拷贝当前图层位置
             this.curAnchorLayerPos = copyLayer.pos
         },
         //全局鼠标按下
