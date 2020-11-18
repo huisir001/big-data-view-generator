@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-18 11:52:55
+ * @LastEditTime: 2020-11-18 18:10:54
 -->
 <template>
     <div
@@ -32,10 +32,8 @@
                     :class="`anchor anchor-${anchor}`"
                     :data-index="index"
                     :data-anchor="anchor"
-                    @mousemove.stop.prevent="anchorMove"
-                    @mousedown.stop.prevent="anchorClick"
-                    @mouseup.stop.prevent="anchorClick"
-                    @mouseleave.stop.prevent="anchorLeave"
+                    @mousedown.prevent="anchorClick"
+                    @mouseup.prevent="anchorClick"
                 >
                     {{ anchor }}
                 </div>
@@ -68,13 +66,15 @@ export default {
             domMouseEnter: false, //鼠标按下
             /* 图层事件拖拽状态 */
             layerMouseEnter: false, //是否按下鼠标
-            layerMouseOffset: [0, 0], //鼠标相对于图层的位置
+            layerMouseOffset: [0, 0], //鼠标位置
             layerMoveState: false, //鼠标按下拖动状态
             /* resize锚点事件状态 */
             anchorMouseEnter: false, //是否按下鼠标
-            anchorMouseButton: 0, //按下鼠标键号（0-左键，1中键盘，2右键）
-            anchorMouseOffset: [0, 0], //鼠标相对于图层的位置
-            anchorMoveState: false, //鼠标按下拖动状态
+            anchorMouseOffset: [0, 0], //鼠标位置
+            curAnchor: null, //当前锚点
+            curAnchorLayer: null, //记录锚点所在图层
+            curAnchorLayerSize: null, //拷贝锚点所在图层尺寸
+            curAnchorLayerPos: null, //拷贝锚点所在图层位置
         }
     },
     computed: {
@@ -170,13 +170,17 @@ export default {
         /* 图层事件绑定 */
         layerClick({ type, button, target, clientX, clientY }) {
             const { index } = target.dataset
-            if (this.layers[index].locked) return false //上锁图层return
+            if (index && this.layers[index].locked) return false //上锁图层return
             //状态改变
             this.layerMouseEnter = type == 'mousedown'
             //鼠标按下重置拖动状态
             this.layerMouseEnter && (this.layerMoveState = false)
             //图层选择
-            this.layerSelect(this.layers[index])
+            index && this.layerSelect(this.layers[index])
+
+            //以下内容非鼠标左键return
+            if (button != 0) return false
+
             //记录鼠标位置
             this.layerMouseOffset = [clientX, clientY]
             //记录图层初始状态
@@ -185,62 +189,26 @@ export default {
             )
         },
         /* Resize锚点事件绑定 */
-        anchorClick({ type, button, offsetX, offsetY, target }) {
-            const { index } = target.dataset
-            if (this.layers[index].locked) return false //上锁图层return
+        anchorClick({ type, button, clientX, clientY, target }) {
+            const { index, anchor } = target.dataset
+            if (button != 0 || (index && this.layers[index].locked))
+                return false //非鼠标左键、上锁图层return
             //状态改变
             this.anchorMouseEnter = type == 'mousedown'
-            //鼠标按键改变
-            this.anchorMouseButton = button
-            //鼠标按下重置拖动状态
-            this.anchorMouseEnter && (this.anchorMoveState = false)
             //记录鼠标位置
-            this.anchorMouseOffset = [offsetX, offsetY]
-        },
-        anchorMove({ offsetX, offsetY, target }) {
-            const { index, anchor } = target.dataset
-            let {
-                anchorMouseEnter,
-                anchorMouseOffset,
-                anchorMouseButton,
-                setLayer,
-                layers,
-            } = this
-            let curLayer = layers[index] //当前图层
-
-            //只有按下+左键才能拖动，右键不可
-            if (anchorMouseEnter && anchorMouseButton == 0) {
-                //拖动指示
-                this.anchorMoveState = true
-
-                console.log(anchor)
-
-                //改变图层尺寸及位置
-                curLayer.width = curLayer.width + offsetX - anchorMouseOffset[0]
-                curLayer.height =
-                    curLayer.height + offsetY - anchorMouseOffset[1]
-                curLayer.compOptions.lastChangeTime = Date.now() //改变图表配置时间戳以便实时刷新图表
-                setLayer(curLayer)
+            this.anchorMouseOffset = [clientX, clientY]
+            //记录当前锚点
+            this.curAnchor = anchor
+            //记录当前图层
+            this.curAnchorLayer = this.layers[index]
+            //拷贝当前图层尺寸
+            const copyLayer = JSON.parse(JSON.stringify(this.layers[index]))
+            this.curAnchorLayerSize = {
+                width: copyLayer.width,
+                height: copyLayer.height,
             }
+            this.curAnchorLayerPos = copyLayer.pos
         },
-        anchorLeave() {
-            this.anchorMouseEnter = false
-        },
-        //图层右键菜单事件
-        layerCtxMenu({ clientX, clientY, target }) {
-            const { setShowLayerCtxMenu, setLayerCtxMenu, layers } = this
-            //显示菜单
-            setShowLayerCtxMenu(true)
-            //设置当前菜单(判断当前右键事件是在图层上点击还是面板上)
-            setLayerCtxMenu({
-                pos: [clientX, clientY],
-                layer:
-                    target.dataset.index == undefined
-                        ? null
-                        : layers[target.dataset.index],
-            })
-        },
-
         //全局鼠标按下
         domMousedown({ button }) {
             if (button != 0) return false //非鼠标左键return
@@ -249,13 +217,16 @@ export default {
             if (showLayerCtxMenu) {
                 this.setShowLayerCtxMenu(false) //隐藏图层右键菜单
             }
-            console.log(1)
             //状态改变
             this.domMouseEnter = true
         },
         //全局鼠标拖动
         domMousemove({ button, clientX, clientY }) {
-            if (button != 0) return false //非鼠标左键return
+            //非鼠标左键return
+            if (button != 0) return false
+            //拖动指示
+            this.layerMoveState = true
+
             let {
                 domMouseEnter,
                 layerMouseEnter,
@@ -263,11 +234,88 @@ export default {
                 initialActiveLayers,
                 activeLayers,
                 setLayer,
+                anchorMouseEnter,
+                anchorMouseOffset,
+                curAnchorLayer,
+                curAnchorLayerSize,
+                curAnchorLayerPos,
+                curAnchor,
             } = this
+
+            //图层缩放（锚点事件）
+            if (anchorMouseEnter && domMouseEnter) {
+                //改变图层位置
+                function curAnchorLayerPosReset(
+                    { x, y } = { x: true, y: true }
+                ) {
+                    curAnchorLayer.pos = [
+                        x
+                            ? curAnchorLayerPos[0] +
+                              clientX -
+                              layerMouseOffset[0]
+                            : curAnchorLayerPos[0],
+                        y
+                            ? curAnchorLayerPos[1] +
+                              clientY -
+                              layerMouseOffset[1]
+                            : curAnchorLayerPos[1],
+                    ]
+                }
+                //改变图层尺寸
+                function curAnchorLayerSizeReset({ w, h }) {
+                    const widthStr = w
+                        ? `curAnchorLayer.width = curAnchorLayerSize.width ${w} (clientX - anchorMouseOffset[0]);`
+                        : ''
+                    const heightStr = h
+                        ? `curAnchorLayer.height =curAnchorLayerSize.height ${h} (clientY - anchorMouseOffset[1]);`
+                        : ''
+                    eval(widthStr + heightStr) //字符串运行
+                }
+                //根据不同锚点执行不同运算
+                switch (Number(curAnchor)) {
+                    case 1:
+                        curAnchorLayerSizeReset({ w: '-', h: '-' })
+                        curAnchorLayerPosReset()
+                        break
+                    case 2:
+                        curAnchorLayerSizeReset({ h: '-' })
+                        curAnchorLayerPosReset({ x: false, y: true })
+                        break
+                    case 3:
+                        curAnchorLayerSizeReset({ w: '+', h: '-' })
+                        curAnchorLayerPosReset({ x: false, y: true })
+                        break
+                    case 4:
+                        curAnchorLayerSizeReset({ w: '-' })
+                        curAnchorLayerPosReset({ x: true, y: false })
+                        break
+                    case 5:
+                        curAnchorLayerSizeReset({ w: '+' })
+                        break
+                    case 6:
+                        curAnchorLayerSizeReset({ w: '-', h: '+' })
+                        curAnchorLayerPosReset({ x: true, y: false })
+                        break
+                    case 7:
+                        curAnchorLayerSizeReset({ h: '+' })
+                        break
+                    default:
+                        curAnchorLayerSizeReset({ w: '+', h: '+' })
+                        break
+                }
+
+                //改变图表配置时间戳以便实时刷新图表
+                curAnchorLayer.compOptions.lastChangeTime = Date.now()
+
+                //视图更新
+                setLayer(curAnchorLayer)
+
+                //缩放不触发后面的拖拽
+                return
+            }
+
             //图层拖动（改变位置）
             if (layerMouseEnter && domMouseEnter) {
-                //拖动指示
-                this.layerMoveState = true
                 //改变图层位置
                 activeLayers.forEach((item, index) => {
                     item.pos = [
@@ -285,10 +333,24 @@ export default {
         //全局鼠标抬起
         domMouseup({ button }) {
             if (button != 0) return false //非鼠标左键return
-            console.log(2)
             //状态改变
             this.domMouseEnter = false
             this.layerMouseEnter = false
+            this.anchorMouseEnter = false
+        },
+        //图层右键菜单事件
+        layerCtxMenu({ clientX, clientY, target }) {
+            const { setShowLayerCtxMenu, setLayerCtxMenu, layers } = this
+            //显示菜单
+            setShowLayerCtxMenu(true)
+            //设置当前菜单(判断当前右键事件是在图层上点击还是面板上)
+            setLayerCtxMenu({
+                pos: [clientX, clientY],
+                layer:
+                    target.dataset.index == undefined
+                        ? null
+                        : layers[target.dataset.index],
+            })
         },
     },
     mounted() {
