@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-18 18:10:54
+ * @LastEditTime: 2020-11-18 18:16:42
 -->
 <template>
     <div
@@ -34,9 +34,7 @@
                     :data-anchor="anchor"
                     @mousedown.prevent="anchorClick"
                     @mouseup.prevent="anchorClick"
-                >
-                    {{ anchor }}
-                </div>
+                ></div>
             </template>
             <!-- 动态组件 -->
             <component :is="item.type" :options="item.compOptions"></component>
