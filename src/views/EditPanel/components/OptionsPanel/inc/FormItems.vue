@@ -2,75 +2,92 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-16 17:58:21
+ * @LastEditTime: 2020-11-19 11:37:26
 -->
 <template>
-    <el-form-item :label="formItemOption.label"
-                  :class="`formOptions${formItemOption.labelOnTop && ' labelOnTop'}`">
+    <el-form-item
+        :label="formItemOption.label"
+        :class="`formOptions${formItemOption.labelOnTop ? ' labelOnTop' : ''}`"
+    >
         <!-- 输入框 -->
         <template v-if="formItemOption.compType == 'input'">
-            <el-input class="inputBox"
-                      v-model="formModelVal"
-                      size="small"
-                      clearable
-                      :placeholder="formItemOption.placeholder || ''"
-                      :disabled="formItemOption.disabled || false"
-                      :type="formItemOption.inputType || 'text'"
-                      :maxlength="formItemOption.maxlength || false"
-                      :readonly="formItemOption.readonly || false"
-                      resize="none"
-                      show-word-limit
-                      :autosize="{ minRows: 3, maxRows: 10 }"></el-input>
+            <el-input
+                class="inputBox"
+                v-model="formModelVal"
+                size="small"
+                clearable
+                :placeholder="formItemOption.placeholder || ''"
+                :disabled="formItemOption.disabled || false"
+                :type="formItemOption.inputType || 'text'"
+                :maxlength="formItemOption.maxlength || false"
+                :readonly="formItemOption.readonly || false"
+                resize="none"
+                show-word-limit
+                :autosize="{ minRows: 3, maxRows: 10 }"
+            ></el-input>
             <!-- 操作按钮组 -->
-            <el-button-group v-if="formItemOption.showBtnGroup"
-                             class="formItemBtnGroup">
-                <el-button type="info"
-                           icon="el-icon-document-copy"
-                           size="mini"
-                           title="复制"
-                           @click="formItemCopy"></el-button>
-                <el-button type="info"
-                           icon="el-icon-edit"
-                           size="mini"
-                           title="编辑"
-                           @click="formItemEdit"></el-button>
+            <el-button-group
+                v-if="formItemOption.showBtnGroup"
+                class="formItemBtnGroup"
+            >
+                <el-button
+                    type="info"
+                    icon="el-icon-document-copy"
+                    size="mini"
+                    title="复制"
+                    @click="formItemCopy"
+                ></el-button>
+                <el-button
+                    type="info"
+                    icon="el-icon-edit"
+                    size="mini"
+                    title="编辑"
+                    @click="formItemEdit"
+                ></el-button>
             </el-button-group>
         </template>
 
         <!-- 滑块 -->
         <template v-if="formItemOption.compType == 'slider'">
-            <el-slider v-model="formModelVal"
-                       :show-tooltip="false"
-                       :min="formItemOption.min || 0"
-                       :max="formItemOption.max || 100"
-                       :step="formItemOption.step || 1"></el-slider>
+            <el-slider
+                v-model="formModelVal"
+                :show-tooltip="false"
+                :min="formItemOption.min || 0"
+                :max="formItemOption.max || 100"
+                :step="formItemOption.step || 1"
+            ></el-slider>
             <div class="sliderValLabel">{{ formModelVal }}</div>
         </template>
 
         <!-- 开关 -->
         <template v-if="formItemOption.compType == 'switch'">
-            <el-switch v-model="formModelVal"
-                       active-color="#409EFF"
-                       inactive-color="#33434f">
+            <el-switch
+                v-model="formModelVal"
+                active-color="#409EFF"
+                inactive-color="#33434f"
+            >
             </el-switch>
         </template>
 
         <!-- 下拉选 -->
         <template v-if="formItemOption.compType == 'radio'">
-            <el-select v-model="formModelVal"
-                       placeholder="请选择">
-                <el-option v-for="option in formItemOption.options"
-                           :key="option.value"
-                           :label="option.label"
-                           :value="option.value">
+            <el-select v-model="formModelVal" placeholder="请选择">
+                <el-option
+                    v-for="option in formItemOption.options"
+                    :key="option.value"
+                    :label="option.label"
+                    :value="option.value"
+                >
                 </el-option>
             </el-select>
         </template>
 
         <!-- 单颜色选择器 -->
         <template v-if="formItemOption.compType == 'color'">
-            <el-color-picker v-model="formModelVal"
-                             size="mini"></el-color-picker>
+            <el-color-picker
+                v-model="formModelVal"
+                size="mini"
+            ></el-color-picker>
         </template>
 
         <!-- 多颜色选择器 -->
@@ -86,41 +103,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in formModelVal"
-                        :key="index">
+                    <tr v-for="(item, index) in formModelVal" :key="index">
                         <td width="45">
-                            <el-color-picker v-model="item.color"
-                                             size="mini"></el-color-picker>
+                            <el-color-picker
+                                v-model="item.color"
+                                size="mini"
+                            ></el-color-picker>
                         </td>
                         <td width="45">
-                            <el-color-picker v-model="item.gdColor"
-                                             size="mini"></el-color-picker>
+                            <el-color-picker
+                                v-model="item.gdColor"
+                                size="mini"
+                            ></el-color-picker>
                         </td>
                         <td>
-                            <el-switch v-model="item.isGradient"
-                                       active-color="#409EFF"
-                                       inactive-color="#33434f">
+                            <el-switch
+                                v-model="item.isGradient"
+                                active-color="#409EFF"
+                                inactive-color="#33434f"
+                            >
                             </el-switch>
                         </td>
                         <td>
-                            <el-slider v-model="item.gdScope"
-                                       range
-                                       :step="0.1"
-                                       :max="1"
-                                       :disabled="!item.isGradient">
+                            <el-slider
+                                v-model="item.gdScope"
+                                range
+                                :step="0.1"
+                                :max="1"
+                                :disabled="!item.isGradient"
+                            >
                             </el-slider>
                         </td>
                         <td>
-                            <el-button size="mini"
-                                       type="danger"
-                                       @click="deleteColor(index, item)">删除</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="deleteColor(index, item)"
+                                >删除</el-button
+                            >
                         </td>
                     </tr>
                     <tr>
                         <td colspan="5">
-                            <el-button size="mini"
-                                       type="primary"
-                                       @click="addColor">+ 新增</el-button>
+                            <el-button
+                                size="mini"
+                                type="primary"
+                                @click="addColor"
+                                >+ 新增</el-button
+                            >
                         </td>
                     </tr>
                 </tbody>

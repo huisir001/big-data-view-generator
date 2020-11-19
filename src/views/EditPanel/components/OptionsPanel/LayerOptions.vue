@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-11-19 11:04:08
+ * @LastEditTime: 2020-11-19 11:46:37
 -->
 <template>
     <div class="layerOptionsBox">
@@ -17,19 +17,17 @@
                     :title="catItem.category"
                     :name="i + 1"
                 >
-                    <div class="collapseItem">
-                        <FormItems
-                            v-for="(item,
-                            index) in activeLayers[0].formControlOptions.filter(
-                                (option) =>
-                                    catItem.optionsFilter.includes(option.key)
-                            )"
-                            :key="index"
-                            :formItemOption="item"
-                            :optionKey="item.key"
-                            :activeLayer="activeLayers[0]"
-                        ></FormItems>
-                    </div>
+                    <FormItems
+                        v-for="(item,
+                        index) in activeLayers[0].formControlOptions.filter(
+                            (option) =>
+                                catItem.optionsFilter.includes(option.key)
+                        )"
+                        :key="index"
+                        :formItemOption="item"
+                        :optionKey="item.key"
+                        :activeLayer="activeLayers[0]"
+                    ></FormItems>
                 </el-collapse-item>
             </el-collapse>
         </template>
@@ -49,7 +47,7 @@ export default {
     data() {
         return {
             layerFormCats,
-            cpActiveName: '1', //折叠面板当前激活项
+            cpActiveName: 1, //折叠面板当前激活项
         }
     },
     computed: {
@@ -58,7 +56,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.layerOptionsBox {
-    padding: 15px 8px 15px 15px;
+.formOptions:last-child {
+    margin-bottom: 0;
 }
 </style>

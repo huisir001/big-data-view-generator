@@ -2,28 +2,31 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-10-19 17:02:02
+ * @LastEditTime: 2020-11-19 11:46:49
 -->
 <template>
     <div class="compLibrary">
-        <el-collapse v-model="cpActiveName"
-                     accordion>
-            <el-collapse-item v-for="(item,index) in compList"
-                              :key="index"
-                              :title="item.category"
-                              :name="index+1">
+        <el-collapse v-model="cpActiveName" accordion>
+            <el-collapse-item
+                v-for="(item, index) in compList"
+                :key="index"
+                :title="item.category"
+                :name="index + 1"
+            >
                 <div class="collapseItem">
-                    <div class="compItem"
-                         v-for="(comp,i) in item.list"
-                         :key="i"
-                         :data-type="comp.type"
-                         :data-title="comp.title"
-                         :data-index="i"
-                         :data-category="item.category"
-                         @mousedown.prevent="compItemDown"
-                         @mouseup.prevent="compItemDown">
-                        <div class="title">{{comp.title}}</div>
-                        <img :src="comp.pic">
+                    <div
+                        class="compItem"
+                        v-for="(comp, i) in item.list"
+                        :key="i"
+                        :data-type="comp.type"
+                        :data-title="comp.title"
+                        :data-index="i"
+                        :data-category="item.category"
+                        @mousedown.prevent="compItemDown"
+                        @mouseup.prevent="compItemDown"
+                    >
+                        <div class="title">{{ comp.title }}</div>
+                        <img :src="comp.pic" />
                     </div>
                 </div>
             </el-collapse-item>
@@ -49,7 +52,7 @@ export default {
             cloneItemMoveInPane: false, //克隆元素移入操作面板状态
             curMouseOffset: [0, 0],
             cloneItem: null,
-            cpActiveName: '1', //折叠面板当前激活项
+            cpActiveName: 1, //折叠面板当前激活项
         }
     },
     computed: {
