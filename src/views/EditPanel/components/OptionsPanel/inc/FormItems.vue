@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-19 11:37:26
+ * @LastEditTime: 2020-11-19 15:58:27
 -->
 <template>
     <el-form-item
@@ -45,6 +45,31 @@
                     @click="formItemEdit"
                 ></el-button>
             </el-button-group>
+        </template>
+
+        <!-- 计数器 -->
+        <template v-if="formItemOption.compType == 'number'">
+            <el-input-number
+                size="small"
+                v-model="formModelVal"
+                controls-position="right"
+            ></el-input-number>
+        </template>
+
+        <!-- 位置坐标计数器 -->
+        <template v-if="formItemOption.compType == 'position'">
+            <el-input-number
+                size="small"
+                v-model="formModelVal[0]"
+                controls-position="right"
+                style="width: 49%"
+            ></el-input-number>
+            <el-input-number
+                size="small"
+                v-model="formModelVal[1]"
+                controls-position="right"
+                style="width: 49%; margin-left: 2%"
+            ></el-input-number>
         </template>
 
         <!-- 滑块 -->
@@ -173,8 +198,15 @@ export default {
         formModelVal: {
             get() {
                 try {
-                    const { optionKey, activeLayer, stringifyOptionKeys } = this
-                    const compOptionVal = activeLayer.compOptions[optionKey]
+                    const {
+                        formItemOption,
+                        optionKey,
+                        activeLayer,
+                        stringifyOptionKeys,
+                    } = this
+                    const compOptionVal = formItemOption.layerOption
+                        ? activeLayer[optionKey] //图层本身配置项
+                        : activeLayer.compOptions[optionKey] //图层内组件配置项
                     // 如果需要转义字符串的 将对象转义后的字符串显示在文本框（一般为代码才需要转义）
                     return activeLayer &&
                         stringifyOptionKeys.includes(optionKey)
@@ -189,12 +221,23 @@ export default {
             },
             set(value) {
                 try {
-                    const { optionKey, activeLayer, stringifyOptionKeys } = this
+                    const {
+                        formItemOption,
+                        optionKey,
+                        activeLayer,
+                        stringifyOptionKeys,
+                    } = this
                     const optionVal =
                         activeLayer && stringifyOptionKeys.includes(optionKey)
                             ? JSON.parse(value)
                             : value
-                    this.activeLayer.compOptions[optionKey] = optionVal
+                    if (formItemOption.layerOption) {
+                        //图层本身配置项
+                        this.activeLayer[optionKey] = optionVal
+                    } else {
+                        //图层内组件配置项
+                        this.activeLayer.compOptions[optionKey] = optionVal
+                    }
                     this.activeLayer.compOptions.lastChangeTime = Date.now() //改变时间戳
                     this.$store.commit('layer/setLayer', this.activeLayer)
                 } catch (error) {

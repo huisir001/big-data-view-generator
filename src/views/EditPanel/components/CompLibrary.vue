@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-11-19 11:46:49
+ * @LastEditTime: 2020-11-19 16:22:33
 -->
 <template>
     <div class="compLibrary">
@@ -112,7 +112,7 @@ export default {
 
                     addLayer({
                         type: getAttr('data-type'), //组件类型
-                        title: getAttr('data-title'), //组件标题
+                        name: getAttr('data-title'), //组件标题
                         pos: [
                             //组件相对于实际视图的位置
                             (cx - vx) / blueprintScale,

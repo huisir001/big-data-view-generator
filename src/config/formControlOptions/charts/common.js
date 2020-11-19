@@ -2,9 +2,35 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-19 10:56:24
+ * @LastEditTime: 2020-11-19 16:31:43
  */
 export default [
+    /* 图层 */
+    {
+        key: 'name',
+        label: '图层名称',
+        compType: 'input',
+        layerOption: true,
+    },
+    {
+        key: 'pos',
+        label: '坐标',
+        compType: 'position', //position类型为固定格式如[10,10]
+        layerOption: true, //图层本身配置
+    },
+    {
+        key: 'width',
+        label: '宽度',
+        compType: 'number',
+        layerOption: true,
+    },
+    {
+        key: 'height',
+        label: '高度',
+        compType: 'number',
+        layerOption: true,
+    },
+    /* 图表 */
     {
         key: 'chartData',
         compType: 'input',
