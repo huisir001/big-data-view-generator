@@ -2,18 +2,22 @@
  * @Description: 图层右键菜单(右键菜单)
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:19:54
- * @LastEditTime: 2020-09-25 18:16:21
+ * @LastEditTime: 2020-11-19 18:07:16
 -->
 <template>
-    <div v-show="showLayerCtxMenu"
-         class="layerCtxMenu"
-         :style="`left:${layerCtxMenuPos[0]}px;top:${layerCtxMenuPos[1]}px;`"
-         @contextmenu.prevent>
-        <div v-for="(item,index) in layerCtxMenuOptions"
-             :key="index"
-             :class="{disabled:item.disabled}"
-             @mousedown="touchLayerCtxMenu(item)">
-            <span :class="item.icon"></span> {{item.name}}
+    <div
+        v-show="showLayerCtxMenu"
+        class="layerCtxMenu"
+        :style="`left:${layerCtxMenuPos[0]}px;top:${layerCtxMenuPos[1]}px;`"
+        @contextmenu.prevent
+    >
+        <div
+            v-for="(item, index) in layerCtxMenuOptions"
+            :key="index"
+            :class="{ disabled: item.disabled }"
+            @mousedown="touchLayerCtxMenu(item)"
+        >
+            <span :class="item.icon"></span> {{ item.name }}
         </div>
     </div>
 </template>
@@ -31,6 +35,8 @@ export default {
             'showLayerCtxMenu',
             'layerCtxMenu',
             'blueprintDomRect',
+            'blueprintScale', //视图层缩放
+            'platformPos', //工作台位置
         ]),
         ...mapStateLayer(['layers', 'copyLayer']),
         //选定图层
@@ -76,6 +82,8 @@ export default {
                 pasteLayer,
                 copyLayer,
                 blueprintDomRect,
+                blueprintScale, //视图层缩放
+                platformPos, //工作台位置
                 setLayer,
                 activeLayers,
                 hiddenLayers,
@@ -99,8 +107,18 @@ export default {
                     func() {
                         //存在复制图层时，粘贴，传入粘贴实际位置
                         pasteLayer([
-                            layerCtxMenu.pos[0] - blueprintDomRect.x,
-                            layerCtxMenu.pos[1] - blueprintDomRect.y,
+                            parseInt(
+                                (layerCtxMenu.pos[0] -
+                                    blueprintDomRect.x -
+                                    platformPos[0]) /
+                                    blueprintScale
+                            ),
+                            parseInt(
+                                (layerCtxMenu.pos[1] -
+                                    blueprintDomRect.y -
+                                    platformPos[1]) /
+                                    blueprintScale
+                            ),
                         ])
                     },
                 },
