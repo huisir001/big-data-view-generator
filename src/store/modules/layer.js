@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-11-19 16:23:14
+ * @LastEditTime: 2020-11-19 17:11:04
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -23,7 +23,7 @@ export default {
         addLayer(state, layer) {
             const ranId = getRanId()
             layer.id = `L-${ranId}` //赋值id，若已有id会被覆盖
-            layer.name += `_${ranId}` //图层初始标题用id区分
+            layer.name = layer.name.split('_')[0] + `_${ranId}` //图层初始标题用id区分
             layer.locked = false //解锁图层
             state.layers.forEach((item) => item.active && (item.active = false)) //移除之前已选定图层
             layer.active = true //是否选定，默认刚新增的图层是选定的
