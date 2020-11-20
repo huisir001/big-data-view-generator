@@ -2,7 +2,7 @@
  * @Description: resize及DOM样式变动监听器
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-02 17:32:53
- * @LastEditTime: 2020-11-20 09:57:35
+ * @LastEditTime: 2020-11-20 16:57:22
  */
 import {
     debounce, //防抖
@@ -71,7 +71,7 @@ export default {
             })
         },
         getDebounceInitWHFun() {
-            this.debounceInitWHFun = debounce(this.initWH, 1000) //防抖
+            this.debounceInitWHFun = debounce(this.initWH, 400) //防抖
         },
         bindDomResizeCallback() {
             const { dom, debounceInitWHFun } = this

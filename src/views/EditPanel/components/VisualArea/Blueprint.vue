@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-20 11:16:03
+ * @LastEditTime: 2020-11-20 17:53:03
 -->
 <template>
     <div
@@ -37,7 +37,11 @@
                 ></div>
             </template>
             <!-- 动态组件 -->
-            <component :is="item.type" :options="item.compOptions"></component>
+            <component
+                :is="item.type"
+                :options="item.compOptions"
+                style="overflow: hidden"
+            ></component>
         </div>
     </div>
 </template>
@@ -98,9 +102,21 @@ export default {
         },
     },
     watch: {
-        layerString(data) {
-            //实时存储
+        layerString(data, old) {
+            //实时存储(实际不需要，只要在需要时候存储就行)
             sessionStorage.setItem(`layers`, data)
+            //缩放完成时改变图表配置时间戳以便实时刷新图表(这里处理手动更改配置栏尺寸的情况，非鼠标拖拽的情况)
+            const oldLayers = JSON.parse(old),
+                newLayers = JSON.parse(data)
+            if (
+                oldLayers[0] &&
+                newLayers[0] &&
+                (oldLayers[0].width != newLayers[0].width ||
+                    oldLayers[0].height != newLayers[0].height)
+            ) {
+                this.curAnchorLayer ||
+                    (this.activeLayers[0].compOptions.lastChangeTime = Date.now())
+            }
         },
     },
     methods: {
@@ -308,9 +324,6 @@ export default {
                         break
                 }
 
-                //改变图表配置时间戳以便实时刷新图表
-                curAnchorLayer.compOptions.lastChangeTime = Date.now()
-
                 //视图更新
                 setLayer(curAnchorLayer)
 
@@ -339,10 +352,14 @@ export default {
         //全局鼠标抬起
         domMouseup({ button }) {
             if (button != 0) return false //非鼠标左键return
+            //缩放完成时改变图表配置时间戳以便实时刷新图表
+            this.curAnchorLayer &&
+                (this.curAnchorLayer.compOptions.lastChangeTime = Date.now())
             //状态改变
             this.domMouseEnter = false
             this.layerMouseEnter = false
             this.anchorMouseEnter = false
+            this.curAnchorLayer = null
         },
         //图层右键菜单事件
         layerCtxMenu({ clientX, clientY, target }) {

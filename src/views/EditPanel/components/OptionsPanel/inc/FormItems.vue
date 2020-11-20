@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-20 16:11:17
+ * @LastEditTime: 2020-11-20 17:35:48
 -->
 <template>
     <el-form-item
@@ -263,8 +263,8 @@ export default {
                     } else {
                         //图层内组件配置项
                         this.activeLayer.compOptions[optionKey] = optionVal
+                        this.activeLayer.compOptions.lastChangeTime = Date.now() //改变时间戳重新渲染图表
                     }
-                    this.activeLayer.compOptions.lastChangeTime = Date.now() //改变时间戳
                     this.$store.commit('layer/setLayer', this.activeLayer)
                 } catch (error) {
                     //如果转义出错，说明转义的内容格式错误
