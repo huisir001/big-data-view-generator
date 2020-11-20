@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-11-19 16:22:33
+ * @LastEditTime: 2020-11-20 09:39:39
 -->
 <template>
     <div class="compLibrary">
@@ -89,6 +89,7 @@ export default {
         },
         domMouseup({ button }) {
             if (button != 0) return false //非鼠标左键return
+
             // 状态还原
             const {
                 compItemEnter,

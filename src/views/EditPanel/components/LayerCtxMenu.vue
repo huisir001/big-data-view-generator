@@ -2,7 +2,7 @@
  * @Description: 图层右键菜单(右键菜单)
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:19:54
- * @LastEditTime: 2020-11-19 18:07:16
+ * @LastEditTime: 2020-11-20 10:06:48
 -->
 <template>
     <div
@@ -107,13 +107,13 @@ export default {
                     func() {
                         //存在复制图层时，粘贴，传入粘贴实际位置
                         pasteLayer([
-                            parseInt(
+                            Math.floor(
                                 (layerCtxMenu.pos[0] -
                                     blueprintDomRect.x -
                                     platformPos[0]) /
                                     blueprintScale
                             ),
-                            parseInt(
+                            Math.floor(
                                 (layerCtxMenu.pos[1] -
                                     blueprintDomRect.y -
                                     platformPos[1]) /

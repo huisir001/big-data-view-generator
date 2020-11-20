@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-18 18:25:18
+ * @LastEditTime: 2020-11-20 11:16:03
 -->
 <template>
     <div
@@ -239,6 +239,7 @@ export default {
                 curAnchorLayerSize,
                 curAnchorLayerPos,
                 curAnchor,
+                blueprintScale,
             } = this
 
             //图层缩放（锚点事件）
@@ -249,24 +250,28 @@ export default {
                 ) {
                     curAnchorLayer.pos = [
                         x
-                            ? curAnchorLayerPos[0] +
-                              clientX -
-                              layerMouseOffset[0]
+                            ? Math.floor(
+                                  curAnchorLayerPos[0] +
+                                      (clientX - layerMouseOffset[0]) /
+                                          blueprintScale
+                              )
                             : curAnchorLayerPos[0],
                         y
-                            ? curAnchorLayerPos[1] +
-                              clientY -
-                              layerMouseOffset[1]
+                            ? Math.floor(
+                                  curAnchorLayerPos[1] +
+                                      (clientY - layerMouseOffset[1]) /
+                                          blueprintScale
+                              )
                             : curAnchorLayerPos[1],
                     ]
                 }
                 //改变图层尺寸
                 function curAnchorLayerSizeReset({ w, h }) {
                     const widthStr = w
-                        ? `curAnchorLayer.width = curAnchorLayerSize.width ${w} (clientX - anchorMouseOffset[0]);`
+                        ? `curAnchorLayer.width = Math.floor(curAnchorLayerSize.width ${w} (clientX - anchorMouseOffset[0]) / blueprintScale);`
                         : ''
                     const heightStr = h
-                        ? `curAnchorLayer.height =curAnchorLayerSize.height ${h} (clientY - anchorMouseOffset[1]);`
+                        ? `curAnchorLayer.height = Math.floor(curAnchorLayerSize.height ${h} (clientY - anchorMouseOffset[1]) / blueprintScale);`
                         : ''
                     eval(widthStr + heightStr) //字符串运行
                 }
@@ -318,12 +323,14 @@ export default {
                 //改变图层位置
                 activeLayers.forEach((item, index) => {
                     item.pos = [
-                        initialActiveLayers[index].pos[0] +
-                            clientX -
-                            layerMouseOffset[0],
-                        initialActiveLayers[index].pos[1] +
-                            clientY -
-                            layerMouseOffset[1],
+                        Math.floor(
+                            initialActiveLayers[index].pos[0] +
+                                (clientX - layerMouseOffset[0]) / blueprintScale
+                        ),
+                        Math.floor(
+                            initialActiveLayers[index].pos[1] +
+                                (clientY - layerMouseOffset[1]) / blueprintScale
+                        ),
                     ]
                     setLayer(item)
                 })
