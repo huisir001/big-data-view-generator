@@ -2,10 +2,10 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-17 11:01:52
+ * @LastEditTime: 2020-11-20 14:41:21
 -->
 <template>
-    <div style="width:100%;height:100%"></div>
+    <div style="width: 100%; height: 100%"></div>
 </template>
 
 <script>
@@ -69,7 +69,7 @@ export default {
                 item.type = 'bar'
                 item.barWidth = barWidth
                 //堆叠
-                if (!stack) {
+                if (stack) {
                     item.stack = '0'
                 } else if (stack instanceof Array) {
                     stack.forEach((obj) => {

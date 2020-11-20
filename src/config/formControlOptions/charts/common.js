@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-19 16:31:43
+ * @LastEditTime: 2020-11-20 16:12:23
  */
 export default [
     /* 图层 */
@@ -15,7 +15,7 @@ export default [
     {
         key: 'pos',
         label: '坐标',
-        compType: 'position', //position类型为固定格式如[10,10]
+        compType: 'numberArray', //position类型为固定格式如[10,10]
         layerOption: true, //图层本身配置
     },
     {
@@ -88,13 +88,39 @@ export default [
         label: '显示图例',
     },
     {
-        key: 'horizontal',
+        key: 'valEnding',
+        compType: 'input',
+        label: '刻度后缀',
+    },
+    {
+        key: 'catLabelRowLen',
+        compType: 'number',
+        min: 2,
+        label: '类型轴换行字数',
+    },
+    {
+        key: 'showValAxisLabel',
         compType: 'switch',
-        label: '是否横向',
+        label: '显示数据轴刻度',
+    },
+    {
+        key: 'showValAxisLine',
+        compType: 'switch',
+        label: '显示数据轴轴线',
+    },
+    {
+        key: 'showValSplitLine',
+        compType: 'switch',
+        label: '显示数据轴分隔线',
+    },
+    {
+        key: 'showCatAxisLine',
+        compType: 'switch',
+        label: '显示类型轴轴线',
     },
     {
         key: 'colorMode',
-        compType: 'radio',
+        compType: 'select',
         label: '颜色模式',
         options: [
             { value: 'byLegend', label: '按图例' },

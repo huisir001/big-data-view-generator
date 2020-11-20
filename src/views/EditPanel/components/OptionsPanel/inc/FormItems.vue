@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-19 15:58:27
+ * @LastEditTime: 2020-11-20 16:11:17
 -->
 <template>
     <el-form-item
@@ -53,22 +53,48 @@
                 size="small"
                 v-model="formModelVal"
                 controls-position="right"
+                :min="
+                    formItemOption.min
+                        ? formItemOption.min
+                        : formItemOption.min === 0
+                        ? 0
+                        : -Infinity
+                "
+                :max="
+                    formItemOption.max
+                        ? formItemOption.max
+                        : formItemOption.max === 0
+                        ? 0
+                        : Infinity
+                "
             ></el-input-number>
         </template>
 
-        <!-- 位置坐标计数器 -->
-        <template v-if="formItemOption.compType == 'position'">
+        <!-- 数字数组 -->
+        <template v-if="formItemOption.compType == 'numberArray'">
             <el-input-number
                 size="small"
-                v-model="formModelVal[0]"
+                v-for="(_, index) in formModelVal"
+                :key="index"
+                v-model="formModelVal[index]"
                 controls-position="right"
-                style="width: 49%"
-            ></el-input-number>
-            <el-input-number
-                size="small"
-                v-model="formModelVal[1]"
-                controls-position="right"
-                style="width: 49%; margin-left: 2%"
+                :min="
+                    formItemOption.min
+                        ? formItemOption.min
+                        : formItemOption.min === 0
+                        ? 0
+                        : -Infinity
+                "
+                :max="
+                    formItemOption.max
+                        ? formItemOption.max
+                        : formItemOption.max === 0
+                        ? 0
+                        : Infinity
+                "
+                :style="`width:49%; margin-left: ${
+                    index % 2 == 0 ? 0 : 2
+                }%;margin-top: ${index < 2 ? 0 : 2}%;`"
             ></el-input-number>
         </template>
 
@@ -95,7 +121,7 @@
         </template>
 
         <!-- 下拉选 -->
-        <template v-if="formItemOption.compType == 'radio'">
+        <template v-if="formItemOption.compType == 'select'">
             <el-select v-model="formModelVal" placeholder="请选择">
                 <el-option
                     v-for="option in formItemOption.options"

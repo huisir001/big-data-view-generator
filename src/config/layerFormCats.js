@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-11-19 16:31:55
+ * @LastEditTime: 2020-11-20 16:05:04
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -31,7 +31,7 @@ export default [
     },
     {
         category: '图表基础配置',
-        optionsFilter: ['title', 'horizontal'],
+        optionsFilter: ['title'],
         compTypeFilter: allCompType,
     },
     {
@@ -46,8 +46,29 @@ export default [
     },
     {
         category: '坐标轴设置',
-        optionsFilter: ['xName', 'yName'],
+        optionsFilter: [
+            'xName',
+            'yName',
+            'valEnding',
+            'showValAxisLabel',
+            'showValAxisLine',
+            'showValSplitLine',
+            'showCatAxisLine',
+            'catLabelRowLen',
+        ],
         compTypeFilter: ['BarChart', 'LineChart', 'ScatterChart', 'TwoYAxis'],
+    },
+    {
+        category: '图表主体配置',
+        optionsFilter: [
+            'barWidth',
+            'stack',
+            'horizontal',
+            'barBorderRadius',
+            'label',
+            'labelPosition',
+        ],
+        compTypeFilter: compTypes_tb,
     },
     {
         category: '视区设置',
