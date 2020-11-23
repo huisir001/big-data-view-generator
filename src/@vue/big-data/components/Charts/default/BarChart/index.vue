@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-20 14:41:21
+ * @LastEditTime: 2020-11-23 18:44:44
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -25,6 +25,8 @@ export default {
             //获取配置项
             const {
                 chartData,
+                useApiData,
+                dynamicData,
                 barWidth,
                 stack,
                 barBorderRadius,
@@ -55,7 +57,7 @@ export default {
                 showLegend,
             } = this.myOptions
 
-            const { xAxis, series } = chartData
+            const { xAxis, series } = useApiData ? dynamicData : chartData
 
             //使用字符串方式对对象进行内存复制（非引用）,以防止图层状态中的option数据易值
             let mySeries = JSON.parse(JSON.stringify(series))

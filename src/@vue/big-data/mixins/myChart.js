@@ -2,11 +2,12 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-11-20 17:55:00
+ * @LastEditTime: 2020-11-23 18:45:12
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme
 import autoResize from './autoResize'
+import Axios from '../utils/axios'
 
 export default {
     mixins: [autoResize],
@@ -43,7 +44,7 @@ export default {
     },
     methods: {
         /* 初始化chart */
-        async initChart() {
+        initChart() {
             const { $el, getMyChart, chartRender } = this
 
             //获取chart对象
@@ -59,18 +60,57 @@ export default {
             //loading
             myChart.showLoading({
                 color: '#dcfffe',
-                text: '',
+                text: 'loading',
+                textColor: '#dcfffe',
                 maskColor: 'rgba(0, 0, 0, 0)',
             })
             return myChart
         },
 
         /* chart渲染 */
-        chartRender() {
-            const { myChart, getEchartsOptions } = this
+        async chartRender() {
+            const { myChart, getEchartsOptions, options, apiRequest } = this
+
             myChart.hideLoading()
+
+            //这里处理数据请求
+            if (options.useApiData) {
+                //loading
+                myChart.showLoading({
+                    color: '#dcfffe',
+                    text: '数据请求中',
+                    textColor: '#dcfffe',
+                    maskColor: 'rgba(0, 0, 0, 0.5)',
+                })
+
+                let res = await apiRequest()
+
+                if (!options.apiResHandle) {
+                    this.options.dynamicData = res
+                } else if (typeof options.apiResHandle == 'string') {
+                    const apiResHandle = eval(options.apiResHandle)
+                    this.options.dynamicData = apiResHandle(res)
+                } else {
+                    this.options.dynamicData = options.apiResHandle(res)
+                }
+
+                myChart.hideLoading()
+            }
+
             myChart.setOption(getEchartsOptions(), true)
             myChart.resize()
+        },
+
+        /* 处理数据请求 */
+        apiRequest() {
+            const { apiReqUrl, apiMethod, apiParam } = this.options
+            const method = apiMethod || 'get'
+            return Axios({
+                method: method,
+                url: apiReqUrl || 'http://localhost/api',
+                data: apiParam || {},
+                [method == 'get' && 'params']: apiParam || {},
+            })
         },
 
         /* 窗口缩放后重新调整图标尺寸 */

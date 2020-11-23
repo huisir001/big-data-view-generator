@@ -117,6 +117,9 @@ $input-bg: #33434f;
 }
 
 //下拉选框
+.el-select {
+    width: 100%;
+}
 .el-select-dropdown {
     border: solid 1px #3a8ee6;
     background-color: #161f28;

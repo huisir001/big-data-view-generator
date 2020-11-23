@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-11-20 15:20:43
+ * @LastEditTime: 2020-11-23 18:43:57
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -12,7 +12,13 @@ class Config {
     constructor(options = {}) {
         const optionsTypeObj = {
             lastChangeTime: Number, //reset时间戳
-            chartData: [Object, Array], //图表数据
+            chartData: [Object, Array], //图表静态数据
+            dynamicData: [Object, Array], //图表动态数据
+            useApiData: Boolean, //使用接口请求的动态数据，默认使用静态数据
+            apiReqUrl: String, //完整接口地址如`http://192.168.1.1/api/users`
+            apiMethod: String, //这里只能为get或者post，默认get
+            apiParam: Object, //请求传参，空为{}空对象
+            apiResHandle: [String, Function], //数据处理，若为字符串，则为`(function(x){return xxx})`格式，传入请求结果，返回新的数据
             title: String, //标题，可有可无,若没有则为""
             valEnding: String, //值的结尾，比如"%"，默认为空
             xName: String, //x轴名，可有可无
@@ -49,15 +55,29 @@ class Config {
         //数据为必传项，这里验证一下(当父组件传options参数的时候)
         //若未传options参数，这里不验证，直接给默认值
         const optionsLen = Object.keys(options).length
-        if (optionsLen > 0 && !options.chartData) {
-            throw new Error(
-                'Lack of data, Please send "chartData" in parent component.'
-            )
+        if (optionsLen > 0) {
+            if (options.useApiData && !options.apiReqUrl) {
+                throw new Error(
+                    'Lack of data, Please send "apiReqUrl" in parent component.'
+                )
+            }
+            if (!options.useApiData && !options.chartData) {
+                throw new Error(
+                    'Lack of data, Please send "chartData" in parent component.'
+                )
+            }
         }
 
         //默认配置
         this.defaultOptions = {
             [optionsLen == 0 && 'chartData']: mockData, //没有配置项时给一个预览数据
+            useApiData: false,
+            apiMethod: 'get',
+            apiParam: {},
+            apiResHandle: function (res) {
+                console.log(res)
+                return res
+            },
             valEnding: '',
             xName: '',
             yName: '',

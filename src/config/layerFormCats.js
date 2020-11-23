@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-11-20 16:05:04
+ * @LastEditTime: 2020-11-23 17:48:39
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -36,7 +36,14 @@ export default [
     },
     {
         category: '数据配置',
-        optionsFilter: ['chartData'],
+        optionsFilter: [
+            'useApiData',
+            'chartData',
+            'apiReqUrl',
+            'apiMethod',
+            'apiParam',
+            'apiResHandle',
+        ],
         compTypeFilter: compTypes_sjpz,
     },
     {

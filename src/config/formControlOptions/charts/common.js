@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-20 16:12:23
+ * @LastEditTime: 2020-11-23 18:09:03
  */
 export default [
     /* 图层 */
@@ -32,9 +32,46 @@ export default [
     },
     /* 图表 */
     {
+        key: 'useApiData',
+        compType: 'switch',
+        label: '动态数据',
+    },
+    {
         key: 'chartData',
         compType: 'input',
         label: '图表数据',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true, //需要转义为字符串显示在表单中
+    },
+    {
+        key: 'apiReqUrl',
+        compType: 'input',
+        label: '接口地址',
+    },
+    {
+        key: 'apiMethod',
+        compType: 'select',
+        label: '请求方式',
+        options: [
+            { value: 'get', label: 'GET请求' },
+            { value: 'post', label: 'POST请求' },
+        ],
+    },
+    {
+        key: 'apiParam',
+        compType: 'input',
+        label: '请求传参',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true,
+    },
+    {
+        key: 'apiResHandle',
+        compType: 'input',
+        label: '数据处理',
         inputType: 'textarea',
         readonly: true,
         showBtnGroup: true,

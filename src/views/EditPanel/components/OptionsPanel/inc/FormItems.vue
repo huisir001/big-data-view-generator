@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-20 17:35:48
+ * @LastEditTime: 2020-11-23 18:57:31
 -->
 <template>
     <el-form-item
@@ -213,29 +213,18 @@
 export default {
     name: 'FormItems',
     props: ['optionKey', 'formItemOption', 'activeLayer'],
-    data() {
-        return {
-            stringifyOptionKeys: ['chartData'], //需要转字符串显示在表单中的参数项
-        }
-    },
-    mounted() {},
     computed: {
         //表单项绑定的数据（这里手写get和set方法以便能实时更新state中的数据）
         formModelVal: {
             get() {
                 try {
-                    const {
-                        formItemOption,
-                        optionKey,
-                        activeLayer,
-                        stringifyOptionKeys,
-                    } = this
+                    const { formItemOption, optionKey, activeLayer } = this
                     const compOptionVal = formItemOption.layerOption
                         ? activeLayer[optionKey] //图层本身配置项
                         : activeLayer.compOptions[optionKey] //图层内组件配置项
+
                     // 如果需要转义字符串的 将对象转义后的字符串显示在文本框（一般为代码才需要转义）
-                    return activeLayer &&
-                        stringifyOptionKeys.includes(optionKey)
+                    return activeLayer && formItemOption.stringify
                         ? JSON.stringify(compOptionVal, null, 2) //格式化json，2个空格缩进
                         : compOptionVal
                 } catch (error) {
@@ -247,14 +236,9 @@ export default {
             },
             set(value) {
                 try {
-                    const {
-                        formItemOption,
-                        optionKey,
-                        activeLayer,
-                        stringifyOptionKeys,
-                    } = this
+                    const { formItemOption, optionKey, activeLayer } = this
                     const optionVal =
-                        activeLayer && stringifyOptionKeys.includes(optionKey)
+                        activeLayer && formItemOption.stringify
                             ? JSON.parse(value)
                             : value
                     if (formItemOption.layerOption) {
@@ -298,19 +282,26 @@ export default {
         },
         //编辑
         formItemEdit() {
-            this.$alert('请确保 JSON格式 及 数据结构 正确', '数据代码编辑', {
+            const { $alert, formModelVal, formItemOption } = this
+            $alert('请确保 JSON格式 及 数据结构 正确', '数据代码编辑', {
                 customClass: 'myMessageBox',
                 showCancelButton: true,
                 confirmButtonText: '确定',
                 showInput: true,
                 inputType: 'textarea',
-                inputValue: this.formModelVal,
+                inputValue: formModelVal,
                 beforeClose(action, instance, done) {
                     instance.editorErrorMessage = ''
                     if (action == 'cancel') {
                         done()
                         return
                     }
+
+                    if (!formItemOption.stringify) {
+                        done()
+                        return
+                    }
+
                     //JSON格式验证
                     let jsonObj
                     try {
@@ -320,12 +311,19 @@ export default {
                         return
                     }
                     //数据格式验证
-                    if (
-                        jsonObj.xAxis &&
-                        jsonObj.series &&
-                        jsonObj.xAxis instanceof Array &&
-                        jsonObj.series instanceof Array
-                    ) {
+                    let FormModelVal = JSON.parse(formModelVal),
+                        flag = true
+                    Object.keys(FormModelVal).forEach((item) => {
+                        if (
+                            !jsonObj[item] ||
+                            FormModelVal[item].constructor.name !=
+                                jsonObj[item].constructor.name
+                        ) {
+                            flag = false
+                        }
+                    })
+
+                    if (flag) {
                         done()
                     } else {
                         instance.editorErrorMessage =

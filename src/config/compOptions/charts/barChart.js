@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-20 16:03:44
+ * @LastEditTime: 2020-11-23 17:55:23
  */
 import common from './common'
 export default {
