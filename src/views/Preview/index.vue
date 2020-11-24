@@ -2,21 +2,31 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2020-11-16 11:51:20
+ * @LastEditTime: 2020-11-24 15:42:47
 -->
 <template>
     <div class="container">
-        <div class="preview"
-             :style="{width:screenSize[0]+'px',height:screenSize[1]+'px',transform}">
+        <div
+            class="preview"
+            :style="{
+                width: screenSize[0] + 'px',
+                height: screenSize[1] + 'px',
+                transform,
+            }"
+        >
             <!-- 图层渲染(采用动态组件) -->
-            <div v-for="(item,index) in layers"
-                 v-show="item.show"
-                 :key="index"
-                 class="viewItem"
-                 :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
+            <div
+                v-for="(item, index) in layers"
+                v-show="item.show"
+                :key="index"
+                class="viewItem"
+                :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`"
+            >
                 <!-- 动态组件 -->
-                <component :is="item.type"
-                           :options="item.compOptions"></component>
+                <component
+                    :is="item.type"
+                    :options="item.compOptions"
+                ></component>
             </div>
         </div>
     </div>
@@ -26,6 +36,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import autoResize from '@/mixin/autoResize'
 const { mapState: mapStateSystem } = createNamespacedHelpers('system')
+
 export default {
     name: 'Preview',
     mixins: [autoResize],
