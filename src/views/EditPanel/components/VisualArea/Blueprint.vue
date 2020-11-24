@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-20 17:53:03
+ * @LastEditTime: 2020-11-24 10:35:12
 -->
 <template>
     <div
@@ -104,7 +104,7 @@ export default {
     watch: {
         layerString(data, old) {
             //实时存储(实际不需要，只要在需要时候存储就行)
-            sessionStorage.setItem(`layers`, data)
+            // sessionStorage.setItem(`layers`, data)
             //缩放完成时改变图表配置时间戳以便实时刷新图表(这里处理手动更改配置栏尺寸的情况，非鼠标拖拽的情况)
             const oldLayers = JSON.parse(old),
                 newLayers = JSON.parse(data)
