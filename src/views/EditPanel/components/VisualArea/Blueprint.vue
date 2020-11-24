@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-24 10:35:12
+ * @LastEditTime: 2020-11-24 15:18:08
 -->
 <template>
     <div
@@ -19,7 +19,15 @@
             :data-index="index"
             @mousedown.prevent="layerClick"
             @mouseup.prevent="layerClick"
-            :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`"
+            :style="`width:${
+                layersCache[item.id] ? layersCache[item.id].width : item.width
+            }px;height:${
+                layersCache[item.id] ? layersCache[item.id].height : item.height
+            }px;left:${
+                layersCache[item.id] ? layersCache[item.id].pos[0] : item.pos[0]
+            }px;top:${
+                layersCache[item.id] ? layersCache[item.id].pos[1] : item.pos[1]
+            }px;z-index:${item.zIndex};`"
         >
             <!-- 位置标线/缩放锚点 -->
             <template v-if="item.active">
@@ -74,9 +82,12 @@ export default {
             anchorMouseEnter: false, //是否按下鼠标
             anchorMouseOffset: [0, 0], //鼠标位置
             curAnchor: null, //当前锚点
-            curAnchorLayer: null, //记录锚点所在图层
-            curAnchorLayerSize: null, //拷贝锚点所在图层尺寸
-            curAnchorLayerPos: null, //拷贝锚点所在图层位置
+            curAnchorLayer: null, //缓存锚点所在图层
+            initialAnchorLayer: null, //记录图层初始状态
+            /* 图层缓存，防止拖拽时图层抖动（卡顿）的bug */
+            initialActiveLayers: null, //图层初始位置状态
+            activeLayersCache: null, //激活图层缓存
+            layersCache: {}, //图层状态（用于视图实时更新）
         }
     },
     computed: {
@@ -105,7 +116,7 @@ export default {
         layerString(data, old) {
             //实时存储(实际不需要，只要在需要时候存储就行)
             // sessionStorage.setItem(`layers`, data)
-            //缩放完成时改变图表配置时间戳以便实时刷新图表(这里处理手动更改配置栏尺寸的情况，非鼠标拖拽的情况)
+            //缩放、拖拽完成时改变时间戳实时更新图表视图
             const oldLayers = JSON.parse(old),
                 newLayers = JSON.parse(data)
             if (
@@ -114,8 +125,7 @@ export default {
                 (oldLayers[0].width != newLayers[0].width ||
                     oldLayers[0].height != newLayers[0].height)
             ) {
-                this.curAnchorLayer ||
-                    (this.activeLayers[0].compOptions.lastChangeTime = Date.now())
+                this.activeLayers[0].compOptions.lastChangeTime = Date.now()
             }
         },
     },
@@ -197,10 +207,19 @@ export default {
 
             //记录鼠标位置
             this.layerMouseOffset = [clientX, clientY]
-            //记录图层初始状态
-            this.initialActiveLayers = JSON.parse(
+
+            //拷贝激活图层
+            const copyActiveLayers = JSON.parse(
                 JSON.stringify(this.activeLayers)
             )
+
+            //缓存激活图层（防内存被修改）
+            this.activeLayersCache = copyActiveLayers.map((item) => {
+                return { pos: item.pos, id: item.id }
+            })
+
+            //记录图层初始位置状态
+            this.initialActiveLayers = copyActiveLayers.map((item) => item.pos)
         },
         /* Resize锚点事件绑定 */
         anchorClick({ type, button, clientX, clientY, target }) {
@@ -213,16 +232,21 @@ export default {
             this.anchorMouseOffset = [clientX, clientY]
             //记录当前锚点
             this.curAnchor = anchor
-            //记录当前图层
-            this.curAnchorLayer = this.layers[index]
-            //拷贝当前图层尺寸
-            const copyLayer = JSON.parse(JSON.stringify(this.layers[index]))
-            this.curAnchorLayerSize = {
-                width: copyLayer.width,
-                height: copyLayer.height,
+            //拷贝图层
+            const copyCurLayer = JSON.parse(JSON.stringify(this.layers[index]))
+            //缓存当前图层位置及尺寸
+            this.curAnchorLayer = {
+                id: copyCurLayer.id,
+                width: copyCurLayer.width,
+                height: copyCurLayer.height,
+                pos: copyCurLayer.pos,
             }
-            //拷贝当前图层位置
-            this.curAnchorLayerPos = copyLayer.pos
+            //记录状态
+            this.initialAnchorLayer = {
+                width: copyCurLayer.width,
+                height: copyCurLayer.height,
+                pos: copyCurLayer.pos,
+            }
         },
         //全局鼠标按下
         domMousedown({ button }) {
@@ -252,8 +276,7 @@ export default {
                 anchorMouseEnter,
                 anchorMouseOffset,
                 curAnchorLayer,
-                curAnchorLayerSize,
-                curAnchorLayerPos,
+                initialAnchorLayer,
                 curAnchor,
                 blueprintScale,
             } = this
@@ -267,27 +290,27 @@ export default {
                     curAnchorLayer.pos = [
                         x
                             ? Math.floor(
-                                  curAnchorLayerPos[0] +
+                                  initialAnchorLayer.pos[0] +
                                       (clientX - layerMouseOffset[0]) /
                                           blueprintScale
                               )
-                            : curAnchorLayerPos[0],
+                            : initialAnchorLayer.pos[0],
                         y
                             ? Math.floor(
-                                  curAnchorLayerPos[1] +
+                                  initialAnchorLayer.pos[1] +
                                       (clientY - layerMouseOffset[1]) /
                                           blueprintScale
                               )
-                            : curAnchorLayerPos[1],
+                            : initialAnchorLayer.pos[1],
                     ]
                 }
                 //改变图层尺寸
                 function curAnchorLayerSizeReset({ w, h }) {
                     const widthStr = w
-                        ? `curAnchorLayer.width = Math.floor(curAnchorLayerSize.width ${w} (clientX - anchorMouseOffset[0]) / blueprintScale);`
+                        ? `curAnchorLayer.width = Math.floor(initialAnchorLayer.width ${w} (clientX - anchorMouseOffset[0]) / blueprintScale);`
                         : ''
                     const heightStr = h
-                        ? `curAnchorLayer.height = Math.floor(curAnchorLayerSize.height ${h} (clientY - anchorMouseOffset[1]) / blueprintScale);`
+                        ? `curAnchorLayer.height = Math.floor(initialAnchorLayer.height ${h} (clientY - anchorMouseOffset[1]) / blueprintScale);`
                         : ''
                     eval(widthStr + heightStr) //字符串运行
                 }
@@ -325,7 +348,7 @@ export default {
                 }
 
                 //视图更新
-                setLayer(curAnchorLayer)
+                this.$set(this.layersCache, curAnchorLayer.id, curAnchorLayer)
 
                 //缩放不触发后面的拖拽
                 return
@@ -334,32 +357,38 @@ export default {
             //图层拖动（改变位置）
             if (layerMouseEnter && domMouseEnter) {
                 //改变图层位置
-                activeLayers.forEach((item, index) => {
+                this.activeLayersCache.forEach((item, index) => {
                     item.pos = [
                         Math.floor(
-                            initialActiveLayers[index].pos[0] +
+                            initialActiveLayers[index][0] +
                                 (clientX - layerMouseOffset[0]) / blueprintScale
                         ),
                         Math.floor(
-                            initialActiveLayers[index].pos[1] +
+                            initialActiveLayers[index][1] +
                                 (clientY - layerMouseOffset[1]) / blueprintScale
                         ),
                     ]
-                    setLayer(item)
+
+                    //视图更新
+                    this.$set(this.layersCache, item.id, item)
                 })
             }
         },
         //全局鼠标抬起
         domMouseup({ button }) {
             if (button != 0) return false //非鼠标左键return
-            //缩放完成时改变图表配置时间戳以便实时刷新图表
-            this.curAnchorLayer &&
-                (this.curAnchorLayer.compOptions.lastChangeTime = Date.now())
+
+            //位置拖拽后更新全局状态
+            for (let key in this.layersCache) {
+                this.setLayer(this.layersCache[key])
+            }
+
             //状态改变
             this.domMouseEnter = false
             this.layerMouseEnter = false
             this.anchorMouseEnter = false
             this.curAnchorLayer = null
+            this.layersCache = {}
         },
         //图层右键菜单事件
         layerCtxMenu({ clientX, clientY, target }) {

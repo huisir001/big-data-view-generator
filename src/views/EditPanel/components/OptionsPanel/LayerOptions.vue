@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-11-24 10:07:47
+ * @LastEditTime: 2020-11-24 14:19:26
 -->
 <template>
     <div class="layerOptionsBox">
@@ -10,18 +10,15 @@
         <template v-if="activeLayers.length == 1">
             <el-collapse v-model="cpActiveName" accordion>
                 <el-collapse-item
-                    v-for="(catItem, i) in layerFormCats.filter((cat) =>
-                        cat.compTypeFilter.includes(activeLayers[0].type)
-                    )"
+                    v-for="(catItem, i) in formCatsFilter"
                     :key="i"
                     :title="catItem.category"
                     :name="i + 1"
                 >
                     <FormItems
                         v-for="(item,
-                        index) in activeLayers[0].formControlOptions.filter(
-                            (option) =>
-                                catItem.optionsFilter.includes(option.key)
+                        index) in curformControlOptions.filter((option) =>
+                            catItem.optionsFilter.includes(option.key)
                         )"
                         :key="index"
                         :formItemOption="item"
@@ -87,6 +84,14 @@ export default {
         ...mapGetters(['activeLayers']), //选定图层
         activeLayersStr() {
             return JSON.stringify(this.activeLayers)
+        },
+        formCatsFilter() {
+            return this.layerFormCats.filter((cat) =>
+                cat.compTypeFilter.includes(this.activeLayers[0].type)
+            )
+        },
+        curformControlOptions() {
+            return this.activeLayers[0].formControlOptions
         },
     },
 }
