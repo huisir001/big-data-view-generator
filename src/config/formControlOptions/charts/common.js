@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-23 18:09:03
+ * @LastEditTime: 2020-11-24 10:10:05
  */
 export default [
     /* 图层 */
@@ -49,6 +49,7 @@ export default [
         key: 'apiReqUrl',
         compType: 'input',
         label: '接口地址',
+        hide: true, //默认隐藏
     },
     {
         key: 'apiMethod',
@@ -58,6 +59,7 @@ export default [
             { value: 'get', label: 'GET请求' },
             { value: 'post', label: 'POST请求' },
         ],
+        hide: true,
     },
     {
         key: 'apiParam',
@@ -67,6 +69,7 @@ export default [
         readonly: true,
         showBtnGroup: true,
         stringify: true,
+        hide: true,
     },
     {
         key: 'apiResHandle',
@@ -75,6 +78,7 @@ export default [
         inputType: 'textarea',
         readonly: true,
         showBtnGroup: true,
+        hide: true,
     },
     {
         key: 'title',

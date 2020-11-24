@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-23 18:38:43
+ * @LastEditTime: 2020-11-24 10:11:51
  */
 export default {
     lastChangeTime: Date.now(),
@@ -10,7 +10,7 @@ export default {
     apiReqUrl: 'http://localhost/api',
     apiMethod: 'get',
     apiParam: {},
-    apiResHandle: `(function(res){\n  console.log(res)\n  return res\n})`,
+    apiResHandle: `function(res){\n  console.log(res)\n  return res\n}`,
     valEnding: '',
     label: false,
     showValAxisLabel: true,

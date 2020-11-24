@@ -2,10 +2,11 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-23 18:57:31
+ * @LastEditTime: 2020-11-24 10:22:59
 -->
 <template>
     <el-form-item
+        v-show="!formItemOption.hide"
         :label="formItemOption.label"
         :class="`formOptions${formItemOption.labelOnTop ? ' labelOnTop' : ''}`"
     >
@@ -283,7 +284,7 @@ export default {
         //编辑
         formItemEdit() {
             const { $alert, formModelVal, formItemOption } = this
-            $alert('请确保 JSON格式 及 数据结构 正确', '数据代码编辑', {
+            $alert('请确保JSON格式、数据结构或代码逻辑正确', '数据代码编辑', {
                 customClass: 'myMessageBox',
                 showCancelButton: true,
                 confirmButtonText: '确定',
@@ -297,7 +298,24 @@ export default {
                         return
                     }
 
-                    if (!formItemOption.stringify) {
+                    if (
+                        !formItemOption.stringify &&
+                        !instance.inputValue.includes('function')
+                    ) {
+                        //
+                        done()
+                        return
+                    }
+
+                    //函数代码验证
+                    if (instance.inputValue.includes('function')) {
+                        try {
+                            eval(`(${instance.inputValue})()`)
+                        } catch (error) {
+                            instance.editorErrorMessage = error
+                            return
+                        }
+
                         done()
                         return
                     }

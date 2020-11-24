@@ -2,7 +2,7 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-11-23 18:45:12
+ * @LastEditTime: 2020-11-24 10:11:29
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme
@@ -88,7 +88,7 @@ export default {
                 if (!options.apiResHandle) {
                     this.options.dynamicData = res
                 } else if (typeof options.apiResHandle == 'string') {
-                    const apiResHandle = eval(options.apiResHandle)
+                    const apiResHandle = eval(`(${options.apiResHandle})`)
                     this.options.dynamicData = apiResHandle(res)
                 } else {
                     this.options.dynamicData = options.apiResHandle(res)

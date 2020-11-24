@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-11-23 19:05:31
+ * @LastEditTime: 2020-11-24 10:07:47
 -->
 <template>
     <div class="layerOptionsBox">
@@ -50,8 +50,44 @@ export default {
             cpActiveName: 1, //折叠面板当前激活项
         }
     },
+    watch: {
+        activeLayersStr(val) {
+            let curLayer = JSON.parse(val)[0]
+            /* 控制数据配置表单项显隐 */
+            const apiDataOptions = [
+                'apiReqUrl',
+                'apiMethod',
+                'apiParam',
+                'apiResHandle',
+            ]
+            if (curLayer.compOptions.useApiData) {
+                curLayer.formControlOptions.forEach((item) => {
+                    if (apiDataOptions.includes(item.key)) {
+                        item.hide = false
+                    }
+                    if (item.key == 'chartData') {
+                        item.hide = true
+                    }
+                })
+            } else {
+                curLayer.formControlOptions.forEach((item) => {
+                    if (apiDataOptions.includes(item.key)) {
+                        item.hide = true
+                    }
+                    if (item.key == 'chartData') {
+                        item.hide = false
+                    }
+                })
+            }
+
+            this.$store.commit('layer/setLayer', curLayer)
+        },
+    },
     computed: {
         ...mapGetters(['activeLayers']), //选定图层
+        activeLayersStr() {
+            return JSON.stringify(this.activeLayers)
+        },
     },
 }
 </script>
