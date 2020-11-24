@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-11-24 14:19:26
+ * @LastEditTime: 2020-11-24 15:36:30
 -->
 <template>
     <div class="layerOptionsBox">
@@ -35,6 +35,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import FormItems from './inc/FormItems' //图层配置栏-表单项组件
 import layerFormCats from '@/config/layerFormCats'
+import { debounce } from '@/utils/myUtils'
 const { mapGetters } = createNamespacedHelpers('layer')
 export default {
     name: 'LayerOptions',
@@ -50,6 +51,11 @@ export default {
     watch: {
         activeLayersStr(val) {
             let curLayer = JSON.parse(val)[0]
+
+            if (!curLayer) {
+                return
+            }
+
             /* 控制数据配置表单项显隐 */
             const apiDataOptions = [
                 'apiReqUrl',
@@ -57,7 +63,11 @@ export default {
                 'apiParam',
                 'apiResHandle',
             ]
-            if (curLayer.compOptions.useApiData) {
+            if (
+                curLayer &&
+                curLayer.compOptions &&
+                curLayer.compOptions.useApiData
+            ) {
                 curLayer.formControlOptions.forEach((item) => {
                     if (apiDataOptions.includes(item.key)) {
                         item.hide = false
