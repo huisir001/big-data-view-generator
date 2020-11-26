@@ -2,10 +2,10 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-11-19 10:36:33
+ * @LastEditTime: 2020-11-26 17:18:40
  */
-import { coBarChart } from './compOptions/charts'
-import { fcoBarChart } from './formControlOptions/charts'
+import { coBarChart, coLineChart } from './compOptions/charts'
+import { fcoBarChart, fcoLineChart } from './formControlOptions/charts'
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
  */
@@ -25,8 +25,8 @@ export default [
                 title: '折线图',
                 type: 'LineChart',
                 pic: require('@/assets/img/compList/line.png'),
-                compOptions: coBarChart,
-                formControlOptions: fcoBarChart,
+                compOptions: coLineChart,
+                formControlOptions: fcoLineChart,
             },
             {
                 title: '饼图',

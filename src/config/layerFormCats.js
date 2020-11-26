@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-11-23 17:48:39
+ * @LastEditTime: 2020-11-26 17:44:56
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -61,6 +61,7 @@ export default [
             'showValAxisLine',
             'showValSplitLine',
             'showCatAxisLine',
+            'boundaryGap',
             'catLabelRowLen',
         ],
         compTypeFilter: ['BarChart', 'LineChart', 'ScatterChart', 'TwoYAxis'],
@@ -70,6 +71,7 @@ export default [
         optionsFilter: [
             'barWidth',
             'stack',
+            'smooth',
             'horizontal',
             'barBorderRadius',
             'label',

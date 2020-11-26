@@ -1,12 +1,12 @@
 /*
- * @Description: 图表默认Options
+ * @Description: 图表默认Options - line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-23 17:55:23
+ * @LastEditTime: 2020-11-26 17:45:46
  */
 import common from './common'
 export default {
-    title: '柱状图',
+    title: '折线图',
     chartData: {
         xAxis: ['郑丽', '于平', '龚娟', '杜强'],
         series: [
@@ -23,9 +23,7 @@ export default {
     bottom: 28,
     showLegend: true, //显示图例
     horizontal: false, //是否横向
-    barWidth: 10,
-    stack: false, //是否堆叠  这里暂时只考虑全部堆叠，不考虑抽样堆叠的情况
-    barBorderRadius: [0, 0, 0, 0], //圆角配置
+    stack: false, //是否堆叠
     labelPosition: 'top',
     colors: [
         {
@@ -47,11 +45,12 @@ export default {
             gdScope: [0, 1],
         },
     ],
-    colorMode: 'byLegend',
     showValAxisLabel: true,
     showValAxisLine: true,
     showValSplitLine: true,
     showCatAxisLine: true,
     catLabelRowLen: 4,
+    boundaryGap: false,
+    smooth: false,
     ...common,
 }

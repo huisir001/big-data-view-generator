@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-24 10:10:05
+ * @LastEditTime: 2020-11-26 17:14:03
  */
 export default [
     /* 图层 */
@@ -86,16 +86,6 @@ export default [
         label: '图表标题',
     },
     {
-        key: 'xName',
-        compType: 'input',
-        label: 'x轴名称',
-    },
-    {
-        key: 'yName',
-        compType: 'input',
-        label: 'y轴名称',
-    },
-    {
         key: 'left',
         compType: 'slider',
         label: '左边距',
@@ -132,41 +122,6 @@ export default [
         key: 'valEnding',
         compType: 'input',
         label: '刻度后缀',
-    },
-    {
-        key: 'catLabelRowLen',
-        compType: 'number',
-        min: 2,
-        label: '类型轴换行字数',
-    },
-    {
-        key: 'showValAxisLabel',
-        compType: 'switch',
-        label: '显示数据轴刻度',
-    },
-    {
-        key: 'showValAxisLine',
-        compType: 'switch',
-        label: '显示数据轴轴线',
-    },
-    {
-        key: 'showValSplitLine',
-        compType: 'switch',
-        label: '显示数据轴分隔线',
-    },
-    {
-        key: 'showCatAxisLine',
-        compType: 'switch',
-        label: '显示类型轴轴线',
-    },
-    {
-        key: 'colorMode',
-        compType: 'select',
-        label: '颜色模式',
-        options: [
-            { value: 'byLegend', label: '按图例' },
-            { value: 'byAxis', label: '按轴向' },
-        ],
     },
     {
         key: 'colors',

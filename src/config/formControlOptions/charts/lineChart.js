@@ -1,25 +1,11 @@
 /*
- * @Description: 配置Option
+ * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-26 17:13:53
+ * @LastEditTime: 2020-11-26 17:49:08
  */
 import common from './common'
 export default [
-    {
-        key: 'barWidth',
-        compType: 'slider',
-        label: '柱宽',
-        min: 0,
-        max: 100,
-    },
-    {
-        key: 'barBorderRadius',
-        compType: 'numberArray',
-        label: '圆角配置',
-        min: 0,
-        max: 50,
-    },
     {
         key: 'label',
         compType: 'switch',
@@ -92,13 +78,14 @@ export default [
         label: '显示类型轴轴线',
     },
     {
-        key: 'colorMode',
-        compType: 'select',
-        label: '颜色模式',
-        options: [
-            { value: 'byLegend', label: '按图例' },
-            { value: 'byAxis', label: '按轴向' },
-        ],
+        key: 'boundaryGap',
+        compType: 'switch',
+        label: '有无边界',
+    },
+    {
+        key: 'smooth',
+        compType: 'switch',
+        label: '平滑曲线',
     },
     ...common,
 ]
