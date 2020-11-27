@@ -2,7 +2,7 @@
  * @Description: 图表默认Options - line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-26 17:45:46
+ * @LastEditTime: 2020-11-27 11:37:31
  */
 import common from './common'
 export default {
@@ -52,5 +52,9 @@ export default {
     catLabelRowLen: 4,
     boundaryGap: false,
     smooth: false,
+    limitAxisMinVal: false,
+    limitAxisMaxVal: false,
+    axisScopeMin: 0,
+    axisScopeMax: 100,
     ...common,
 }

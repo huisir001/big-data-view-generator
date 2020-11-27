@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-11-26 16:42:48
+ * @LastEditTime: 2020-11-27 11:23:01
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -42,7 +42,10 @@ class Config {
             label: Boolean, //是否显示数据标签
             labelPosition: String, //数据标签位置,默认在上方
             visualMap: Object, //视觉映射（改变某些数据区域的颜色）
-            axisDegreeScope: Object, //数据轴刻度范围
+            limitAxisMinVal: Boolean, //是否限制刻度最小值
+            limitAxisMaxVal: Boolean, //是否限制刻度最大值
+            axisScopeMin: Number, //数据轴刻度范围最小值
+            axisScopeMax: Number, //数据轴刻度范围最大值
             showValAxisLabel: Boolean, //显示数据轴刻度
             showValAxisLine: Boolean, //显示数据轴轴线
             showValSplitLine: Boolean, //显示数据轴刻度分隔线
@@ -87,7 +90,10 @@ class Config {
             stack: false,
             label: false,
             horizontal: false,
-            axisDegreeScope: {},
+            limitAxisMinVal: false,
+            limitAxisMaxVal: false,
+            axisScopeMin: 0,
+            axisScopeMax: 100,
             boundaryGap: false,
             smooth: false,
             showValAxisLabel: true,

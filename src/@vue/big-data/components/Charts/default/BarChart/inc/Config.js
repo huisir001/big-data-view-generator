@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-11-23 18:43:57
+ * @LastEditTime: 2020-11-27 17:38:04
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -32,7 +32,10 @@ class Config {
             stack: [Array, Boolean], //是否堆叠，堆叠的项目有哪些，stack为true时所有柱子都堆叠在一柱上，且不考虑堆叠的类型名
             horizontal: Boolean, //是否横向，声明即横向
             barBorderRadius: [Array, Number], //柱子是否圆角，可传数组或数字如30或[30,30,30,30]
-            dataZoom: Object, //数据缩放滚动条
+            showDataZoom: Boolean, //显示滚动条
+            dataZoomAxis: String, //滚动条映射的数据轴这里4个值：`y0,y1,x0,x1`
+            dataZoomSplitType: String, //滚动条数据分隔方式:`index`按下标，`ratio`按比例
+            dataZoomSplitScope: Array, //滚动条数据分隔范围，是2个值的数组：`[0,9]`,`[0,50]`,dataZoomSplitType按比例的话，范围为0-100，按下标的话，范围为0-(值的长度-1)
             markPoint: Object, //气泡标注
             markLine: Object, //标线
             markArea: Object, //标域
@@ -41,7 +44,10 @@ class Config {
             label: Boolean, //是否显示数据标签
             labelPosition: String, //数据标签位置,默认在柱子上方
             visualMap: Object, //视觉映射（改变某些数据区域的颜色）
-            axisDegreeScope: Object, //数据轴刻度范围
+            limitAxisMinVal: Boolean, //是否限制刻度最小值
+            limitAxisMaxVal: Boolean, //是否限制刻度最大值
+            axisScopeMin: Number, //数据轴刻度范围最小值
+            axisScopeMax: Number, //数据轴刻度范围最大值
             showValAxisLabel: Boolean, //显示数据轴刻度
             showValAxisLine: Boolean, //显示数据轴轴线
             showValSplitLine: Boolean, //显示数据轴刻度分隔线
@@ -89,12 +95,19 @@ class Config {
             label: false,
             horizontal: false,
             barBorderRadius: 0,
-            axisDegreeScope: {},
             showValAxisLabel: true,
             showValAxisLine: true,
             showValSplitLine: true,
             showCatAxisLine: true,
             catLabelRowLen: 4,
+            limitAxisMinVal: false,
+            limitAxisMaxVal: false,
+            axisScopeMin: 0,
+            axisScopeMax: 100,
+            showDataZoom: false,
+            dataZoomAxis: 'x0',
+            dataZoomSplitType: 'index',
+            dataZoomSplitScope: [0, 9],
         }
 
         this.options = Object.assign(this.defaultOptions, options)

@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-26 17:14:03
+ * @LastEditTime: 2020-11-27 11:57:55
  */
 export default [
     /* 图层 */
@@ -35,6 +35,10 @@ export default [
         key: 'useApiData',
         compType: 'switch',
         label: '动态数据',
+        displayItems: {
+            t: ['apiReqUrl', 'apiMethod', 'apiParam', 'apiResHandle'],
+            f: ['chartData'],
+        }, //显隐控制
     },
     {
         key: 'chartData',
@@ -44,6 +48,7 @@ export default [
         readonly: true,
         showBtnGroup: true,
         stringify: true, //需要转义为字符串显示在表单中
+        hide: true, //默认隐藏
     },
     {
         key: 'apiReqUrl',

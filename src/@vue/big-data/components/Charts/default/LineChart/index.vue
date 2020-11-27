@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2020-11-26 17:20:03
+ * @LastEditTime: 2020-11-27 11:24:36
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -52,7 +52,10 @@ export default {
                 catLabelRowLen,
                 showCatAxisLine,
                 showValAxisLabel,
-                axisDegreeScope,
+                limitAxisMinVal,
+                limitAxisMaxVal,
+                axisScopeMin,
+                axisScopeMax,
                 showValAxisLine,
                 showValSplitLine,
                 colors,
@@ -183,7 +186,9 @@ export default {
                             show: showValAxisLabel, //数据轴刻度是否显示
                             formatter: '{value}' + valEnding,
                         },
-                        ...axisDegreeScope, //刻度显示范围
+                        //刻度显示范围
+                        [limitAxisMinVal && 'min']: axisScopeMin,
+                        [limitAxisMaxVal && 'max']: axisScopeMax,
                         axisLine: { show: showValAxisLine }, //轴线
                         splitLine: { show: showValSplitLine }, //刻度分割线
                     },

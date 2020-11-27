@@ -2,7 +2,7 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-26 17:49:08
+ * @LastEditTime: 2020-11-27 11:57:02
  */
 import common from './common'
 export default [
@@ -86,6 +86,34 @@ export default [
         key: 'smooth',
         compType: 'switch',
         label: '平滑曲线',
+    },
+    {
+        key: 'limitAxisMinVal',
+        compType: 'switch',
+        label: '限制刻度最小值',
+        displayItems: {
+            t: ['axisScopeMin'],
+        }, //显隐控制
+    },
+    {
+        key: 'limitAxisMaxVal',
+        compType: 'switch',
+        label: '限制刻度最大值',
+        displayItems: {
+            t: ['axisScopeMax'],
+        }, //显隐控制
+    },
+    {
+        key: 'axisScopeMin',
+        compType: 'number',
+        label: '刻度最小值',
+        hide: true,
+    },
+    {
+        key: 'axisScopeMax',
+        compType: 'number',
+        label: '刻度最大值',
+        hide: true,
     },
     ...common,
 ]

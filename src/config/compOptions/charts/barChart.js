@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-23 17:55:23
+ * @LastEditTime: 2020-11-27 18:33:09
  */
 import common from './common'
 export default {
@@ -53,5 +53,13 @@ export default {
     showValSplitLine: true,
     showCatAxisLine: true,
     catLabelRowLen: 4,
+    limitAxisMinVal: false,
+    limitAxisMaxVal: false,
+    axisScopeMin: 0,
+    axisScopeMax: 100,
+    showDataZoom: false,
+    dataZoomAxis: 'x0',
+    dataZoomSplitType: 'index',
+    dataZoomSplitScope: [0, 9],
     ...common,
 }

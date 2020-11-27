@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-24 15:56:14
+ * @LastEditTime: 2020-11-27 10:38:03
 -->
 <template>
     <div
@@ -116,12 +116,21 @@ export default {
         layerString(data, old) {
             //缩放、拖拽完成时改变时间戳实时更新图表视图
             const oldLayers = JSON.parse(old),
-                newLayers = JSON.parse(data)
+                newLayers = JSON.parse(data),
+                activeLayers = this.activeLayers,
+                curOldLayer =
+                    activeLayers.length > 0
+                        ? oldLayers.find(
+                              (item) => item.id == activeLayers[0].id
+                          )
+                        : null
             if (
                 oldLayers[0] &&
                 newLayers[0] &&
-                (oldLayers[0].width != newLayers[0].width ||
-                    oldLayers[0].height != newLayers[0].height)
+                curOldLayer &&
+                activeLayers[0] &&
+                (curOldLayer.width != activeLayers[0].width ||
+                    curOldLayer.height != activeLayers[0].height)
             ) {
                 this.activeLayers[0].compOptions.lastChangeTime = Date.now()
             }

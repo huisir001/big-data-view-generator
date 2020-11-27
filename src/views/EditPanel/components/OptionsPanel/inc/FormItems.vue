@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-24 10:22:59
+ * @LastEditTime: 2020-11-27 18:29:29
 -->
 <template>
     <el-form-item
@@ -108,7 +108,22 @@
                 :max="formItemOption.max || 100"
                 :step="formItemOption.step || 1"
             ></el-slider>
-            <div class="sliderValLabel">{{ formModelVal }}</div>
+            <div class="sliderValLabel">
+                {{ formModelVal }}
+            </div>
+        </template>
+
+        <!-- 范围滑块 -->
+        <template v-if="formItemOption.compType == 'rangeSlider'">
+            <el-slider
+                class="rangeSlider"
+                v-model="formModelVal"
+                range
+                show-tooltip
+                :min="formItemOption.min || 0"
+                :max="formItemOption.max || 100"
+                :step="formItemOption.step || 1"
+            ></el-slider>
         </template>
 
         <!-- 开关 -->

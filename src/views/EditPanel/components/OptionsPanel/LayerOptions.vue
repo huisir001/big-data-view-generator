@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-11-24 15:36:30
+ * @LastEditTime: 2020-11-27 14:36:41
 -->
 <template>
     <div class="layerOptionsBox">
@@ -57,32 +57,25 @@ export default {
             }
 
             /* 控制数据配置表单项显隐 */
-            const apiDataOptions = [
-                'apiReqUrl',
-                'apiMethod',
-                'apiParam',
-                'apiResHandle',
-            ]
-            if (
-                curLayer &&
-                curLayer.compOptions &&
-                curLayer.compOptions.useApiData
-            ) {
+            if (curLayer && curLayer.compOptions) {
                 curLayer.formControlOptions.forEach((item) => {
-                    if (apiDataOptions.includes(item.key)) {
-                        item.hide = false
-                    }
-                    if (item.key == 'chartData') {
-                        item.hide = true
-                    }
-                })
-            } else {
-                curLayer.formControlOptions.forEach((item) => {
-                    if (apiDataOptions.includes(item.key)) {
-                        item.hide = true
-                    }
-                    if (item.key == 'chartData') {
-                        item.hide = false
+                    if (item.displayItems) {
+                        curLayer.formControlOptions.forEach((optionItem) => {
+                            if (
+                                item.displayItems.t &&
+                                item.displayItems.t.includes(optionItem.key)
+                            ) {
+                                optionItem.hide = !curLayer.compOptions[
+                                    item.key
+                                ]
+                            }
+                            if (
+                                item.displayItems.f &&
+                                item.displayItems.f.includes(optionItem.key)
+                            ) {
+                                optionItem.hide = curLayer.compOptions[item.key]
+                            }
+                        })
                     }
                 })
             }

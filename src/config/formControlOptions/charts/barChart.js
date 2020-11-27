@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-26 17:13:53
+ * @LastEditTime: 2020-11-27 18:29:38
  */
 import common from './common'
 export default [
@@ -92,6 +92,36 @@ export default [
         label: '显示类型轴轴线',
     },
     {
+        key: 'limitAxisMinVal',
+        compType: 'switch',
+        label: '限制刻度最小值',
+        displayItems: {
+            //显隐控制
+            t: ['axisScopeMin'],
+        },
+    },
+    {
+        key: 'limitAxisMaxVal',
+        compType: 'switch',
+        label: '限制刻度最大值',
+        displayItems: {
+            //显隐控制
+            t: ['axisScopeMax'],
+        },
+    },
+    {
+        key: 'axisScopeMin',
+        compType: 'number',
+        label: '刻度最小值',
+        hide: true,
+    },
+    {
+        key: 'axisScopeMax',
+        compType: 'number',
+        label: '刻度最大值',
+        hide: true,
+    },
+    {
         key: 'colorMode',
         compType: 'select',
         label: '颜色模式',
@@ -99,6 +129,43 @@ export default [
             { value: 'byLegend', label: '按图例' },
             { value: 'byAxis', label: '按轴向' },
         ],
+    },
+    {
+        key: 'showDataZoom',
+        compType: 'switch',
+        label: '显示滚动条',
+        displayItems: {
+            //显隐控制
+            t: ['dataZoomAxis', 'dataZoomSplitType', 'dataZoomSplitScope'],
+        },
+    },
+    {
+        key: 'dataZoomAxis',
+        compType: 'select',
+        label: '数据轴映射',
+        options: [
+            { value: 'y0', label: 'Y轴一' },
+            { value: 'y1', label: 'Y轴二' },
+            { value: 'x0', label: 'X轴一' },
+            { value: 'x1', label: 'X轴二' },
+        ],
+    },
+    {
+        key: 'dataZoomSplitType',
+        compType: 'select',
+        label: '数据分隔方式',
+        options: [
+            { value: 'index', label: '按下标' },
+            { value: 'ratio', label: '按比例' },
+        ],
+    },
+    {
+        key: 'dataZoomSplitScope',
+        compType: 'rangeSlider',
+        label: '数据分隔范围',
+        step: 1,
+        min: 0,
+        max: 100,
     },
     ...common,
 ]
