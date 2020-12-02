@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2020-12-02 14:58:32
+ * @LastEditTime: 2020-12-02 16:31:31
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -32,6 +32,9 @@ export default {
                 labelPosition,
                 areaStyle,
                 stack,
+                showMarkPoint,
+                showMarkLine,
+                showMarkArea,
                 markPoint,
                 markLine,
                 markArea,
@@ -48,7 +51,6 @@ export default {
                 dataZoomSplitScope,
                 xName,
                 yName,
-                visualMap,
                 horizontal,
                 valEnding,
                 boundaryGap,
@@ -62,6 +64,8 @@ export default {
                 showValAxisLine,
                 showValSplitLine,
                 colors,
+                showVisualMap,
+                visualMap,
             } = this.myOptions
 
             const { xAxis, series } = useApiData ? dynamicData : chartData
@@ -96,9 +100,9 @@ export default {
                 //区域填充(自定义)
                 typeof areaStyle == 'object' && (item.areaStyle = areaStyle)
                 stack && (item.stack = '1') //实现堆积面积图
-                markPoint && (item.markPoint = markPoint) //气泡标注
-                markLine && (item.markLine = markLine) //标线
-                markArea && (item.markArea = markArea) //标域
+                showMarkPoint && (item.markPoint = markPoint) //气泡标注
+                showMarkLine && (item.markLine = markLine) //标线
+                showMarkArea && (item.markArea = markArea) //标域
                 lineStyle && (item.lineStyle = lineStyle) //线条样式
             })
 
@@ -122,7 +126,7 @@ export default {
                             : 8),
                     y: title ? 37 : 10,
                 },
-                [visualMap && 'visualMap']: visualMap, //视觉映射
+                [showVisualMap && 'visualMap']: visualMap, //视觉映射
                 grid: {
                     //这里的left+""避免left为数字0时判定为false
                     x:

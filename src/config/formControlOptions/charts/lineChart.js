@@ -2,7 +2,7 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 15:06:28
+ * @LastEditTime: 2020-12-02 16:36:19
  */
 import common from './common'
 export default [
@@ -151,6 +151,78 @@ export default [
         step: 1,
         min: 0,
         max: 100,
+    },
+    {
+        key: 'showVisualMap',
+        compType: 'switch',
+        label: '显示视觉映射',
+        displayItems: {
+            t: ['visualMap'],
+        },
+    },
+    {
+        key: 'visualMap',
+        compType: 'input',
+        label: '视觉映射配置',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true, //需要转义为字符串显示在表单中
+        hide: true, //默认隐藏
+    },
+    {
+        key: 'showMarkPoint',
+        compType: 'switch',
+        label: '显示标注',
+        displayItems: {
+            t: ['markPoint'],
+        },
+    },
+    {
+        key: 'markPoint',
+        compType: 'input',
+        label: '标注配置',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true,
+        hide: true,
+    },
+    {
+        key: 'showMarkLine',
+        compType: 'switch',
+        label: '显示标线',
+        displayItems: {
+            t: ['markLine'],
+        },
+    },
+    {
+        key: 'markLine',
+        compType: 'input',
+        label: '标线配置',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true,
+        hide: true,
+    },
+    {
+        key: 'showMarkArea',
+        compType: 'switch',
+        label: '显示标域',
+        displayItems: {
+            t: ['markArea'],
+        },
+    },
+    {
+        key: 'markArea',
+        compType: 'input',
+        label: '标域配置',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true,
+        hide: true,
     },
     ...common,
 ]

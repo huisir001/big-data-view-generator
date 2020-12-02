@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-11-27 18:17:06
+ * @LastEditTime: 2020-12-02 16:15:54
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -84,6 +84,14 @@ export default [
             'dataZoomAxis',
             'dataZoomSplitType',
             'dataZoomSplitScope',
+            'showVisualMap',
+            'visualMap',
+            'showMarkPoint',
+            'markPoint',
+            'showMarkLine',
+            'markLine',
+            'showMarkArea',
+            'markArea',
         ],
         compTypeFilter: compTypes_tb,
     },

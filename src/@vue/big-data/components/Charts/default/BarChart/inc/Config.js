@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-02 14:47:00
+ * @LastEditTime: 2020-12-02 16:00:18
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -36,14 +36,10 @@ class Config {
             dataZoomAxis: String, //滚动条映射的数据轴这里4个值：`y0,y1,x0,x1`
             dataZoomSplitType: String, //滚动条数据分隔方式:`index`按下标，`ratio`按比例
             dataZoomSplitScope: Array, //滚动条数据分隔范围，是2个值的数组：`[0,9]`,`[0,50]`,dataZoomSplitType按比例的话，范围为0-100，按下标的话，范围为0-(值的长度-1)
-            markPoint: Object, //气泡标注
-            markLine: Object, //标线
-            markArea: Object, //标域
             colors: Array, //自定义柱子颜色
             colorMode: String, //  颜色展示模式(分为`byLegend`和`byAxis`)
             label: Boolean, //是否显示数据标签
             labelPosition: String, //数据标签位置,默认在柱子上方
-            visualMap: Object, //视觉映射（改变某些数据区域的颜色）
             limitAxisMinVal: Boolean, //是否限制刻度最小值
             limitAxisMaxVal: Boolean, //是否限制刻度最大值
             axisScopeMin: Number, //数据轴刻度范围最小值
@@ -53,6 +49,14 @@ class Config {
             showValSplitLine: Boolean, //显示数据轴刻度分隔线
             showCatAxisLine: Boolean, //显示类型轴轴线
             catLabelRowLen: Number, //类型轴类型名称每行字数（多少字换行）
+            showVisualMap: Boolean, //是否显示视觉映射
+            visualMap: Object, //视觉映射（改变某些数据区域的颜色）
+            showMarkPoint: Boolean, //显示标注
+            showMarkLine: Boolean, //显示标线
+            showMarkArea: Boolean, //显示标域
+            markPoint: Object, //气泡标注
+            markLine: Object, //标线
+            markArea: Object, //标域
         }
 
         //类型验证
@@ -108,6 +112,10 @@ class Config {
             dataZoomAxis: 'x0',
             dataZoomSplitType: 'index',
             dataZoomSplitScope: [0, 9],
+            showVisualMap: false,
+            showMarkPoint: false,
+            showMarkLine: false,
+            showMarkArea: false,
         }
 
         this.options = Object.assign(this.defaultOptions, options)

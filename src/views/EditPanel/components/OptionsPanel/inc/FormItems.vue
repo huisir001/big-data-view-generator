@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-11-27 18:29:29
+ * @LastEditTime: 2020-12-02 15:46:53
 -->
 <template>
     <el-form-item
@@ -348,7 +348,7 @@ export default {
                         flag = true
                     Object.keys(FormModelVal).forEach((item) => {
                         if (
-                            !jsonObj[item] ||
+                            (jsonObj[item] != 0 && !jsonObj[item]) ||
                             FormModelVal[item].constructor.name !=
                                 jsonObj[item].constructor.name
                         ) {

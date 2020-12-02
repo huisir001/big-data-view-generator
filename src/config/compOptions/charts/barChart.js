@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-27 18:33:09
+ * @LastEditTime: 2020-12-02 16:14:39
  */
 import common from './common'
 export default {
@@ -61,5 +61,71 @@ export default {
     dataZoomAxis: 'x0',
     dataZoomSplitType: 'index',
     dataZoomSplitScope: [0, 9],
+    showVisualMap: false,
+    visualMap: {
+        top: 10,
+        right: 0,
+        pieces: [
+            {
+                lte: 300,
+            },
+            {
+                gt: 300,
+                lte: 400,
+            },
+            {
+                gt: 400,
+                lte: 600,
+            },
+            {
+                gt: 600,
+                lte: 800,
+            },
+            {
+                gt: 800,
+                lte: 1000,
+            },
+        ],
+    },
+    showMarkPoint: false,
+    showMarkLine: false,
+    showMarkArea: false,
+    markPoint: {
+        data: [
+            { type: 'max', name: '最大值' },
+            { type: 'min', name: '最小值' },
+        ],
+        label: {
+            color: '#fff',
+            textBorderColor: '#000',
+            formatter: function (params) {
+                return `${params.name}\n${params.value}`
+            },
+        },
+    },
+    markLine: {
+        data: [{ type: 'average', name: '平均值' }],
+        label: {
+            formatter: function (params) {
+                return `${params.name}\n${params.value}`
+            },
+        },
+    },
+    markArea: {
+        label: {
+            position: 'right',
+        },
+        data: [
+            [
+                {
+                    name: '标域',
+                    yAxis: '200',
+                },
+                {
+                    yAxis: '500',
+                },
+            ],
+        ],
+    },
     ...common,
 }
