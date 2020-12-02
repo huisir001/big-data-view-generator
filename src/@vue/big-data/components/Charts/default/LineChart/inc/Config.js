@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-02 17:26:25
+ * @LastEditTime: 2020-12-02 18:16:02
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -35,7 +35,8 @@ class Config {
             dataZoomSplitScope: Array, //滚动条数据分隔范围，是2个值的数组：`[0,9]`,`[0,50]`,dataZoomSplitType按比例的话，范围为0-100，按下标的话，范围为0-(值的长度-1)
             boundaryGap: Boolean, //数据轴上是否取点，申明即不取，默认取点
             smooth: Boolean, //是否平滑曲线（申明即平滑）
-            areaStyle: [String, Boolean, Object], //区域是否填充-面积图（申明即填充，这里为填充默认色，支持自定义）
+            areaFill: Boolean, //区域是否填充-面积图
+            areaStyle: Object, //区域填充自定义
             stack: Boolean, //是否堆积-此参数配合areaStyle实现堆积面积图，单用此参无意义（申明即堆积）
             colors: Array, //自定义颜色
             label: Boolean, //是否显示数据标签
@@ -101,6 +102,8 @@ class Config {
             yName: '',
             labelPosition: 'top',
             showLegend: true,
+            areaFill: false,
+            areaStyle: { type: 'default' },
             stack: false,
             label: false,
             horizontal: false,

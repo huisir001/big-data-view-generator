@@ -2,7 +2,7 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 17:52:16
+ * @LastEditTime: 2020-12-02 18:20:26
  */
 import common from './common'
 export default [
@@ -11,6 +11,9 @@ export default [
         key: 'label',
         compType: 'switch',
         label: '显示标签',
+        displayItems: {
+            t: ['labelPosition'],
+        }, //显隐控制
     },
     {
         key: 'labelPosition',
@@ -283,5 +286,22 @@ export default [
         label: '阴影垂直偏移',
         min: 0,
         max: 20,
+    },
+    {
+        key: 'areaFill',
+        compType: 'switch',
+        label: '区域填充面积图',
+        displayItems: {
+            t: ['areaStyle'],
+        },
+    },
+    {
+        key: 'areaStyle',
+        compType: 'input',
+        label: '区域填充配置',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true,
     },
 ]

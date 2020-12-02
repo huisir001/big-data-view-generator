@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2020-12-02 17:35:29
+ * @LastEditTime: 2020-12-02 18:15:16
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -30,6 +30,7 @@ export default {
                 smooth,
                 label,
                 labelPosition,
+                areaFill,
                 areaStyle,
                 stack,
                 showMarkPoint,
@@ -97,16 +98,9 @@ export default {
                         fontSize: 10,
                     },
                 }
-                //区域填充(默认)
-                if (
-                    typeof areaStyle == 'string' ||
-                    typeof areaStyle == 'boolean'
-                )
-                    item.areaStyle = { type: 'default' }
 
-                //区域填充(自定义)
-                typeof areaStyle == 'object' && (item.areaStyle = areaStyle)
                 stack && (item.stack = '1') //实现堆积面积图
+                areaFill && (item.areaStyle = areaStyle) //区域填充
                 showMarkPoint && (item.markPoint = markPoint) //气泡标注
                 showMarkLine && (item.markLine = markLine) //标线
                 showMarkArea && (item.markArea = markArea) //标域

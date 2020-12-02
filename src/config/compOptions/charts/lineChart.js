@@ -2,10 +2,11 @@
  * @Description: 图表默认Options - line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 17:25:58
+ * @LastEditTime: 2020-12-02 18:16:57
  */
 import common from './common'
 export default {
+    ...common,
     title: '折线图',
     chartData: {
         xAxis: ['郑丽', '于平', '龚娟', '杜强'],
@@ -134,5 +135,6 @@ export default {
     shadowOffsetX: 0,
     shadowOffsetY: 0,
     opacity: 1,
-    ...common,
+    areaFill: false,
+    areaStyle: { type: 'default' },
 }

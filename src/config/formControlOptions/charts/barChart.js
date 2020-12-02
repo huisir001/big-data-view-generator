@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 16:16:33
+ * @LastEditTime: 2020-12-02 18:21:44
  */
 import common from './common'
 export default [
@@ -24,6 +24,9 @@ export default [
         key: 'label',
         compType: 'switch',
         label: '显示标签',
+        displayItems: {
+            t: ['labelPosition'],
+        }, //显隐控制
     },
     {
         key: 'labelPosition',
