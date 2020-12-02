@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-12-02 16:15:54
+ * @LastEditTime: 2020-12-02 17:46:54
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -31,7 +31,7 @@ export default [
     },
     {
         category: '图表基础配置',
-        optionsFilter: ['title'],
+        optionsFilter: ['title', 'lineWidth', 'lineType', 'opacity'],
         compTypeFilter: allCompType,
     },
     {
@@ -92,6 +92,11 @@ export default [
             'markLine',
             'showMarkArea',
             'markArea',
+            'showShadow',
+            'shadowBlur',
+            'shadowColor',
+            'shadowOffsetX',
+            'shadowOffsetY',
         ],
         compTypeFilter: compTypes_tb,
     },

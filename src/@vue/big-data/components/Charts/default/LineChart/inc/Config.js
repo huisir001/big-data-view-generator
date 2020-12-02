@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-02 16:28:49
+ * @LastEditTime: 2020-12-02 17:26:25
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -35,7 +35,6 @@ class Config {
             dataZoomSplitScope: Array, //滚动条数据分隔范围，是2个值的数组：`[0,9]`,`[0,50]`,dataZoomSplitType按比例的话，范围为0-100，按下标的话，范围为0-(值的长度-1)
             boundaryGap: Boolean, //数据轴上是否取点，申明即不取，默认取点
             smooth: Boolean, //是否平滑曲线（申明即平滑）
-            lineStyle: Object, //线条样式
             areaStyle: [String, Boolean, Object], //区域是否填充-面积图（申明即填充，这里为填充默认色，支持自定义）
             stack: Boolean, //是否堆积-此参数配合areaStyle实现堆积面积图，单用此参无意义（申明即堆积）
             colors: Array, //自定义颜色
@@ -58,6 +57,14 @@ class Config {
             markPoint: Object, //气泡标注
             markLine: Object, //标线
             markArea: Object, //标域
+            lineWidth: Number, //线宽
+            lineType: String, //线型 solid\dashed\dotted
+            showShadow: Boolean, //显示阴影
+            shadowBlur: Number, //线条阴影模糊尺寸
+            shadowColor: String, //阴影色
+            shadowOffsetX: Number, //阴影水平偏移
+            shadowOffsetY: Number, //阴影垂直偏移
+            opacity: Number, //透明度 0-1
         }
 
         //类型验证
@@ -116,6 +123,10 @@ class Config {
             showMarkPoint: false,
             showMarkLine: false,
             showMarkArea: false,
+            lineWidth: 2,
+            lineType: 'solid',
+            opacity: 1,
+            showShadow: false,
         }
 
         this.options = Object.assign(this.defaultOptions, options)

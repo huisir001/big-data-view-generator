@@ -2,10 +2,11 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 16:36:19
+ * @LastEditTime: 2020-12-02 17:52:16
  */
 import common from './common'
 export default [
+    ...common,
     {
         key: 'label',
         compType: 'switch',
@@ -224,5 +225,63 @@ export default [
         stringify: true,
         hide: true,
     },
-    ...common,
+    {
+        key: 'lineType',
+        compType: 'select',
+        label: '线型',
+        options: [
+            { value: 'solid', label: '实线' },
+            { value: 'dashed', label: '虚线' },
+            { value: 'dotted', label: '点线' },
+        ],
+    },
+    {
+        key: 'lineWidth',
+        compType: 'slider',
+        label: '线宽',
+        min: 0,
+        max: 20,
+    },
+    {
+        key: 'opacity',
+        compType: 'slider',
+        label: '透明度',
+        min: 0,
+        max: 1,
+        step: 0.1,
+    },
+    {
+        key: 'showShadow',
+        compType: 'switch',
+        label: '线条阴影',
+        displayItems: {
+            t: ['shadowBlur', 'shadowOffsetX', 'shadowOffsetY', 'shadowColor'],
+        },
+    },
+    {
+        key: 'shadowColor',
+        compType: 'color',
+        label: '阴影色',
+    },
+    {
+        key: 'shadowBlur',
+        compType: 'slider',
+        label: '阴影模糊尺寸',
+        min: 0,
+        max: 20,
+    },
+    {
+        key: 'shadowOffsetX',
+        compType: 'slider',
+        label: '阴影水平偏移',
+        min: 0,
+        max: 20,
+    },
+    {
+        key: 'shadowOffsetY',
+        compType: 'slider',
+        label: '阴影垂直偏移',
+        min: 0,
+        max: 20,
+    },
 ]

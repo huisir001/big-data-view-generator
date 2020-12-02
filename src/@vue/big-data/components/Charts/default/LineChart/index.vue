@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2020-12-02 16:31:31
+ * @LastEditTime: 2020-12-02 17:35:29
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -38,7 +38,14 @@ export default {
                 markPoint,
                 markLine,
                 markArea,
-                lineStyle,
+                lineWidth,
+                lineType,
+                showShadow,
+                shadowBlur,
+                shadowColor,
+                shadowOffsetX,
+                shadowOffsetY,
+                opacity,
                 title,
                 showLegend,
                 left,
@@ -103,7 +110,17 @@ export default {
                 showMarkPoint && (item.markPoint = markPoint) //气泡标注
                 showMarkLine && (item.markLine = markLine) //标线
                 showMarkArea && (item.markArea = markArea) //标域
-                lineStyle && (item.lineStyle = lineStyle) //线条样式
+
+                //线条样式
+                const shadowOption = showShadow
+                    ? { shadowBlur, shadowColor, shadowOffsetX, shadowOffsetY }
+                    : {}
+                item.lineStyle = {
+                    width: lineWidth,
+                    type: lineType,
+                    opacity,
+                    ...shadowOption,
+                }
             })
 
             //返回线图配置项

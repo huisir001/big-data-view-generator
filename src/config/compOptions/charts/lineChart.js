@@ -2,7 +2,7 @@
  * @Description: 图表默认Options - line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 16:36:36
+ * @LastEditTime: 2020-12-02 17:25:58
  */
 import common from './common'
 export default {
@@ -126,5 +126,13 @@ export default {
             ],
         ],
     },
+    lineWidth: 2,
+    lineType: 'solid',
+    showShadow: false,
+    shadowBlur: 10,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffsetX: 0,
+    shadowOffsetY: 0,
+    opacity: 1,
     ...common,
 }
