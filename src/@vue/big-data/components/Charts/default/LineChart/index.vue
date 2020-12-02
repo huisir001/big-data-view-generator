@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2020-11-27 11:24:36
+ * @LastEditTime: 2020-12-02 14:58:32
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -42,7 +42,10 @@ export default {
                 top,
                 right,
                 bottom,
-                dataZoom,
+                showDataZoom,
+                dataZoomAxis,
+                dataZoomSplitType,
+                dataZoomSplitScope,
                 xName,
                 yName,
                 visualMap,
@@ -112,7 +115,11 @@ export default {
                     show: showLegend,
                     right:
                         right ||
-                        (dataZoom && dataZoom.yAxisIndex ? 48 : xName ? 25 : 8),
+                        (showDataZoom && dataZoomAxis[0] == 'y'
+                            ? 48
+                            : xName
+                            ? 25
+                            : 8),
                     y: title ? 37 : 10,
                 },
                 [visualMap && 'visualMap']: visualMap, //视觉映射
@@ -134,14 +141,14 @@ export default {
                     y: top + '' || (title ? 70 : 50),
                     x2:
                         right + '' ||
-                        (dataZoom && dataZoom.yAxisIndex
+                        (showDataZoom && dataZoomAxis[0] == 'y'
                             ? 48
                             : xName
                             ? 30
                             : 10),
                     y2:
                         bottom + '' ||
-                        (dataZoom && dataZoom.xAxisIndex ? 45 : 30),
+                        (showDataZoom && dataZoomAxis[0] == 'x' ? 42 : 30),
                 },
                 //是否横向判断
                 [horizontal ? 'yAxis' : 'xAxis']: {
@@ -194,22 +201,28 @@ export default {
                     },
                 ],
                 series: mySeries,
-                [dataZoom && 'dataZoom']: [
+                [showDataZoom && 'dataZoom']: [
                     //这里默认只支持单个滚动条
                     {
-                        show: true,
-                        [dataZoom && dataZoom.xAxisIndex && 'bottom']: 5, //位置，如果在左侧，则设left，右侧right
-                        [dataZoom && dataZoom.yAxisIndex && 'right']: 8, //位置，如果在左侧，则设left，右侧right
-                        [dataZoom && dataZoom.xAxisIndex && 'height']: 12, //滚动条粗细，若为x轴，则设height
-                        [dataZoom && dataZoom.yAxisIndex && 'width']: 12, //滚动条粗细，若为Y轴，则设width
-                        ...dataZoom, //参数
-
-                        /* 传参配置项说明 */
-                        // xAxisIndex: [0], //滚动数据源，这里默认第一条X轴，若为横向图可设置y轴。若为多轴图，可调整下标
-                        // minValueSpan: 1, //最小显示到的折线下标，1为2单位折线
-                        // maxValueSpan: 9, //最大显示到的折线下标，9为10单位折线
-                        // start: 0, //滚动条默认显示当前轴数据范围，start为起始值，end为结束值，这里为百分比，最小0，最大100
-                        // end: 50,    //minValueSpan/maxValueSpan  start/end 不要同时使用，故这里不设默认值，需要由父组件传参
+                        show: showDataZoom,
+                        [dataZoomAxis[0] == 'x' && 'bottom']: 5,
+                        [dataZoomAxis[0] == 'y' && 'right']: 8,
+                        [dataZoomAxis[0] == 'x' && 'height']: 12,
+                        [dataZoomAxis[0] == 'y' && 'width']: 12,
+                        [dataZoomAxis[0] == 'x' && 'xAxisIndex']: [
+                            Number(dataZoomAxis[1]),
+                        ], //滚动数据源，这里默认第一条X轴，若为横向柱图可设置y轴。若为多轴图，可调整下标
+                        [dataZoomAxis[0] == 'y' && 'yAxisIndex']: [
+                            Number(dataZoomAxis[1]),
+                        ],
+                        [dataZoomSplitType == 'index' &&
+                        'minValueSpan']: dataZoomSplitScope[0], //最小显示到的柱子下标，1为2单位柱子
+                        [dataZoomSplitType == 'index' &&
+                        'maxValueSpan']: dataZoomSplitScope[1], //最大显示到的柱子下标，9为10单位柱子
+                        [dataZoomSplitType == 'ratio' &&
+                        'start']: dataZoomSplitScope[0], //滚动条默认显示当前轴数据范围，start为起始值，end为结束值，这里为百分比，最小0，最大100
+                        [dataZoomSplitType == 'ratio' &&
+                        'end']: dataZoomSplitScope[1], //minValueSpan/maxValueSpan  start/end 不要同时使用，故这里不设默认值，需要由父组件传参
                     },
                 ],
                 [colors && 'color']: colors.map((item) => {

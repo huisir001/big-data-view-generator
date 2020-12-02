@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-11-27 18:06:01
+ * @LastEditTime: 2020-12-02 14:56:43
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -178,7 +178,7 @@ export default {
                             : 10),
                     y2:
                         bottom + '' ||
-                        (showDataZoom && dataZoomAxis[0] == 'x' ? 45 : 30),
+                        (showDataZoom && dataZoomAxis[0] == 'x' ? 42 : 30),
                 },
                 //是否横向判断
                 [horizontal ? 'yAxis' : 'xAxis']: {

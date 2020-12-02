@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-11-27 11:23:01
+ * @LastEditTime: 2020-12-02 14:47:10
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -29,7 +29,10 @@ class Config {
             bottom: [String, Number], //下边距
             showLegend: Boolean, //显示图例
             horizontal: Boolean, //是否横向，声明即横向
-            dataZoom: Object, //数据缩放滚动条
+            showDataZoom: Boolean, //显示滚动条
+            dataZoomAxis: String, //滚动条映射的数据轴这里4个值：`y0,y1,x0,x1`
+            dataZoomSplitType: String, //滚动条数据分隔方式:`index`按下标，`ratio`按比例
+            dataZoomSplitScope: Array, //滚动条数据分隔范围，是2个值的数组：`[0,9]`,`[0,50]`,dataZoomSplitType按比例的话，范围为0-100，按下标的话，范围为0-(值的长度-1)
             markPoint: Object, //气泡标注
             markLine: Object, //标线
             markArea: Object, //标域
@@ -101,6 +104,10 @@ class Config {
             showValSplitLine: true,
             showCatAxisLine: true,
             catLabelRowLen: 4,
+            showDataZoom: false,
+            dataZoomAxis: 'x0',
+            dataZoomSplitType: 'index',
+            dataZoomSplitScope: [0, 9],
         }
 
         this.options = Object.assign(this.defaultOptions, options)
