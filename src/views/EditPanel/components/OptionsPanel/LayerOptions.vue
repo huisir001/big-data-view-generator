@@ -2,18 +2,18 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-12-02 15:54:30
+ * @LastEditTime: 2020-12-03 17:19:52
 -->
 <template>
     <div class="layerOptionsBox">
         <!-- 表单项，activeLayer为当前编辑图层（第一个已激活图层，暂不支持多图层编辑） -->
-        <template v-if="activeLayers.length == 1">
+        <el-form label-position="left" label-width="66px">
             <el-collapse v-model="cpActiveName" accordion>
                 <el-collapse-item
                     v-for="(catItem, i) in formCatsFilter"
                     :key="i"
                     :title="catItem.category"
-                    :name="i + 1"
+                    :name="i"
                 >
                     <FormItems
                         v-for="(item,
@@ -27,7 +27,7 @@
                     ></FormItems>
                 </el-collapse-item>
             </el-collapse>
-        </template>
+        </el-form>
     </div>
 </template>
 
@@ -45,11 +45,11 @@ export default {
     data() {
         return {
             layerFormCats,
-            cpActiveName: 1, //折叠面板当前激活项
+            cpActiveName: 0, //折叠面板当前激活项
         }
     },
     watch: {
-        activeLayersStr(val) {
+        activeLayersStr(val, oldVal) {
             let curLayer = JSON.parse(val)[0]
 
             if (!curLayer) {
@@ -57,7 +57,7 @@ export default {
             }
 
             /* 控制数据配置表单项显隐 */
-            if (curLayer && curLayer.compOptions) {
+            if (curLayer.compOptions) {
                 curLayer.formControlOptions.forEach((item) => {
                     if (item.displayItems) {
                         curLayer.formControlOptions.forEach((optionItem) => {
@@ -89,9 +89,13 @@ export default {
             return JSON.stringify(this.activeLayers)
         },
         formCatsFilter() {
-            return this.layerFormCats.filter((cat) =>
-                cat.compTypeFilter.includes(this.activeLayers[0].type)
-            )
+            if (this.activeLayers[0]) {
+                return this.layerFormCats.filter((cat) =>
+                    cat.compTypeFilter.includes(this.activeLayers[0].type)
+                )
+            } else {
+                return []
+            }
         },
         curformControlOptions() {
             return this.activeLayers[0].formControlOptions
