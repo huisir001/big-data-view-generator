@@ -2,29 +2,32 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-12-03 18:06:51
+ * @LastEditTime: 2020-12-03 23:06:02
 -->
 <template>
     <div class="layerOptionsBox">
         <!-- 表单项，activeLayer为当前编辑图层（第一个已激活图层，暂不支持多图层编辑） -->
-        <el-form label-position="left" label-width="66px">
-            <el-collapse v-model="cpActiveName" accordion>
-                <el-collapse-item
-                    v-for="(catItem, i) in formCatsFilter"
-                    :key="i"
-                    :title="catItem.category"
-                    :name="i"
-                >
-                    <FormItems
-                        v-for="(item,
-                        index) in curformControlOptions.filter((option) =>
-                            catItem.optionsFilter.includes(option.key)
-                        )"
-                        :key="index"
-                        :formItemOption="item"
-                        :optionKey="item.key"
-                        :activeLayer="activeLayers[0]"
-                    ></FormItems>
+        <el-form label-position="left"
+                 label-width="66px">
+            <el-collapse v-model="cpActiveName"
+                         accordion
+                         @change="collapseChange">
+                <el-collapse-item v-for="(catItem, i) in formCatsFilter"
+                                  :key="i"
+                                  :title="catItem.category"
+                                  :name="i">
+                    <template v-if="cpActiveName==i">
+                        <div v-loading="collapseLoading"
+                             style="min-height: 33px"
+                             element-loading-background="rgba(0, 0, 0, 0.85)">
+                            <FormItems v-for="(item,
+                                index) in curCollapseOptions"
+                                       :key="index"
+                                       :formItemOption="item"
+                                       :optionKey="item.key"
+                                       :activeLayer="activeLayers[0]"></FormItems>
+                        </div>
+                    </template>
                 </el-collapse-item>
             </el-collapse>
         </el-form>
@@ -46,10 +49,19 @@ export default {
         return {
             layerFormCats,
             cpActiveName: 0, //折叠面板当前激活项
+            collapseLoading: false,
+            curCollapseOptions: [],
         }
+    },
+    created() {
+        this.curCollapseOptions = this.getCollapseOptions(
+            this.formCatsFilter[0].optionsFilter
+        )
     },
     watch: {
         activeLayersStr(val, oldVal) {
+            console.log(2222)
+
             let curLayer = JSON.parse(val)[0]
 
             if (!curLayer) {
@@ -82,6 +94,21 @@ export default {
 
             this.$store.commit('layer/setLayer', curLayer)
         },
+        formCatsFilter(newVal) {
+            this.collapseLoading = true
+            this.curCollapseOptions = this.getCollapseOptions(
+                newVal[this.cpActiveName].optionsFilter
+            )
+        },
+        curCollapseOptions(newVal) {
+            this.$nextTick(() => {
+                //这里是数据改变后视图渲染完成的回调
+                let timer = setTimeout(() => {
+                    this.collapseLoading = false
+                    clearTimeout(timer)
+                }, 400)
+            })
+        },
     },
     computed: {
         ...mapGetters(['activeLayers']), //选定图层
@@ -99,6 +126,21 @@ export default {
         },
         curformControlOptions() {
             return this.activeLayers[0].formControlOptions
+        },
+    },
+    methods: {
+        getCollapseOptions(optionsFilter) {
+            //获取当前折叠面板子面板当前图层的表单项
+            return this.curformControlOptions.filter((option) =>
+                optionsFilter.includes(option.key)
+            )
+        },
+        collapseChange(e) {
+            //面板折叠事件
+            if (e === '') return
+            this.collapseLoading = true
+            let optionsFilter = this.formCatsFilter[e].optionsFilter
+            this.curCollapseOptions = this.getCollapseOptions(optionsFilter)
         },
     },
 }
