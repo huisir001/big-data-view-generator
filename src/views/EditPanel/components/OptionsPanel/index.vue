@@ -2,7 +2,7 @@
  * @Description: 配置项面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 10:55:08
- * @LastEditTime: 2020-12-03 18:10:37
+ * @LastEditTime: 2020-12-03 18:31:38
 -->
 <template>
     <el-drawer
@@ -23,15 +23,16 @@
                 label="图层配置"
                 name="layerOption"
             >
-                <div
+                <!-- <div
                     v-if="!showLyOptBox"
                     v-loading="true"
                     style="height: 100px"
                     element-loading-text="拼命加载中"
                     element-loading-spinner="el-icon-loading"
                     element-loading-background="rgba(0, 0, 0, 0)"
-                ></div>
-                <LayerOptions v-if="showLyOptBox"></LayerOptions>
+                ></div> -->
+                <!-- <LayerOptions v-if="showLyOptBox"></LayerOptions> -->
+                <LayerOptions></LayerOptions>
             </el-tab-pane>
             <el-tab-pane label="系统配置" name="systemOption"> </el-tab-pane>
         </el-tabs>
@@ -80,6 +81,13 @@ export default {
                 return
             }
 
+            const loading = this.$loading({
+                lock: true,
+                text: '拼命加载中',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.5)',
+            })
+
             /* 关闭配置栏 */
             this.showLyOptBox = false
 
@@ -87,6 +95,7 @@ export default {
 
             /* 延时加载配置栏 */
             let showLyOptBoxTimer = setTimeout(() => {
+                loading.close()
                 this.showLyOptBox = true
                 clearTimeout(showLyOptBoxTimer)
             })
