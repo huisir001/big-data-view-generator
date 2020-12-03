@@ -2,7 +2,7 @@
  * @Description: 配置项面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 10:55:08
- * @LastEditTime: 2020-12-03 17:40:06
+ * @LastEditTime: 2020-12-03 18:10:37
 -->
 <template>
     <el-drawer

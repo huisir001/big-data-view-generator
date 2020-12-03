@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-03 14:36:06
+ * @LastEditTime: 2020-12-03 17:55:59
 -->
 <template>
     <el-form-item
