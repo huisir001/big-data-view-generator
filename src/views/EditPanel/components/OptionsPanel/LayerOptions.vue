@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-12-04 14:43:17
+ * @LastEditTime: 2020-12-04 15:22:39
 -->
 <template>
     <div class="layerOptionsBox">
@@ -154,3 +154,17 @@ export default {
     },
 }
 </script>
+<style lang="scss">
+.layerOptionsBox {
+    .el-collapse-item__header {
+        padding: 0 2px 0 10px;
+    }
+    .el-collapse-item__header {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+    .el-collapse-item__arrow {
+        margin: 0 8px 0 0;
+    }
+}
+</style>
