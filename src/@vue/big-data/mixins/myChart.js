@@ -2,7 +2,7 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-11-24 10:11:29
+ * @LastEditTime: 2020-12-04 18:08:18
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme
@@ -55,7 +55,7 @@ export default {
         },
 
         /* 获取chart对象 */
-        getMyChart: (ele) => {
+        getMyChart(ele) {
             let myChart = echarts.init(ele, 'mytheme')
             //loading
             myChart.showLoading({
@@ -64,6 +64,9 @@ export default {
                 textColor: '#dcfffe',
                 maskColor: 'rgba(0, 0, 0, 0)',
             })
+
+            //这里将chart对象暴露给父组件
+            this.$emit('getCurChart', myChart)
             return myChart
         },
 
@@ -98,6 +101,20 @@ export default {
             }
 
             myChart.setOption(getEchartsOptions(), true)
+
+            //事件绑定
+            options.chartEvents.forEach((item) => {
+                //事件解绑，防止事件重复绑定
+                myChart.off(item.event)
+                //重新绑定
+                if (item.query) {
+                    myChart.on(item.event, item.query, item.callback)
+                } else {
+                    myChart.on(item.event, item.callback)
+                }
+            })
+
+            //重置尺寸
             myChart.resize()
         },
 
