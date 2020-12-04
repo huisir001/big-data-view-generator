@@ -185,6 +185,9 @@ $font-color: #fff;
     font-size: 12px;
     font-weight: 400;
 }
+.el-collapse-item__header:active {
+    background-color: #486d8a;
+}
 
 //标签页
 .el-tabs__header {
@@ -265,9 +268,4 @@ $font-color: #fff;
             resize: none;
         }
     }
-}
-
-//loading
-.el-loading-spinner .path {
-    stroke: #5ef5ff;
 }
