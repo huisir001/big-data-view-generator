@@ -2,11 +2,11 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-04 11:55:19
+ * @LastEditTime: 2020-12-04 15:02:11
 -->
 <template>
     <el-form-item
-        v-show="!formItemOption.hide"
+        v-if="!formItemOption.hide"
         :label="formItemOption.label"
         :class="`formOptions${formItemOption.labelOnTop ? ' labelOnTop' : ''}`"
     >

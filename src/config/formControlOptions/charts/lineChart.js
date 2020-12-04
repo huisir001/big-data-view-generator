@@ -2,7 +2,7 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-03 18:27:29
+ * @LastEditTime: 2020-12-04 15:00:17
  */
 import common from './common'
 export default [
@@ -34,6 +34,7 @@ export default [
             { value: 'insideTopRight', label: '内侧右上' },
             { value: 'insideBottomRight', label: '内侧右下' },
         ],
+        hide: true,
     },
     {
         key: 'stack',
@@ -100,18 +101,18 @@ export default [
         }, //显隐控制
     },
     {
+        key: 'axisScopeMin',
+        compType: 'number',
+        label: '刻度最小值',
+        hide: true,
+    },
+    {
         key: 'limitAxisMaxVal',
         compType: 'switch',
         label: '限制刻度最大值',
         displayItems: {
             t: ['axisScopeMax'],
         }, //显隐控制
-    },
-    {
-        key: 'axisScopeMin',
-        compType: 'number',
-        label: '刻度最小值',
-        hide: true,
     },
     {
         key: 'axisScopeMax',
@@ -138,6 +139,7 @@ export default [
             { value: 'x0', label: 'X轴一' },
             { value: 'x1', label: 'X轴二' },
         ],
+        hide: true,
     },
     {
         key: 'dataZoomSplitType',
@@ -147,6 +149,7 @@ export default [
             { value: 'index', label: '按下标' },
             { value: 'ratio', label: '按比例' },
         ],
+        hide: true,
     },
     {
         key: 'dataZoomSplitScope',
@@ -155,6 +158,7 @@ export default [
         step: 1,
         min: 0,
         max: 100,
+        hide: true,
     },
     {
         key: 'showVisualMap',
@@ -265,6 +269,7 @@ export default [
         key: 'shadowColor',
         compType: 'color',
         label: '阴影色',
+        hide: true,
     },
     {
         key: 'shadowBlur',
@@ -272,6 +277,7 @@ export default [
         label: '阴影模糊尺寸',
         min: 0,
         max: 20,
+        hide: true,
     },
     {
         key: 'shadowOffsetX',
@@ -279,6 +285,7 @@ export default [
         label: '阴影水平偏移',
         min: 0,
         max: 20,
+        hide: true,
     },
     {
         key: 'shadowOffsetY',
@@ -286,6 +293,7 @@ export default [
         label: '阴影垂直偏移',
         min: 0,
         max: 20,
+        hide: true,
     },
     {
         key: 'areaFill',
@@ -303,5 +311,6 @@ export default [
         readonly: true,
         showBtnGroup: true,
         stringify: true,
+        hide: true,
     },
 ]

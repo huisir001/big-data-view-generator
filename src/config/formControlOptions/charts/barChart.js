@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 18:21:44
+ * @LastEditTime: 2020-12-04 14:52:59
  */
 import common from './common'
 export default [
@@ -47,6 +47,7 @@ export default [
             { value: 'insideTopRight', label: '内侧右上' },
             { value: 'insideBottomRight', label: '内侧右下' },
         ],
+        hide: true,
     },
     {
         key: 'stack',
@@ -152,6 +153,7 @@ export default [
             { value: 'x0', label: 'X轴一' },
             { value: 'x1', label: 'X轴二' },
         ],
+        hide: true,
     },
     {
         key: 'dataZoomSplitType',
@@ -161,6 +163,7 @@ export default [
             { value: 'index', label: '按下标' },
             { value: 'ratio', label: '按比例' },
         ],
+        hide: true,
     },
     {
         key: 'dataZoomSplitScope',
@@ -169,6 +172,7 @@ export default [
         step: 1,
         min: 0,
         max: 100,
+        hide: true,
     },
     {
         key: 'showVisualMap',

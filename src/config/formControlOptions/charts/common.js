@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-11-27 11:57:55
+ * @LastEditTime: 2020-12-04 14:55:56
  */
 export default [
     /* 图层 */
@@ -48,7 +48,6 @@ export default [
         readonly: true,
         showBtnGroup: true,
         stringify: true, //需要转义为字符串显示在表单中
-        hide: true, //默认隐藏
     },
     {
         key: 'apiReqUrl',
