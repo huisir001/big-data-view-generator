@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-12-04 14:34:24
+ * @LastEditTime: 2020-12-04 14:43:17
 -->
 <template>
     <div class="layerOptionsBox">
@@ -63,11 +63,6 @@ export default {
             collapseLoading: false,
         }
     },
-    // created() {
-    //     this.curCollapseOptions = this.getCollapseOptions(
-    //         this.formCatsFilter[0].optionsFilter
-    //     )
-    // },
     watch: {
         activeLayersStr(val, oldVal) {
             let newLayer = val ? JSON.parse(val) : [],
@@ -151,12 +146,6 @@ export default {
         },
     },
     methods: {
-        // getCollapseOptions(optionsFilter) {
-        //     //获取当前折叠面板子面板当前图层的表单项
-        //     return this.curformControlOptions.filter((option) =>
-        //         optionsFilter.includes(option.key)
-        //     )
-        // },
         collapseChange(e) {
             //面板折叠事件
             if (e === '') return
