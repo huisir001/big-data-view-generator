@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-04 14:55:56
+ * @LastEditTime: 2020-12-04 18:27:49
  */
 export default [
     /* 图层 */
@@ -131,6 +131,13 @@ export default [
         key: 'colors',
         compType: 'colors',
         label: '颜色配置',
+        labelOnTop: true, //标签在上面
+    },
+    /* 事件 */
+    {
+        key: 'chartEvents',
+        compType: 'events',
+        label: '事件绑定',
         labelOnTop: true, //标签在上面
     },
 ]
