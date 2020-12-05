@@ -2,7 +2,7 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2020-12-05 14:03:24
+ * @LastEditTime: 2020-12-05 14:07:32
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme
@@ -103,21 +103,23 @@ export default {
             myChart.setOption(getEchartsOptions(), true)
 
             //事件绑定
-            options.chartEvents.forEach((item) => {
-                //事件解绑，防止事件重复绑定
-                myChart.off(item.event)
-                //重新绑定
-                const cb =
-                    typeof item.callback == 'string'
-                        ? eval(`(${item.callback})`)
-                        : item.callback
+            if (options.chartEvents && options.chartEvents.length > 0) {
+                options.chartEvents.forEach((item) => {
+                    //事件解绑，防止事件重复绑定
+                    myChart.off(item.event)
+                    //重新绑定
+                    const cb =
+                        typeof item.callback == 'string'
+                            ? eval(`(${item.callback})`)
+                            : item.callback
 
-                if (item.setQuery) {
-                    myChart.on(item.event, item.query, cb)
-                } else {
-                    myChart.on(item.event, cb)
-                }
-            })
+                    if (item.setQuery) {
+                        myChart.on(item.event, item.query, cb)
+                    } else {
+                        myChart.on(item.event, cb)
+                    }
+                })
+            }
 
             //重置尺寸
             myChart.resize()
