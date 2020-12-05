@@ -134,11 +134,11 @@ $input-bg: #33434f;
 .el-select-dropdown__item {
     color: #547790;
 }
-.el-popper[x-placement^='top'] .popper__arrow::after {
-    border-top-color: #161f28;
+.el-popper[x-placement^='bottom'] .popper__arrow::after {
+    border-bottom-color: #161f28 !important;
 }
-.el-popper[x-placement^='top'] .popper__arrow {
-    border-top-color: #3a8ee6;
+.el-popper[x-placement^='bottom'] .popper__arrow {
+    border-bottom-color: #409eff !important;
 }
 
 //计数器

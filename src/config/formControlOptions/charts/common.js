@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-04 18:27:49
+ * @LastEditTime: 2020-12-05 11:49:02
  */
 export default [
     /* 图层 */
@@ -137,7 +137,7 @@ export default [
     {
         key: 'chartEvents',
         compType: 'events',
-        label: '事件绑定',
+        label: null,
         labelOnTop: true, //标签在上面
     },
 ]

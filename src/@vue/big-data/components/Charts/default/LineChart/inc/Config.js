@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-04 18:09:16
+ * @LastEditTime: 2020-12-05 13:04:37
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -20,7 +20,7 @@ class Config {
             apiParam: Object, //请求传参，空为{}空对象
             apiResHandle: [String, Function], //数据处理，若为字符串，则为`(function(x){return xxx})`格式，传入请求结果，返回新的数据
             chartEvents: Array,
-            //事件绑定，格式`[{event:"click",callback:(e)=>{console.log(e)}},{event:"click",query:"series",callback:(e)=>{console.log(e)}}]`,
+            //事件绑定，格式`[{event:"click",setQuery: false,query:{},callback:(e)=>{console.log(e)}},{event:"click",setQuery: true,query:"series",callback:(e)=>{console.log(e)}}]`,
             //其中的 query 可为 string 或者 Object，具体看echarts文档
             title: String, //标题，可有可无,若没有则为""
             valEnding: String, //值的结尾，比如"%"，默认为空

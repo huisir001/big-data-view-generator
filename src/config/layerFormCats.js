@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-12-02 18:18:57
+ * @LastEditTime: 2020-12-05 11:46:26
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -110,6 +110,11 @@ export default [
     {
         category: '自定义配色',
         optionsFilter: ['colorMode', 'colors'],
+        compTypeFilter: compTypes_tb,
+    },
+    {
+        category: '自定义事件',
+        optionsFilter: ['chartEvents'],
         compTypeFilter: compTypes_tb,
     },
 ]
