@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-09 16:45:17
+ * @LastEditTime: 2020-12-09 16:59:20
 -->
 <template>
     <el-form-item
@@ -287,7 +287,7 @@
                             icon="el-icon-edit"
                             size="mini"
                             title="编辑"
-                            @click="formItemEdit(item.callback)"
+                            @click="eventCbEdit(index, item.callback)"
                         ></el-button>
                     </el-button-group>
                 </el-form-item>
@@ -425,9 +425,8 @@ export default {
             )
         },
         //编辑
-        formItemEdit(bindVal) {
-            const { $alert, formItemOption } = this
-            let formModelVal = bindVal || this.formModelVal
+        formItemEdit() {
+            const { $alert, formModelVal, formItemOption } = this
             $alert('请确保JSON格式、数据结构或代码逻辑正确', '数据代码编辑', {
                 customClass: 'myMessageBox',
                 showCancelButton: true,
@@ -529,6 +528,40 @@ export default {
         //删除事件
         delEvent(index) {
             this.formModelVal.splice(index, 1)
+        },
+        //编辑事件回调
+        eventCbEdit(index, eventCbVal) {
+            const { $alert } = this
+            $alert('请确保JSON格式、数据结构或代码逻辑正确', '数据代码编辑', {
+                customClass: 'myMessageBox',
+                showCancelButton: true,
+                confirmButtonText: '确定',
+                showInput: true,
+                inputType: 'textarea',
+                inputValue: eventCbVal,
+                beforeClose(action, instance, done) {
+                    instance.editorErrorMessage = ''
+                    if (action == 'cancel') {
+                        done()
+                        return
+                    }
+
+                    //函数代码验证
+                    try {
+                        eval(`(${instance.inputValue})()`)
+                    } catch (error) {
+                        instance.editorErrorMessage = error
+                        return
+                    }
+
+                    done()
+                    return
+                },
+            })
+                .then(({ value }) => {
+                    this.formModelVal[index].callback = value
+                })
+                .catch(() => false)
         },
     },
 }
