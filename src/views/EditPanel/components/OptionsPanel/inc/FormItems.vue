@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-09 16:35:15
+ * @LastEditTime: 2020-12-09 16:45:17
 -->
 <template>
     <el-form-item
@@ -317,7 +317,36 @@ export default {
     props: ['optionKey', 'formItemOption', 'activeLayer'],
     data() {
         return {
-            events: ['click', '2'],
+            events: [
+                'click',
+                'dblclick',
+                'mousedown',
+                'mousemove',
+                'mouseup',
+                'mouseover',
+                'mouseout',
+                'globalout',
+                'contextmenu',
+                'rendered',
+                'restore',
+                'finished',
+                'legendselectchanged',
+                'legendselected',
+                'legendunselected',
+                'legendselectall',
+                'legendinverseselect',
+                'legendscroll',
+                'datazoom',
+                'datarangeselected',
+                'geoselectchanged',
+                'geoselected',
+                'geounselected',
+                'pieselectchanged',
+                'pieselected',
+                'pieunselected',
+                'mapselected',
+                'mapunselected',
+            ],
             eventQuerys: [
                 'series',
                 'series.line',
