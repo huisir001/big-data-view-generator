@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-05 11:49:02
+ * @LastEditTime: 2020-12-09 15:36:28
  */
 export default [
     /* 图层 */
