@@ -1,8 +1,8 @@
 /*
- * @Description: 参数配置（工厂模式） line
+ * @Description: 参数配置（工厂模式） pie
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-05 13:04:37
+ * @LastEditTime: 2020-12-11 18:15:13
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -22,53 +22,32 @@ class Config {
             chartEvents: Array,
             //事件绑定，格式`[{event:"click",setQuery: false,query:{},callback:(e)=>{console.log(e)}},{event:"click",setQuery: true,query:"series",callback:(e)=>{console.log(e)}}]`,
             //其中的 query 可为 string 或者 Object，具体看echarts文档
-            title: String, //标题，可有可无,若没有则为""
-            valEnding: String, //值的结尾，比如"%"，默认为空
-            xName: String, //x轴名，可有可无
-            yName: String, //y轴名，可有可无
-            left: [String, Number], //左边距
-            top: [String, Number], //上边距
-            right: [String, Number], //右边距
-            bottom: [String, Number], //下边距
-            showLegend: Boolean, //显示图例
-            horizontal: Boolean, //是否横向，声明即横向
-            showDataZoom: Boolean, //显示滚动条
-            dataZoomAxis: String, //滚动条映射的数据轴这里4个值：`y0,y1,x0,x1`
-            dataZoomSplitType: String, //滚动条数据分隔方式:`index`按下标，`ratio`按比例
-            dataZoomSplitScope: Array, //滚动条数据分隔范围，是2个值的数组：`[0,9]`,`[0,50]`,dataZoomSplitType按比例的话，范围为0-100，按下标的话，范围为0-(值的长度-1)
-            boundaryGap: Boolean, //数据轴上是否取点，申明即不取，默认取点
-            smooth: Boolean, //是否平滑曲线（申明即平滑）
-            areaFill: Boolean, //区域是否填充-面积图
-            areaStyle: Object, //区域填充自定义
-            stack: Boolean, //是否堆积-此参数配合areaStyle实现堆积面积图，单用此参无意义（申明即堆积）
+            title: String, //标题，可有可无
+            titleSize: Number, //标题字号
+            titlePosLeft: [String, Number], //标题左边距,
+            titlePosTop: [String, Number], //标题上边距,
+            titlePosRight: [String, Number], //标题右边距,
+            titlePosBottom: [String, Number], //标题下边距,
             colors: Array, //自定义颜色
-            label: Boolean, //是否显示数据标签
-            labelPosition: String, //数据标签位置,默认在上方
-            limitAxisMinVal: Boolean, //是否限制刻度最小值
-            limitAxisMaxVal: Boolean, //是否限制刻度最大值
-            axisScopeMin: Number, //数据轴刻度范围最小值
-            axisScopeMax: Number, //数据轴刻度范围最大值
-            showValAxisLabel: Boolean, //显示数据轴刻度
-            showValAxisLine: Boolean, //显示数据轴轴线
-            showValSplitLine: Boolean, //显示数据轴刻度分隔线
-            showCatAxisLine: Boolean, //显示类型轴轴线
-            catLabelRowLen: Number, //类型轴类型名称每行字数（多少字换行）
-            showVisualMap: Boolean, //是否显示视觉映射
-            visualMap: Object, //视觉映射（改变某些数据区域的颜色）
-            showMarkPoint: Boolean, //显示标注
-            showMarkLine: Boolean, //显示标线
-            showMarkArea: Boolean, //显示标域
-            markPoint: Object, //气泡标注
-            markLine: Object, //标线
-            markArea: Object, //标域
-            lineWidth: Number, //线宽
-            lineType: String, //线型 solid\dashed\dotted
-            showShadow: Boolean, //显示阴影
-            shadowBlur: Number, //线条阴影模糊尺寸
-            shadowColor: String, //阴影色
-            shadowOffsetX: Number, //阴影水平偏移
-            shadowOffsetY: Number, //阴影垂直偏移
-            opacity: Number, //透明度 0-1
+            radius: [String, Array], //饼图大小（所占盒子的比例），默认为50%，若为数组，则为环饼图尺寸
+            center: Array, //饼图位置，数组两个值分别为圆心的横向位置比和纵向位置比，默认为["50%","50%"]
+            label: Boolean, //是否显示数据标签（申明即填充）
+            labelPosition: [String, Array], //标签位置inside\outside 如果为嵌套饼图可传数组
+            labelFmt: [String, Array], //数据标注的字符串模板，如`{b}: {c} ({d}%)`，如果为多个类型(嵌套图)，可传数组
+            labelSize: [Number, Array], //标注字号，如果为嵌套饼图可传数组
+            tooltipFmt: String, //提示框的字符串模板，如`{a} <br/>{b} : {c} ({d}%)`
+            showLegend: Boolean, //显示图例
+            legendPosLeft: [String, Number], //图例左边距
+            legendPosTop: [String, Number], //图例上边距
+            legendPosRight: [String, Number], //图例右边距
+            legendPosBottom: [String, Number], //图例下边距
+            legendOrient: String, //图例布局 vertical/horizontal 默认horizontal
+            selectedCats: [String, Array], //默认选中的项目类型（可以是逗号分隔字符串）
+            roseType: [Boolean, String], //是否为南丁格尔玫瑰图及其格式,默认为false
+            labelLineLength: Number, //标线引出线长度
+            selectedMode: [Boolean, String], //扇形选中模式，默认为false,可选multiple、single
+            borderColor: String, //扇形描边颜色
+            borderWidth: Number, //扇形描边宽度
         }
 
         //类型验证
@@ -101,39 +80,17 @@ class Config {
                 return res
             },
             chartEvents: [],
-            valEnding: '',
-            xName: '',
-            yName: '',
-            labelPosition: 'top',
             showLegend: true,
-            areaFill: false,
-            areaStyle: { type: 'default' },
-            stack: false,
+            labelPosition: 'outside',
+            tooltipFmt: '{a} <br/>{b}: {c} ({d}%)',
+            showLegend: true,
             label: false,
-            horizontal: false,
-            limitAxisMinVal: false,
-            limitAxisMaxVal: false,
-            axisScopeMin: 0,
-            axisScopeMax: 100,
-            boundaryGap: false,
-            smooth: false,
-            showValAxisLabel: true,
-            showValAxisLine: true,
-            showValSplitLine: true,
-            showCatAxisLine: true,
-            catLabelRowLen: 4,
-            showDataZoom: false,
-            dataZoomAxis: 'x0',
-            dataZoomSplitType: 'index',
-            dataZoomSplitScope: [0, 9],
-            showVisualMap: false,
-            showMarkPoint: false,
-            showMarkLine: false,
-            showMarkArea: false,
-            lineWidth: 2,
-            lineType: 'solid',
-            opacity: 1,
-            showShadow: false,
+            labelSize: 10,
+            roseType: false,
+            selectedMode: false,
+            borderColor: 'rgba(255,255,255,0)',
+            borderWidth: 0,
+            selectedCats: [],
         }
 
         this.options = Object.assign(this.defaultOptions, options)

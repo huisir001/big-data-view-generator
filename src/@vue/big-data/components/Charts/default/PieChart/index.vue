@@ -2,265 +2,170 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-10 16:52:50
+ * @LastEditTime: 2020-12-11 17:12:56
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
 </template>
 
 <script>
-import myChart from '../../../../mixins/myChart'
+import common from '../../../../mixins/myChart'
 import Config from './inc/Config'
 import echarts from 'echarts'
 export default {
-    name: 'LineChart',
+    name: 'PieChart',
     mixins: [myChart],
     data() {
-        return {
-            Config,
-        }
+        return { Config }
     },
     methods: {
         getEchartsOptions() {
-            //获取配置项
             const {
                 chartData,
                 useApiData,
                 dynamicData,
-                smooth,
+                title,
+                titleSize,
+                titlePosLeft,
+                titlePosTop,
+                titlePosRight,
+                titlePosBottom,
+                colors,
+                radius,
+                center,
                 label,
                 labelPosition,
-                areaFill,
-                areaStyle,
-                stack,
-                showMarkPoint,
-                showMarkLine,
-                showMarkArea,
-                markPoint,
-                markLine,
-                markArea,
-                lineWidth,
-                lineType,
-                showShadow,
-                shadowBlur,
-                shadowColor,
-                shadowOffsetX,
-                shadowOffsetY,
-                opacity,
-                title,
+                labelFmt,
+                labelSize,
                 showLegend,
-                left,
-                top,
-                right,
-                bottom,
-                showDataZoom,
-                dataZoomAxis,
-                dataZoomSplitType,
-                dataZoomSplitScope,
-                xName,
-                yName,
-                horizontal,
-                valEnding,
-                boundaryGap,
-                catLabelRowLen,
-                showCatAxisLine,
-                showValAxisLabel,
-                limitAxisMinVal,
-                limitAxisMaxVal,
-                axisScopeMin,
-                axisScopeMax,
-                showValAxisLine,
-                showValSplitLine,
-                colors,
-                showVisualMap,
-                visualMap,
+                legendPosLeft,
+                legendPosTop,
+                legendPosRight,
+                legendPosBottom,
+                legendOrient,
+                tooltipFmt,
+                selectedCats,
+                roseType,
+                labelLineLength,
+                selectedMode,
+                borderColor,
+                borderWidth,
             } = this.myOptions
 
-            const { xAxis, series } = useApiData ? dynamicData : chartData
+            const series = useApiData ? dynamicData : chartData
 
             //使用字符串方式对对象进行内存复制（非引用）,以防止图层状态中的option数据易值
             let mySeries = JSON.parse(JSON.stringify(series))
+            //图例，需去重
+            let legends = []
 
-            //所有数据 方便计算最大值
-            let allDatas = []
-
-            //配置折线图格式
-            mySeries.forEach((item) => {
-                allDatas = allDatas.concat(item.data)
-                item.type = 'line'
-                item.smooth = smooth //平滑曲线
+            //配置饼图格式
+            mySeries.forEach((item, index) => {
+                item.type = 'pie'
+                item.roseType = roseType //是否为南丁格尔玫瑰图及其格式
+                item.selectedMode = selectedMode //选中模式
                 item.label = {
                     //数据标签
-                    show: label,
-                    position: labelPosition,
-                    formatter: '{c}' + valEnding,
+                    show: label, //是否显示
                     textStyle: {
-                        fontSize: 10,
+                        fontSize:
+                            labelSize instanceof Array
+                                ? labelSize[index]
+                                : labelSize,
+                    },
+                    position:
+                        labelPosition instanceof Array
+                            ? labelPosition[index]
+                            : labelPosition, //inside\outside
+                    [labelFmt && 'formatter']:
+                        labelFmt instanceof Array ? labelFmt[index] : labelFmt, //字符串模板
+                }
+                item.labelLine = {
+                    normal: {
+                        length: labelLineLength || 10, //标线引出线长度,默认10
                     },
                 }
-
-                stack && (item.stack = '1') //实现堆积面积图
-                areaFill && (item.areaStyle = areaStyle) //区域填充
-                showMarkPoint && (item.markPoint = markPoint) //气泡标注
-                showMarkLine && (item.markLine = markLine) //标线
-                showMarkArea && (item.markArea = markArea) //标域
-
-                //线条样式
-                const shadowOption = showShadow
-                    ? { shadowBlur, shadowColor, shadowOffsetX, shadowOffsetY }
-                    : {}
-                item.lineStyle = {
-                    width: lineWidth,
-                    type: lineType,
-                    opacity,
-                    ...shadowOption,
+                item.itemStyle = {
+                    borderColor, //描边色
+                    borderWidth, //描边宽
+                    emphasis: {
+                        label: {
+                            //高亮显示标签
+                            show: true,
+                            textStyle: {
+                                fontSize:
+                                    (labelSize instanceof Array
+                                        ? labelSize[index]
+                                        : labelSize) + 5,
+                                fontWeight: 'bold',
+                            },
+                        },
+                    },
                 }
+                //饼图大小，考虑到嵌套饼图情况
+                if (radius && radius[0] instanceof Array) {
+                    item.radius = radius[index]
+                    //设置内部饼图标签
+                    if (parseFloat(radius[0][1]) < parseFloat(radius[1][0])) {
+                        index == 0 && (item.label.position = 'inside')
+                    } else {
+                        index == 1 && (item.label.position = 'inside')
+                    }
+                } else {
+                    item.radius = radius || '50%'
+                }
+                item.center = center || ['50%', '50%'] //饼图位置
+                legends = legends.concat(item.data.map((item) => item.name)) //图例
+                //默认选中的项目类型
+                item.data.forEach((child) => {
+                    selectedCats &&
+                        selectedCats.includes(child.name) &&
+                        (child.selected = true)
+                })
             })
 
-            //返回线图配置项
+            //返回饼图配置项
             return {
-                title: { text: title },
+                title: {
+                    text: title,
+                    left: titlePosLeft || 'center',
+                    top: titlePosTop || 'bottom',
+                    right: titlePosRight || 'auto',
+                    bottom: titlePosBottom || 'auto',
+                    textStyle: {
+                        fontSize: titleSize || 10,
+                    },
+                },
                 tooltip: {
-                    show: true,
-                    // axisPointer: {
-                    //     type: 'shadow',  //鼠标移入显示阴影背景
-                    // },
+                    //提示
+                    trigger: 'item',
+                    [tooltipFmt && 'formatter']: tooltipFmt,
                 },
                 legend: {
                     show: showLegend,
-                    right:
-                        right ||
-                        (showDataZoom && dataZoomAxis[0] == 'y'
-                            ? 48
-                            : xName
-                            ? 25
-                            : 8),
-                    y: title ? 37 : 10,
+                    data: [...new Set(legends)], //去重
+                    left: legendPosLeft || 'center',
+                    top: legendPosTop || 'bottom',
+                    right: legendPosRight || 'auto',
+                    bottom: legendPosBottom || 'auto',
+                    orient: legendOrient || 'horizontal', //vertical/horizontal
                 },
-                [showVisualMap && 'visualMap']: visualMap, //视觉映射
-                grid: {
-                    //这里的left+""避免left为数字0时判定为false
-                    x:
-                        left + '' ||
-                        (horizontal
-                            ? (Math.max.apply(
-                                  null,
-                                  xAxis.map((item) => item.length)
-                              ) +
-                                  1) *
-                              10 //横向柱图根据最长标签长度计算
-                            : ((Math.max.apply(null, allDatas) + '').length +
-                                  1) *
-                                  10 +
-                              valEnding.length * 10), //纵向柱图根据最大值位数计算宽度
-                    y: top + '' || (title ? 70 : 50),
-                    x2:
-                        right + '' ||
-                        (showDataZoom && dataZoomAxis[0] == 'y'
-                            ? 48
-                            : xName
-                            ? 30
-                            : 10),
-                    y2:
-                        bottom + '' ||
-                        (showDataZoom && dataZoomAxis[0] == 'x' ? 42 : 30),
-                },
-                //是否横向判断
-                [horizontal ? 'yAxis' : 'xAxis']: {
-                    type: 'category',
-                    boundaryGap: boundaryGap, //数据轴上是否取点，默认取点
-                    name: horizontal
-                        ? yName
-                        : xName
-                              .split('')
-                              .map((word) => word + '\n')
-                              .join(''), //纵排x轴名称
-                    nameTextStyle: {
-                        align: 'center', //x轴名称位置
-                    },
-                    data: xAxis.map((item) => {
-                        if (item.length <= catLabelRowLen) return item
-                        return item
-                            .split('')
-                            .map((v, i) => {
-                                if (i > 0 && (i + 1) % catLabelRowLen == 0)
-                                    return v + '\n'
-                                else return v
-                            })
-                            .join('')
-                    }),
-                    axisLine: { show: showCatAxisLine }, //类型轴轴线
-                },
-                [horizontal ? 'xAxis' : 'yAxis']: [
-                    {
-                        type: 'value',
-                        name: horizontal
-                            ? xName
-                                  .split('')
-                                  .map((word) => word + '\n')
-                                  .join('') //纵排x轴名称
-                            : yName,
-                        nameTextStyle: {
-                            align: 'right', //y轴名称位置
-                        },
-                        axisLabel: {
-                            //刻度
-                            show: showValAxisLabel, //数据轴刻度是否显示
-                            formatter: '{value}' + valEnding,
-                        },
-                        //刻度显示范围
-                        [limitAxisMinVal && 'min']: axisScopeMin,
-                        [limitAxisMaxVal && 'max']: axisScopeMax,
-                        axisLine: { show: showValAxisLine }, //轴线
-                        splitLine: { show: showValSplitLine }, //刻度分割线
-                    },
-                ],
-                series: mySeries,
-                [showDataZoom && 'dataZoom']: [
-                    //这里默认只支持单个滚动条
-                    {
-                        show: showDataZoom,
-                        [dataZoomAxis[0] == 'x' && 'bottom']: 5,
-                        [dataZoomAxis[0] == 'y' && 'right']: 8,
-                        [dataZoomAxis[0] == 'x' && 'height']: 12,
-                        [dataZoomAxis[0] == 'y' && 'width']: 12,
-                        [dataZoomAxis[0] == 'x' && 'xAxisIndex']: [
-                            Number(dataZoomAxis[1]),
-                        ], //滚动数据源，这里默认第一条X轴，若为横向柱图可设置y轴。若为多轴图，可调整下标
-                        [dataZoomAxis[0] == 'y' && 'yAxisIndex']: [
-                            Number(dataZoomAxis[1]),
-                        ],
-                        [dataZoomSplitType == 'index' &&
-                        'minValueSpan']: dataZoomSplitScope[0], //最小显示到的柱子下标，1为2单位柱子
-                        [dataZoomSplitType == 'index' &&
-                        'maxValueSpan']: dataZoomSplitScope[1], //最大显示到的柱子下标，9为10单位柱子
-                        [dataZoomSplitType == 'ratio' &&
-                        'start']: dataZoomSplitScope[0], //滚动条默认显示当前轴数据范围，start为起始值，end为结束值，这里为百分比，最小0，最大100
-                        [dataZoomSplitType == 'ratio' &&
-                        'end']: dataZoomSplitScope[1], //minValueSpan/maxValueSpan  start/end 不要同时使用，故这里不设默认值，需要由父组件传参
-                    },
-                ],
                 [colors && 'color']: colors.map((item) => {
                     //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
                     return item.isGradient
-                        ? new echarts.graphic.LinearGradient(
-                              0,
-                              horizontal ? 0 : 1,
-                              horizontal ? 1 : 0,
-                              0,
-                              [
-                                  {
-                                      offset: item.gdScope[0],
-                                      color: item.color || 'rgba(0,0,0,0)',
-                                  },
-                                  {
-                                      offset: item.gdScope[1],
-                                      color: item.gdColor || 'rgba(0,0,0,0)',
-                                  },
-                              ]
-                          )
+                        ? new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                              {
+                                  offset: item.gdScope[0],
+                                  color: item.color || 'rgba(0,0,0,0)',
+                              },
+                              {
+                                  offset: item.gdScope[1],
+                                  color: item.gdColor || 'rgba(0,0,0,0)',
+                              },
+                          ])
                         : item.color
                 }),
+                series: mySeries, //数据赋值
             }
         },
     },
