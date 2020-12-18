@@ -2,18 +2,38 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-04 15:00:17
+ * @LastEditTime: 2020-12-18 18:41:01
  */
 import common from './common'
 export default [
     ...common,
     {
-        key: 'label',
-        compType: 'switch',
-        label: '显示标签',
-        displayItems: {
-            t: ['labelPosition'],
-        }, //显隐控制
+        key: 'left',
+        compType: 'slider',
+        label: '左边距',
+        min: 0,
+        max: 200,
+    },
+    {
+        key: 'top',
+        compType: 'slider',
+        label: '上边距',
+        min: 0,
+        max: 200,
+    },
+    {
+        key: 'right',
+        compType: 'slider',
+        label: '右边距',
+        min: 0,
+        max: 200,
+    },
+    {
+        key: 'bottom',
+        compType: 'slider',
+        label: '下边距',
+        min: 0,
+        max: 200,
     },
     {
         key: 'labelPosition',

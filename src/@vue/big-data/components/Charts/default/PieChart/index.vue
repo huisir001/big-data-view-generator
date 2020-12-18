@@ -2,14 +2,14 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-11 17:12:56
+ * @LastEditTime: 2020-12-18 18:22:14
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
 </template>
 
 <script>
-import common from '../../../../mixins/myChart'
+import myChart from '../../../../mixins/myChart'
 import Config from './inc/Config'
 import echarts from 'echarts'
 export default {
@@ -82,7 +82,7 @@ export default {
                 }
                 item.labelLine = {
                     normal: {
-                        length: labelLineLength || 10, //标线引出线长度,默认10
+                        length: labelLineLength, //标线引出线长度,默认10
                     },
                 }
                 item.itemStyle = {
@@ -128,12 +128,12 @@ export default {
             return {
                 title: {
                     text: title,
-                    left: titlePosLeft || 'center',
-                    top: titlePosTop || 'bottom',
-                    right: titlePosRight || 'auto',
-                    bottom: titlePosBottom || 'auto',
+                    left: titlePosLeft,
+                    top: titlePosTop,
+                    right: titlePosRight,
+                    bottom: titlePosBottom,
                     textStyle: {
-                        fontSize: titleSize || 10,
+                        fontSize: titleSize,
                     },
                 },
                 tooltip: {
@@ -144,11 +144,11 @@ export default {
                 legend: {
                     show: showLegend,
                     data: [...new Set(legends)], //去重
-                    left: legendPosLeft || 'center',
-                    top: legendPosTop || 'bottom',
-                    right: legendPosRight || 'auto',
-                    bottom: legendPosBottom || 'auto',
-                    orient: legendOrient || 'horizontal', //vertical/horizontal
+                    left: legendPosLeft,
+                    top: legendPosTop,
+                    right: legendPosRight,
+                    bottom: legendPosBottom,
+                    orient: legendOrient, //vertical/horizontal
                 },
                 [colors && 'color']: colors.map((item) => {
                     //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）

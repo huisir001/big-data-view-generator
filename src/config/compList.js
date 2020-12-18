@@ -2,7 +2,7 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-11-26 17:18:40
+ * @LastEditTime: 2020-12-18 17:27:59
  */
 import { coBarChart, coLineChart } from './compOptions/charts'
 import { fcoBarChart, fcoLineChart } from './formControlOptions/charts'
@@ -32,8 +32,8 @@ export default [
                 title: '饼图',
                 type: 'PieChart',
                 pic: require('@/assets/img/compList/pie.png'),
-                compOptions: coBarChart,
-                formControlOptions: fcoBarChart,
+                compOptions: coPieChart,
+                formControlOptions: fcoPieChart,
             },
             {
                 title: '仪表盘',

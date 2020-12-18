@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） pie
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-11 18:15:13
+ * @LastEditTime: 2020-12-18 18:39:25
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -83,7 +83,6 @@ class Config {
             showLegend: true,
             labelPosition: 'outside',
             tooltipFmt: '{a} <br/>{b}: {c} ({d}%)',
-            showLegend: true,
             label: false,
             labelSize: 10,
             roseType: false,
@@ -91,6 +90,17 @@ class Config {
             borderColor: 'rgba(255,255,255,0)',
             borderWidth: 0,
             selectedCats: [],
+            titleSize: 10,
+            titlePosLeft: 'center',
+            titlePosTop: 'bottom',
+            titlePosRight: 'auto',
+            titlePosBottom: 'auto',
+            legendPosLeft: 'center',
+            legendPosTop: 'bottom',
+            legendPosRight: 'auto',
+            legendPosBottom: 'auto',
+            legendOrient: 'horizontal',
+            labelLineLength: 10,
         }
 
         this.options = Object.assign(this.defaultOptions, options)

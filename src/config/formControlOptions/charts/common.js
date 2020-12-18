@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-09 15:36:28
+ * @LastEditTime: 2020-12-18 18:40:39
  */
 export default [
     /* 图层 */
@@ -90,37 +90,17 @@ export default [
         label: '图表标题',
     },
     {
-        key: 'left',
-        compType: 'slider',
-        label: '左边距',
-        min: 0,
-        max: 200,
-    },
-    {
-        key: 'top',
-        compType: 'slider',
-        label: '上边距',
-        min: 0,
-        max: 200,
-    },
-    {
-        key: 'right',
-        compType: 'slider',
-        label: '右边距',
-        min: 0,
-        max: 200,
-    },
-    {
-        key: 'bottom',
-        compType: 'slider',
-        label: '下边距',
-        min: 0,
-        max: 200,
-    },
-    {
         key: 'showLegend',
         compType: 'switch',
         label: '显示图例',
+    },
+    {
+        key: 'label',
+        compType: 'switch',
+        label: '显示标签',
+        displayItems: {
+            t: ['labelPosition'],
+        }, //显隐控制
     },
     {
         key: 'valEnding',
