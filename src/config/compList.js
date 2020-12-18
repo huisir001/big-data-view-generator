@@ -2,10 +2,14 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-12-18 17:27:59
+ * @LastEditTime: 2020-12-18 18:53:33
  */
-import { coBarChart, coLineChart } from './compOptions/charts'
-import { fcoBarChart, fcoLineChart } from './formControlOptions/charts'
+import { coBarChart, coLineChart, coPieChart } from './compOptions/charts'
+import {
+    fcoBarChart,
+    fcoLineChart,
+    fcoPieChart,
+} from './formControlOptions/charts'
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
  */
