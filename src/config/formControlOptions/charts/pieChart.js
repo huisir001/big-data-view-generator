@@ -2,24 +2,15 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-18 18:51:08
+ * @LastEditTime: 2020-12-21 18:00:41
  */
 import common from './common'
 export default [
-    {
-        key: 'labelPosition',
-        compType: 'select',
-        label: '标签位置',
-        options: [
-            { value: 'outside', label: '外侧' },
-            { value: 'inside', label: '内侧' },
-        ],
-        hide: true,
-    },
+    ...common,
     {
         key: 'tooltipFmt',
         compType: 'input',
-        label: '提示框模板',
+        label: '提示框模板字符串',
     },
     {
         key: 'titleSize',
@@ -31,22 +22,32 @@ export default [
     {
         key: 'titlePosLeft',
         compType: 'number',
-        label: '标题左边距',
+        label: '标题左侧偏移/px',
     },
     {
         key: 'titlePosTop',
         compType: 'number',
-        label: '标题上边距',
+        label: '标题上侧偏移/px',
     },
     {
         key: 'legendPosLeft',
         compType: 'number',
-        label: '图例左边距',
+        label: '图例左侧偏移/px',
     },
     {
         key: 'legendPosTop',
         compType: 'number',
-        label: '图例上边距',
+        label: '图例上侧偏移/px',
+    },
+    {
+        key: 'labelPosition',
+        compType: 'select',
+        label: '标签位置',
+        options: [
+            { value: 'outside', label: '外侧' },
+            { value: 'inside', label: '内侧' },
+        ],
+        hide: true,
     },
     {
         key: 'labelSize',
@@ -54,6 +55,15 @@ export default [
         label: '标签字号',
         min: 0,
         max: 50,
+        hide: true,
+    },
+    {
+        key: 'labelLineLength',
+        compType: 'slider',
+        label: '标线引出长度',
+        min: 0,
+        max: 50,
+        hide: true,
     },
     {
         key: 'borderWidth',
@@ -79,14 +89,7 @@ export default [
     {
         key: 'selectedCats',
         compType: 'input',
-        label: '默认选中项(“,”隔开)',
+        label: '默认选中项',
+        placeholder: '用“,”隔开',
     },
-    {
-        key: 'labelLineLength',
-        compType: 'slider',
-        label: '标线引出长度',
-        min: 0,
-        max: 50,
-    },
-    ...common,
 ]

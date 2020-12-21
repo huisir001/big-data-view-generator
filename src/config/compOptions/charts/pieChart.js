@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-18 18:43:01
+ * @LastEditTime: 2020-12-21 17:55:33
  */
 import common from './common'
 export default {
@@ -43,12 +43,12 @@ export default {
     // selectedMode: false,
     borderColor: 'rgba(255,255,255,0)',
     borderWidth: 0,
-    titleSize: 10,
-    titlePosLeft: 0,
-    titlePosTop: 0,
+    titleSize: 16,
+    titlePosLeft: 128,
+    titlePosTop: 5,
     legendPosLeft: 0,
-    legendPosTop: 0,
-    legendOrient: 'horizontal',
+    legendPosTop: 30,
+    legendOrient: 'vertical',
     selectedCats: '',
     labelLineLength: 10,
     colors: [
