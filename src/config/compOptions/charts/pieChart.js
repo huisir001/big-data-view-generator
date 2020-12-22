@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-21 17:55:33
+ * @LastEditTime: 2020-12-22 09:34:28
  */
 import common from './common'
 export default {
@@ -66,6 +66,18 @@ export default {
         },
         {
             color: '#00BCD4',
+            gdColor: null,
+            isGradient: false,
+            gdScope: [0, 1],
+        },
+        {
+            color: '#2d8ebf',
+            gdColor: null,
+            isGradient: false,
+            gdScope: [0, 1],
+        },
+        {
+            color: '#1d88eb',
             gdColor: null,
             isGradient: false,
             gdScope: [0, 1],

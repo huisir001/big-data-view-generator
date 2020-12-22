@@ -2,7 +2,7 @@
  * @Description: 图表默认Options - line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-02 18:16:57
+ * @LastEditTime: 2020-12-22 11:35:42
  */
 import common from './common'
 export default {
@@ -26,6 +26,7 @@ export default {
     horizontal: false, //是否横向
     stack: false, //是否堆叠
     labelPosition: 'top',
+    valEnding: '',
     colors: [
         {
             color: '#5ef5ff',

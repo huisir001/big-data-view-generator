@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-04 18:24:19
+ * @LastEditTime: 2020-12-22 11:35:32
  */
 import common from './common'
 export default {
@@ -24,6 +24,7 @@ export default {
     showLegend: true, //显示图例
     horizontal: false, //是否横向
     barWidth: 10,
+    valEnding: '',
     stack: false, //是否堆叠  这里暂时只考虑全部堆叠，不考虑抽样堆叠的情况
     barBorderRadius: [0, 0, 0, 0], //圆角配置
     labelPosition: 'top',

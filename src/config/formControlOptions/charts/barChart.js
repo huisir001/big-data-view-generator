@@ -2,11 +2,16 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-18 18:40:47
+ * @LastEditTime: 2020-12-22 11:34:27
  */
 import common from './common'
 export default [
     ...common,
+    {
+        key: 'valEnding',
+        compType: 'input',
+        label: '刻度后缀',
+    },
     {
         key: 'left',
         compType: 'slider',

@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-21 18:01:07
+ * @LastEditTime: 2020-12-22 11:34:02
  */
 export default [
     /* 图层 */
@@ -101,11 +101,6 @@ export default [
         displayItems: {
             t: ['labelPosition', 'labelLineLength', 'labelSize'],
         }, //显隐控制
-    },
-    {
-        key: 'valEnding',
-        compType: 'input',
-        label: '刻度后缀',
     },
     {
         key: 'colors',

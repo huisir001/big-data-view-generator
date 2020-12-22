@@ -8,6 +8,11 @@ import common from './common'
 export default [
     ...common,
     {
+        key: 'valEnding',
+        compType: 'input',
+        label: '刻度后缀',
+    },
+    {
         key: 'left',
         compType: 'slider',
         label: '左边距',
