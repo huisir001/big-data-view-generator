@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-21 18:00:41
+ * @LastEditTime: 2020-12-22 17:54:52
  */
 import common from './common'
 export default [
@@ -47,7 +47,6 @@ export default [
             { value: 'outside', label: '外侧' },
             { value: 'inside', label: '内侧' },
         ],
-        hide: true,
     },
     {
         key: 'labelSize',
@@ -55,7 +54,6 @@ export default [
         label: '标签字号',
         min: 0,
         max: 50,
-        hide: true,
     },
     {
         key: 'labelLineLength',
@@ -63,7 +61,11 @@ export default [
         label: '标线引出长度',
         min: 0,
         max: 50,
-        hide: true,
+    },
+    {
+        key: 'labelFmt',
+        compType: 'stringArray',
+        label: '标签模板字符串',
     },
     {
         key: 'borderWidth',
@@ -89,7 +91,17 @@ export default [
     {
         key: 'selectedCats',
         compType: 'input',
-        label: '默认选中项',
+        label: '默认选中项名称',
         placeholder: '用“,”隔开',
+    },
+    {
+        key: 'radius',
+        compType: 'numberArray',
+        label: '饼图尺寸',
+    },
+    {
+        key: 'center',
+        compType: 'numberArray',
+        label: '饼图位置',
     },
 ]

@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-22 09:34:28
+ * @LastEditTime: 2020-12-22 17:56:19
  */
 import common from './common'
 export default {
@@ -35,14 +35,15 @@ export default {
         },
     ],
     tooltipFmt: '{a} <br/>{b}: {c} ({d}%)',
+    labelFmt: ['{b}'],
     showLegend: true,
-    label: false,
+    label: true,
     labelPosition: 'outside',
     labelSize: 10,
     // roseType: false,
     // selectedMode: false,
-    borderColor: 'rgba(255,255,255,0)',
-    borderWidth: 0,
+    borderColor: '#ffffff',
+    borderWidth: 1,
     titleSize: 16,
     titlePosLeft: 128,
     titlePosTop: 5,
@@ -51,6 +52,8 @@ export default {
     legendOrient: 'vertical',
     selectedCats: '',
     labelLineLength: 10,
+    radius: [55],
+    center: [150, 100],
     colors: [
         {
             color: '#5ef5ff',

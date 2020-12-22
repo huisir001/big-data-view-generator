@@ -2,7 +2,7 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-22 11:51:51
+ * @LastEditTime: 2020-12-22 16:25:04
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -102,11 +102,18 @@ export default {
                         },
                     },
                 }
-                //饼图大小，考虑到嵌套饼图情况
-                if (radius && radius[0] instanceof Array) {
-                    item.radius = radius[index]
+                //饼图大小，考虑到嵌套饼图情况,这里只能嵌套一层
+                if (radius && radius instanceof Array) {
+                    if (radius.length == 1) {
+                        item.radius = radius[0]
+                    } else if (radius.length == 2) {
+                        item.radius = radius
+                    } else if (radius.length == 3 || radius.length == 4) {
+                        index == 0 && (item.radius = radius.slice(0, 2))
+                        index == 1 && (item.radius = radius.slice(2))
+                    }
                     //设置内部饼图标签
-                    if (parseFloat(radius[0][1]) < parseFloat(radius[1][0])) {
+                    if (parseFloat(radius[1]) < parseFloat(radius[2])) {
                         index == 0 && (item.label.position = 'inside')
                     } else {
                         index == 1 && (item.label.position = 'inside')

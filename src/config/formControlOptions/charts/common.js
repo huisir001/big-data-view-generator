@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-22 11:34:02
+ * @LastEditTime: 2020-12-22 15:25:20
  */
 export default [
     /* 图层 */
@@ -99,7 +99,7 @@ export default [
         compType: 'switch',
         label: '显示标签',
         displayItems: {
-            t: ['labelPosition', 'labelLineLength', 'labelSize'],
+            t: ['labelPosition', 'labelLineLength', 'labelSize', 'labelFmt'],
         }, //显隐控制
     },
     {

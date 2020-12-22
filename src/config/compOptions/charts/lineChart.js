@@ -25,6 +25,7 @@ export default {
     showLegend: true, //显示图例
     horizontal: false, //是否横向
     stack: false, //是否堆叠
+    label: false,
     labelPosition: 'top',
     valEnding: '',
     colors: [

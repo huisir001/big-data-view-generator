@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-09 16:59:20
+ * @LastEditTime: 2020-12-22 15:36:28
 -->
 <template>
     <el-form-item
@@ -97,6 +97,21 @@
                     index % 2 == 0 ? 0 : 2
                 }%;margin-top: ${index < 2 ? 0 : 2}%;`"
             ></el-input-number>
+        </template>
+
+        <!-- 字符串数组 -->
+        <template v-if="formItemOption.compType == 'stringArray'">
+            <el-input
+                size="small"
+                v-for="(_, index) in formModelVal"
+                :key="index"
+                v-model="formModelVal[index]"
+                :style="`${
+                    formModelVal.length == 1 ? 'width:100%;' : 'width:49%;'
+                } margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
+                    index < 2 ? 0 : 2
+                }%;`"
+            ></el-input>
         </template>
 
         <!-- 滑块 -->

@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-12-21 18:00:09
+ * @LastEditTime: 2020-12-22 17:55:24
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -117,6 +117,7 @@ export default [
             'borderColor',
             'selectedCats',
             'labelLineLength',
+            'labelFmt',
         ],
         compTypeFilter: compTypes_tb,
     },
@@ -127,7 +128,7 @@ export default [
     },
     {
         category: '视区设置',
-        optionsFilter: ['left', 'top', 'bottom', 'right'],
+        optionsFilter: ['left', 'top', 'bottom', 'right', 'radius', 'center'],
         compTypeFilter: compTypes_tb,
     },
     {
