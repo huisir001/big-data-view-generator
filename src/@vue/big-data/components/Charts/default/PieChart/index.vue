@@ -2,7 +2,7 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-23 11:33:46
+ * @LastEditTime: 2020-12-23 14:30:10
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>

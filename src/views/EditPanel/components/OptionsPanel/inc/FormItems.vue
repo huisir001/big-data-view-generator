@@ -2,331 +2,398 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-23 10:53:22
+ * @LastEditTime: 2020-12-23 18:25:49
 -->
 <template>
-    <el-form-item
-        v-if="!formItemOption.hide"
-        :label="formItemOption.label"
-        :class="`formOptions${formItemOption.labelOnTop ? ' labelOnTop' : ''}`"
+    <el-tooltip
+        effect="light"
+        :disabled="!formItemOption.tooltip"
+        placement="left"
     >
-        <!-- 输入框 -->
-        <template v-if="formItemOption.compType == 'input'">
-            <el-input
-                class="inputBox"
-                v-model="formModelVal"
-                size="small"
-                clearable
-                :placeholder="formItemOption.placeholder || ''"
-                :disabled="formItemOption.disabled || false"
-                :type="formItemOption.inputType || 'text'"
-                :maxlength="formItemOption.maxlength || false"
-                :readonly="formItemOption.readonly || false"
-                resize="none"
-                show-word-limit
-                :autosize="{ minRows: 3, maxRows: 10 }"
-            ></el-input>
-            <!-- 操作按钮组 -->
-            <el-button-group
-                v-if="formItemOption.showBtnGroup"
-                class="formItemBtnGroup"
-            >
-                <el-button
-                    type="info"
-                    icon="el-icon-document-copy"
-                    size="mini"
-                    title="复制"
-                    @click="formItemCopy"
-                ></el-button>
-                <el-button
-                    type="info"
-                    icon="el-icon-edit"
-                    size="mini"
-                    title="编辑"
-                    @click="formItemEdit"
-                ></el-button>
-            </el-button-group>
-        </template>
-
-        <!-- 计数器 -->
-        <template v-if="formItemOption.compType == 'number'">
-            <el-input-number
-                size="small"
-                v-model="formModelVal"
-                controls-position="right"
-                :min="
-                    formItemOption.min
-                        ? formItemOption.min
-                        : formItemOption.min === 0
-                        ? 0
-                        : -Infinity
-                "
-                :max="
-                    formItemOption.max
-                        ? formItemOption.max
-                        : formItemOption.max === 0
-                        ? 0
-                        : Infinity
-                "
-            ></el-input-number>
-        </template>
-
-        <!-- 数字数组 -->
-        <template v-if="formItemOption.compType == 'numberArray'">
-            <el-input-number
-                size="small"
-                v-for="(_, index) in formModelVal"
-                :key="index"
-                v-model="formModelVal[index]"
-                controls-position="right"
-                :min="
-                    formItemOption.min
-                        ? formItemOption.min
-                        : formItemOption.min === 0
-                        ? 0
-                        : -Infinity
-                "
-                :max="
-                    formItemOption.max
-                        ? formItemOption.max
-                        : formItemOption.max === 0
-                        ? 0
-                        : Infinity
-                "
-                :style="`${
-                    formModelVal.length == 1 ? 'width:100%;' : 'width:49%;'
-                }margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
-                    index < 2 ? 0 : 2
-                }%;`"
-            ></el-input-number>
-        </template>
-
-        <!-- 字符串数组 -->
-        <template v-if="formItemOption.compType == 'stringArray'">
-            <el-input
-                size="small"
-                v-for="(_, index) in formModelVal"
-                :key="index"
-                v-model="formModelVal[index]"
-                :style="`${
-                    formModelVal.length == 1 ? 'width:100%;' : 'width:49%;'
-                }margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
-                    index < 2 ? 0 : 2
-                }%;`"
-            ></el-input>
-        </template>
-
-        <!-- 滑块 -->
-        <template v-if="formItemOption.compType == 'slider'">
-            <el-slider
-                v-model="formModelVal"
-                :show-tooltip="false"
-                :min="formItemOption.min || 0"
-                :max="formItemOption.max || 100"
-                :step="formItemOption.step || 1"
-            ></el-slider>
-            <div class="sliderValLabel">
-                {{ formModelVal }}
-            </div>
-        </template>
-
-        <!-- 范围滑块 -->
-        <template v-if="formItemOption.compType == 'rangeSlider'">
-            <el-slider
-                class="rangeSlider"
-                v-model="formModelVal"
-                range
-                show-tooltip
-                :min="formItemOption.min || 0"
-                :max="formItemOption.max || 100"
-                :step="formItemOption.step || 1"
-            ></el-slider>
-        </template>
-
-        <!-- 开关 -->
-        <template v-if="formItemOption.compType == 'switch'">
-            <el-switch
-                v-model="formModelVal"
-                active-color="#409EFF"
-                inactive-color="#33434f"
-            >
-            </el-switch>
-        </template>
-
-        <!-- 下拉选 -->
-        <template v-if="formItemOption.compType == 'select'">
-            <el-select v-model="formModelVal" placeholder="请选择">
-                <el-option
-                    v-for="option in formItemOption.options"
-                    :key="option.value"
-                    :label="option.label"
-                    :value="option.value"
+        <div slot="content" v-html="formItemOption.tooltip"></div>
+        <el-form-item
+            v-if="!formItemOption.hide"
+            :label="formItemOption.label"
+            :class="`formOptions${
+                formItemOption.labelOnTop ? ' labelOnTop' : ''
+            }`"
+        >
+            <!-- 输入框 -->
+            <template v-if="formItemOption.compType == 'input'">
+                <el-input
+                    class="inputBox"
+                    v-model="formModelVal"
+                    size="small"
+                    clearable
+                    :placeholder="formItemOption.placeholder || ''"
+                    :disabled="formItemOption.disabled || false"
+                    :type="formItemOption.inputType || 'text'"
+                    :maxlength="formItemOption.maxlength || false"
+                    :readonly="formItemOption.readonly || false"
+                    resize="none"
+                    show-word-limit
+                    :autosize="{ minRows: 3, maxRows: 10 }"
+                ></el-input>
+                <!-- 操作按钮组 -->
+                <el-button-group
+                    v-if="formItemOption.showBtnGroup"
+                    class="formItemBtnGroup"
                 >
-                </el-option>
-            </el-select>
-        </template>
-
-        <!-- 单颜色选择器 -->
-        <template v-if="formItemOption.compType == 'color'">
-            <el-color-picker
-                v-model="formModelVal"
-                size="mini"
-            ></el-color-picker>
-        </template>
-
-        <!-- 多颜色选择器 -->
-        <template v-if="formItemOption.compType == 'colors'">
-            <table class="formItemTable">
-                <thead>
-                    <tr>
-                        <th>基础</th>
-                        <th>渐变</th>
-                        <th>是否渐变</th>
-                        <th>渐变范围</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in formModelVal" :key="index">
-                        <td width="45">
-                            <el-color-picker
-                                v-model="item.color"
-                                size="mini"
-                            ></el-color-picker>
-                        </td>
-                        <td width="45">
-                            <el-color-picker
-                                v-model="item.gdColor"
-                                size="mini"
-                            ></el-color-picker>
-                        </td>
-                        <td>
-                            <el-switch
-                                v-model="item.isGradient"
-                                active-color="#409EFF"
-                                inactive-color="#33434f"
-                            >
-                            </el-switch>
-                        </td>
-                        <td>
-                            <el-slider
-                                v-model="item.gdScope"
-                                range
-                                :step="0.1"
-                                :max="1"
-                                :disabled="!item.isGradient"
-                            >
-                            </el-slider>
-                        </td>
-                        <td>
-                            <el-button
-                                size="mini"
-                                type="danger"
-                                @click="deleteColor(index)"
-                                >删除</el-button
-                            >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">
-                            <el-button
-                                size="mini"
-                                type="primary"
-                                @click="addColor"
-                                >+ 新增</el-button
-                            >
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </template>
-
-        <!-- 事件添加器 -->
-        <template v-if="formItemOption.compType == 'events'">
-            <div
-                class="eventItem"
-                v-for="(item, index) in formModelVal"
-                :key="index"
-            >
-                <el-form-item label="事件类型">
-                    <el-select v-model="item.event" placeholder="请选择">
-                        <el-option
-                            v-for="e in events"
-                            :key="e"
-                            :label="e"
-                            :value="e"
-                        >
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="指定元素">
-                    <el-switch
-                        v-model="item.setQuery"
-                        active-color="#409EFF"
-                        inactive-color="#33434f"
-                    >
-                    </el-switch>
-                </el-form-item>
-                <el-form-item v-if="item.setQuery" label="元素配置">
-                    <el-select v-model="item.query" placeholder="请选择">
-                        <el-option
-                            v-for="q in eventQuerys"
-                            :key="q"
-                            :label="q"
-                            :value="q"
-                        >
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="回调函数">
-                    <el-input
-                        class="inputBox"
-                        v-model="item.callback"
-                        size="small"
-                        clearable
-                        type="textarea"
-                        readonly
-                        resize="none"
-                        show-word-limit
-                        :autosize="{ minRows: 3, maxRows: 10 }"
-                    ></el-input>
-                    <!-- 操作按钮组 -->
-                    <el-button-group class="formItemBtnGroup">
-                        <el-button
-                            type="info"
-                            icon="el-icon-document-copy"
-                            size="mini"
-                            title="复制"
-                            @click="formItemCopy"
-                        ></el-button>
-                        <el-button
-                            type="info"
-                            icon="el-icon-edit"
-                            size="mini"
-                            title="编辑"
-                            @click="eventCbEdit(index, item.callback)"
-                        ></el-button>
-                    </el-button-group>
-                </el-form-item>
-                <div style="text-align: right; margin-bottom: -6px">
                     <el-button
+                        type="info"
+                        icon="el-icon-document-copy"
                         size="mini"
-                        type="danger"
-                        @click="delEvent(index)"
-                        >删除</el-button
-                    >
+                        title="复制"
+                        @click="formItemCopy"
+                    ></el-button>
+                    <el-button
+                        type="info"
+                        icon="el-icon-edit"
+                        size="mini"
+                        title="编辑"
+                        @click="formItemEdit"
+                    ></el-button>
+                </el-button-group>
+            </template>
+
+            <!-- 计数器 -->
+            <template v-if="formItemOption.compType == 'number'">
+                <el-input-number
+                    size="small"
+                    v-model="formModelVal"
+                    controls-position="right"
+                    :min="
+                        formItemOption.min
+                            ? formItemOption.min
+                            : formItemOption.min === 0
+                            ? 0
+                            : -Infinity
+                    "
+                    :max="
+                        formItemOption.max
+                            ? formItemOption.max
+                            : formItemOption.max === 0
+                            ? 0
+                            : Infinity
+                    "
+                ></el-input-number>
+            </template>
+
+            <!-- 数字数组 -->
+            <template v-if="formItemOption.compType == 'numberArray'">
+                <el-input-number
+                    size="small"
+                    v-for="(_, index) in formModelVal"
+                    :key="index"
+                    v-model="formModelVal[index]"
+                    controls-position="right"
+                    :min="
+                        formItemOption.min
+                            ? formItemOption.min
+                            : formItemOption.min === 0
+                            ? 0
+                            : -Infinity
+                    "
+                    :max="
+                        formItemOption.max
+                            ? formItemOption.max
+                            : formItemOption.max === 0
+                            ? 0
+                            : Infinity
+                    "
+                    :style="`${
+                        formModelVal.length == 1 ? 'width:100%;' : 'width:49%;'
+                    }margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
+                        index < 2 ? 0 : 2
+                    }%;`"
+                ></el-input-number>
+            </template>
+
+            <!-- 数字数组增删组件 -->
+            <template v-if="formItemOption.compType == 'numberArrayModifier'">
+                <table class="formItemTable numberArray">
+                    <thead>
+                        <tr>
+                            <th>下标</th>
+                            <th>数组项</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(_, index) in formModelVal" :key="index">
+                            <td width="60">{{ index }}</td>
+                            <td>
+                                <el-input-number
+                                    size="small"
+                                    v-model="formModelVal[index]"
+                                    controls-position="right"
+                                    :min="
+                                        formItemOption.min
+                                            ? formItemOption.min
+                                            : formItemOption.min === 0
+                                            ? 0
+                                            : -Infinity
+                                    "
+                                    :max="
+                                        formItemOption.max
+                                            ? formItemOption.max
+                                            : formItemOption.max === 0
+                                            ? 0
+                                            : Infinity
+                                    "
+                                    class="numberArrayModifierInput"
+                                ></el-input-number>
+                            </td>
+                            <td width="70">
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="delNumberArray(index)"
+                                    >删除</el-button
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <el-button
+                                    size="mini"
+                                    type="primary"
+                                    @click="addNumberArray"
+                                    >+ 新增</el-button
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+
+            <!-- 字符串数组 -->
+            <template v-if="formItemOption.compType == 'stringArray'">
+                <el-input
+                    size="small"
+                    v-for="(_, index) in formModelVal"
+                    :key="index"
+                    v-model="formModelVal[index]"
+                    :style="`${
+                        formModelVal.length == 1 ? 'width:100%;' : 'width:49%;'
+                    }margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
+                        index < 2 ? 0 : 2
+                    }%;`"
+                ></el-input>
+            </template>
+
+            <!-- 滑块 -->
+            <template v-if="formItemOption.compType == 'slider'">
+                <el-slider
+                    v-model="formModelVal"
+                    :show-tooltip="false"
+                    :min="formItemOption.min || 0"
+                    :max="formItemOption.max || 100"
+                    :step="formItemOption.step || 1"
+                ></el-slider>
+                <div class="sliderValLabel">
+                    {{ formModelVal }}
                 </div>
-                <el-divider></el-divider>
-            </div>
-            <el-button
-                size="small"
-                style="width: 100%"
-                type="primary"
-                @click="addEvent"
-                >+ 新增事件</el-button
-            >
-        </template>
-    </el-form-item>
+            </template>
+
+            <!-- 范围滑块 -->
+            <template v-if="formItemOption.compType == 'rangeSlider'">
+                <el-slider
+                    class="rangeSlider"
+                    v-model="formModelVal"
+                    range
+                    show-tooltip
+                    :min="formItemOption.min || 0"
+                    :max="formItemOption.max || 100"
+                    :step="formItemOption.step || 1"
+                ></el-slider>
+            </template>
+
+            <!-- 开关 -->
+            <template v-if="formItemOption.compType == 'switch'">
+                <el-switch
+                    v-model="formModelVal"
+                    active-color="#409EFF"
+                    inactive-color="#33434f"
+                >
+                </el-switch>
+            </template>
+
+            <!-- 下拉选 -->
+            <template v-if="formItemOption.compType == 'select'">
+                <el-select v-model="formModelVal" placeholder="请选择">
+                    <el-option
+                        v-for="option in formItemOption.options"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                    >
+                    </el-option>
+                </el-select>
+            </template>
+
+            <!-- 单颜色选择器 -->
+            <template v-if="formItemOption.compType == 'color'">
+                <el-color-picker
+                    v-model="formModelVal"
+                    size="mini"
+                ></el-color-picker>
+            </template>
+
+            <!-- 多颜色选择器 -->
+            <template v-if="formItemOption.compType == 'colors'">
+                <table class="formItemTable">
+                    <thead>
+                        <tr>
+                            <th>基础</th>
+                            <th>渐变</th>
+                            <th>是否渐变</th>
+                            <th>渐变范围</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in formModelVal" :key="index">
+                            <td width="45">
+                                <el-color-picker
+                                    v-model="item.color"
+                                    size="mini"
+                                ></el-color-picker>
+                            </td>
+                            <td width="45">
+                                <el-color-picker
+                                    v-model="item.gdColor"
+                                    size="mini"
+                                ></el-color-picker>
+                            </td>
+                            <td>
+                                <el-switch
+                                    v-model="item.isGradient"
+                                    active-color="#409EFF"
+                                    inactive-color="#33434f"
+                                >
+                                </el-switch>
+                            </td>
+                            <td>
+                                <el-slider
+                                    v-model="item.gdScope"
+                                    range
+                                    :step="0.1"
+                                    :max="1"
+                                    :disabled="!item.isGradient"
+                                >
+                                </el-slider>
+                            </td>
+                            <td>
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="deleteColor(index)"
+                                    >删除</el-button
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <el-button
+                                    size="mini"
+                                    type="primary"
+                                    @click="addColor"
+                                    >+ 新增</el-button
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+
+            <!-- 事件添加器 -->
+            <template v-if="formItemOption.compType == 'events'">
+                <div
+                    class="eventItem"
+                    v-for="(item, index) in formModelVal"
+                    :key="index"
+                >
+                    <el-form-item label="事件类型">
+                        <el-select v-model="item.event" placeholder="请选择">
+                            <el-option
+                                v-for="e in events"
+                                :key="e"
+                                :label="e"
+                                :value="e"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="指定元素">
+                        <el-switch
+                            v-model="item.setQuery"
+                            active-color="#409EFF"
+                            inactive-color="#33434f"
+                        >
+                        </el-switch>
+                    </el-form-item>
+                    <el-form-item v-if="item.setQuery" label="元素配置">
+                        <el-select v-model="item.query" placeholder="请选择">
+                            <el-option
+                                v-for="q in eventQuerys"
+                                :key="q"
+                                :label="q"
+                                :value="q"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="回调函数">
+                        <el-input
+                            class="inputBox"
+                            v-model="item.callback"
+                            size="small"
+                            clearable
+                            type="textarea"
+                            readonly
+                            resize="none"
+                            show-word-limit
+                            :autosize="{ minRows: 3, maxRows: 10 }"
+                        ></el-input>
+                        <!-- 操作按钮组 -->
+                        <el-button-group class="formItemBtnGroup">
+                            <el-button
+                                type="info"
+                                icon="el-icon-document-copy"
+                                size="mini"
+                                title="复制"
+                                @click="formItemCopy"
+                            ></el-button>
+                            <el-button
+                                type="info"
+                                icon="el-icon-edit"
+                                size="mini"
+                                title="编辑"
+                                @click="eventCbEdit(index, item.callback)"
+                            ></el-button>
+                        </el-button-group>
+                    </el-form-item>
+                    <div style="text-align: right; margin-bottom: -6px">
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            @click="delEvent(index)"
+                            >删除</el-button
+                        >
+                    </div>
+                    <el-divider></el-divider>
+                </div>
+                <el-button
+                    size="small"
+                    style="width: 100%"
+                    type="primary"
+                    @click="addEvent"
+                    >+ 新增事件</el-button
+                >
+            </template>
+        </el-form-item>
+    </el-tooltip>
 </template>
 <script>
 export default {
@@ -527,6 +594,14 @@ export default {
         deleteColor(index) {
             this.formModelVal.splice(index, 1)
         },
+        //新增数组对象
+        addNumberArray() {
+            this.formModelVal.push(30)
+        },
+        //删除数组对象
+        delNumberArray(index) {
+            this.formModelVal.splice(index, 1)
+        },
         //新增事件
         addEvent() {
             this.formModelVal = this.formModelVal || []
@@ -622,6 +697,22 @@ export default {
     & > .el-form-item__content {
         margin-left: 0 !important;
     }
+    label.el-form-item__label {
+        width: 100% !important;
+    }
+}
+.numberArrayModifierInput {
+    line-height: 25px !important;
+    .el-input__inner {
+        padding-left: 10px !important;
+        height: 26px !important;
+        line-height: 26px !important;
+    }
+    span.el-input-number__decrease,
+    span.el-input-number__increase {
+        width: 24px !important;
+        line-height: 12px !important;
+    }
 }
 .formOptions {
     .formItemTable {
@@ -645,6 +736,12 @@ export default {
         .el-slider__runway {
             width: calc(100% - 20px);
             margin-left: 10px;
+        }
+        &.numberArray {
+            td,
+            th {
+                padding: 5px;
+            }
         }
     }
     .eventItem {

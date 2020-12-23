@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） pie
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-23 11:38:13
+ * @LastEditTime: 2020-12-23 14:35:53
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'

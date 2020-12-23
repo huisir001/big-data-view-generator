@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-12-05 12:02:59
+ * @LastEditTime: 2020-12-23 12:06:38
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -44,6 +44,7 @@ import {
     Notification,
     Loading,
     Divider,
+    Tooltip,
 } from 'element-ui'
 
 //导入组件
@@ -80,6 +81,7 @@ Vue.use(Container)
     .use(Button)
     .use(ButtonGroup)
     .use(Divider)
+    .use(Tooltip)
     .use(Loading.directive) //指令方式加载loading(在组件上使用v-loading)
 //.use(Message)
 //.use(MessageBox)

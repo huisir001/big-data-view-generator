@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-12-23 11:44:58
+ * @LastEditTime: 2020-12-23 12:24:22
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -121,6 +121,8 @@ export default [
             'selectedCats',
             'labelLineLength',
             'labelFmt',
+            'ringlike',
+            'nestification',
         ],
         compTypeFilter: compTypes_tb,
     },

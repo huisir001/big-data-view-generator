@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-23 11:43:59
+ * @LastEditTime: 2020-12-23 18:13:35
  */
 import common from './common'
 export default [
@@ -114,16 +114,20 @@ export default [
         compType: 'input',
         label: '默认选中项名称',
         placeholder: '用“,”隔开',
+        tooltip: '填写选中项的name名称，用英文逗号隔开',
     },
     {
         key: 'radius',
-        compType: 'numberArray',
-        label: '饼图尺寸占比(%)',
+        compType: 'numberArrayModifier',
+        label: '饼图半径(%)',
+        labelOnTop: true,
+        tooltip:
+            '这里可以调整数组，<br>以显示环形图或嵌套饼图。<br>嵌套饼图只支持一层。',
     },
     {
         key: 'center',
         compType: 'numberArray',
-        label: '饼图位置比例(%)',
+        label: '饼图圆心坐标(%)',
     },
     {
         key: 'roseType',
