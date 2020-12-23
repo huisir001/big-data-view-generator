@@ -2,7 +2,7 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-22 16:25:04
+ * @LastEditTime: 2020-12-23 11:33:46
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -26,6 +26,9 @@ export default {
                 dynamicData,
                 title,
                 titleSize,
+                titleFontWeight,
+                titleFontFamily,
+                titleColor,
                 titlePosLeft,
                 titlePosTop,
                 titlePosRight,
@@ -104,16 +107,20 @@ export default {
                 }
                 //饼图大小，考虑到嵌套饼图情况,这里只能嵌套一层
                 if (radius && radius instanceof Array) {
-                    if (radius.length == 1) {
-                        item.radius = radius[0]
-                    } else if (radius.length == 2) {
-                        item.radius = radius
-                    } else if (radius.length == 3 || radius.length == 4) {
-                        index == 0 && (item.radius = radius.slice(0, 2))
-                        index == 1 && (item.radius = radius.slice(2))
+                    let myRadius = JSON.parse(JSON.stringify(radius))
+                    myRadius = myRadius.map((item) =>
+                        typeof item == 'number' ? `${item}%` : item
+                    )
+                    if (myRadius.length == 1) {
+                        item.radius = myRadius[0]
+                    } else if (myRadius.length == 2) {
+                        item.radius = myRadius
+                    } else if (myRadius.length == 3 || myRadius.length == 4) {
+                        index == 0 && (item.radius = myRadius.slice(0, 2))
+                        index == 1 && (item.radius = myRadius.slice(2))
                     }
                     //设置内部饼图标签
-                    if (parseFloat(radius[1]) < parseFloat(radius[2])) {
+                    if (parseFloat(myRadius[1]) < parseFloat(myRadius[2])) {
                         index == 0 && (item.label.position = 'inside')
                     } else {
                         index == 1 && (item.label.position = 'inside')
@@ -121,8 +128,14 @@ export default {
                 } else {
                     item.radius = radius || '50%'
                 }
-                item.center = center || ['50%', '50%'] //饼图位置
-                legends = legends.concat(item.data.map((item) => item.name)) //图例
+                //饼图位置
+                let myCenter = JSON.parse(JSON.stringify(center))
+                myCenter = myCenter.map((item) =>
+                    typeof item == 'number' ? `${item}%` : item
+                )
+                item.center = myCenter || ['50%', '50%']
+                //图例
+                legends = legends.concat(item.data.map((item) => item.name))
                 //默认选中的项目类型
                 item.data.forEach((child) => {
                     selectedCats &&
@@ -141,6 +154,9 @@ export default {
                     bottom: titlePosBottom,
                     textStyle: {
                         fontSize: titleSize,
+                        fontWeight: titleFontWeight,
+                        fontFamily: titleFontFamily,
+                        color: titleColor,
                     },
                 },
                 tooltip: {

@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-22 17:54:52
+ * @LastEditTime: 2020-12-23 11:43:59
  */
 import common from './common'
 export default [
@@ -18,6 +18,27 @@ export default [
         label: '标题字号',
         min: 0,
         max: 50,
+    },
+    {
+        key: 'titleFontWeight',
+        compType: 'select',
+        label: '标题粗细',
+        options: [
+            { value: 'normal', label: '正常' },
+            { value: 'bold', label: '加粗' },
+            { value: 'bolder', label: '更粗' },
+            { value: 'lighter', label: '更细' },
+        ],
+    },
+    {
+        key: 'titleFontFamily',
+        compType: 'input',
+        label: '标题字体',
+    },
+    {
+        key: 'titleColor',
+        compType: 'color',
+        label: '标题颜色',
     },
     {
         key: 'titlePosLeft',
@@ -97,11 +118,16 @@ export default [
     {
         key: 'radius',
         compType: 'numberArray',
-        label: '饼图尺寸',
+        label: '饼图尺寸占比(%)',
     },
     {
         key: 'center',
         compType: 'numberArray',
-        label: '饼图位置',
+        label: '饼图位置比例(%)',
+    },
+    {
+        key: 'roseType',
+        compType: 'switch',
+        label: '玫瑰图',
     },
 ]

@@ -2,11 +2,19 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-22 17:56:19
+ * @LastEditTime: 2020-12-23 11:39:09
  */
 import common from './common'
 export default {
     title: '饼图',
+    titleSize: 16,
+    titleFontWeight: 'bold',
+    titleFontFamily: 'Microsoft YaHei',
+    titleColor: '#ffffff',
+    titlePosLeft: 128,
+    titlePosTop: 5,
+    legendPosLeft: 0,
+    legendPosTop: 30,
     chartData: [
         {
             name: '数量',
@@ -40,20 +48,14 @@ export default {
     label: true,
     labelPosition: 'outside',
     labelSize: 10,
-    // roseType: false,
-    // selectedMode: false,
+    roseType: false,
     borderColor: '#ffffff',
     borderWidth: 1,
-    titleSize: 16,
-    titlePosLeft: 128,
-    titlePosTop: 5,
-    legendPosLeft: 0,
-    legendPosTop: 30,
     legendOrient: 'vertical',
     selectedCats: '',
     labelLineLength: 10,
     radius: [55],
-    center: [150, 100],
+    center: [50, 50],
     colors: [
         {
             color: '#5ef5ff',

@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） pie
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-18 18:39:25
+ * @LastEditTime: 2020-12-23 11:38:13
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -24,6 +24,9 @@ class Config {
             //其中的 query 可为 string 或者 Object，具体看echarts文档
             title: String, //标题，可有可无
             titleSize: Number, //标题字号
+            titleFontWeight: String, //标题粗细
+            titleFontFamily: String, //标题字体
+            titleColor: String, //标题颜色
             titlePosLeft: [String, Number], //标题左边距,
             titlePosTop: [String, Number], //标题上边距,
             titlePosRight: [String, Number], //标题右边距,
@@ -91,6 +94,9 @@ class Config {
             borderWidth: 0,
             selectedCats: [],
             titleSize: 10,
+            titleFontWeight: 'bold', //标题粗细
+            titleFontFamily: 'Microsoft YaHei', //标题字体
+            titleColor: '#ffffff', //标题颜色
             titlePosLeft: 'center',
             titlePosTop: 'bottom',
             titlePosRight: 'auto',

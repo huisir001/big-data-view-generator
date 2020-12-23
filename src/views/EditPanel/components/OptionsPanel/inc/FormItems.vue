@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-22 15:36:28
+ * @LastEditTime: 2020-12-23 10:53:22
 -->
 <template>
     <el-form-item
@@ -93,9 +93,11 @@
                         ? 0
                         : Infinity
                 "
-                :style="`width:49%; margin-left: ${
-                    index % 2 == 0 ? 0 : 2
-                }%;margin-top: ${index < 2 ? 0 : 2}%;`"
+                :style="`${
+                    formModelVal.length == 1 ? 'width:100%;' : 'width:49%;'
+                }margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
+                    index < 2 ? 0 : 2
+                }%;`"
             ></el-input-number>
         </template>
 
@@ -108,7 +110,7 @@
                 v-model="formModelVal[index]"
                 :style="`${
                     formModelVal.length == 1 ? 'width:100%;' : 'width:49%;'
-                } margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
+                }margin-left: ${index % 2 == 0 ? 0 : 2}%;margin-top: ${
                     index < 2 ? 0 : 2
                 }%;`"
             ></el-input>

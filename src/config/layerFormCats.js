@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-12-22 17:55:24
+ * @LastEditTime: 2020-12-23 11:44:58
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -33,12 +33,15 @@ export default [
         category: '图表基础配置',
         optionsFilter: [
             'title',
+            'titleSize',
+            'titleFontWeight',
+            'titleFontFamily',
+            'titleColor',
+            'titlePosLeft',
+            'titlePosTop',
             'lineWidth',
             'lineType',
             'opacity',
-            'titleSize',
-            'titlePosLeft',
-            'titlePosTop',
         ],
         compTypeFilter: allCompType,
     },
@@ -123,7 +126,7 @@ export default [
     },
     {
         category: '其他配置',
-        optionsFilter: ['tooltipFmt'],
+        optionsFilter: ['tooltipFmt', 'roseType'],
         compTypeFilter: compTypes_tb,
     },
     {
