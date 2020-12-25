@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-23 18:25:49
+ * @LastEditTime: 2020-12-25 11:27:45
 -->
 <template>
     <el-tooltip
@@ -596,7 +596,7 @@ export default {
         },
         //新增数组对象
         addNumberArray() {
-            this.formModelVal.push(30)
+            this.formModelVal.push(80)
         },
         //删除数组对象
         delNumberArray(index) {

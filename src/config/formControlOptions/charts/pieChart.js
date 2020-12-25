@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-23 18:13:35
+ * @LastEditTime: 2020-12-25 11:30:47
  */
 import common from './common'
 export default [
@@ -87,6 +87,7 @@ export default [
         key: 'labelFmt',
         compType: 'stringArray',
         label: '标签模板字符串',
+        tooltip: '例：`{b}: {c} ({d}%)`',
     },
     {
         key: 'borderWidth',
