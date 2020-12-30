@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-25 11:27:45
+ * @LastEditTime: 2020-12-30 12:02:28
 -->
 <template>
     <el-tooltip
@@ -246,6 +246,7 @@
                     <thead>
                         <tr>
                             <th>基础</th>
+                            <th v-if="formItemOption.section">分段</th>
                             <th>渐变</th>
                             <th>是否渐变</th>
                             <th>渐变范围</th>
@@ -259,6 +260,14 @@
                                     v-model="item.color"
                                     size="mini"
                                 ></el-color-picker>
+                            </td>
+                            <td v-if="formItemOption.section">
+                                <el-slider
+                                    v-model="item.per"
+                                    :step="0.1"
+                                    :max="1"
+                                >
+                                </el-slider>
                             </td>
                             <td width="45">
                                 <el-color-picker

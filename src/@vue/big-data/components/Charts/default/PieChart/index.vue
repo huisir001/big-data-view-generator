@@ -2,7 +2,7 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-23 14:30:10
+ * @LastEditTime: 2020-12-30 16:58:56
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -147,6 +147,7 @@ export default {
             //返回饼图配置项
             return {
                 title: {
+                    show: title && title.length > 0,
                     text: title,
                     left: titlePosLeft,
                     top: titlePosTop,

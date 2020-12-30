@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-12-02 16:03:14
+ * @LastEditTime: 2020-12-30 16:58:27
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -138,7 +138,7 @@ export default {
 
             //返回柱图配置项
             return {
-                title: { text: title },
+                title: { show: title && title.length > 0, text: title },
                 tooltip: {
                     show: true,
                     // axisPointer: {
