@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-22 15:25:20
+ * @LastEditTime: 2020-12-30 17:26:35
  */
 export default [
     /* 图层 */
@@ -88,19 +88,6 @@ export default [
         key: 'title',
         compType: 'input',
         label: '图表标题',
-    },
-    {
-        key: 'showLegend',
-        compType: 'switch',
-        label: '显示图例',
-    },
-    {
-        key: 'label',
-        compType: 'switch',
-        label: '显示标签',
-        displayItems: {
-            t: ['labelPosition', 'labelLineLength', 'labelSize', 'labelFmt'],
-        }, //显隐控制
     },
     {
         key: 'colors',

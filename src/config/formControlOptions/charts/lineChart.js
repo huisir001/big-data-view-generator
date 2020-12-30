@@ -2,11 +2,24 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-18 18:41:01
+ * @LastEditTime: 2020-12-30 17:27:30
  */
 import common from './common'
 export default [
     ...common,
+    {
+        key: 'showLegend',
+        compType: 'switch',
+        label: '显示图例',
+    },
+    {
+        key: 'label',
+        compType: 'switch',
+        label: '显示标签',
+        displayItems: {
+            t: ['labelPosition', 'labelLineLength', 'labelSize', 'labelFmt'],
+        }, //显隐控制
+    },
     {
         key: 'valEnding',
         compType: 'input',

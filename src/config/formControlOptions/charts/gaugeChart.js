@@ -1,25 +1,12 @@
 /*
- * @Description: 配置Option
+ * @Description: 配置Option Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-25 11:30:47
+ * @LastEditTime: 2020-12-30 17:25:54
  */
 import common from './common'
 export default [
     ...common,
-    {
-        key: 'showLegend',
-        compType: 'switch',
-        label: '显示图例',
-    },
-    {
-        key: 'label',
-        compType: 'switch',
-        label: '显示标签',
-        displayItems: {
-            t: ['labelPosition', 'labelLineLength', 'labelSize', 'labelFmt'],
-        }, //显隐控制
-    },
     {
         key: 'tooltipFmt',
         compType: 'input',
