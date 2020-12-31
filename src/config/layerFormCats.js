@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-12-23 12:24:22
+ * @LastEditTime: 2020-12-31 17:33:51
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -123,12 +123,54 @@ export default [
             'labelFmt',
             'ringlike',
             'nestification',
+            'startAngle',
+            'endAngle',
+            'min',
+            'max',
+            'splitNumber',
+            'clockwise',
+            'showAxis',
+            'axisWidth',
+            'showDialTitle',
+            'dialTitleCenter',
+            'dialTitleSize',
+            'dialTitleWeight',
+            'dialTitleColor',
+            'showDetail',
+            'detailFmt',
+            'detailCenter',
+            'detailSize',
+            'detailFontWeight',
+            'showAxisTick',
+            'axisTickType',
+            'axisTickWidth',
+            'axisTickLength',
+            'axisTickSplitNum',
+            'showSplitLine',
+            'splitLineLength',
+            'splitLineWidth',
+            'splitLineType',
+            'pointerLength',
+            'pointerWidth',
+            'pointerColorAuto',
+            'pointerColor',
+            'pointerOpacity',
+            'pointerBorderColor',
+            'pointerBorderWidth',
+            'pointerBorderType',
         ],
         compTypeFilter: compTypes_tb,
     },
     {
         category: '其他配置',
-        optionsFilter: ['tooltipFmt', 'roseType'],
+        optionsFilter: [
+            'tooltipFmt',
+            'roseType',
+            'axisShadowBlur',
+            'axisShadowColor',
+            'axisShadowOffsetX',
+            'axisShadowOffsetY',
+        ],
         compTypeFilter: compTypes_tb,
     },
     {

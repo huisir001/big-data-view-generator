@@ -2,16 +2,12 @@
  * @Description: 配置Option line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-30 17:27:30
+ * @LastEditTime: 2020-12-31 16:38:07
  */
-import common from './common'
+import { publicOpts, legendOpts } from './common'
 export default [
-    ...common,
-    {
-        key: 'showLegend',
-        compType: 'switch',
-        label: '显示图例',
-    },
+    ...publicOpts,
+    ...legendOpts,
     {
         key: 'label',
         compType: 'switch',
@@ -350,5 +346,12 @@ export default [
         showBtnGroup: true,
         stringify: true,
         hide: true,
+    },
+    /* 颜色配置 */
+    {
+        key: 'colors',
+        compType: 'colors',
+        label: '颜色配置',
+        labelOnTop: true, //标签在上面
     },
 ]

@@ -2,7 +2,7 @@
  * @Description: 标准仪表盘（当前只支持单表盘单指针图表）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月19日 12:00:03
- * @LastEditTime: 2020-12-30 16:59:11
+ * @LastEditTime: 2020-12-31 15:28:24
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -93,7 +93,9 @@ export default {
                 type: 'gauge',
                 //仪表盘大小
                 radius,
-                center, //仪表盘位置
+                center: center.map((item) =>
+                    typeof item == 'number' ? `${item}%` : item
+                ), //仪表盘位置,这里默认为百分比
                 splitNumber, //表盘分割段数
                 clockwise, //是否顺时针
                 startAngle, //表盘开始角度（单位为度数）

@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-30 16:56:23
+ * @LastEditTime: 2020-12-31 16:37:34
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -31,7 +31,7 @@ class Config {
             titlePosTop: [String, Number], //标题上边距,
             titlePosRight: [String, Number], //标题右边距,
             titlePosBottom: [String, Number], //标题下边距,
-            radius: String, //仪表盘大小（所占盒子的比例），默认为80%
+            radius: [String, Number], //仪表盘大小（字符串为所占盒子的比例），默认为80%，数字类型为像素
             center: Array, //仪表盘位置，数组两个值分别为圆心的横向位置比和纵向位置比，默认为['50%', '60%']
             tooltipFmt: String, //提示框的字符串模板，如`{a} <br/>{b} : {c} ({d}%)`
             startAngle: Number, //表盘开始角度（单位为度数）
@@ -120,9 +120,8 @@ class Config {
             titlePosTop: 'bottom',
             titlePosRight: 'auto',
             titlePosBottom: 'auto',
-            radius: '80%',
+            radius: '100%',
             center: ['50%', '60%'],
-            tooltipFmt: '{a} <br/>{b} : {c} ({d}%)',
             startAngle: 225,
             endAngle: -45,
             min: 0,

@@ -2,9 +2,11 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-30 17:26:35
+ * @LastEditTime: 2020-12-31 16:37:47
  */
-export default [
+
+/* 共有 */
+export const publicOpts = [
     /* 图层 */
     {
         key: 'name',
@@ -30,7 +32,7 @@ export default [
         compType: 'number',
         layerOption: true,
     },
-    /* 图表 */
+    /* 图表数据 */
     {
         key: 'useApiData',
         compType: 'switch',
@@ -84,16 +86,56 @@ export default [
         showBtnGroup: true,
         hide: true,
     },
+    /* 提示框 */
+    {
+        key: 'tooltipFmt',
+        compType: 'input',
+        label: '提示框模板字符串',
+        tooltip: '例：`{a} &lt;br/&gt;{b} : {c} ({d}%)`',
+    },
+    /* 标题配置 */
     {
         key: 'title',
         compType: 'input',
         label: '图表标题',
     },
     {
-        key: 'colors',
-        compType: 'colors',
-        label: '颜色配置',
-        labelOnTop: true, //标签在上面
+        key: 'titleSize',
+        compType: 'slider',
+        label: '标题字号',
+        min: 0,
+        max: 50,
+    },
+    {
+        key: 'titleFontWeight',
+        compType: 'select',
+        label: '标题粗细',
+        options: [
+            { value: 'normal', label: '正常' },
+            { value: 'bold', label: '加粗' },
+            { value: 'bolder', label: '更粗' },
+            { value: 'lighter', label: '更细' },
+        ],
+    },
+    {
+        key: 'titleFontFamily',
+        compType: 'input',
+        label: '标题字体',
+    },
+    {
+        key: 'titleColor',
+        compType: 'color',
+        label: '标题颜色',
+    },
+    {
+        key: 'titlePosLeft',
+        compType: 'number',
+        label: '标题左侧偏移/px',
+    },
+    {
+        key: 'titlePosTop',
+        compType: 'number',
+        label: '标题上侧偏移/px',
     },
     /* 事件 */
     {
@@ -101,5 +143,33 @@ export default [
         compType: 'events',
         label: null,
         labelOnTop: true, //标签在上面
+    },
+]
+
+/* 图例 */
+export const legendOpts = [
+    {
+        key: 'showLegend',
+        compType: 'switch',
+        label: '显示图例',
+    },
+    {
+        key: 'legendPosLeft',
+        compType: 'number',
+        label: '图例左侧偏移/px',
+    },
+    {
+        key: 'legendPosTop',
+        compType: 'number',
+        label: '图例上侧偏移/px',
+    },
+    {
+        key: 'legendOrient',
+        compType: 'select',
+        label: '图例排列',
+        options: [
+            { value: 'horizontal', label: '横排' },
+            { value: 'vertical', label: '竖排' },
+        ],
     },
 ]

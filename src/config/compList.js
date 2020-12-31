@@ -2,13 +2,19 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2020-12-18 18:53:33
+ * @LastEditTime: 2020-12-31 11:52:15
  */
-import { coBarChart, coLineChart, coPieChart } from './compOptions/charts'
+import {
+    coBarChart,
+    coLineChart,
+    coPieChart,
+    coGaugeChart,
+} from './compOptions/charts'
 import {
     fcoBarChart,
     fcoLineChart,
     fcoPieChart,
+    fcoGaugeChart,
 } from './formControlOptions/charts'
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
@@ -43,8 +49,8 @@ export default [
                 title: '仪表盘',
                 type: 'GaugeChart',
                 pic: require('@/assets/img/compList/gauge.png'),
-                compOptions: coBarChart,
-                formControlOptions: fcoBarChart,
+                compOptions: coGaugeChart,
+                formControlOptions: fcoGaugeChart,
             },
             {
                 title: '雷达图',

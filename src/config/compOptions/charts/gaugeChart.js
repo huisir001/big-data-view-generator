@@ -1,0 +1,88 @@
+/*
+ * @Description: 图表默认Options Gauge
+ * @Autor: HuiSir<273250950@qq.com>
+ * @Date: 2020-09-29 18:13:39
+ * @LastEditTime: 2020-12-31 16:41:35
+ */
+import common from './common'
+export default {
+    ...common,
+    chartData: {
+        name: '利润',
+        data: [
+            {
+                name: '比率',
+                value: 38,
+            },
+        ],
+    },
+    radius: '100%',
+    center: [50, 58],
+    startAngle: 225,
+    endAngle: -45,
+    min: 0,
+    max: 100,
+    splitNumber: 5,
+    clockwise: true,
+    showAxis: true,
+    axisWidth: 25,
+    axisShadowBlur: 0,
+    axisShadowColor: '#ffffff',
+    axisShadowOffsetX: 0,
+    axisShadowOffsetY: 0,
+    showDialTitle: true,
+    dialTitleCenter: [0, -40],
+    dialTitleSize: 15,
+    dialTitleWeight: 'normal',
+    dialTitleColor: '#ffffff',
+    showDetail: true,
+    detailFmt: '{value}%',
+    detailCenter: [0, 45],
+    detailSize: 30,
+    detailFontWeight: 'normal',
+    showAxisLabel: true,
+    axisLabelSize: 12,
+    axisLabelStyle: 'normal',
+    axisLabelWeight: 'normal',
+    axisLabelFmt: '{value}',
+    showAxisTick: true,
+    axisTickType: 'solid',
+    axisTickWidth: 1,
+    axisTickLength: 10,
+    axisTickSplitNum: 5,
+    showSplitLine: true,
+    splitLineLength: 30,
+    splitLineWidth: 2,
+    splitLineType: 'solid',
+    pointerLength: '70%',
+    pointerWidth: 8,
+    pointerColorAuto: true,
+    pointerColor: '#ff4500',
+    pointerOpacity: 1,
+    pointerBorderColor: '#ffffff',
+    pointerBorderWidth: 0,
+    pointerBorderType: 'solid',
+    colors: [
+        {
+            color: '#27bf99',
+            gdColor: null,
+            isGradient: false,
+            per: 0.2,
+            gdScope: [0, 1],
+        },
+        {
+            color: '#1d88eb',
+            gdColor: null,
+            isGradient: false,
+            per: 0.8,
+            gdScope: [0, 1],
+        },
+        {
+            color: '#ff4500',
+            gdColor: null,
+            isGradient: false,
+            per: 1,
+            gdScope: [0, 1],
+        },
+    ],
+}

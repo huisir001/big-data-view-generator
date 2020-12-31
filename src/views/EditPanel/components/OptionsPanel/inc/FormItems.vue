@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-30 12:02:28
+ * @LastEditTime: 2020-12-31 16:47:00
 -->
 <template>
     <el-tooltip
@@ -192,7 +192,7 @@
                     :step="formItemOption.step || 1"
                 ></el-slider>
                 <div class="sliderValLabel">
-                    {{ formModelVal }}
+                    {{ formModelVal + (formItemOption.suffix || '') }}
                 </div>
             </template>
 
@@ -247,9 +247,9 @@
                         <tr>
                             <th>基础</th>
                             <th v-if="formItemOption.section">分段</th>
-                            <th>渐变</th>
-                            <th>是否渐变</th>
-                            <th>渐变范围</th>
+                            <th v-if="!formItemOption.section">渐变</th>
+                            <th v-if="!formItemOption.section">是否渐变</th>
+                            <th v-if="!formItemOption.section">渐变范围</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -261,7 +261,7 @@
                                     size="mini"
                                 ></el-color-picker>
                             </td>
-                            <td v-if="formItemOption.section">
+                            <td v-if="formItemOption.section" width="180">
                                 <el-slider
                                     v-model="item.per"
                                     :step="0.1"
@@ -269,13 +269,13 @@
                                 >
                                 </el-slider>
                             </td>
-                            <td width="45">
+                            <td v-if="!formItemOption.section" width="45">
                                 <el-color-picker
                                     v-model="item.gdColor"
                                     size="mini"
                                 ></el-color-picker>
                             </td>
-                            <td>
+                            <td v-if="!formItemOption.section">
                                 <el-switch
                                     v-model="item.isGradient"
                                     active-color="#409EFF"
@@ -283,7 +283,7 @@
                                 >
                                 </el-switch>
                             </td>
-                            <td>
+                            <td v-if="!formItemOption.section">
                                 <el-slider
                                     v-model="item.gdScope"
                                     range
@@ -303,7 +303,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="5">
+                            <td :colspan="formItemOption.section ? 3 : 5">
                                 <el-button
                                     size="mini"
                                     type="primary"
@@ -456,9 +456,17 @@ export default {
             get() {
                 try {
                     const { formItemOption, optionKey, activeLayer } = this
-                    const compOptionVal = formItemOption.layerOption
+                    let compOptionVal = formItemOption.layerOption
                         ? activeLayer[optionKey] //图层本身配置项
                         : activeLayer.compOptions[optionKey] //图层内组件配置项
+
+                    //判断数字是否有后缀（不含数组情况）
+                    if (
+                        formItemOption.suffix &&
+                        typeof compOptionVal == 'string'
+                    ) {
+                        compOptionVal = parseFloat(compOptionVal)
+                    }
 
                     // 如果需要转义字符串的 将对象转义后的字符串显示在文本框（一般为代码才需要转义）
                     return activeLayer && formItemOption.stringify
@@ -474,10 +482,16 @@ export default {
             set(value) {
                 try {
                     const { formItemOption, optionKey, activeLayer } = this
-                    const optionVal =
+                    let optionVal =
                         activeLayer && formItemOption.stringify
                             ? JSON.parse(value)
                             : value
+
+                    //判断数字是否有后缀（不含数组情况）
+                    if (formItemOption.suffix && typeof optionVal == 'number') {
+                        optionVal = optionVal + formItemOption.suffix
+                    }
+
                     if (formItemOption.layerOption) {
                         //图层本身配置项
                         this.activeLayer[optionKey] = optionVal
@@ -691,7 +705,7 @@ export default {
     color: #fff;
     font-size: 12px;
     font-family: cursive;
-    width: 26px;
+    width: 28px;
     text-align: center;
     background-color: #33434f;
     border: 1px solid #000000;

@@ -2,16 +2,12 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-25 11:30:47
+ * @LastEditTime: 2020-12-31 10:01:26
  */
-import common from './common'
+import { publicOpts, legendOpts } from './common'
 export default [
-    ...common,
-    {
-        key: 'showLegend',
-        compType: 'switch',
-        label: '显示图例',
-    },
+    ...publicOpts,
+    ...legendOpts,
     {
         key: 'label',
         compType: 'switch',
@@ -19,59 +15,6 @@ export default [
         displayItems: {
             t: ['labelPosition', 'labelLineLength', 'labelSize', 'labelFmt'],
         }, //显隐控制
-    },
-    {
-        key: 'tooltipFmt',
-        compType: 'input',
-        label: '提示框模板字符串',
-    },
-    {
-        key: 'titleSize',
-        compType: 'slider',
-        label: '标题字号',
-        min: 0,
-        max: 50,
-    },
-    {
-        key: 'titleFontWeight',
-        compType: 'select',
-        label: '标题粗细',
-        options: [
-            { value: 'normal', label: '正常' },
-            { value: 'bold', label: '加粗' },
-            { value: 'bolder', label: '更粗' },
-            { value: 'lighter', label: '更细' },
-        ],
-    },
-    {
-        key: 'titleFontFamily',
-        compType: 'input',
-        label: '标题字体',
-    },
-    {
-        key: 'titleColor',
-        compType: 'color',
-        label: '标题颜色',
-    },
-    {
-        key: 'titlePosLeft',
-        compType: 'number',
-        label: '标题左侧偏移/px',
-    },
-    {
-        key: 'titlePosTop',
-        compType: 'number',
-        label: '标题上侧偏移/px',
-    },
-    {
-        key: 'legendPosLeft',
-        compType: 'number',
-        label: '图例左侧偏移/px',
-    },
-    {
-        key: 'legendPosTop',
-        compType: 'number',
-        label: '图例上侧偏移/px',
     },
     {
         key: 'labelPosition',
@@ -115,15 +58,6 @@ export default [
         label: '描边颜色',
     },
     {
-        key: 'legendOrient',
-        compType: 'select',
-        label: '图例排列',
-        options: [
-            { value: 'horizontal', label: '横排' },
-            { value: 'vertical', label: '竖排' },
-        ],
-    },
-    {
         key: 'selectedCats',
         compType: 'input',
         label: '默认选中项名称',
@@ -147,5 +81,12 @@ export default [
         key: 'roseType',
         compType: 'switch',
         label: '玫瑰图',
+    },
+    /* 颜色配置 */
+    {
+        key: 'colors',
+        compType: 'colors',
+        label: '颜色配置',
+        labelOnTop: true, //标签在上面
     },
 ]
