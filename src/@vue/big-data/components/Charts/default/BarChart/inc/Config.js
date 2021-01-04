@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-04 10:40:56
+ * @LastEditTime: 2021-01-04 14:40:09
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -39,6 +39,11 @@ class Config {
             right: [String, Number], //右边距
             bottom: [String, Number], //下边距
             showLegend: Boolean, //显示图例
+            legendPosLeft: [String, Number], //图例左边距,可以为数字像素，也可以为字符串`center/left/right`
+            legendPosTop: [String, Number], //图例上边距,可以为数字像素，也可以为字符串`center/top/bottom`
+            legendPosRight: [String, Number], //图例右边距
+            legendPosBottom: [String, Number], //图例下边距
+            legendOrient: String, //图例布局 vertical/horizontal 默认horizontal
             barWidth: [String, Number], //柱粗（可以是百分比`20%`或数字20）
             stack: [Array, Boolean], //是否堆叠，堆叠的项目有哪些，stack为true时所有柱子都堆叠在一柱上，且不考虑堆叠的类型名
             horizontal: Boolean, //是否横向，声明即横向
@@ -115,6 +120,11 @@ class Config {
             labelPosition: 'top',
             colorMode: 'byLegend',
             showLegend: true,
+            legendPosLeft: 'center',
+            legendPosTop: 35,
+            legendPosRight: 'auto',
+            legendPosBottom: 'auto',
+            legendOrient: 'horizontal',
             stack: false,
             label: false,
             horizontal: false,

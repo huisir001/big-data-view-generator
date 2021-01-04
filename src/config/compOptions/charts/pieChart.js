@@ -2,13 +2,15 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 10:44:34
+ * @LastEditTime: 2021-01-04 14:33:47
  */
 import common from './common'
 export default {
     title: '饼状图',
+    showLegend: true,
     legendPosLeft: 0,
     legendPosTop: 30,
+    legendOrient: 'vertical',
     chartData: [
         {
             name: '数量',
@@ -38,14 +40,12 @@ export default {
     ],
     tooltipFmt: '{a} <br/>{b}: {c} ({d}%)',
     labelFmt: ['{b}'],
-    showLegend: true,
     label: true,
     labelPosition: 'outside',
     labelSize: 10,
     roseType: false,
     borderColor: '#ffffff',
     borderWidth: 1,
-    legendOrient: 'vertical',
     selectedCats: '',
     labelLineLength: 10,
     radius: [55],

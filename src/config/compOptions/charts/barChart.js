@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-22 15:02:37
+ * @LastEditTime: 2021-01-04 14:38:58
  */
 import common from './common'
 export default {
@@ -22,6 +22,9 @@ export default {
     right: 28,
     bottom: 28,
     showLegend: true, //显示图例
+    legendPosLeft: 98,
+    legendPosTop: 35,
+    legendOrient: 'horizontal',
     horizontal: false, //是否横向
     barWidth: 10,
     valEnding: '',

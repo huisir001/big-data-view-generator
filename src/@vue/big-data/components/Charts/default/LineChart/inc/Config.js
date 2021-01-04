@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-04 10:38:05
+ * @LastEditTime: 2021-01-04 14:45:38
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -39,6 +39,11 @@ class Config {
             right: [String, Number], //右边距
             bottom: [String, Number], //下边距
             showLegend: Boolean, //显示图例
+            legendPosLeft: [String, Number], //图例左边距,可以为数字像素，也可以为字符串`center/left/right`
+            legendPosTop: [String, Number], //图例上边距,可以为数字像素，也可以为字符串`center/top/bottom`
+            legendPosRight: [String, Number], //图例右边距
+            legendPosBottom: [String, Number], //图例下边距
+            legendOrient: String, //图例布局 vertical/horizontal 默认horizontal
             horizontal: Boolean, //是否横向，声明即横向
             showDataZoom: Boolean, //显示滚动条
             dataZoomAxis: String, //滚动条映射的数据轴这里4个值：`y0,y1,x0,x1`
@@ -122,6 +127,11 @@ class Config {
             yName: '',
             labelPosition: 'top',
             showLegend: true,
+            legendPosLeft: 'center',
+            legendPosTop: 35,
+            legendPosRight: 'auto',
+            legendPosBottom: 'auto',
+            legendOrient: 'horizontal',
             areaFill: false,
             areaStyle: { type: 'default' },
             stack: false,
