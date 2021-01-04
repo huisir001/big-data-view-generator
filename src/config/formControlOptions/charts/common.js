@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-31 16:37:47
+ * @LastEditTime: 2021-01-04 16:56:34
  */
 
 /* 共有 */
@@ -129,13 +129,15 @@ export const publicOpts = [
     },
     {
         key: 'titlePosLeft',
-        compType: 'number',
-        label: '标题左侧偏移/px',
+        compType: 'numOrText',
+        label: '标题左侧偏移',
+        tooltip: '可以为像素值或位置字符串(left/center/right)',
     },
     {
         key: 'titlePosTop',
-        compType: 'number',
-        label: '标题上侧偏移/px',
+        compType: 'numOrText',
+        label: '标题上侧偏移',
+        tooltip: '可以为像素值或位置字符串(top/center/bottom)',
     },
     /* 事件 */
     {

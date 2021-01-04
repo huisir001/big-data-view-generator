@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2020-12-31 16:47:00
+ * @LastEditTime: 2021-01-04 16:53:38
 -->
 <template>
     <el-tooltip
@@ -77,6 +77,62 @@
                             : Infinity
                     "
                 ></el-input-number>
+            </template>
+
+            <!-- 计数器和文本框切换 -->
+            <template v-if="formItemOption.compType == 'numOrText'">
+                <el-input-number
+                    v-if="numOrTextInputType == 'number'"
+                    size="small"
+                    v-model="formModelVal"
+                    controls-position="right"
+                    :min="
+                        formItemOption.min
+                            ? formItemOption.min
+                            : formItemOption.min === 0
+                            ? 0
+                            : -Infinity
+                    "
+                    :max="
+                        formItemOption.max
+                            ? formItemOption.max
+                            : formItemOption.max === 0
+                            ? 0
+                            : Infinity
+                    "
+                    style="width: calc(100% - 38px)"
+                ></el-input-number>
+                <el-input
+                    v-else
+                    class="inputBox"
+                    v-model="formModelVal"
+                    size="small"
+                    type="text"
+                    clearable
+                    :placeholder="formItemOption.placeholder || ''"
+                    resize="none"
+                    style="width: calc(100% - 38px)"
+                ></el-input>
+                <el-tooltip
+                    class="item"
+                    effect="dark"
+                    :content="
+                        numOrTextInputType == 'string'
+                            ? '切换为计数器'
+                            : '切换为文本框'
+                    "
+                    placement="top-end"
+                >
+                    <i
+                        class="el-icon-sort numOrTextBtn"
+                        @click="
+                            numOrTextInputType =
+                                numOrTextInputType == 'string'
+                                    ? 'number'
+                                    : 'string'
+                        "
+                    ></i>
+                </el-tooltip>
             </template>
 
             <!-- 数字数组 -->
@@ -509,6 +565,23 @@ export default {
                 }
             },
         },
+        /* 数字框切换文本框类型 */
+        numOrTextInputType: {
+            get() {
+                const { formItemOption, formModelVal } = this
+                if (formItemOption.compType == 'numOrText') {
+                    return typeof formModelVal
+                }
+            },
+            set(value) {
+                if (value == 'string') {
+                    this.formModelVal = this.formModelVal.toString()
+                } else {
+                    let curVal = parseInt(this.formModelVal)
+                    this.formModelVal = isNaN(curVal) ? 0 : curVal
+                }
+            },
+        },
     },
     methods: {
         //复制
@@ -711,6 +784,17 @@ export default {
     border: 1px solid #000000;
     border-radius: 2px;
     height: 24px;
+}
+.numOrTextBtn {
+    padding: 8px 10px;
+    background: #33434f;
+    border-radius: 3px;
+    transform: translateY(1px);
+    margin-left: 4px;
+    cursor: pointer;
+    &:active {
+        background: #409eff;
+    }
 }
 </style>
 <style lang="scss">
