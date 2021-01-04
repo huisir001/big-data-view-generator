@@ -2,7 +2,7 @@
  * @Description: 图表默认Options Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-31 16:41:35
+ * @LastEditTime: 2021-01-04 11:40:54
  */
 import common from './common'
 export default {
@@ -16,6 +16,7 @@ export default {
             },
         ],
     },
+    title: '',
     radius: '100%',
     center: [50, 58],
     startAngle: 225,
@@ -38,20 +39,24 @@ export default {
     showDetail: true,
     detailFmt: '{value}%',
     detailCenter: [0, 45],
-    detailSize: 30,
+    detailSize: 24,
     detailFontWeight: 'normal',
+    detailColorAuto: true,
+    detailColor: '#ffffff',
     showAxisLabel: true,
     axisLabelSize: 12,
     axisLabelStyle: 'normal',
     axisLabelWeight: 'normal',
     axisLabelFmt: '{value}',
+    axisLabelColorAuto: true,
+    axisLabelColor: '#ffffff',
     showAxisTick: true,
     axisTickType: 'solid',
     axisTickWidth: 1,
     axisTickLength: 10,
     axisTickSplitNum: 5,
     showSplitLine: true,
-    splitLineLength: 30,
+    splitLineLength: 25,
     splitLineWidth: 2,
     splitLineType: 'solid',
     pointerLength: '70%',

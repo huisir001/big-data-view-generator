@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2020-12-31 17:33:51
+ * @LastEditTime: 2021-01-04 11:57:04
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -65,7 +65,7 @@ export default [
             'legendPosTop',
             'legendOrient',
         ],
-        compTypeFilter: compTypes_tb,
+        compTypeFilter: compTypes_tb.filter((item) => item != 'GaugeChart'), //仪表盘不需要图例
     },
     {
         category: '坐标轴设置',
@@ -127,7 +127,6 @@ export default [
             'endAngle',
             'min',
             'max',
-            'splitNumber',
             'clockwise',
             'showAxis',
             'axisWidth',
@@ -140,16 +139,38 @@ export default [
             'detailFmt',
             'detailCenter',
             'detailSize',
+            'detailColorAuto',
+            'detailColor',
             'detailFontWeight',
+        ],
+        compTypeFilter: compTypes_tb,
+    },
+    {
+        category: '刻度及分割线配置',
+        optionsFilter: [
+            'showAxisLabel',
+            'axisLabelSize',
+            'axisLabelStyle',
+            'axisLabelWeight',
+            'axisLabelFmt',
+            'axisLabelColorAuto',
+            'axisLabelColor',
             'showAxisTick',
             'axisTickType',
             'axisTickWidth',
             'axisTickLength',
             'axisTickSplitNum',
+            'splitNumber',
             'showSplitLine',
             'splitLineLength',
             'splitLineWidth',
             'splitLineType',
+        ],
+        compTypeFilter: ['GaugeChart'], //仪表盘特有
+    },
+    {
+        category: '指针配置',
+        optionsFilter: [
             'pointerLength',
             'pointerWidth',
             'pointerColorAuto',
@@ -159,7 +180,7 @@ export default [
             'pointerBorderWidth',
             'pointerBorderType',
         ],
-        compTypeFilter: compTypes_tb,
+        compTypeFilter: ['GaugeChart'], //仪表盘特有
     },
     {
         category: '其他配置',

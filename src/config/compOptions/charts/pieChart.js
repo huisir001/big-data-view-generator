@@ -2,17 +2,11 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-23 14:37:45
+ * @LastEditTime: 2021-01-04 10:44:34
  */
 import common from './common'
 export default {
-    title: '饼图',
-    titleSize: 16,
-    titleFontWeight: 'bold',
-    titleFontFamily: 'Microsoft YaHei',
-    titleColor: '#ffffff',
-    titlePosLeft: 128,
-    titlePosTop: 5,
+    title: '饼状图',
     legendPosLeft: 0,
     legendPosTop: 30,
     chartData: [

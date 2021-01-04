@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2020-12-30 16:58:27
+ * @LastEditTime: 2021-01-04 10:43:18
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -40,6 +40,14 @@ export default {
                 markLine,
                 markArea,
                 title,
+                titleSize,
+                titleFontWeight,
+                titleFontFamily,
+                titleColor,
+                titlePosLeft,
+                titlePosTop,
+                titlePosRight,
+                titlePosBottom,
                 showVisualMap,
                 visualMap,
                 left,
@@ -138,7 +146,20 @@ export default {
 
             //返回柱图配置项
             return {
-                title: { show: title && title.length > 0, text: title },
+                title: {
+                    show: title && title.length > 0,
+                    text: title,
+                    left: titlePosLeft,
+                    top: titlePosTop,
+                    right: titlePosRight,
+                    bottom: titlePosBottom,
+                    textStyle: {
+                        fontSize: titleSize,
+                        fontWeight: titleFontWeight,
+                        fontFamily: titleFontFamily,
+                        color: titleColor,
+                    },
+                },
                 tooltip: {
                     show: true,
                     // axisPointer: {

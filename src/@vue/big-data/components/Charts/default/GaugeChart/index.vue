@@ -2,7 +2,7 @@
  * @Description: 标准仪表盘（当前只支持单表盘单指针图表）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月19日 12:00:03
- * @LastEditTime: 2020-12-31 15:28:24
+ * @LastEditTime: 2021-01-04 11:39:11
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -59,11 +59,15 @@ export default {
                 detailCenter,
                 detailSize,
                 detailFontWeight,
+                detailColorAuto,
+                detailColor,
                 showAxisLabel,
                 axisLabelSize,
                 axisLabelStyle,
                 axisLabelWeight,
                 axisLabelFmt,
+                axisLabelColorAuto,
+                axisLabelColor,
                 axisTickType,
                 axisTickWidth,
                 showAxisTick,
@@ -89,7 +93,7 @@ export default {
             let mySeries = JSON.parse(JSON.stringify(series))
 
             //配置仪表盘格式
-            Object.assign(series, {
+            Object.assign(mySeries, {
                 type: 'gauge',
                 //仪表盘大小
                 radius,
@@ -110,6 +114,7 @@ export default {
                     textStyle: {
                         fontSize: detailSize,
                         fontWeight: detailFontWeight,
+                        color: detailColorAuto ? 'auto' : detailColor,
                     },
                 },
                 //仪表盘键名配置用于显示名称
@@ -194,6 +199,7 @@ export default {
                         fontSize: axisLabelSize,
                         fontStyle: axisLabelStyle,
                         fontWeight: axisLabelWeight,
+                        color: axisLabelColorAuto ? 'auto' : axisLabelColor,
                     },
                     formatter: axisLabelFmt,
                 },
@@ -233,7 +239,7 @@ export default {
                     trigger: 'item',
                     [tooltipFmt && 'formatter']: tooltipFmt,
                 },
-                series, //数据赋值
+                series: mySeries, //数据赋值
             }
         },
     },

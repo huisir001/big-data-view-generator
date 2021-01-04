@@ -2,7 +2,7 @@
  * @Description: 配置Option Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-31 17:36:06
+ * @LastEditTime: 2021-01-04 11:42:44
  */
 import { publicOpts } from './common'
 export default [
@@ -165,6 +165,16 @@ export default [
         ],
     },
     {
+        key: 'detailColorAuto',
+        compType: 'switch',
+        label: '数据值颜色自适应',
+    },
+    {
+        key: 'detailColor',
+        compType: 'color',
+        label: '自定义数据值颜色',
+    },
+    {
         key: 'showAxisLabel',
         compType: 'switch',
         label: '是否显示刻度值',
@@ -186,7 +196,7 @@ export default [
         ],
     },
     {
-        key: 'detailFontWeight',
+        key: 'axisLabelWeight',
         compType: 'select',
         label: '刻度值字体粗细',
         options: [
@@ -200,6 +210,16 @@ export default [
         key: 'axisLabelFmt',
         compType: 'input',
         label: '刻度值模板',
+    },
+    {
+        key: 'axisLabelColorAuto',
+        compType: 'switch',
+        label: '刻度值颜色自适应',
+    },
+    {
+        key: 'axisLabelColor',
+        compType: 'color',
+        label: '自定义刻度值颜色',
     },
     {
         key: 'showAxisTick',

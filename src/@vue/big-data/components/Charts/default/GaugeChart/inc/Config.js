@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-31 16:37:34
+ * @LastEditTime: 2021-01-04 11:40:24
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -57,11 +57,15 @@ class Config {
             detailCenter: Array, //数据值位置，可以为数字数组，也可以为百分比字符串
             detailSize: Number, //数据值字号
             detailFontWeight: String, //数据值字体粗细 bold/normal/bolder/lighter
+            detailColorAuto: Boolean, //数据值颜色自适应
+            detailColor: String, //自定义数据值颜色
             showAxisLabel: Boolean, //是否显示刻度值
             axisLabelSize: Number, //刻度值字号
             axisLabelStyle: String, //刻度值字体样式  normal/italic
             axisLabelWeight: String, //刻度值字体粗细 bold/normal/bolder/lighter
             axisLabelFmt: String, //刻度值模板，默认`{value}`
+            axisLabelColorAuto: Boolean, //刻度值颜色是否自适应
+            axisLabelColor: String, //自定义刻度值颜色
             showAxisTick: Boolean, //是否显示刻度线（非表盘分割线）
             axisTickType: String, //刻度线类型 solid/dotted/dashed
             axisTickWidth: Number, //刻度线线宽
@@ -112,6 +116,7 @@ class Config {
             },
             chartEvents: [],
             tooltipFmt: '{a} <br/>{b}: {c} ({d}%)',
+            title: '',
             titleSize: 10,
             titleFontWeight: 'bold', //标题粗细
             titleFontFamily: 'Microsoft YaHei', //标题字体
@@ -144,11 +149,15 @@ class Config {
             detailCenter: [0, 45],
             detailSize: 30,
             detailFontWeight: 'normal',
+            detailColorAuto: true,
+            detailColor: '#ffffff',
             showAxisLabel: true,
             axisLabelSize: 12,
             axisLabelStyle: 'normal',
             axisLabelWeight: 'normal',
             axisLabelFmt: '{value}',
+            axisLabelColorAuto: true,
+            axisLabelColor: '#ffffff',
             showAxisTick: true,
             axisTickType: 'solid',
             axisTickWidth: 1,

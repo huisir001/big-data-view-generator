@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2020-12-30 16:58:45
+ * @LastEditTime: 2021-01-04 10:42:44
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -48,6 +48,14 @@ export default {
                 shadowOffsetY,
                 opacity,
                 title,
+                titleSize,
+                titleFontWeight,
+                titleFontFamily,
+                titleColor,
+                titlePosLeft,
+                titlePosTop,
+                titlePosRight,
+                titlePosBottom,
                 showLegend,
                 left,
                 top,
@@ -119,7 +127,20 @@ export default {
 
             //返回线图配置项
             return {
-                title: { show: title && title.length > 0, text: title },
+                title: {
+                    show: title && title.length > 0,
+                    text: title,
+                    left: titlePosLeft,
+                    top: titlePosTop,
+                    right: titlePosRight,
+                    bottom: titlePosBottom,
+                    textStyle: {
+                        fontSize: titleSize,
+                        fontWeight: titleFontWeight,
+                        fontFamily: titleFontFamily,
+                        color: titleColor,
+                    },
+                },
                 tooltip: {
                     show: true,
                     // axisPointer: {

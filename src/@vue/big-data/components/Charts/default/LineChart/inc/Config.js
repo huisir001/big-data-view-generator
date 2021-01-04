@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2020-12-05 13:04:37
+ * @LastEditTime: 2021-01-04 10:38:05
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -23,6 +23,14 @@ class Config {
             //事件绑定，格式`[{event:"click",setQuery: false,query:{},callback:(e)=>{console.log(e)}},{event:"click",setQuery: true,query:"series",callback:(e)=>{console.log(e)}}]`,
             //其中的 query 可为 string 或者 Object，具体看echarts文档
             title: String, //标题，可有可无,若没有则为""
+            titleSize: Number, //标题字号
+            titleFontWeight: String, //标题粗细 bold/normal/bolder/lighter
+            titleFontFamily: String, //标题字体
+            titleColor: String, //标题颜色
+            titlePosLeft: [String, Number], //标题左边距,
+            titlePosTop: [String, Number], //标题上边距,
+            titlePosRight: [String, Number], //标题右边距,
+            titlePosBottom: [String, Number], //标题下边距,
             valEnding: String, //值的结尾，比如"%"，默认为空
             xName: String, //x轴名，可有可无
             yName: String, //y轴名，可有可无
@@ -101,6 +109,14 @@ class Config {
                 return res
             },
             chartEvents: [],
+            titleSize: 10,
+            titleFontWeight: 'bold', //标题粗细
+            titleFontFamily: 'Microsoft YaHei', //标题字体
+            titleColor: '#ffffff', //标题颜色
+            titlePosLeft: 'center',
+            titlePosTop: 'bottom',
+            titlePosRight: 'auto',
+            titlePosBottom: 'auto',
             valEnding: '',
             xName: '',
             yName: '',
