@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 16:56:34
+ * @LastEditTime: 2021-01-04 17:36:51
  */
 
 /* 共有 */
@@ -129,15 +129,23 @@ export const publicOpts = [
     },
     {
         key: 'titlePosLeft',
-        compType: 'numOrText',
+        compType: 'numOrSelect',
         label: '标题左侧偏移',
-        tooltip: '可以为像素值或位置字符串(left/center/right)',
+        options: [
+            { value: 'left', label: '居左' },
+            { value: 'center', label: '居中' },
+            { value: 'right', label: '居右' },
+        ],
     },
     {
         key: 'titlePosTop',
-        compType: 'numOrText',
+        compType: 'numOrSelect',
         label: '标题上侧偏移',
-        tooltip: '可以为像素值或位置字符串(top/center/bottom)',
+        options: [
+            { value: 'top', label: '居上' },
+            { value: 'center', label: '居中' },
+            { value: 'bottom', label: '居下' },
+        ],
     },
     /* 事件 */
     {
@@ -157,13 +165,23 @@ export const legendOpts = [
     },
     {
         key: 'legendPosLeft',
-        compType: 'number',
-        label: '图例左侧偏移/px',
+        compType: 'numOrSelect',
+        label: '图例左侧偏移',
+        options: [
+            { value: 'left', label: '居左' },
+            { value: 'center', label: '居中' },
+            { value: 'right', label: '居右' },
+        ],
     },
     {
         key: 'legendPosTop',
-        compType: 'number',
-        label: '图例上侧偏移/px',
+        compType: 'numOrSelect',
+        label: '图例上侧偏移',
+        options: [
+            { value: 'top', label: '居上' },
+            { value: 'center', label: '居中' },
+            { value: 'bottom', label: '居下' },
+        ],
     },
     {
         key: 'legendOrient',

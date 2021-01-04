@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 10:44:27
+ * @LastEditTime: 2021-01-04 17:43:16
  */
 export default {
     lastChangeTime: Date.now(),
@@ -19,6 +19,6 @@ export default {
     titleFontWeight: 'bold',
     titleFontFamily: 'Microsoft YaHei',
     titleColor: '#ffffff',
-    titlePosLeft: 120,
+    titlePosLeft: 'center',
     titlePosTop: 5,
 }

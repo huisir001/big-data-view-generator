@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-04 16:53:38
+ * @LastEditTime: 2021-01-04 17:46:43
 -->
 <template>
     <el-tooltip
@@ -79,10 +79,10 @@
                 ></el-input-number>
             </template>
 
-            <!-- 计数器和文本框切换 -->
-            <template v-if="formItemOption.compType == 'numOrText'">
+            <!-- 计数器和下拉框切换 -->
+            <template v-if="formItemOption.compType == 'numOrSelect'">
                 <el-input-number
-                    v-if="numOrTextInputType == 'number'"
+                    v-if="numOrSelectInputType == 'number'"
                     size="small"
                     v-model="formModelVal"
                     controls-position="right"
@@ -102,32 +102,35 @@
                     "
                     style="width: calc(100% - 38px)"
                 ></el-input-number>
-                <el-input
+                <el-select
                     v-else
-                    class="inputBox"
                     v-model="formModelVal"
-                    size="small"
-                    type="text"
-                    clearable
-                    :placeholder="formItemOption.placeholder || ''"
-                    resize="none"
+                    placeholder="请选择"
                     style="width: calc(100% - 38px)"
-                ></el-input>
+                >
+                    <el-option
+                        v-for="option in formItemOption.options"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                    >
+                    </el-option>
+                </el-select>
                 <el-tooltip
                     class="item"
                     effect="dark"
                     :content="
-                        numOrTextInputType == 'string'
+                        numOrSelectInputType == 'string'
                             ? '切换为计数器'
-                            : '切换为文本框'
+                            : '切换为选择框'
                     "
                     placement="top-end"
                 >
                     <i
-                        class="el-icon-sort numOrTextBtn"
+                        class="el-icon-sort numOrSelectBtn"
                         @click="
-                            numOrTextInputType =
-                                numOrTextInputType == 'string'
+                            numOrSelectInputType =
+                                numOrSelectInputType == 'string'
                                     ? 'number'
                                     : 'string'
                         "
@@ -566,19 +569,18 @@ export default {
             },
         },
         /* 数字框切换文本框类型 */
-        numOrTextInputType: {
+        numOrSelectInputType: {
             get() {
                 const { formItemOption, formModelVal } = this
-                if (formItemOption.compType == 'numOrText') {
+                if (formItemOption.compType == 'numOrSelect') {
                     return typeof formModelVal
                 }
             },
             set(value) {
                 if (value == 'string') {
-                    this.formModelVal = this.formModelVal.toString()
+                    this.formModelVal = this.formItemOption.options[0].value
                 } else {
-                    let curVal = parseInt(this.formModelVal)
-                    this.formModelVal = isNaN(curVal) ? 0 : curVal
+                    this.formModelVal = 0
                 }
             },
         },
@@ -785,7 +787,7 @@ export default {
     border-radius: 2px;
     height: 24px;
 }
-.numOrTextBtn {
+.numOrSelectBtn {
     padding: 8px 10px;
     background: #33434f;
     border-radius: 3px;
