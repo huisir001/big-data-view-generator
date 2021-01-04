@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-04 11:57:04
+ * @LastEditTime: 2021-01-04 15:56:07
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -128,8 +128,6 @@ export default [
             'min',
             'max',
             'clockwise',
-            'showAxis',
-            'axisWidth',
             'showDialTitle',
             'dialTitleCenter',
             'dialTitleSize',
@@ -146,7 +144,19 @@ export default [
         compTypeFilter: compTypes_tb,
     },
     {
-        category: '刻度及分割线配置',
+        category: '表盘配置',
+        optionsFilter: [
+            'showAxis',
+            'axisWidth',
+            'axisShadowBlur',
+            'axisShadowColor',
+            'axisShadowOffsetX',
+            'axisShadowOffsetY',
+        ],
+        compTypeFilter: ['GaugeChart'], //仪表盘特有
+    },
+    {
+        category: '刻度配置',
         optionsFilter: [
             'showAxisLabel',
             'axisLabelSize',
@@ -160,6 +170,12 @@ export default [
             'axisTickWidth',
             'axisTickLength',
             'axisTickSplitNum',
+        ],
+        compTypeFilter: ['GaugeChart'], //仪表盘特有
+    },
+    {
+        category: '分割线配置',
+        optionsFilter: [
             'splitNumber',
             'showSplitLine',
             'splitLineLength',
@@ -184,14 +200,7 @@ export default [
     },
     {
         category: '其他配置',
-        optionsFilter: [
-            'tooltipFmt',
-            'roseType',
-            'axisShadowBlur',
-            'axisShadowColor',
-            'axisShadowOffsetX',
-            'axisShadowOffsetY',
-        ],
+        optionsFilter: ['tooltipFmt', 'roseType'],
         compTypeFilter: compTypes_tb,
     },
     {

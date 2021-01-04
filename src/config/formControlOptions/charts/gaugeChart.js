@@ -2,7 +2,7 @@
  * @Description: 配置Option Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 15:38:27
+ * @LastEditTime: 2021-01-04 15:48:50
  */
 import { publicOpts } from './common'
 export default [
@@ -70,7 +70,6 @@ export default [
                 'axisShadowColor',
                 'axisShadowOffsetX',
                 'axisShadowOffsetY',
-                'colors',
             ],
         },
     },
