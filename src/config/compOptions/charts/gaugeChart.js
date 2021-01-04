@@ -2,7 +2,7 @@
  * @Description: 图表默认Options Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 11:40:54
+ * @LastEditTime: 2021-01-04 15:02:38
  */
 import common from './common'
 export default {
@@ -16,6 +16,7 @@ export default {
             },
         ],
     },
+    tooltipFmt: '{a} <br/>{b}: {c}%',
     title: '',
     radius: '100%',
     center: [50, 58],

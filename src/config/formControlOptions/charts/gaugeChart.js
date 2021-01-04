@@ -2,7 +2,7 @@
  * @Description: 配置Option Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 11:42:44
+ * @LastEditTime: 2021-01-04 15:38:27
  */
 import { publicOpts } from './common'
 export default [
@@ -58,10 +58,21 @@ export default [
         compType: 'switch',
         label: '顺时针',
     },
+    /* 表盘 */
     {
         key: 'showAxis',
         compType: 'switch',
         label: '表盘显隐',
+        displayItems: {
+            t: [
+                'axisWidth',
+                'axisShadowBlur',
+                'axisShadowColor',
+                'axisShadowOffsetX',
+                'axisShadowOffsetY',
+                'colors',
+            ],
+        },
     },
     {
         key: 'axisWidth',
@@ -79,7 +90,7 @@ export default [
     {
         key: 'axisShadowColor',
         compType: 'color',
-        label: '表盘阴影模色',
+        label: '表盘阴影色',
     },
     {
         key: 'axisShadowOffsetX',
@@ -98,10 +109,19 @@ export default [
         section: true,
         labelOnTop: true,
     },
+    /* 盘内标题 */
     {
         key: 'showDialTitle',
         compType: 'switch',
         label: '盘内标题显隐',
+        displayItems: {
+            t: [
+                'dialTitleCenter',
+                'dialTitleSize',
+                'dialTitleWeight',
+                'dialTitleColor',
+            ],
+        },
     },
     {
         key: 'dialTitleCenter',
@@ -131,10 +151,20 @@ export default [
         compType: 'color',
         label: '盘内标题颜色',
     },
+    /* 数据值 */
     {
         key: 'showDetail',
         compType: 'switch',
         label: '是否显示数据值',
+        displayItems: {
+            t: [
+                'detailFmt',
+                'detailCenter',
+                'detailSize',
+                'detailFontWeight',
+                'detailColorAuto',
+            ],
+        },
     },
     {
         key: 'detailFmt',
@@ -168,16 +198,30 @@ export default [
         key: 'detailColorAuto',
         compType: 'switch',
         label: '数据值颜色自适应',
+        displayItems: {
+            f: ['detailColor'],
+        },
     },
     {
         key: 'detailColor',
         compType: 'color',
         label: '自定义数据值颜色',
+        hide: true,
     },
+    /* 刻度值 */
     {
         key: 'showAxisLabel',
         compType: 'switch',
         label: '是否显示刻度值',
+        displayItems: {
+            t: [
+                'axisLabelSize',
+                'axisLabelStyle',
+                'axisLabelWeight',
+                'axisLabelFmt',
+                'axisLabelColorAuto',
+            ],
+        },
     },
     {
         key: 'axisLabelSize',
@@ -215,21 +259,34 @@ export default [
         key: 'axisLabelColorAuto',
         compType: 'switch',
         label: '刻度值颜色自适应',
+        displayItems: {
+            f: ['axisLabelColor'],
+        },
     },
     {
         key: 'axisLabelColor',
         compType: 'color',
         label: '自定义刻度值颜色',
+        hide: true,
     },
+    /* 刻度线 */
     {
         key: 'showAxisTick',
         compType: 'switch',
         label: '是否显示刻度线',
+        displayItems: {
+            t: [
+                'axisTickType',
+                'axisTickWidth',
+                'axisTickLength',
+                'axisTickSplitNum',
+            ],
+        },
     },
     {
         key: 'axisTickType',
         compType: 'select',
-        label: '刻度线类型',
+        label: '刻度线型',
         options: [
             { value: 'solid', label: '直线' },
             { value: 'dotted', label: '点线' },
@@ -239,14 +296,14 @@ export default [
     {
         key: 'axisTickWidth',
         compType: 'slider',
-        label: '刻度线线宽',
+        label: '刻度线宽',
         min: 0,
         max: 40,
     },
     {
         key: 'axisTickLength',
         compType: 'number',
-        label: '刻度线线长',
+        label: '刻度线长',
         min: 0,
     },
     {
@@ -256,10 +313,19 @@ export default [
         min: 0,
         max: 10,
     },
+    /* 分割线 */
     {
         key: 'showSplitLine',
         compType: 'switch',
         label: '表盘分割线显隐',
+        displayItems: {
+            t: [
+                'splitLineLength',
+                'splitLineWidth',
+                'splitLineType',
+                'axisTickSplitNum',
+            ],
+        },
     },
     {
         key: 'splitLineLength',
@@ -277,13 +343,14 @@ export default [
     {
         key: 'splitLineType',
         compType: 'select',
-        label: '表盘分割类型',
+        label: '表盘分割线类型',
         options: [
             { value: 'solid', label: '直线' },
             { value: 'dotted', label: '点线' },
             { value: 'dashed', label: '虚线' },
         ],
     },
+    /* 指针 */
     {
         key: 'pointerLength',
         compType: 'slider',
@@ -302,11 +369,15 @@ export default [
         key: 'pointerColorAuto',
         compType: 'switch',
         label: '指针颜色自适应',
+        displayItems: {
+            f: ['pointerColor'],
+        },
     },
     {
         key: 'pointerColor',
         compType: 'color',
         label: '自定义指针颜色',
+        hide: true,
     },
     {
         key: 'pointerOpacity',
