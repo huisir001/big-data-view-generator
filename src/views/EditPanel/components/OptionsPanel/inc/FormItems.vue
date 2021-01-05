@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-04 17:46:43
+ * @LastEditTime: 2021-01-05 17:36:40
 -->
 <template>
     <el-tooltip
@@ -296,6 +296,7 @@
                 <el-color-picker
                     v-model="formModelVal"
                     size="mini"
+                    show-alpha
                 ></el-color-picker>
             </template>
 
@@ -318,6 +319,7 @@
                                 <el-color-picker
                                     v-model="item.color"
                                     size="mini"
+                                    show-alpha
                                 ></el-color-picker>
                             </td>
                             <td v-if="formItemOption.section" width="180">
@@ -332,6 +334,7 @@
                                 <el-color-picker
                                     v-model="item.gdColor"
                                     size="mini"
+                                    show-alpha
                                 ></el-color-picker>
                             </td>
                             <td v-if="!formItemOption.section">
