@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-04 14:40:09
+ * @LastEditTime: 2021-01-06 16:21:14
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -44,6 +44,12 @@ class Config {
             legendPosRight: [String, Number], //图例右边距
             legendPosBottom: [String, Number], //图例下边距
             legendOrient: String, //图例布局 vertical/horizontal 默认horizontal
+            legendFontColor: String, //图例字体颜色
+            legendFontWeight: String, //图例字体粗细 bold/normal/bolder/lighter
+            legendFontSize: Number, //图例字号
+            legendItemWidth: Number, //图例图标宽
+            legendItemHeight: Number, //图例图标高
+            legendItemGap: Number, //图例项目间隔
             barWidth: [String, Number], //柱粗（可以是百分比`20%`或数字20）
             stack: [Array, Boolean], //是否堆叠，堆叠的项目有哪些，stack为true时所有柱子都堆叠在一柱上，且不考虑堆叠的类型名
             horizontal: Boolean, //是否横向，声明即横向
@@ -125,6 +131,12 @@ class Config {
             legendPosRight: 'auto',
             legendPosBottom: 'auto',
             legendOrient: 'horizontal',
+            legendFontColor: '#ddd',
+            legendFontWeight: 'normal',
+            legendFontSize: 10,
+            legendItemWidth: 18,
+            legendItemHeight: 12,
+            legendItemGap: 14,
             stack: false,
             label: false,
             horizontal: false,

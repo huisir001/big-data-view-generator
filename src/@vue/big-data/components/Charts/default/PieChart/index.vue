@@ -2,7 +2,7 @@
  * @Description: 标准饼图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-30 16:58:56
+ * @LastEditTime: 2021-01-06 16:26:49
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -46,6 +46,12 @@ export default {
                 legendPosRight,
                 legendPosBottom,
                 legendOrient,
+                legendFontColor,
+                legendFontWeight,
+                legendFontSize,
+                legendItemWidth,
+                legendItemHeight,
+                legendItemGap,
                 tooltipFmt,
                 selectedCats,
                 roseType,
@@ -173,6 +179,14 @@ export default {
                     right: legendPosRight,
                     bottom: legendPosBottom,
                     orient: legendOrient, //vertical/horizontal
+                    textStyle: {
+                        color: legendFontColor,
+                        fontWeight: legendFontWeight,
+                        fontSize: legendFontSize,
+                    },
+                    itemWidth: legendItemWidth,
+                    itemHeight: legendItemHeight,
+                    itemGap: legendItemGap,
                 },
                 [colors && 'color']: colors.map((item) => {
                     //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）

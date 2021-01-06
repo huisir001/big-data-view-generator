@@ -2,7 +2,7 @@
  * @Description: 配置Option 雷达图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 14:23:41
+ * @LastEditTime: 2021-01-06 15:44:15
  */
 import { publicOpts, legendOpts } from './common'
 export default [
@@ -217,7 +217,7 @@ export default [
         compType: 'switch',
         label: '显示指示器名称',
         displayItems: {
-            t: ['catNameFmt', 'catNameColor'],
+            t: ['catNameFmt', 'catNameColor', 'nameGap'],
         },
     },
     {
@@ -225,6 +225,13 @@ export default [
         compType: 'input',
         label: '指示器名称模板',
         tooltip: '字符串模板如：`{value}`',
+    },
+    {
+        key: 'catNameSize',
+        compType: 'slider',
+        label: '指示器名称字号',
+        min: 0,
+        max: 50,
     },
     {
         key: 'catNameColor',

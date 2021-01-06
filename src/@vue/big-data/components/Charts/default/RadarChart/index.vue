@@ -2,7 +2,7 @@
  * @Description: 标准雷达图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月31日 10:59:20
- * @LastEditTime: 2021-01-06 14:21:50
+ * @LastEditTime: 2021-01-06 16:19:43
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -40,6 +40,12 @@ export default {
                 legendPosRight,
                 legendPosBottom,
                 legendOrient,
+                legendFontColor,
+                legendFontWeight,
+                legendFontSize,
+                legendItemWidth,
+                legendItemHeight,
+                legendItemGap,
                 radius,
                 center,
                 max,
@@ -65,6 +71,7 @@ export default {
                 showCatName,
                 catNameFmt,
                 catNameColor,
+                catNameSize,
                 label,
                 labelPosition,
                 labelFmt,
@@ -111,6 +118,14 @@ export default {
                     right: legendPosRight,
                     bottom: legendPosBottom,
                     orient: legendOrient,
+                    textStyle: {
+                        color: legendFontColor,
+                        fontWeight: legendFontWeight,
+                        fontSize: legendFontSize,
+                    },
+                    itemWidth: legendItemWidth,
+                    itemHeight: legendItemHeight,
+                    itemGap: legendItemGap,
                 },
                 tooltip: {
                     //提示
@@ -119,7 +134,9 @@ export default {
                 },
                 radar: {
                     radius: radius,
-                    center: center,
+                    center: center.map((item) =>
+                        typeof item == 'number' ? `${item}%` : item
+                    ), //仪表盘位置,这里默认为百分比,
                     indicator: cats.map((item, index) => {
                         item = { name: item }
                         item.max =
@@ -160,6 +177,7 @@ export default {
                         formatter: catNameFmt, //'{value}'
                         textStyle: {
                             color: catNameColor,
+                            fontSize: catNameSize,
                         },
                     },
                     /* 指示器名称和指示器轴的距离。 */

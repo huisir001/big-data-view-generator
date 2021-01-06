@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-06 14:24:12
+ * @LastEditTime: 2021-01-06 16:32:07
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -64,6 +64,12 @@ export default [
             'legendPosLeft',
             'legendPosTop',
             'legendOrient',
+            'legendFontColor',
+            'legendFontWeight',
+            'legendFontSize',
+            'legendItemWidth',
+            'legendItemHeight',
+            'legendItemGap',
         ],
         compTypeFilter: compTypes_tb.filter((item) => item != 'GaugeChart'), //仪表盘不需要图例
     },
@@ -145,6 +151,7 @@ export default [
             'showCatName',
             'catNameFmt',
             'catNameColor',
+            'catNameSize',
             'nameGap',
         ],
         compTypeFilter: compTypes_tb,

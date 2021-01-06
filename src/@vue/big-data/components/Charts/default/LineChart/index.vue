@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2021-01-05 14:36:52
+ * @LastEditTime: 2021-01-06 16:25:05
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -62,6 +62,12 @@ export default {
                 legendPosRight,
                 legendPosBottom,
                 legendOrient,
+                legendFontColor,
+                legendFontWeight,
+                legendFontSize,
+                legendItemWidth,
+                legendItemHeight,
+                legendItemGap,
                 left,
                 top,
                 right,
@@ -159,6 +165,14 @@ export default {
                     right: legendPosRight,
                     bottom: legendPosBottom,
                     orient: legendOrient, //vertical/horizontal
+                    textStyle: {
+                        color: legendFontColor,
+                        fontWeight: legendFontWeight,
+                        fontSize: legendFontSize,
+                    },
+                    itemWidth: legendItemWidth,
+                    itemHeight: legendItemHeight,
+                    itemGap: legendItemGap,
                 },
                 [showVisualMap && 'visualMap']: visualMap, //视觉映射
                 grid: {

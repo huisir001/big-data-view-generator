@@ -2,7 +2,7 @@
  * @Description: 图表默认Options 雷达图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 15:18:28
+ * @LastEditTime: 2021-01-06 15:39:03
  */
 import common from './common'
 export default {
@@ -32,7 +32,7 @@ export default {
     legendPosTop: 'bottom',
     legendOrient: 'vertical',
     radius: '50%',
-    center: ['50%', '55%'],
+    center: [50, 55],
     max: 50000,
     min: 0,
     splitNumber: 4,
@@ -85,6 +85,7 @@ export default {
     showCatName: true,
     catNameFmt: '{value}',
     catNameColor: '#fff',
+    catNameSize: 10,
     nameGap: 10,
     colors: [
         {

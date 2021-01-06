@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-04 14:45:38
+ * @LastEditTime: 2021-01-06 16:25:44
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -44,6 +44,12 @@ class Config {
             legendPosRight: [String, Number], //图例右边距
             legendPosBottom: [String, Number], //图例下边距
             legendOrient: String, //图例布局 vertical/horizontal 默认horizontal
+            legendFontColor: String, //图例字体颜色
+            legendFontWeight: String, //图例字体粗细 bold/normal/bolder/lighter
+            legendFontSize: Number, //图例字号
+            legendItemWidth: Number, //图例图标宽
+            legendItemHeight: Number, //图例图标高
+            legendItemGap: Number, //图例项目间隔
             horizontal: Boolean, //是否横向，声明即横向
             showDataZoom: Boolean, //显示滚动条
             dataZoomAxis: String, //滚动条映射的数据轴这里4个值：`y0,y1,x0,x1`
@@ -132,6 +138,12 @@ class Config {
             legendPosRight: 'auto',
             legendPosBottom: 'auto',
             legendOrient: 'horizontal',
+            legendFontColor: '#ddd',
+            legendFontWeight: 'normal',
+            legendFontSize: 10,
+            legendItemWidth: 18,
+            legendItemHeight: 12,
+            legendItemGap: 14,
             areaFill: false,
             areaStyle: { type: 'default' },
             stack: false,

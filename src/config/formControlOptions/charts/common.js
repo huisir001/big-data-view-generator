@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 17:36:51
+ * @LastEditTime: 2021-01-06 16:33:54
  */
 
 /* 共有 */
@@ -162,6 +162,19 @@ export const legendOpts = [
         key: 'showLegend',
         compType: 'switch',
         label: '显示图例',
+        displayItems: {
+            t: [
+                'legendPosLeft',
+                'legendPosTop',
+                'legendOrient',
+                'legendFontColor',
+                'legendFontWeight',
+                'legendFontSize',
+                'legendItemWidth',
+                'legendItemHeight',
+                'legendItemGap',
+            ],
+        },
     },
     {
         key: 'legendPosLeft',
@@ -191,5 +204,49 @@ export const legendOpts = [
             { value: 'horizontal', label: '横排' },
             { value: 'vertical', label: '竖排' },
         ],
+    },
+    {
+        key: 'legendFontColor',
+        compType: 'color',
+        label: '图例字体颜色',
+    },
+    {
+        key: 'legendFontWeight',
+        compType: 'select',
+        label: '图例字体粗细',
+        options: [
+            { value: 'normal', label: '正常' },
+            { value: 'bold', label: '加粗' },
+            { value: 'bolder', label: '更粗' },
+            { value: 'lighter', label: '更细' },
+        ],
+    },
+    {
+        key: 'legendFontSize',
+        compType: 'slider',
+        label: '图例字号',
+        min: 0,
+        max: 50,
+    },
+    {
+        key: 'legendItemWidth',
+        compType: 'slider',
+        label: '图例图标宽度',
+        min: 0,
+        max: 50,
+    },
+    {
+        key: 'legendItemHeight',
+        compType: 'slider',
+        label: '图例图标高度',
+        min: 0,
+        max: 50,
+    },
+    {
+        key: 'legendItemGap',
+        compType: 'slider',
+        label: '图例各项间隔宽度',
+        min: 0,
+        max: 50,
     },
 ]

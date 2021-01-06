@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） RadarChart
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-06 14:22:24
+ * @LastEditTime: 2021-01-06 16:20:30
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -38,6 +38,12 @@ class Config {
             legendPosRight: [String, Number], //图例右边距
             legendPosBottom: [String, Number], //图例下边距
             legendOrient: String, //图例布局 vertical/horizontal 默认horizontal
+            legendFontColor: String, //图例字体颜色
+            legendFontWeight: String, //图例字体粗细 bold/normal/bolder/lighter
+            legendFontSize: Number, //图例字号
+            legendItemWidth: Number, //图例图标宽
+            legendItemHeight: Number, //图例图标高
+            legendItemGap: Number, //图例项目间隔
             radius: [String, Number], //雷达图大小，默认为60%，若为数字，则为像素尺寸
             center: Array, //雷达图位置，数组两个值分别为圆心的横向位置比和纵向位置比，默认为默认['50%', '55%']
             max: Number, //最大值
@@ -69,6 +75,7 @@ class Config {
             showCatName: Boolean, //显示指示器名称
             catNameFmt: String, //指示器名称模板'{value}'
             catNameColor: String, //指示器名称颜色
+            catNameSize: Number, //指示器名称字号
             nameGap: Number, //指示器名称和轴之间距离
         }
 
@@ -117,6 +124,12 @@ class Config {
             legendPosRight: 'auto',
             legendPosBottom: 'auto',
             legendOrient: 'vertical',
+            legendFontColor: '#ddd',
+            legendFontWeight: 'normal',
+            legendFontSize: 10,
+            legendItemWidth: 18,
+            legendItemHeight: 12,
+            legendItemGap: 14,
             radius: '50%',
             center: ['50%', '55%'],
             min: 0,
@@ -145,6 +158,7 @@ class Config {
             showCatName: true,
             catNameFmt: '{value}',
             catNameColor: '#fff',
+            catNameSize: 10,
             nameGap: 10,
         }
 
