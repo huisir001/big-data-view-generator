@@ -1,8 +1,8 @@
 <!--
- * @Description: 标准饼图
+ * @Description: 标准雷达图
  * @Autor: HuiSir<273250950@qq.com>
- * @Date: 2020-08-17 09:25:39
- * @LastEditTime: 2020-12-30 16:58:56
+ * @Date: 2020年8月31日 10:59:20
+ * @LastEditTime: 2021-01-06 14:21:50
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -13,7 +13,7 @@ import myChart from '../../../../mixins/myChart'
 import Config from './inc/Config'
 import echarts from 'echarts'
 export default {
-    name: 'PieChart',
+    name: 'RadarChart',
     mixins: [myChart],
     data() {
         return { Config }
@@ -33,118 +33,61 @@ export default {
                 titlePosTop,
                 titlePosRight,
                 titlePosBottom,
-                colors,
-                radius,
-                center,
-                label,
-                labelPosition,
-                labelFmt,
-                labelSize,
+                tooltipFmt,
                 showLegend,
                 legendPosLeft,
                 legendPosTop,
                 legendPosRight,
                 legendPosBottom,
                 legendOrient,
-                tooltipFmt,
-                selectedCats,
-                roseType,
-                labelLineLength,
-                selectedMode,
-                borderColor,
-                borderWidth,
+                radius,
+                center,
+                max,
+                min,
+                maxValOffset,
+                showAxisLabel,
+                axisLabelColor,
+                axisLabelSize,
+                splitNumber,
+                areaOpacity,
+                colors,
+                showAxisLine,
+                axisLineColor,
+                axisLineWidth,
+                axisLineType,
+                showSplitLine,
+                splitLineColor,
+                splitLineWidth,
+                splitLineType,
+                showSplitArea,
+                splitAreaColorAuto,
+                splitAreaColor,
+                showCatName,
+                catNameFmt,
+                catNameColor,
+                label,
+                labelPosition,
+                labelFmt,
+                labelSize,
+                radarType,
+                startAngle,
+                nameGap,
             } = this.myOptions
 
-            const series = useApiData ? dynamicData : chartData
+            const { cats, series } = useApiData ? dynamicData : chartData
 
             //使用字符串方式对对象进行内存复制（非引用）,以防止图层状态中的option数据易值
             let mySeries = JSON.parse(JSON.stringify(series))
-            //图例，需去重
-            let legends = []
 
-            //配置饼图格式
-            mySeries.forEach((item, index) => {
-                item.type = 'pie'
-                item.roseType = roseType //是否为南丁格尔玫瑰图及其格式
-                item.selectedMode = selectedMode //选中模式
-                item.label = {
-                    //数据标签
-                    show: label, //是否显示
-                    textStyle: {
-                        fontSize:
-                            labelSize instanceof Array
-                                ? labelSize[index]
-                                : labelSize,
-                    },
-                    position:
-                        labelPosition instanceof Array
-                            ? labelPosition[index]
-                            : labelPosition, //inside\outside
-                    [labelFmt && 'formatter']:
-                        labelFmt instanceof Array ? labelFmt[index] : labelFmt, //字符串模板
-                }
-                item.labelLine = {
-                    normal: {
-                        length: labelLineLength, //标线引出线长度,默认10
-                    },
-                }
-                item.itemStyle = {
-                    borderColor, //描边色
-                    borderWidth, //描边宽
-                    emphasis: {
-                        label: {
-                            //高亮显示标签
-                            show: true,
-                            textStyle: {
-                                fontSize:
-                                    (labelSize instanceof Array
-                                        ? labelSize[index]
-                                        : labelSize) + 5,
-                                fontWeight: 'bold',
-                            },
-                        },
-                    },
-                }
-                //饼图大小，考虑到嵌套饼图情况,这里只能嵌套一层
-                if (radius && radius instanceof Array) {
-                    let myRadius = JSON.parse(JSON.stringify(radius))
-                    myRadius = myRadius.map((item) =>
-                        typeof item == 'number' ? `${item}%` : item
-                    )
-                    if (myRadius.length == 1) {
-                        item.radius = myRadius[0]
-                    } else if (myRadius.length == 2) {
-                        item.radius = myRadius
-                    } else if (myRadius.length == 3 || myRadius.length == 4) {
-                        index == 0 && (item.radius = myRadius.slice(0, 2))
-                        index == 1 && (item.radius = myRadius.slice(2))
-                    }
-                    //设置内部饼图标签
-                    if (parseFloat(myRadius[1]) < parseFloat(myRadius[2])) {
-                        index == 0 && (item.label.position = 'inside')
-                    } else {
-                        index == 1 && (item.label.position = 'inside')
-                    }
-                } else {
-                    item.radius = radius || '50%'
-                }
-                //饼图位置
-                let myCenter = JSON.parse(JSON.stringify(center))
-                myCenter = myCenter.map((item) =>
-                    typeof item == 'number' ? `${item}%` : item
-                )
-                item.center = myCenter || ['50%', '50%']
-                //图例
-                legends = legends.concat(item.data.map((item) => item.name))
-                //默认选中的项目类型
-                item.data.forEach((child) => {
-                    selectedCats &&
-                        selectedCats.includes(child.name) &&
-                        (child.selected = true)
-                })
+            //所有数据 方便计算最大值
+            let allDatas = [],
+                legends = []
+            mySeries.forEach((item) => {
+                allDatas = allDatas.concat(item.value)
+                legends.push(item.name)
             })
 
-            //返回饼图配置项
+            //返回配置项
             return {
                 title: {
                     show: title && title.length > 0,
@@ -160,19 +103,115 @@ export default {
                         color: titleColor,
                     },
                 },
+                legend: {
+                    show: showLegend,
+                    data: legends,
+                    left: legendPosLeft,
+                    top: legendPosTop,
+                    right: legendPosRight,
+                    bottom: legendPosBottom,
+                    orient: legendOrient,
+                },
                 tooltip: {
                     //提示
                     trigger: 'item',
                     [tooltipFmt && 'formatter']: tooltipFmt,
                 },
-                legend: {
-                    show: showLegend,
-                    data: [...new Set(legends)], //去重
-                    left: legendPosLeft,
-                    top: legendPosTop,
-                    right: legendPosRight,
-                    bottom: legendPosBottom,
-                    orient: legendOrient, //vertical/horizontal
+                radar: {
+                    radius: radius,
+                    center: center,
+                    indicator: cats.map((item, index) => {
+                        item = { name: item }
+                        item.max =
+                            max || Math.max.apply(null, allDatas) + maxValOffset
+                        item.min = min || 0
+                        showAxisLabel &&
+                            index > 0 &&
+                            (item.axisLabel = { show: false }) //只显示一侧刻度
+                        return item
+                    }),
+                    /* 刻度值 */
+                    axisLabel: {
+                        show: showAxisLabel,
+                        color: axisLabelColor,
+                        fontSize: axisLabelSize,
+                    },
+                    /* 轴线 */
+                    axisLine: {
+                        show: showAxisLine,
+                        lineStyle: {
+                            color: axisLineColor,
+                            width: axisLineWidth,
+                            type: axisLineType,
+                        },
+                    },
+                    /* 分割线 */
+                    splitLine: {
+                        show: showSplitLine,
+                        lineStyle: {
+                            color: splitLineColor,
+                            width: splitLineWidth,
+                            type: splitLineType,
+                        },
+                    },
+                    /* 指示器名称 */
+                    name: {
+                        show: showCatName,
+                        formatter: catNameFmt, //'{value}'
+                        textStyle: {
+                            color: catNameColor,
+                        },
+                    },
+                    /* 指示器名称和指示器轴的距离。 */
+                    nameGap,
+                    /* 分隔区域 */
+                    splitArea: {
+                        show: showSplitArea,
+                        [splitAreaColorAuto || 'areaStyle']: {
+                            color: splitAreaColor.map((item) => {
+                                //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
+                                return item.isGradient
+                                    ? new echarts.graphic.LinearGradient(
+                                          0,
+                                          0,
+                                          1,
+                                          0,
+                                          [
+                                              {
+                                                  offset: item.gdScope[0],
+                                                  color:
+                                                      item.color ||
+                                                      'rgba(0,0,0,0)',
+                                              },
+                                              {
+                                                  offset: item.gdScope[1],
+                                                  color:
+                                                      item.gdColor ||
+                                                      'rgba(0,0,0,0)',
+                                              },
+                                          ]
+                                      )
+                                    : item.color
+                            }),
+                        },
+                    },
+                    shape: radarType, //底盘形状polygon、circle
+                    startAngle, //起始角度
+                    splitNumber, //分隔数
+                },
+                series: {
+                    //数据赋值
+                    type: 'radar',
+                    data: mySeries,
+                    areaStyle: {
+                        opacity: areaOpacity, //默认为0
+                    },
+                    label: {
+                        show: label,
+                        [labelPosition && 'position']: labelPosition,
+                        [labelFmt && 'formatter']: labelFmt,
+                        [labelSize && 'fontSize']: labelSize,
+                    },
                 },
                 [colors && 'color']: colors.map((item) => {
                     //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
@@ -189,7 +228,6 @@ export default {
                           ])
                         : item.color
                 }),
-                series: mySeries, //数据赋值
             }
         },
     },

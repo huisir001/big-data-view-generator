@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） RadarChart
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-05 18:11:37
+ * @LastEditTime: 2021-01-06 14:22:24
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -69,6 +69,7 @@ class Config {
             showCatName: Boolean, //显示指示器名称
             catNameFmt: String, //指示器名称模板'{value}'
             catNameColor: String, //指示器名称颜色
+            nameGap: Number, //指示器名称和轴之间距离
         }
 
         //类型验证
@@ -101,7 +102,7 @@ class Config {
                 return res
             },
             chartEvents: [],
-            tooltipFmt: '{a} <br/>{b}: {c} ({d}%)',
+            tooltipFmt: '',
             titleSize: 10,
             titleFontWeight: 'bold', //标题粗细
             titleFontFamily: 'Microsoft YaHei', //标题字体
@@ -111,18 +112,18 @@ class Config {
             titlePosRight: 'auto',
             titlePosBottom: 'auto',
             showLegend: true,
-            legendPosLeft: 'center',
+            legendPosLeft: 'right',
             legendPosTop: 'bottom',
             legendPosRight: 'auto',
             legendPosBottom: 'auto',
-            legendOrient: 'horizontal',
-            radius: '60%',
+            legendOrient: 'vertical',
+            radius: '50%',
             center: ['50%', '55%'],
             min: 0,
             maxValOffset: 10,
             splitNumber: 4,
             radarType: 'polygon',
-            startAngle: 0, //起始角度
+            startAngle: 90, //起始角度
             areaOpacity: 0,
             label: false,
             labelPosition: 'inside',
@@ -138,18 +139,13 @@ class Config {
             splitLineType: 'solid',
             showSplitArea: true,
             splitAreaColorAuto: true,
-            splitAreaColor: [
-                'rgba(255,255,255,.2)',
-                'rgba(255,255,255,.1)',
-                'rgba(255,255,255,.2)',
-                'rgba(255,255,255,.1)',
-            ],
             showAxisLabel: false,
             axisLabelColor: '#ffaa00',
             axisLabelSize: 10,
             showCatName: true,
             catNameFmt: '{value}',
-            catNameColor: '#333',
+            catNameColor: '#fff',
+            nameGap: 10,
         }
 
         this.options = Object.assign(this.defaultOptions, options)

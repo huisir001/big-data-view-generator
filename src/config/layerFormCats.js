@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-04 15:56:07
+ * @LastEditTime: 2021-01-06 14:24:12
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -140,6 +140,12 @@ export default [
             'detailColorAuto',
             'detailColor',
             'detailFontWeight',
+            'maxValOffset',
+            'areaOpacity',
+            'showCatName',
+            'catNameFmt',
+            'catNameColor',
+            'nameGap',
         ],
         compTypeFilter: compTypes_tb,
     },
@@ -171,7 +177,7 @@ export default [
             'axisTickLength',
             'axisTickSplitNum',
         ],
-        compTypeFilter: ['GaugeChart'], //仪表盘特有
+        compTypeFilter: ['GaugeChart', 'RadarChart'],
     },
     {
         category: '分割线配置',
@@ -182,7 +188,7 @@ export default [
             'splitLineWidth',
             'splitLineType',
         ],
-        compTypeFilter: ['GaugeChart'], //仪表盘特有
+        compTypeFilter: ['GaugeChart'],
     },
     {
         category: '指针配置',
@@ -197,6 +203,25 @@ export default [
             'pointerBorderType',
         ],
         compTypeFilter: ['GaugeChart'], //仪表盘特有
+    },
+    {
+        category: '底盘配置',
+        optionsFilter: [
+            'radarType',
+            'showAxisLine',
+            'axisLineColor',
+            'axisLineWidth',
+            'axisLineType',
+            'showSplitArea',
+            'splitAreaColorAuto',
+            'splitAreaColor',
+            'splitNumber',
+            'showSplitLine',
+            'splitLineWidth',
+            'splitLineType',
+            'splitLineColor',
+        ],
+        compTypeFilter: ['RadarChart'],
     },
     {
         category: '其他配置',
