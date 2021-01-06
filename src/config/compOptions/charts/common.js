@@ -2,9 +2,9 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 17:12:06
+ * @LastEditTime: 2021-01-06 17:57:08
  */
-export default {
+export const publicOpts = {
     lastChangeTime: Date.now(),
     /* 数据 */
     useApiData: false,
@@ -21,4 +21,14 @@ export default {
     titleColor: '#ffffff',
     titlePosLeft: 'center',
     titlePosTop: 5,
+}
+
+export const legendOpts = {
+    showLegend: true,
+    legendFontColor: '#ddd',
+    legendFontWeight: 'normal',
+    legendFontSize: 10,
+    legendItemWidth: 18,
+    legendItemHeight: 12,
+    legendItemGap: 8,
 }

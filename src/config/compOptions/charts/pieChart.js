@@ -2,21 +2,16 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 14:33:47
+ * @LastEditTime: 2021-01-06 18:00:20
  */
-import common from './common'
+import { publicOpts, legendOpts } from './common'
 export default {
+    ...publicOpts,
+    ...legendOpts,
     title: '饼状图',
-    showLegend: true,
     legendPosLeft: 0,
     legendPosTop: 30,
     legendOrient: 'vertical',
-    legendFontColor: '#ddd',
-    legendFontWeight: 'normal',
-    legendFontSize: 10,
-    legendItemWidth: 18,
-    legendItemHeight: 12,
-    legendItemGap: 8,
     chartData: [
         {
             name: '数量',
@@ -88,5 +83,4 @@ export default {
             gdScope: [0, 1],
         },
     ],
-    ...common,
 }

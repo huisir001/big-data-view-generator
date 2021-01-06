@@ -2,10 +2,12 @@
  * @Description: 图表默认Options 雷达图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 17:12:47
+ * @LastEditTime: 2021-01-06 18:03:23
  */
-import common from './common'
+import { publicOpts, legendOpts } from './common'
 export default {
+    ...publicOpts,
+    ...legendOpts,
     title: '雷达图',
     chartData: {
         cats: ['销售', '管理', '技术', '客服', '研发', '市场'],
@@ -21,22 +23,9 @@ export default {
         ],
     },
     tooltipFmt: '',
-    titleSize: 10,
-    titleFontWeight: 'bold',
-    titleFontFamily: 'Microsoft YaHei',
-    titleColor: '#ffffff',
-    titlePosLeft: 'center',
-    titlePosTop: 'bottom',
-    showLegend: true,
     legendPosLeft: 'right',
     legendPosTop: 'bottom',
     legendOrient: 'vertical',
-    legendFontColor: '#ddd',
-    legendFontWeight: 'normal',
-    legendFontSize: 10,
-    legendItemWidth: 18,
-    legendItemHeight: 12,
-    legendItemGap: 8,
     radius: '50%',
     center: [50, 55],
     max: 50000,
@@ -107,5 +96,4 @@ export default {
             gdScope: [0, 1],
         },
     ],
-    ...common,
 }

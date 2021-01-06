@@ -2,10 +2,12 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 17:12:15
+ * @LastEditTime: 2021-01-06 17:58:36
  */
-import common from './common'
+import { publicOpts, legendOpts } from './common'
 export default {
+    ...publicOpts,
+    ...legendOpts,
     title: '柱状图',
     chartData: {
         xAxis: ['郑丽', '于平', '龚娟', '杜强'],
@@ -21,16 +23,9 @@ export default {
     top: 68,
     right: 28,
     bottom: 28,
-    showLegend: true, //显示图例
     legendPosLeft: 98,
     legendPosTop: 35,
     legendOrient: 'horizontal',
-    legendFontColor: '#ddd',
-    legendFontWeight: 'normal',
-    legendFontSize: 10,
-    legendItemWidth: 18,
-    legendItemHeight: 12,
-    legendItemGap: 8,
     horizontal: false, //是否横向
     barWidth: 10,
     valEnding: '',
@@ -138,5 +133,4 @@ export default {
             ],
         ],
     },
-    ...common,
 }

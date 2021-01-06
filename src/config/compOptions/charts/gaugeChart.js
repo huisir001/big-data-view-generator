@@ -2,11 +2,11 @@
  * @Description: 图表默认Options Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 15:02:38
+ * @LastEditTime: 2021-01-06 17:59:10
  */
-import common from './common'
+import { publicOpts } from './common'
 export default {
-    ...common,
+    ...publicOpts,
     chartData: {
         name: '利润',
         data: [
