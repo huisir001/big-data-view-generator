@@ -11,6 +11,12 @@ export default {
     legendPosLeft: 0,
     legendPosTop: 30,
     legendOrient: 'vertical',
+    legendFontColor: '#ddd',
+    legendFontWeight: 'normal',
+    legendFontSize: 10,
+    legendItemWidth: 18,
+    legendItemHeight: 12,
+    legendItemGap: 8,
     chartData: [
         {
             name: '数量',

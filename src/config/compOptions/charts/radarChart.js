@@ -2,7 +2,7 @@
  * @Description: 图表默认Options 雷达图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 15:39:03
+ * @LastEditTime: 2021-01-06 17:12:47
  */
 import common from './common'
 export default {
@@ -31,6 +31,12 @@ export default {
     legendPosLeft: 'right',
     legendPosTop: 'bottom',
     legendOrient: 'vertical',
+    legendFontColor: '#ddd',
+    legendFontWeight: 'normal',
+    legendFontSize: 10,
+    legendItemWidth: 18,
+    legendItemHeight: 12,
+    legendItemGap: 8,
     radius: '50%',
     center: [50, 55],
     max: 50000,

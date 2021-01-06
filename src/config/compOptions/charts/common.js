@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 16:33:00
+ * @LastEditTime: 2021-01-06 17:12:06
  */
 export default {
     lastChangeTime: Date.now(),
@@ -21,10 +21,4 @@ export default {
     titleColor: '#ffffff',
     titlePosLeft: 'center',
     titlePosTop: 5,
-    legendFontColor: '#ddd',
-    legendFontWeight: 'normal',
-    legendFontSize: 10,
-    legendItemWidth: 18,
-    legendItemHeight: 12,
-    legendItemGap: 8,
 }

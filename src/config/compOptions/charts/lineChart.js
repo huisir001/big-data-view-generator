@@ -2,7 +2,7 @@
  * @Description: 图表默认Options - line
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-04 14:46:48
+ * @LastEditTime: 2021-01-06 17:12:35
  */
 import common from './common'
 export default {
@@ -26,6 +26,12 @@ export default {
     legendPosLeft: 98,
     legendPosTop: 35,
     legendOrient: 'horizontal',
+    legendFontColor: '#ddd',
+    legendFontWeight: 'normal',
+    legendFontSize: 10,
+    legendItemWidth: 18,
+    legendItemHeight: 12,
+    legendItemGap: 8,
     horizontal: false, //是否横向
     stack: false, //是否堆叠
     label: false,
