@@ -2,7 +2,7 @@
  * @Description: 图表默认Options 雷达图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 14:24:41
+ * @LastEditTime: 2021-01-06 15:18:28
  */
 import common from './common'
 export default {
@@ -95,12 +95,6 @@ export default {
         },
         {
             color: '#27bf99',
-            gdColor: null,
-            isGradient: false,
-            gdScope: [0, 1],
-        },
-        {
-            color: '#00BCD4',
             gdColor: null,
             isGradient: false,
             gdScope: [0, 1],
