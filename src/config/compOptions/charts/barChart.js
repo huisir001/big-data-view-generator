@@ -2,7 +2,7 @@
  * @Description: 图表默认Options
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 17:58:36
+ * @LastEditTime: 2021-01-07 11:36:59
  */
 import { publicOpts, legendOpts } from './common'
 export default {
@@ -19,6 +19,7 @@ export default {
     },
     xName: '姓名',
     yName: '数量',
+    tooltipFmt: '{a} <br/>{b}: {c}',
     left: 40,
     top: 68,
     right: 28,

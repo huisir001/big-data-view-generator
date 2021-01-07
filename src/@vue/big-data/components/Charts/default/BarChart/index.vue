@@ -2,7 +2,7 @@
  * @Description: 标准柱图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 10:56:39
- * @LastEditTime: 2021-01-06 16:21:58
+ * @LastEditTime: 2021-01-07 11:33:33
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -50,6 +50,7 @@ export default {
                 titlePosBottom,
                 showVisualMap,
                 visualMap,
+                tooltipFmt,
                 left,
                 top,
                 right,
@@ -173,9 +174,7 @@ export default {
                 },
                 tooltip: {
                     show: true,
-                    // axisPointer: {
-                    //     type: 'shadow',  //鼠标移入显示阴影背景
-                    // },
+                    [tooltipFmt && 'formatter']: tooltipFmt,
                 },
                 legend: {
                     show: showLegend,

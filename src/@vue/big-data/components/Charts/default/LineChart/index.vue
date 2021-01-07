@@ -2,7 +2,7 @@
  * @Description: 标准折线图单数据轴（不支持多轴，不支持时间轴）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-12 10:56:39
- * @LastEditTime: 2021-01-06 16:25:05
+ * @LastEditTime: 2021-01-07 15:57:26
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -68,6 +68,7 @@ export default {
                 legendItemWidth,
                 legendItemHeight,
                 legendItemGap,
+                tooltipFmt,
                 left,
                 top,
                 right,
@@ -154,9 +155,7 @@ export default {
                 },
                 tooltip: {
                     show: true,
-                    // axisPointer: {
-                    //     type: 'shadow',  //鼠标移入显示阴影背景
-                    // },
+                    [tooltipFmt && 'formatter']: tooltipFmt,
                 },
                 legend: {
                     show: showLegend,
@@ -263,14 +262,14 @@ export default {
                         [dataZoomAxis[0] == 'y' && 'width']: 12,
                         [dataZoomAxis[0] == 'x' && 'xAxisIndex']: [
                             Number(dataZoomAxis[1]),
-                        ], //滚动数据源，这里默认第一条X轴，若为横向柱图可设置y轴。若为多轴图，可调整下标
+                        ], //滚动数据源，这里默认第一条X轴，若为横向线图可设置y轴。若为多轴图，可调整下标
                         [dataZoomAxis[0] == 'y' && 'yAxisIndex']: [
                             Number(dataZoomAxis[1]),
                         ],
                         [dataZoomSplitType == 'index' &&
-                        'minValueSpan']: dataZoomSplitScope[0], //最小显示到的柱子下标，1为2单位柱子
+                        'minValueSpan']: dataZoomSplitScope[0], //最小显示到的折线下标，1为2单位折线
                         [dataZoomSplitType == 'index' &&
-                        'maxValueSpan']: dataZoomSplitScope[1], //最大显示到的柱子下标，9为10单位柱子
+                        'maxValueSpan']: dataZoomSplitScope[1], //最大显示到的折线下标，9为10单位折线
                         [dataZoomSplitType == 'ratio' &&
                         'start']: dataZoomSplitScope[0], //滚动条默认显示当前轴数据范围，start为起始值，end为结束值，这里为百分比，最小0，最大100
                         [dataZoomSplitType == 'ratio' &&

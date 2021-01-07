@@ -2,7 +2,7 @@
  * @Description: 标准仪表盘（当前只支持单表盘单指针图表）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月19日 12:00:03
- * @LastEditTime: 2021-01-04 11:39:11
+ * @LastEditTime: 2021-01-07 16:41:40
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -137,34 +137,7 @@ export default {
                         shadowOffsetX: axisShadowOffsetX, //表盘阴影横向偏移
                         shadowOffsetY: axisShadowOffsetY, //表盘阴影纵向偏移
                         color: colors
-                            ? colors.map((item) => {
-                                  //渐变色（横向渐变0,0,1,0、纵向渐变0, 1, 0, 0）
-                                  return item.isGradient
-                                      ? [
-                                            item.per,
-                                            new echarts.graphic.LinearGradient(
-                                                0,
-                                                0,
-                                                1,
-                                                0,
-                                                [
-                                                    {
-                                                        offset: item.gdScope[0],
-                                                        color:
-                                                            item.color ||
-                                                            'rgba(0,0,0,0)',
-                                                    },
-                                                    {
-                                                        offset: item.gdScope[1],
-                                                        color:
-                                                            item.gdColor ||
-                                                            'rgba(0,0,0,0)',
-                                                    },
-                                                ]
-                                            ),
-                                        ]
-                                      : [item.per, item.color]
-                              })
+                            ? colors.map((item) => [item.per, item.color])
                             : [
                                   //默认分段及颜色自定义
                                   [0.2, '#27bf99'],

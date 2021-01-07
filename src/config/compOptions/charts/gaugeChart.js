@@ -2,7 +2,7 @@
  * @Description: 图表默认Options Gauge
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 17:59:10
+ * @LastEditTime: 2021-01-07 16:40:53
  */
 import { publicOpts } from './common'
 export default {

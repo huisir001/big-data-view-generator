@@ -1,8 +1,8 @@
 /*
- * @Description: 参数配置（工厂模式） line
+ * @Description: 参数配置（工厂模式） 浮点图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-07 11:37:41
+ * @LastEditTime: 2021-01-07 18:09:00
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -31,13 +31,6 @@ class Config {
             titlePosTop: [String, Number], //标题上边距,
             titlePosRight: [String, Number], //标题右边距,
             titlePosBottom: [String, Number], //标题下边距,
-            valEnding: String, //值的结尾，比如"%"，默认为空
-            xName: String, //x轴名，可有可无
-            yName: String, //y轴名，可有可无
-            left: [String, Number], //左边距
-            top: [String, Number], //上边距
-            right: [String, Number], //右边距
-            bottom: [String, Number], //下边距
             showLegend: Boolean, //显示图例
             legendPosLeft: [String, Number], //图例左边距,可以为数字像素，也可以为字符串`center/left/right`
             legendPosTop: [String, Number], //图例上边距,可以为数字像素，也可以为字符串`center/top/bottom`
@@ -50,29 +43,34 @@ class Config {
             legendItemWidth: Number, //图例图标宽
             legendItemHeight: Number, //图例图标高
             legendItemGap: Number, //图例项目间隔
+            left: [String, Number], //左边距
+            top: [String, Number], //上边距
+            right: [String, Number], //右边距
+            bottom: [String, Number], //下边距
             tooltipFmt: String, //提示框的字符串模板，如`{a} <br/>{b} : {c} ({d}%)`
-            horizontal: Boolean, //是否横向，声明即横向
+            showxAxisLabel: Boolean, //显示X轴标签
+            showyAxisLabel: Boolean, //显示Y轴标签
+            showxAxisLine: Boolean, //显示x轴线
+            showxSplitLine: Boolean, //显示x轴分隔线
+            showyAxisLine: Boolean, //显示y轴线
+            showySplitLine: Boolean, //显示y轴分割线
+            limitxAxisMinVal: Boolean, //限制x轴最小刻度
+            limitxAxisMaxVal: Boolean, //限制x轴最大刻度
+            limityAxisMinVal: Boolean, //限制y轴最小刻度
+            limityAxisMaxVal: Boolean, //限制y轴最大刻度
+            xAxisScopeMin: Number, //x轴刻度范围最小值
+            xAxisScopeMax: Number, //x轴刻度范围最大值
+            yAxisScopeMin: Number, //y轴刻度范围最小值
+            yAxisScopeMax: Number, //y轴刻度范围最大值
+            xAxisLabelFmt: String, //x轴标签模板
+            yAxisLabelFmt: String, //y轴标签模板
+            xName: String, //x轴名，可有可无
+            yName: String, //y轴名，可有可无
+            colors: Array, //自定义颜色
             showDataZoom: Boolean, //显示滚动条
             dataZoomAxis: String, //滚动条映射的数据轴这里4个值：`y0,y1,x0,x1`
             dataZoomSplitType: String, //滚动条数据分隔方式:`index`按下标，`ratio`按比例
             dataZoomSplitScope: Array, //滚动条数据分隔范围，是2个值的数组：`[0,9]`,`[0,50]`,dataZoomSplitType按比例的话，范围为0-100，按下标的话，范围为0-(值的长度-1)
-            boundaryGap: Boolean, //数据轴上是否取点，申明即不取，默认取点
-            smooth: Boolean, //是否平滑曲线（申明即平滑）
-            areaFill: Boolean, //区域是否填充-面积图
-            areaStyle: Object, //区域填充自定义
-            stack: Boolean, //是否堆积-此参数配合areaStyle实现堆积面积图，单用此参无意义（申明即堆积）
-            colors: Array, //自定义颜色
-            label: Boolean, //是否显示数据标签
-            labelPosition: String, //数据标签位置,默认在上方
-            limitAxisMinVal: Boolean, //是否限制刻度最小值
-            limitAxisMaxVal: Boolean, //是否限制刻度最大值
-            axisScopeMin: Number, //数据轴刻度范围最小值
-            axisScopeMax: Number, //数据轴刻度范围最大值
-            showValAxisLabel: Boolean, //显示数据轴刻度
-            showValAxisLine: Boolean, //显示数据轴轴线
-            showValSplitLine: Boolean, //显示数据轴刻度分隔线
-            showCatAxisLine: Boolean, //显示类型轴轴线
-            catLabelRowLen: Number, //类型轴类型名称每行字数（多少字换行）
             showVisualMap: Boolean, //是否显示视觉映射
             visualMap: Object, //视觉映射（改变某些数据区域的颜色）
             showMarkPoint: Boolean, //显示标注
@@ -81,14 +79,19 @@ class Config {
             markPoint: Object, //气泡标注
             markLine: Object, //标线
             markArea: Object, //标域
-            lineWidth: Number, //线宽
-            lineType: String, //线型 solid\dashed\dotted
-            showShadow: Boolean, //显示阴影
-            shadowBlur: Number, //线条阴影模糊尺寸
-            shadowColor: String, //阴影色
-            shadowOffsetX: Number, //阴影水平偏移
-            shadowOffsetY: Number, //阴影垂直偏移
-            opacity: Number, //透明度 0-1
+            label: Boolean, //是否显示数据标签
+            labelPosition: String, //标签位置，支持：top/left/right/bottom/inside/insideLeft/insideRight/insideTop/insideBottom/insideTopLeft/insideBottomLeft/insideTopRight/insideBottomRight
+            labelFmt: String, //数据标注的字符串模板，如`{a} {b}: {c}`，
+            labelSize: Number, //标注字号
+            symbolSize: Number, //浮点尺寸 默认10
+            isBubble: Boolean, //是否为气泡图
+            minBubbleSize: Number, //气泡最小半径
+            maxBubbleSize: Number, //气泡最大半径
+            symbolType: [String, Array], //浮点标志类型
+            shadowBlur: Number, //浮点阴影模糊尺寸
+            shadowColor: String, //浮点阴影色
+            shadowOffsetX: Number, //浮点阴影水平偏移
+            shadowOffsetY: Number, //浮点阴影垂直偏移
         }
 
         //类型验证
@@ -130,10 +133,6 @@ class Config {
             titlePosRight: 'auto',
             titlePosBottom: 'auto',
             tooltipFmt: '',
-            valEnding: '',
-            xName: '',
-            yName: '',
-            labelPosition: 'top',
             showLegend: true,
             legendPosLeft: 'center',
             legendPosTop: 35,
@@ -146,22 +145,22 @@ class Config {
             legendItemWidth: 18,
             legendItemHeight: 12,
             legendItemGap: 14,
-            areaFill: false,
-            areaStyle: { type: 'default' },
-            stack: false,
-            label: false,
-            horizontal: false,
-            limitAxisMinVal: false,
-            limitAxisMaxVal: false,
-            axisScopeMin: 0,
-            axisScopeMax: 100,
-            boundaryGap: false,
-            smooth: false,
-            showValAxisLabel: true,
-            showValAxisLine: true,
-            showValSplitLine: true,
-            showCatAxisLine: true,
-            catLabelRowLen: 4,
+            showxAxisLabel: true,
+            showyAxisLabel: true,
+            showxAxisLine: true,
+            showxSplitLine: true,
+            showyAxisLine: true,
+            showySplitLine: true,
+            limitxAxisMinVal: false,
+            limitxAxisMaxVal: false,
+            limityAxisMinVal: false,
+            limityAxisMaxVal: false,
+            xAxisScopeMin: 0,
+            yAxisScopeMin: 0,
+            xAxisLabelFmt: '{value}',
+            yAxisLabelFmt: '{value}',
+            xName: '',
+            yName: '',
             showDataZoom: false,
             dataZoomAxis: 'x0',
             dataZoomSplitType: 'index',
@@ -170,10 +169,19 @@ class Config {
             showMarkPoint: false,
             showMarkLine: false,
             showMarkArea: false,
-            lineWidth: 2,
-            lineType: 'solid',
-            opacity: 1,
-            showShadow: false,
+            label: false,
+            labelPosition: 'top',
+            labelFmt: '{c}',
+            labelSize: 10,
+            symbolSize: 10,
+            isBubble: false,
+            minBubbleSize: 3,
+            maxBubbleSize: 15,
+            symbolType: '',
+            shadowBlur: 15,
+            shadowColor: 'rgba(255, 255, 255, 0.5)',
+            shadowOffsetX: 3,
+            shadowOffsetY: 5,
         }
 
         this.options = Object.assign(this.defaultOptions, options)

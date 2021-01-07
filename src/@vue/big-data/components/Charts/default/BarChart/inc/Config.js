@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-06 16:21:14
+ * @LastEditTime: 2021-01-07 11:36:15
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -31,6 +31,7 @@ class Config {
             titlePosTop: [String, Number], //标题上边距,
             titlePosRight: [String, Number], //标题右边距,
             titlePosBottom: [String, Number], //标题下边距,
+            tooltipFmt: String, //提示框的字符串模板，如`{a} <br/>{b} : {c} ({d}%)`
             valEnding: String, //值的结尾，比如"%"，默认为空
             xName: String, //x轴名，可有可无
             yName: String, //y轴名，可有可无
@@ -119,6 +120,7 @@ class Config {
             titlePosTop: 'bottom',
             titlePosRight: 'auto',
             titlePosBottom: 'auto',
+            tooltipFmt: '{a} <br/>{b}: {c}',
             valEnding: '',
             xName: '',
             yName: '',
