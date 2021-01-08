@@ -2,7 +2,7 @@
  * @Description: 图表默认Options - scatterChart
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-08 18:05:54
+ * @LastEditTime: 2021-01-08 18:10:09
  */
 import { publicOpts, legendOpts } from './common'
 export default {
@@ -156,27 +156,27 @@ export default {
         },
     ],
     visualMap: {
-        top: 10,
+        top: 0,
         right: 0,
         pieces: [
             {
-                lte: 150,
+                lte: 30,
             },
             {
-                gt: 150,
-                lte: 160,
+                gt: 30,
+                lte: 50,
             },
             {
-                gt: 160,
-                lte: 170,
+                gt: 50,
+                lte: 70,
             },
             {
-                gt: 170,
-                lte: 180,
+                gt: 70,
+                lte: 90,
             },
             {
-                gt: 180,
-                lte: 190,
+                gt: 90,
+                lte: 110,
             },
         ],
     },
