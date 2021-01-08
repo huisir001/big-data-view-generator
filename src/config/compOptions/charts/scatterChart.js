@@ -2,7 +2,7 @@
  * @Description: 图表默认Options - scatterChart
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-08 17:11:35
+ * @LastEditTime: 2021-01-08 18:05:54
  */
 import { publicOpts, legendOpts } from './common'
 export default {
@@ -66,7 +66,7 @@ export default {
     legendPosLeft: 98,
     legendPosTop: 35,
     legendOrient: 'horizontal',
-    xName: '身高/cm',
+    xName: '身高',
     yName: '体重/kg',
     showxAxisLabel: true,
     showyAxisLabel: true,
@@ -82,8 +82,6 @@ export default {
     yAxisScopeMin: 0,
     xAxisLabelFmt: '{value}',
     yAxisLabelFmt: '{value}',
-    xName: '',
-    yName: '',
     showDataZoom: false,
     dataZoomAxis: 'x0',
     dataZoomSplitType: 'index',

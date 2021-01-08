@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） 浮点图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-08 10:52:06
+ * @LastEditTime: 2021-01-08 18:04:18
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -160,8 +160,6 @@ class Config {
             yAxisScopeMin: 0,
             xAxisLabelFmt: '{value}',
             yAxisLabelFmt: '{value}',
-            xName: '',
-            yName: '',
             showDataZoom: false,
             dataZoomAxis: 'x0',
             dataZoomSplitType: 'index',
