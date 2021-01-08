@@ -2,7 +2,7 @@
  * @Description: 配置Option ScatterChart
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-08 17:36:01
+ * @LastEditTime: 2021-01-08 17:55:16
  */
 import { publicOpts, legendOpts, backGauge } from './common'
 export default [
@@ -321,17 +321,10 @@ export default [
         options: [
             { value: 'circle', label: '圆' },
             { value: 'rectangle', label: '矩形' },
-            { value: 'heart', label: '心形' },
-            { value: 'droplet', label: '水滴' },
             { value: 'pin', label: '标注' },
             { value: 'arrow', label: '箭头' },
-            { value: 'star', label: '五角星' },
             { value: 'diamond', label: '菱形' },
             { value: 'triangle', label: '三角形' },
-            { value: 'emptyCircle', label: '空心圆' },
-            { value: 'emptyRectangle', label: '空心矩形' },
-            { value: 'emptyTriangle', label: '空心三角' },
-            { value: 'emptyDiamond', label: '空心菱形' },
         ],
         labelOnTop: true,
     },
