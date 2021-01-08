@@ -2,7 +2,7 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2021-01-06 11:17:55
+ * @LastEditTime: 2021-01-08 17:12:10
  */
 import {
     coBarChart,
@@ -10,6 +10,7 @@ import {
     coPieChart,
     coGaugeChart,
     coRadarChart,
+    coScatterChart,
 } from './compOptions/charts'
 import {
     fcoBarChart,
@@ -17,6 +18,7 @@ import {
     fcoPieChart,
     fcoGaugeChart,
     fcoRadarChart,
+    fcoScatterChart,
 } from './formControlOptions/charts'
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
@@ -65,8 +67,8 @@ export default [
                 title: '散点图',
                 type: 'ScatterChart',
                 pic: require('@/assets/img/compList/scatter.png'),
-                compOptions: coBarChart,
-                formControlOptions: fcoBarChart,
+                compOptions: coScatterChart,
+                formControlOptions: fcoScatterChart,
             },
             {
                 title: '柱线双Y轴',

@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-06 16:33:54
+ * @LastEditTime: 2021-01-08 10:11:27
  */
 
 /* 共有 */
@@ -248,5 +248,37 @@ export const legendOpts = [
         label: '图例各项间隔宽度',
         min: 0,
         max: 50,
+    },
+]
+
+/* 边距 */
+export const backGauge = [
+    {
+        key: 'left',
+        compType: 'slider',
+        label: '左边距',
+        min: 0,
+        max: 200,
+    },
+    {
+        key: 'top',
+        compType: 'slider',
+        label: '上边距',
+        min: 0,
+        max: 200,
+    },
+    {
+        key: 'right',
+        compType: 'slider',
+        label: '右边距',
+        min: 0,
+        max: 200,
+    },
+    {
+        key: 'bottom',
+        compType: 'slider',
+        label: '下边距',
+        min: 0,
+        max: 200,
     },
 ]

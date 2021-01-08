@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-05 17:36:40
+ * @LastEditTime: 2021-01-08 15:38:38
 -->
 <template>
     <el-tooltip
@@ -239,6 +239,57 @@
                         index < 2 ? 0 : 2
                     }%;`"
                 ></el-input>
+            </template>
+
+            <!-- 下拉框数组增删组件 -->
+            <template v-if="formItemOption.compType == 'selectArrayModifier'">
+                <table class="formItemTable selectArray">
+                    <thead>
+                        <tr>
+                            <th>下标</th>
+                            <th>数组项</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(_, index) in formModelVal" :key="index">
+                            <td width="60">{{ index }}</td>
+                            <td>
+                                <el-select
+                                    size="small"
+                                    v-model="formModelVal[index]"
+                                    placeholder="请选择"
+                                >
+                                    <el-option
+                                        v-for="option in formItemOption.options"
+                                        :key="option.value"
+                                        :label="option.label"
+                                        :value="option.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                            </td>
+                            <td width="70">
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="delSelectArray(index)"
+                                    >删除</el-button
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <el-button
+                                    size="mini"
+                                    type="primary"
+                                    @click="addSelectArray"
+                                    >+ 新增</el-button
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </template>
 
             <!-- 滑块 -->
@@ -695,12 +746,20 @@ export default {
         deleteColor(index) {
             this.formModelVal.splice(index, 1)
         },
-        //新增数组对象
+        //新增数字数组对象
         addNumberArray() {
             this.formModelVal.push(80)
         },
-        //删除数组对象
+        //删除数字数组对象
         delNumberArray(index) {
+            this.formModelVal.splice(index, 1)
+        },
+        //新增下拉选数组对象
+        addSelectArray() {
+            this.formModelVal.push('')
+        },
+        //删除下拉选数组对象
+        delSelectArray(index) {
             this.formModelVal.splice(index, 1)
         },
         //新增事件
@@ -849,7 +908,8 @@ export default {
             width: calc(100% - 20px);
             margin-left: 10px;
         }
-        &.numberArray {
+        &.numberArray,
+        &.selectArray {
             td,
             th {
                 padding: 5px;

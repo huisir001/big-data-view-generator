@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-06 17:09:48
+ * @LastEditTime: 2021-01-08 17:32:00
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -89,6 +89,22 @@ export default [
             'limitAxisMaxVal',
             'axisScopeMin',
             'axisScopeMax',
+            'showxAxisLabel',
+            'xAxisLabelFmt',
+            'showyAxisLabel',
+            'yAxisLabelFmt',
+            'showxAxisLine',
+            'showyAxisLine',
+            'showxSplitLine',
+            'showySplitLine',
+            'limitxAxisMinVal',
+            'limitxAxisMaxVal',
+            'limityAxisMinVal',
+            'limityAxisMaxVal',
+            'xAxisScopeMin',
+            'xAxisScopeMax',
+            'yAxisScopeMin',
+            'yAxisScopeMax',
         ],
         compTypeFilter: ['BarChart', 'LineChart', 'ScatterChart', 'TwoYAxis'],
     },
@@ -153,6 +169,11 @@ export default [
             'catNameColor',
             'catNameSize',
             'nameGap',
+            'isBubble',
+            'minBubbleSize',
+            'maxBubbleSize',
+            'symbolSize',
+            'symbolType',
         ],
         compTypeFilter: compTypes_tb,
     },

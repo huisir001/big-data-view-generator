@@ -2,7 +2,7 @@
  * @Description: 参数配置（工厂模式） 浮点图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-27 10:08:27
- * @LastEditTime: 2021-01-07 18:09:00
+ * @LastEditTime: 2021-01-08 10:52:06
  */
 
 import { ObjVerify } from '../../../../../utils/myUtils'
@@ -88,6 +88,7 @@ class Config {
             minBubbleSize: Number, //气泡最小半径
             maxBubbleSize: Number, //气泡最大半径
             symbolType: [String, Array], //浮点标志类型
+            showShadow: Boolean, //显示浮点阴影
             shadowBlur: Number, //浮点阴影模糊尺寸
             shadowColor: String, //浮点阴影色
             shadowOffsetX: Number, //浮点阴影水平偏移
@@ -178,6 +179,7 @@ class Config {
             minBubbleSize: 3,
             maxBubbleSize: 15,
             symbolType: '',
+            showShadow: false,
             shadowBlur: 15,
             shadowColor: 'rgba(255, 255, 255, 0.5)',
             shadowOffsetX: 3,

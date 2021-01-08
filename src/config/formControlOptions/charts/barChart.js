@@ -2,12 +2,13 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-31 16:37:55
+ * @LastEditTime: 2021-01-08 10:13:36
  */
-import { publicOpts, legendOpts } from './common'
+import { publicOpts, legendOpts, backGauge } from './common'
 export default [
     ...publicOpts,
     ...legendOpts,
+    ...backGauge,
     {
         key: 'label',
         compType: 'switch',
@@ -20,34 +21,6 @@ export default [
         key: 'valEnding',
         compType: 'input',
         label: '刻度后缀',
-    },
-    {
-        key: 'left',
-        compType: 'slider',
-        label: '左边距',
-        min: 0,
-        max: 200,
-    },
-    {
-        key: 'top',
-        compType: 'slider',
-        label: '上边距',
-        min: 0,
-        max: 200,
-    },
-    {
-        key: 'right',
-        compType: 'slider',
-        label: '右边距',
-        min: 0,
-        max: 200,
-    },
-    {
-        key: 'bottom',
-        compType: 'slider',
-        label: '下边距',
-        min: 0,
-        max: 200,
     },
     {
         key: 'barWidth',

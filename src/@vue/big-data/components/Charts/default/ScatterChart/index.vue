@@ -2,7 +2,7 @@
  * @Description: 标准散点图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年8月31日 16:59:34
- * @LastEditTime: 2021-01-07 17:51:03
+ * @LastEditTime: 2021-01-08 17:50:19
 -->
 <template>
     <div style="width: 100%; height: 100%"></div>
@@ -90,6 +90,7 @@ export default {
                 minBubbleSize,
                 maxBubbleSize,
                 symbolType,
+                showShadow,
                 shadowBlur,
                 shadowColor,
                 shadowOffsetX,
@@ -112,7 +113,9 @@ export default {
                 item.symbolSize = isBubble
                     ? (value) => {
                           let radius =
-                              ((value[2] - 0) * (maxBubbleSize - 3)) / 100 +
+                              ((value[value.length - 1] - 0) *
+                                  (maxBubbleSize - 3)) /
+                                  100 +
                               minBubbleSize
                           return Math.max(Math.round(radius), 1) || 1
                       }
@@ -126,12 +129,13 @@ export default {
                     : symbolType[index] || 'circle'
 
                 //浮点阴影
-                item.itemStyle = {
-                    shadowBlur,
-                    shadowColor,
-                    shadowOffsetX,
-                    shadowOffsetY,
-                }
+                showShadow &&
+                    (item.itemStyle = {
+                        shadowBlur,
+                        shadowColor,
+                        shadowOffsetX,
+                        shadowOffsetY,
+                    })
 
                 //数据标签
                 item.label = {
