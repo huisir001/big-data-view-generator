@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2020-12-04 15:22:39
+ * @LastEditTime: 2021-01-11 16:36:13
 -->
 <template>
     <div class="layerOptionsBox">
@@ -49,7 +49,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import FormItems from './inc/FormItems' //图层配置栏-表单项组件
 import layerFormCats from '@/config/layerFormCats'
-import { debounce } from '@/utils/myUtils'
+// import { debounce } from '@/utils/myUtils'
 const { mapGetters } = createNamespacedHelpers('layer')
 export default {
     name: 'LayerOptions',

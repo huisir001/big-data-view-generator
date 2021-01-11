@@ -2,7 +2,7 @@
  * @Description: 图表默认Options - scatterChart
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-08 18:10:09
+ * @LastEditTime: 2021-01-11 09:45:10
  */
 import { publicOpts, legendOpts } from './common'
 export default {

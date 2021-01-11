@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-08 17:32:00
+ * @LastEditTime: 2021-01-11 11:27:55
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -25,7 +25,7 @@ compList.forEach((item) => {
 
 export default [
     {
-        category: '图层配置',
+        category: '图层属性',
         optionsFilter: ['name', 'pos', 'width', 'height'],
         compTypeFilter: allCompType,
     },
