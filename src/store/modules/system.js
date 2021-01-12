@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-01-12 10:29:46
+ * @LastEditTime: 2021-01-12 18:19:40
  */
 export default {
     namespaced: true,
@@ -13,12 +13,10 @@ export default {
             bgColor: 'rgba(30, 144, 255, 1)',
             useBgImage: false,
             showGrid: false,
-            bgImage: '',
-            router: '',
+            bgImage: 'http://localhost:8080/assets/img/bg.30ac61bb.jpg',
         },
         asideShow: true, //侧边栏开关
         optionPanelShow: true, //配置栏开关
-        screenSize: [1920, 1080], //视图层尺寸(默认1920*1080)
         blueprintPos: [60, 60], //视图层位置(左上顶点left,top)
         blueprintScale: 1, //视图层缩放
         platformPos: [0, 0], //工作台位置

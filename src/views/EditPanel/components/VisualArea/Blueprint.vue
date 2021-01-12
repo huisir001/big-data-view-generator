@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-27 10:38:03
+ * @LastEditTime: 2021-01-12 18:46:40
 -->
 <template>
     <div
@@ -92,7 +92,7 @@ export default {
     },
     computed: {
         ...mapStateSystem([
-            'screenSize',
+            'pageOptions',
             'blueprintPos',
             'blueprintScale',
             'curkeydownCodes',
@@ -101,14 +101,20 @@ export default {
         ...mapStateLayer(['layers']), //图层信息,已选定图层
         ...mapGettersLayer(['activeLayers', 'layerString']), //选定图层、layer string
         blueprintStyle() {
-            const { screenSize, blueprintPos, blueprintScale } = this
+            const { pageOptions, blueprintPos, blueprintScale } = this
             return {
-                width: screenSize[0] + 'px',
-                height: screenSize[1] + 'px',
+                width: pageOptions.screenSize[0] + 'px',
+                height: pageOptions.screenSize[1] + 'px',
                 left: blueprintPos[0] + 'px',
                 top: blueprintPos[1] + 'px',
                 transform: `scale(${blueprintScale})`,
-                // backgroundImage: 'url(assets/img/bg.jpg)',
+                backgroundImage:
+                    pageOptions.showGrid || !pageOptions.useBgImage
+                        ? 'none'
+                        : `url(${pageOptions.bgImage})`,
+                backgroundColor: pageOptions.showGrid
+                    ? 'transparent'
+                    : pageOptions.bgColor,
             }
         },
     },
@@ -439,7 +445,6 @@ export default {
 <style lang="scss" scoped>
 .blueprint {
     position: absolute;
-    background-image: url(../../../../assets/img/bg.jpg);
     background-position: center top;
     background-size: cover;
     background-repeat: no-repeat;

@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2020-12-23 12:06:38
+ * @LastEditTime: 2021-01-12 17:03:22
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -45,6 +45,9 @@ import {
     Loading,
     Divider,
     Tooltip,
+    Image,
+    Dialog,
+    Upload,
 } from 'element-ui'
 
 //导入组件
@@ -82,6 +85,9 @@ Vue.use(Container)
     .use(ButtonGroup)
     .use(Divider)
     .use(Tooltip)
+    .use(Image)
+    .use(Dialog)
+    .use(Upload)
     .use(Loading.directive) //指令方式加载loading(在组件上使用v-loading)
 //.use(Message)
 //.use(MessageBox)

@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-12 11:59:47
+ * @LastEditTime: 2021-01-12 18:39:27
 -->
 <template>
     <el-tooltip
@@ -329,6 +329,34 @@
                 </el-switch>
             </template>
 
+            <!-- 图片选择器 -->
+            <template v-if="formItemOption.compType == 'image'">
+                <div @click="imageDialogVisible = true">
+                    <el-image
+                        style="
+                            width: 100%;
+                            height: 125px;
+                            background: #33434f;
+                            border-radius: 3px;
+                        "
+                        fit="contain"
+                        :src="formModelVal"
+                    ></el-image>
+                    <!-- 图库选择弹窗 -->
+                    <el-dialog
+                        title="背景图库"
+                        :append-to-body="true"
+                        :visible.sync="imageDialogVisible"
+                        width="60%"
+                    >
+                        <Gallery
+                            :type="formItemOption.galleryType"
+                            @handleSelect="imageSelect"
+                        ></Gallery>
+                    </el-dialog>
+                </div>
+            </template>
+
             <!-- 下拉选 -->
             <template v-if="formItemOption.compType == 'select'">
                 <el-select v-model="formModelVal" placeholder="请选择">
@@ -518,11 +546,16 @@
     </el-tooltip>
 </template>
 <script>
+import Gallery from './Gallery'
 export default {
     name: 'FormItems',
     props: ['optionKey', 'formItemOption', 'activeLayer', 'pageOptions'],
+    components: {
+        Gallery,
+    },
     data() {
         return {
+            imageDialogVisible: false,
             events: [
                 'click',
                 'dblclick',
@@ -784,6 +817,11 @@ export default {
         //删除下拉选数组对象
         delSelectArray(index) {
             this.formModelVal.splice(index, 1)
+        },
+        //图片选择
+        imageSelect(picUrl) {
+            this.formModelVal = picUrl
+            this.imageDialogVisible = false
         },
         //新增事件
         addEvent() {

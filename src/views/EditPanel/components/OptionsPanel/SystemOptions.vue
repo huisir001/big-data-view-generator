@@ -2,7 +2,7 @@
  * @Description: 系统配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:25:50
- * @LastEditTime: 2021-01-12 10:35:01
+ * @LastEditTime: 2021-01-12 15:16:13
 -->
 <template>
     <div class="systemOptionsBox">
@@ -62,46 +62,44 @@ export default {
         }
     },
     watch: {
-        // pageOptionsStr(val, oldVal) {
-        //     let newLayer = val ? JSON.parse(val) : [],
-        //         oldLayer = oldVal ? JSON.parse(oldVal) : [],
-        //         curLayer = newLayer[0],
-        //         oldCurLayer = oldLayer[0]
+        pageOptionsStr(val, oldVal) {
+            let newPageOptions = val ? JSON.parse(val) : {},
+                oldPageOptions = oldVal ? JSON.parse(oldVal) : {}
 
-        //     if (!curLayer) {
-        //         return
-        //     }
+            if (!val) {
+                return
+            }
 
-        //     /* 控制数据配置表单项显隐 */
-        //     if (curLayer.compOptions) {
-        //         curLayer.formControlOptions.forEach((item) => {
-        //             if (
-        //                 item.compType == 'switch' &&
-        //                 item.displayItems &&
-        //                 curLayer.compOptions[item.key] ==
-        //                     !oldCurLayer.compOptions[item.key]
-        //             ) {
-        //                 curLayer.formControlOptions.forEach((optionItem) => {
-        //                     if (
-        //                         item.displayItems.t &&
-        //                         item.displayItems.t.includes(optionItem.key)
-        //                     ) {
-        //                         optionItem.hide = !curLayer.compOptions[
-        //                             item.key
-        //                         ]
-        //                     }
-        //                     if (
-        //                         item.displayItems.f &&
-        //                         item.displayItems.f.includes(optionItem.key)
-        //                     ) {
-        //                         optionItem.hide = curLayer.compOptions[item.key]
-        //                     }
-        //                 })
-        //                 this.$store.commit('layer/setLayer', curLayer)
-        //             }
-        //         })
-        //     }
-        // },
+            /* 控制数据配置表单项显隐 */
+            if (this.curCollapseOptions.length > 0) {
+                this.curCollapseOptions.forEach((item) => {
+                    if (
+                        item.compType == 'switch' &&
+                        item.displayItems &&
+                        newPageOptions[item.key] == !oldPageOptions[item.key]
+                    ) {
+                        this.curCollapseOptions.forEach((optionItem) => {
+                            if (
+                                item.displayItems.t &&
+                                item.displayItems.t.includes(optionItem.key)
+                            ) {
+                                optionItem.hide = !newPageOptions[item.key]
+                            }
+                            if (
+                                item.displayItems.f &&
+                                item.displayItems.f.includes(optionItem.key)
+                            ) {
+                                optionItem.hide = newPageOptions[item.key]
+                            }
+                        })
+                        this.$store.commit(
+                            'system/setPageOptions',
+                            newPageOptions
+                        )
+                    }
+                })
+            }
+        },
         formCatsFilter() {
             this.collapseLoading = true
             this.cpActiveName = 0

@@ -34,6 +34,16 @@ $input-bg: #33434f;
     padding: 0;
 }
 
+//dialog弹窗
+.el-dialog__body {
+    padding: 8px 20px;
+}
+
+//上传
+.el-upload--picture-card {
+    margin-bottom: 13px;
+}
+
 //抽屉中表单样式
 .el-form-item__label {
     color: #fff;

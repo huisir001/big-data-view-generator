@@ -2,7 +2,7 @@
  * @Description: 配置项面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 10:55:08
- * @LastEditTime: 2021-01-12 10:36:47
+ * @LastEditTime: 2021-01-12 14:31:44
 -->
 <template>
     <el-drawer
@@ -13,11 +13,7 @@
         :show-close="false"
         :visible.sync="$store.state.system.optionPanelShow"
     >
-        <el-tabs
-            v-model="optionTabAcName"
-            @tab-click="optionTabClick"
-            :stretch="true"
-        >
+        <el-tabs v-model="optionTabAcName" :stretch="true">
             <el-tab-pane
                 v-if="activeLayers.length == 1"
                 label="图层配置"
@@ -55,11 +51,6 @@ export default {
             set(value) {
                 return value
             },
-        },
-    },
-    methods: {
-        optionTabClick() {
-            console.log(2)
         },
     },
 }

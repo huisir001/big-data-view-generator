@@ -2,7 +2,7 @@
  * @Description: 可视区
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-22 17:24:55
+ * @LastEditTime: 2021-01-12 18:18:01
 -->
 <template>
     <!-- 可视区域 -->
@@ -10,13 +10,17 @@
         <!-- 刻度尺 -->
         <Ruler />
         <!-- 工作台 -->
-        <div class="platform"
-             :style="`width:${platformSize[0]}px;height:${platformSize[1]}px;left:${platformPos[0]}px;top:${platformPos[1]}px`">
+        <div
+            class="platform"
+            :style="`width:${platformSize[0]}px;height:${platformSize[1]}px;left:${platformPos[0]}px;top:${platformPos[1]}px`"
+        >
             <!-- 视图面板层 -->
             <Blueprint />
             <!-- 缩略图层 -->
-            <Thumbnail :visualAreaSize="[width,height]"
-                       :platformSize="platformSize" />
+            <Thumbnail
+                :visualAreaSize="[width, height]"
+                :platformSize="platformSize"
+            />
             <!-- 配置项侧栏 -->
             <slot name="options"></slot>
         </div>
@@ -39,12 +43,12 @@ export default {
         Thumbnail,
     },
     computed: {
-        ...mapState(['screenSize', 'platformPos', 'curkeydownCodes']),
+        ...mapState(['pageOptions', 'platformPos', 'curkeydownCodes']),
         //工作台尺寸
         platformSize() {
-            let { width, height, screenSize } = this
-            let myWidth = screenSize[0] * 1.5 + 360,
-                myHeight = screenSize[1] * 1.5 + 230
+            let { width, height, pageOptions } = this
+            let myWidth = pageOptions.screenSize[0] * 1.5 + 360,
+                myHeight = pageOptions.screenSize[1] * 1.5 + 230
             return [myWidth, myHeight]
         },
     },

@@ -2,15 +2,15 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2020-11-24 15:42:47
+ * @LastEditTime: 2021-01-12 18:19:19
 -->
 <template>
     <div class="container">
         <div
             class="preview"
             :style="{
-                width: screenSize[0] + 'px',
-                height: screenSize[1] + 'px',
+                width: pageOptions.screenSize[0] + 'px',
+                height: pageOptions.screenSize[1] + 'px',
                 transform,
             }"
         >
@@ -47,7 +47,7 @@ export default {
         }
     },
     computed: {
-        ...mapStateSystem(['screenSize']), //系统信息
+        ...mapStateSystem(['pageOptions']), //系统信息
     },
     methods: {
         afterAutoResizeMixinInit() {
@@ -59,8 +59,8 @@ export default {
             //计算缩放比例
             const { clientWidth, clientHeight } = document.body
             const scale = Math.min.apply(null, [
-                clientWidth / this.screenSize[0],
-                clientHeight / this.screenSize[1],
+                clientWidth / this.pageOptions.screenSize[0],
+                clientHeight / this.pageOptions.screenSize[1],
             ])
             this.transform = `scale(${scale}) translate(-50%,-50%)`
         },

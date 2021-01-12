@@ -2,41 +2,48 @@
  * @Description: 缩略图/导览图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2020-11-06 11:45:11
+ * @LastEditTime: 2021-01-12 18:18:37
 -->
 <template>
-    <div class="thumbnail"
-         :style="thumbnailStyle">
+    <div class="thumbnail" :style="thumbnailStyle">
         <!-- 按钮 -->
         <div class="btn-group">
-            <i class="el-icon-sort"
-               title="窗口推拉"
-               @click="isMin=!isMin"></i>
-            <i class="el-icon-zoom-in"
-               title="放大"
-               @click="setBlueprintScale(.1)"></i>
-            <i class="el-icon-zoom-out"
-               title="缩小"
-               @click="setBlueprintScale(-.1)"></i>
-            <i class="el-icon-refresh-left"
-               title="还原"
-               @click="setBlueprintScale(0)"></i>
+            <i
+                class="el-icon-sort"
+                title="窗口推拉"
+                @click="isMin = !isMin"
+            ></i>
+            <i
+                class="el-icon-zoom-in"
+                title="放大"
+                @click="setBlueprintScale(0.1)"
+            ></i>
+            <i
+                class="el-icon-zoom-out"
+                title="缩小"
+                @click="setBlueprintScale(-0.1)"
+            ></i>
+            <i
+                class="el-icon-refresh-left"
+                title="还原"
+                @click="setBlueprintScale(0)"
+            ></i>
         </div>
         <!-- 操作面板区 -->
-        <div class="viewBox"
-             :style="viewBoxStyle"></div>
+        <div class="viewBox" :style="viewBoxStyle"></div>
         <!-- 缩放比例 -->
-        <div class="scaleTxt">{{parseInt(blueprintScale*100)}}%</div>
+        <div class="scaleTxt">{{ parseInt(blueprintScale * 100) }}%</div>
         <!-- 悬浮快用于点击事件 -->
-        <div class="floatBox"
-             @click="floatBoxClick"></div>
+        <div class="floatBox" @click="floatBoxClick"></div>
         <!-- 滑块 -->
-        <div class="slider"
-             :style="sliderStyle"
-             @mousemove="sliderMove"
-             @mousedown="sliderDown"
-             @mouseup="sliderDown"
-             @mouseleave="sliderLeave"></div>
+        <div
+            class="slider"
+            :style="sliderStyle"
+            @mousemove="sliderMove"
+            @mousedown="sliderDown"
+            @mouseup="sliderDown"
+            @mouseleave="sliderLeave"
+        ></div>
     </div>
 </template>
 
@@ -56,7 +63,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'screenSize',
+            'pageOptions',
             'blueprintPos',
             'blueprintScale',
             'optionPanelShow',
@@ -64,10 +71,10 @@ export default {
         ]),
         //操作区域实际尺寸
         blueprintSize() {
-            const { screenSize, blueprintScale } = this
+            const { pageOptions, blueprintScale } = this
             return [
-                screenSize[0] * blueprintScale,
-                screenSize[1] * blueprintScale,
+                pageOptions.screenSize[0] * blueprintScale,
+                pageOptions.screenSize[1] * blueprintScale,
             ]
         },
         //缩略图缩略倍数

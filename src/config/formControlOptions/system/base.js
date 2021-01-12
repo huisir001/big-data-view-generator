@@ -2,18 +2,13 @@
  * @Description: 页面基础配置项（画布）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-11 14:49:25
- * @LastEditTime: 2021-01-12 12:00:56
+ * @LastEditTime: 2021-01-12 16:54:53
  */
 export default [
     {
         key: 'title',
         label: '页面名称',
         compType: 'input',
-    },
-    {
-        key: 'router',
-        compType: 'input',
-        label: '路由地址',
     },
     {
         key: 'screenSize',
@@ -38,6 +33,7 @@ export default [
         key: 'bgImage',
         compType: 'image',
         label: '背景图片',
+        galleryType: 'page',
         hide: true,
     },
     {

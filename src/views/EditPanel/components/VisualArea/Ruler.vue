@@ -2,29 +2,35 @@
  * @Description: 刻度尺
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:16:49
- * @LastEditTime: 2020-09-22 10:36:51
+ * @LastEditTime: 2021-01-12 18:18:21
 -->
 <template>
     <div class="ruler">
         <!-- x刻度尺 -->
-        <div class="ruler-top"
-             :style="rulerTopStyle">
+        <div class="ruler-top" :style="rulerTopStyle">
             <!-- 60像素刻度线 -->
-            <div v-for="(_,i) in parseInt(screenSize[0]*blueprintScale/60+1)"
-                 :key="i"
-                 class="l">
-                <span>{{parseInt(i*60/blueprintScale)}}</span>
+            <div
+                v-for="(_, i) in parseInt(
+                    (pageOptions.screenSize[0] * blueprintScale) / 60 + 1
+                )"
+                :key="i"
+                class="l"
+            >
+                <span>{{ parseInt((i * 60) / blueprintScale) }}</span>
                 <!-- 均分10份 -->
                 <div class="s"></div>
             </div>
         </div>
         <!-- y刻度尺 -->
-        <div class="ruler-left"
-             :style="rulerLeftStyle">
-            <div v-for="(_,i) in parseInt(screenSize[1]*blueprintScale/60+1)"
-                 :key="i"
-                 class="l">
-                <span>{{parseInt(i*60/blueprintScale)}}</span>
+        <div class="ruler-left" :style="rulerLeftStyle">
+            <div
+                v-for="(_, i) in parseInt(
+                    (pageOptions.screenSize[1] * blueprintScale) / 60 + 1
+                )"
+                :key="i"
+                class="l"
+            >
+                <span>{{ parseInt((i * 60) / blueprintScale) }}</span>
                 <div class="s"></div>
             </div>
         </div>
@@ -39,7 +45,7 @@ export default {
         return {}
     },
     computed: {
-        ...mapState(['screenSize', 'platformPos', 'blueprintScale']),
+        ...mapState(['pageOptions', 'platformPos', 'blueprintScale']),
         //上标尺样式
         rulerTopStyle() {
             return {
