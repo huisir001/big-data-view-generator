@@ -2,7 +2,7 @@
  * @Description: 页面基础配置项（画布）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-11 14:49:25
- * @LastEditTime: 2021-01-11 17:27:10
+ * @LastEditTime: 2021-01-12 12:00:56
  */
 export default [
     {
@@ -19,6 +19,7 @@ export default [
         key: 'screenSize',
         label: '画布尺寸',
         compType: 'numberArray',
+        min: 0,
     },
     {
         key: 'bgColor',

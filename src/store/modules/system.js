@@ -2,19 +2,18 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-01-11 18:14:57
+ * @LastEditTime: 2021-01-12 10:29:46
  */
 export default {
     namespaced: true,
     state: {
-        title: '大数据视图生成器', //标题
         pageOptions: {
-            title: '大数据页面_aaaa',
+            title: '大数据页面设计',
             screenSize: [1920, 1080],
             bgColor: 'rgba(30, 144, 255, 1)',
             useBgImage: false,
-            bgImage: '',
             showGrid: false,
+            bgImage: '',
             router: '',
         },
         asideShow: true, //侧边栏开关
@@ -38,6 +37,9 @@ export default {
         },
     },
     mutations: {
+        setPageOptions(state, data) {
+            Object.assign(state.pageOptions, data)
+        },
         setAsideShow(state) {
             state.asideShow = !state.asideShow
         },
@@ -120,5 +122,7 @@ export default {
             }
         },
     },
-    getters: {},
+    getters: {
+        pageOptionsStr: (state) => JSON.stringify(state.pageOptions),
+    },
 }

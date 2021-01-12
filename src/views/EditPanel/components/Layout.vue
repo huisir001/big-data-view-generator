@@ -2,30 +2,30 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2020-09-25 18:25:10
+ * @LastEditTime: 2021-01-12 09:57:54
 -->
 <template>
     <el-container>
-        <el-aside :class="`aside ${asideShow || 'hide'}`"
-                  width="245px">
-            <h1>{{title}}</h1>
+        <el-aside :class="`aside ${asideShow || 'hide'}`" width="245px">
+            <h1 :title="pageOptions.title">
+                {{ pageOptions.title }}
+            </h1>
             <!-- 侧边栏 -->
-            <el-tabs v-model="asideTabAcName"
-                     @tab-click="asideTabClick"
-                     :stretch="true">
-                <el-tab-pane label="可用组件"
-                             name="comp">
+            <el-tabs
+                v-model="asideTabAcName"
+                @tab-click="asideTabClick"
+                :stretch="true"
+            >
+                <el-tab-pane label="可用组件" name="comp">
                     <slot name="compLibrary"></slot>
                 </el-tab-pane>
-                <el-tab-pane label="图层管理"
-                             name="layer">
+                <el-tab-pane label="图层管理" name="layer">
                     <slot name="layerList"></slot>
                 </el-tab-pane>
             </el-tabs>
         </el-aside>
         <el-container class="content">
-            <el-header class="head-box"
-                       height="50px">
+            <el-header class="head-box" height="50px">
                 <!-- 顶栏 -->
                 <slot name="head"></slot>
             </el-header>
@@ -50,7 +50,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['title', 'asideShow']),
+        ...mapState(['pageOptions', 'asideShow']),
     },
     methods: {
         asideTabClick() {
@@ -79,10 +79,15 @@ $header-height: 50px;
     }
     h1 {
         margin: 0;
-        padding: 0 15px;
-        font-size: 20px;
+        padding: 0 14px 0 16px;
+        font-size: 19px;
         height: $header-height;
         line-height: $header-height;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
     }
 }
 .content {

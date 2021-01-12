@@ -2,21 +2,20 @@
 <html lang="zh">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link rel="icon" href="<%= BASE_URL %>favicon.ico">
-	<!-- 分辨率传参 -->
-	<meta name="screen" width="<%= htmlWebpackPlugin.options.screenWidth %>"
-		height="<%= htmlWebpackPlugin.options.screenHeight %>">
-	<title><%= htmlWebpackPlugin.options.title %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
 </head>
 
 <body>
-	<noscript>
-		<strong>很抱歉，「<%= htmlWebpackPlugin.options.title %>」必须运行在具备JavaScript脚本环境的浏览器中。</strong>
-	</noscript>
-	<div id="app"></div>
+    <noscript>
+        <strong>很抱歉，「<%= htmlWebpackPlugin.options.title %>」必须运行在具备JavaScript脚本环境的浏览器中。</strong>
+    </noscript>
+    <div id="app"></div>
 </body>
 
 </html>

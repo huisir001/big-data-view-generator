@@ -2,7 +2,7 @@
  * @Description: 配置项面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 10:55:08
- * @LastEditTime: 2021-01-11 17:17:32
+ * @LastEditTime: 2021-01-12 10:36:47
 -->
 <template>
     <el-drawer
@@ -44,9 +44,6 @@ export default {
         LayerOptions,
         SystemOptions,
     },
-    // data() {
-    //     return {}
-    // },
     computed: {
         ...mapGetters(['activeLayers']), //选定图层
         optionTabAcName: {

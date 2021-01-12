@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-08 15:38:38
+ * @LastEditTime: 2021-01-12 11:59:47
 -->
 <template>
     <el-tooltip
@@ -520,7 +520,7 @@
 <script>
 export default {
     name: 'FormItems',
-    props: ['optionKey', 'formItemOption', 'activeLayer'],
+    props: ['optionKey', 'formItemOption', 'activeLayer', 'pageOptions'],
     data() {
         return {
             events: [
@@ -568,8 +568,15 @@ export default {
         formModelVal: {
             get() {
                 try {
-                    const { formItemOption, optionKey, activeLayer } = this
-                    let compOptionVal = formItemOption.layerOption
+                    const {
+                        formItemOption,
+                        optionKey,
+                        activeLayer,
+                        pageOptions,
+                    } = this
+                    let compOptionVal = pageOptions
+                        ? pageOptions[optionKey]
+                        : formItemOption.layerOption //系统配置项
                         ? activeLayer[optionKey] //图层本身配置项
                         : activeLayer.compOptions[optionKey] //图层内组件配置项
 
@@ -581,8 +588,8 @@ export default {
                         compOptionVal = parseFloat(compOptionVal)
                     }
 
-                    // 如果需要转义字符串的 将对象转义后的字符串显示在文本框（一般为代码才需要转义）
-                    return activeLayer && formItemOption.stringify
+                    // 如果需要转义字符串的 将对象转义后的字符串显示在文本框（一般为json才需要转义）
+                    return formItemOption.stringify
                         ? JSON.stringify(compOptionVal, null, 2) //格式化json，2个空格缩进
                         : compOptionVal
                 } catch (error) {
@@ -594,7 +601,12 @@ export default {
             },
             set(value) {
                 try {
-                    const { formItemOption, optionKey, activeLayer } = this
+                    const {
+                        formItemOption,
+                        optionKey,
+                        activeLayer,
+                        pageOptions,
+                    } = this
                     let optionVal =
                         activeLayer && formItemOption.stringify
                             ? JSON.parse(value)
@@ -603,6 +615,17 @@ export default {
                     //判断数字是否有后缀（不含数组情况）
                     if (formItemOption.suffix && typeof optionVal == 'number') {
                         optionVal = optionVal + formItemOption.suffix
+                    }
+
+                    //系统配置项
+                    if (pageOptions) {
+                        let newPageOptions = {}
+                        newPageOptions[optionKey] = optionVal
+                        this.$store.commit(
+                            'system/setPageOptions',
+                            newPageOptions
+                        )
+                        return
                     }
 
                     if (formItemOption.layerOption) {

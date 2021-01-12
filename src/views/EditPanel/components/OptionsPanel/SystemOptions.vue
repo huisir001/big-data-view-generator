@@ -2,7 +2,7 @@
  * @Description: 系统配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:25:50
- * @LastEditTime: 2021-01-11 17:23:45
+ * @LastEditTime: 2021-01-12 10:35:01
 -->
 <template>
     <div class="systemOptionsBox">
@@ -29,7 +29,7 @@
                                 :key="index"
                                 :formItemOption="item"
                                 :optionKey="item.key"
-                                :systemOption="true"
+                                :pageOptions="pageOptions"
                                 :style="`${
                                     index == curCollapseOptions.length - 1
                                         ? 'margin-bottom:0'
@@ -48,7 +48,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import FormItems from './inc/FormItems' //图层配置栏-表单项组件
 import systemFormCats from '@/config/systemFormCats'
-const { mapGetters } = createNamespacedHelpers('system')
+const { mapState, mapGetters } = createNamespacedHelpers('system')
 export default {
     name: 'SystemOptions',
     components: {
@@ -62,7 +62,7 @@ export default {
         }
     },
     watch: {
-        // activeLayersStr(val, oldVal) {
+        // pageOptionsStr(val, oldVal) {
         //     let newLayer = val ? JSON.parse(val) : [],
         //         oldLayer = oldVal ? JSON.parse(oldVal) : [],
         //         curLayer = newLayer[0],
@@ -117,10 +117,8 @@ export default {
         },
     },
     computed: {
-        // ...mapGetters(['activeLayers']), //选定图层
-        // activeLayersStr() {
-        //     return JSON.stringify(this.activeLayers)
-        // },
+        ...mapState(['pageOptions']),
+        ...mapGetters(['pageOptionsStr']),
         curCollapseOptions() {
             return this.cpActiveName === ''
                 ? []
