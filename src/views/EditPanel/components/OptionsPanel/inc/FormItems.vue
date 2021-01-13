@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-12 18:39:27
+ * @LastEditTime: 2021-01-13 11:00:43
 -->
 <template>
     <el-tooltip
@@ -341,7 +341,11 @@
                         "
                         fit="contain"
                         :src="formModelVal"
-                    ></el-image>
+                    >
+                        <div slot="error" class="image-slot">
+                            <i class="el-icon-picture"></i>
+                        </div>
+                    </el-image>
                     <!-- 图库选择弹窗 -->
                     <el-dialog
                         title="背景图库"
@@ -982,5 +986,14 @@ export default {
             background-color: #666668;
         }
     }
+}
+.image-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: #909399;
+    font-size: 25px;
 }
 </style>

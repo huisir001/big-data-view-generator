@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-01-12 18:19:40
+ * @LastEditTime: 2021-01-13 16:56:53
  */
 export default {
     namespaced: true,
@@ -10,10 +10,11 @@ export default {
         pageOptions: {
             title: '大数据页面设计',
             screenSize: [1920, 1080],
-            bgColor: 'rgba(30, 144, 255, 1)',
+            bgColor: 'rgba(5, 26, 69, 1)',
             useBgImage: false,
             showGrid: false,
-            bgImage: 'http://localhost:8080/assets/img/bg.30ac61bb.jpg',
+            bgImage: '',
+            pid: '',
         },
         asideShow: true, //侧边栏开关
         optionPanelShow: true, //配置栏开关

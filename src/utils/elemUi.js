@@ -2,7 +2,7 @@
  * @Description:element-ui
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:40:40
- * @LastEditTime: 2021-01-12 17:03:22
+ * @LastEditTime: 2021-01-13 15:17:47
  */
 import Vue from 'vue'
 import '@/assets/css/element-variables.scss' //主题样式配置
@@ -27,15 +27,15 @@ import {
     ColorPicker,
     //   Table,
     //   TableColumn,
-    // Card,
-    // Row,
-    // Col,
+    Card,
+    Row,
+    Col,
     // Dropdown,
     // DropdownMenu,
     // DropdownItem,
-    // Menu,
-    // Submenu,
-    // MenuItem,
+    Menu,
+    Submenu,
+    MenuItem,
     // MenuItemGroup,
     Button,
     ButtonGroup,
@@ -71,15 +71,15 @@ Vue.use(Container)
     .use(ColorPicker)
     //   .use(Table)
     //   .use(TableColumn)
-    // .use(Card)
-    // .use(Row)
-    // .use(Col)
+    .use(Card)
+    .use(Row)
+    .use(Col)
     // .use(Dropdown)
     // .use(DropdownMenu)
     // .use(DropdownItem)
-    // .use(Menu)
-    // .use(Submenu)
-    // .use(MenuItem)
+    .use(Menu)
+    .use(Submenu)
+    .use(MenuItem)
     // .use(MenuItemGroup)
     .use(Button)
     .use(ButtonGroup)

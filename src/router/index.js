@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2020-11-30 16:43:14
+ * @LastEditTime: 2021-01-13 10:59:52
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -31,6 +31,14 @@ const routes = [
         meta: {
             title: '编辑面板',
         },
+    },
+    {
+        path: '/WorkList',
+        name: 'WorkList',
+        meta: {
+            title: '作品管理',
+        },
+        component: () => import('@/views/WorkList'),
     },
     {
         path: '/Preview',

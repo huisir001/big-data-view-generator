@@ -2,22 +2,21 @@
  * @Description: 启动页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月24日 18:08:41
- * @LastEditTime: 2020-09-24 19:16:58
+ * @LastEditTime: 2021-01-13 14:28:40
 -->
 <template>
-    <div class="startup"
-         @contextmenu.prevent>
+    <div class="startup" @contextmenu.prevent>
         <h1>大数据视图生成器</h1>
         <div class="btns">
-            <el-button type="primary"
-                       @click="$router.push('EditPanel')"
-                       round>创 建 大 屏</el-button>
-            <el-button type="primary"
-                       @click="$router.push('Preview')"
-                       round>作 品 预 览</el-button>
-            <el-button type="primary"
-                       @click="workEdit"
-                       round>作 品 编 辑</el-button>
+            <el-button type="primary" @click="$router.push('EditPanel')" round
+                >创 建 大 屏</el-button
+            >
+            <el-button type="primary" @click="$router.push('WorkList')" round
+                >作 品 中 心</el-button
+            >
+            <el-button type="primary" @click="workEdit" round
+                >作 品 编 辑</el-button
+            >
         </div>
         <footer>Copyright © 2020 by HuiSir</footer>
     </div>
@@ -43,7 +42,7 @@ export default {
                         background: 'rgba(0, 0, 0, 0.7)',
                     })
                     //跳转传参
-                    this.$router.push('EditPanel')
+                    // this.$router.push('EditPanel')
                 })
                 .catch(() => {})
         },
