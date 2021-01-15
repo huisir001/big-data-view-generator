@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2020-11-24 15:57:34
+ * @LastEditTime: 2021-01-15 11:28:42
 -->
 <template>
     <div class="header">
@@ -19,9 +19,11 @@
         </div>
         <!-- 右侧菜单 -->
         <div class="right">
-            <!-- 新窗口打开 -->
-            <span @click="openPreview" style="cursor: pointer">预览</span>
-            <!-- <router-link tag="a" target="_blank" :to="{name:'Preview',query:{id: 'val'}}">详情页</router-link> -->
+            <span @click="saveCurWork" style="cursor: pointer"> 保存 </span>
+            <span @click="$router.replace('WorkList')" style="cursor: pointer">
+                作品中心
+            </span>
+            <span @click="openPreview" style="cursor: pointer"> 预览 </span>
             配置栏
             <el-switch
                 v-model="$store.state.system.optionPanelShow"
@@ -42,6 +44,13 @@ export default {
     },
     methods: {
         ...mapMutations(['setAsideShow']),
+        saveCurWork() {
+            //保存
+            const PageInfo = {
+                layers: this.$store.getters['layer/layerString'],
+                pageOptions: this.$store.getters['system/pageOptionsStr'],
+            }
+        },
         openPreview() {
             //缓存图层信息
             sessionStorage.setItem(

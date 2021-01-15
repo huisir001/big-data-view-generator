@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2020-11-19 17:15:04
+ * @LastEditTime: 2021-01-15 15:00:15
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -41,6 +41,10 @@ export default {
         delLayer(state, layer) {
             let delIndex = state.layers.findIndex(({ id }) => id == layer.id) //找到图层位置
             state.layers.splice(delIndex, 1) //删除
+        },
+        //清空图层
+        clearLayers(state) {
+            state.layers = []
         },
         //上移图层
         moveupLayer(state, layer) {

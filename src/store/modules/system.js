@@ -2,13 +2,13 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-01-13 16:56:53
+ * @LastEditTime: 2021-01-15 14:37:28
  */
 export default {
     namespaced: true,
     state: {
         pageOptions: {
-            title: '大数据页面设计',
+            title: '',
             screenSize: [1920, 1080],
             bgColor: 'rgba(5, 26, 69, 1)',
             useBgImage: false,
@@ -37,7 +37,17 @@ export default {
     },
     mutations: {
         setPageOptions(state, data) {
-            Object.assign(state.pageOptions, data)
+            let pageOptions = {
+                title: '',
+                screenSize: [1920, 1080],
+                bgColor: 'rgba(5, 26, 69, 1)',
+                useBgImage: false,
+                showGrid: false,
+                bgImage: '',
+                pid: '',
+            }
+            Object.assign(pageOptions, data)
+            state.pageOptions = pageOptions
         },
         setAsideShow(state) {
             state.asideShow = !state.asideShow

@@ -2,7 +2,7 @@
  * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2020-09-24 18:05:57
+ * @LastEditTime: 2021-01-15 15:05:52
 -->
 <template>
     <div @contextmenu.prevent>
@@ -56,6 +56,25 @@ export default {
         OptionsPanel,
         VisualArea,
         LayerCtxMenu,
+    },
+    beforeRouteLeave(to, from, next) {
+        //判断是否已保存，已保存的话直接销毁页面
+        //...待判断是否保存
+        //如若未保存则弹出提示
+        this.$confirm('当前工作暂未保存，是否保存?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+        })
+            .then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '保存成功!',
+                })
+                this.$destroy()
+                next()
+            })
+            .catch(() => {})
     },
 }
 </script>

@@ -2,7 +2,7 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 14:49:51
- * @LastEditTime: 2021-01-13 17:04:03
+ * @LastEditTime: 2021-01-15 16:12:07
 -->
 <template>
     <div class="works">
@@ -10,7 +10,7 @@
             <el-col :span="36" :xs="12" :sm="9" :md="6" :lg="4" class="workCol">
                 <el-card
                     :body-style="{ padding: '0px' }"
-                    style="border: 1px solid #03a9f4"
+                    style="border: 1px solid #7385eb"
                 >
                     <div class="addNewWork" @click="addNewWork">
                         <i class="el-icon-plus"></i>
@@ -30,14 +30,39 @@
             >
                 <el-card
                     :body-style="{ padding: '0px' }"
-                    style="border: 1px solid #03a9f4"
+                    style="border: 1px solid #7385eb"
                 >
                     <div class="workItem">
                         <img
                             src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                            class="image"
+                            class="screenshot"
                         />
-                        <span>好吃的汉堡</span>
+                        <div class="foot">
+                            <h2>页面标题</h2>
+                            <p>最后编辑 2020-01-15 23:00</p>
+                        </div>
+                        <div class="floatBox">
+                            <el-button
+                                type="primary"
+                                class="editBtn"
+                                size="small"
+                                >编辑</el-button
+                            >
+                            <div class="iconBtns">
+                                <span
+                                    class="el-icon-monitor"
+                                    title="预览"
+                                ></span>
+                                <span
+                                    class="el-icon-document-copy"
+                                    title="复制"
+                                ></span>
+                                <span
+                                    class="el-icon-delete"
+                                    title="删除"
+                                ></span>
+                            </div>
+                        </div>
                     </div>
                 </el-card>
             </el-col>
@@ -74,7 +99,7 @@
                 <el-button @click="dialogNewWorkVisible = false"
                     >取 消</el-button
                 >
-                <el-button type="primary" @click="dialogNewWorkVisible = false"
+                <el-button type="primary" @click="addNewWorkBtn"
                     >确 定</el-button
                 >
             </div>
@@ -84,6 +109,8 @@
 
 <script>
 import { getRanId } from '@/utils/myUtils'
+import { createNamespacedHelpers } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('system')
 export default {
     name: 'Works',
     data() {
@@ -95,14 +122,22 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['setPageOptions']),
         addNewWork() {
-            const ranId = getRanId()
+            const ranId = getRanId(4)
             this.newWorkFormVal = {
                 pid: `P-${ranId}`,
                 title: `可视化页面_${ranId}`,
                 screenSize: [1920, 1080],
             }
             this.dialogNewWorkVisible = true
+        },
+        addNewWorkBtn() {
+            const { setPageOptions, newWorkFormVal, $router } = this
+            setPageOptions(newWorkFormVal)
+            this.dialogNewWorkVisible = false
+            this.$store.commit('layer/clearLayers') //清空图层
+            $router.replace('EditPanel')
         },
     },
 }
@@ -149,7 +184,78 @@ export default {
         }
     }
     .workItem {
+        position: relative;
         height: 220px;
+        overflow: hidden;
+        img.screenshot {
+            width: 100%;
+            height: calc(100% - 43px);
+        }
+        .foot {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 43px;
+            background: #7385eb;
+            font-family: sans-serif;
+            padding: 5px 6px;
+            line-height: 1;
+            color: #fff;
+            z-index: 1;
+            h2 {
+                margin: 0;
+                padding: 0;
+                font-size: 16px;
+                margin-bottom: 5px;
+                overflow: hidden;
+                -o-text-overflow: ellipsis;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+            }
+            p {
+                padding: 0;
+                margin: 0;
+                font-size: 12px;
+            }
+        }
+        &:hover {
+            .floatBox {
+                top: 0;
+                opacity: 1;
+            }
+        }
+        .floatBox {
+            position: absolute;
+            transition: 0.3s all;
+            width: 100%;
+            height: calc(100% - 43px);
+            top: calc(100% - 43px);
+            left: 0;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .editBtn {
+                margin-bottom: 18px;
+                width: 120px;
+            }
+            .iconBtns {
+                display: flex;
+                align-items: center;
+                span {
+                    color: #fff;
+                    font-size: 22px;
+                    cursor: pointer;
+                    margin: 0 10px;
+                    padding: 5px;
+                }
+            }
+        }
     }
 }
 </style>

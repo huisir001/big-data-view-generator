@@ -2,7 +2,7 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2021-01-12 09:57:54
+ * @LastEditTime: 2021-01-15 14:38:58
 -->
 <template>
     <el-container>
@@ -80,7 +80,7 @@ $header-height: 50px;
     h1 {
         margin: 0;
         padding: 0 14px 0 16px;
-        font-size: 19px;
+        font-size: 18px;
         height: $header-height;
         line-height: $header-height;
         overflow: hidden;

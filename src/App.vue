@@ -2,11 +2,14 @@
  * @Description: 入口组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2020-09-09 17:21:50
+ * @LastEditTime: 2021-01-15 11:33:00
 -->
 <template>
     <div id="app">
-        <router-view />
+        <!-- 缓存编辑器路由 -->
+        <keep-alive include="EditPanel">
+            <router-view />
+        </keep-alive>
     </div>
 </template>
 
