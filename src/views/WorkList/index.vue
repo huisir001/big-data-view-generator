@@ -2,7 +2,7 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 10:29:54
- * @LastEditTime: 2021-01-13 15:30:02
+ * @LastEditTime: 2021-01-18 10:03:58
 -->
 <template>
     <div class="workList">
@@ -38,10 +38,16 @@
 
 <script>
 import Works from './components/Works'
+import Templet from './components/Templet'
+import Map from './components/Map'
+import User from './components/User'
 export default {
     name: 'WorkList',
     components: {
         Works,
+        Templet,
+        Map,
+        User,
     },
     data() {
         return {
@@ -50,7 +56,7 @@ export default {
     },
     methods: {
         handleTopMenuSelect(key, keyPath) {
-            console.log(key, keyPath)
+            this.activeComponet = key
         },
     },
 }
