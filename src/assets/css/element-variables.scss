@@ -151,6 +151,21 @@ $input-bg: #33434f;
     border-bottom-color: #409eff !important;
 }
 
+//下拉多选
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected,.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover {
+    background-color: transparent;
+}
+.el-select__tags{
+    .el-tag.el-tag--info {
+        background-color: #2196F3;
+        border-color: #2196F3;
+        color: #ffffff;
+        .el-tag__close {
+            color: #2196F3;
+        }
+    }
+}
+
 //计数器
 .el-input-number--small {
     width: 100%;

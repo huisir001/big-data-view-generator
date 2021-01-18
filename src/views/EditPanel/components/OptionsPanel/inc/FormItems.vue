@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-18 10:38:39
+ * @LastEditTime: 2021-01-18 18:22:43
 -->
 <template>
     <el-tooltip
@@ -498,7 +498,71 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="回调函数">
+                    <el-form-item label="自定义回调函数">
+                        <el-switch
+                            v-model="item.diyCallback"
+                            active-color="#409EFF"
+                            inactive-color="#33434f"
+                        >
+                        </el-switch>
+                    </el-form-item>
+                    <el-form-item v-if="!item.diyCallback" label="图层联动">
+                        <el-select
+                            v-model="item.linkageLayers"
+                            multiple
+                            placeholder="请选择图层"
+                        >
+                            <el-option
+                                v-for="l in linkageLayers"
+                                :key="l.id"
+                                :label="l.name"
+                                :value="l.id"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-tooltip
+                        v-if="!item.diyCallback"
+                        effect="light"
+                        placement="left"
+                    >
+                        <div slot="content">
+                            e为事件回调参数可直接调用<br />会与联动图层的请求参数合并
+                        </div>
+                        <el-form-item label="图层传参">
+                            <el-input
+                                class="inputBox"
+                                v-model="item.transmit"
+                                size="small"
+                                clearable
+                                type="textarea"
+                                readonly
+                                resize="none"
+                                show-word-limit
+                                :autosize="{ minRows: 3, maxRows: 10 }"
+                            ></el-input>
+                            <!-- 操作按钮组 -->
+                            <el-button-group class="formItemBtnGroup">
+                                <el-button
+                                    type="info"
+                                    icon="el-icon-document-copy"
+                                    size="mini"
+                                    title="复制"
+                                    @click="formItemCopy(index, item.transmit)"
+                                ></el-button>
+                                <el-button
+                                    type="info"
+                                    icon="el-icon-edit"
+                                    size="mini"
+                                    title="编辑"
+                                    @click="
+                                        eventCbEdit(index, item.transmit, true)
+                                    "
+                                ></el-button>
+                            </el-button-group>
+                        </el-form-item>
+                    </el-tooltip>
+                    <el-form-item v-if="item.diyCallback" label="回调函数">
                         <el-input
                             class="inputBox"
                             v-model="item.callback"
@@ -550,6 +614,8 @@
     </el-tooltip>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState } = createNamespacedHelpers('layer')
 import Gallery from './Gallery'
 export default {
     name: 'FormItems',
@@ -601,6 +667,16 @@ export default {
         }
     },
     computed: {
+        //图层
+        ...mapState(['layers']),
+        //图层选项，作为事件图层联动选项，排除当前图层
+        linkageLayers() {
+            return this.layers
+                .map(({ id, name }) => {
+                    return { id, name }
+                })
+                .filter(({ id }) => id != this.activeLayer.id)
+        },
         //表单项绑定的数据（这里手写get和set方法以便能实时更新state中的数据）
         formModelVal: {
             get() {
@@ -838,7 +914,11 @@ export default {
             this.formModelVal.push({
                 event: 'click',
                 setQuery: false,
-                callback: `function(e){\n  console.log(e)\n}`,
+                diyCallback: false,
+                linkageLayers: [],
+                transmit: `{ name: e.name }`,
+                callback: `function(e){\n  //console.log(e)\n}`,
+                transmitObj: {}, //这是事件点击后返回的真实参数
             })
             this.$notify({
                 title: '添加事件成功',
@@ -852,7 +932,7 @@ export default {
             this.formModelVal.splice(index, 1)
         },
         //编辑事件回调
-        eventCbEdit(index, eventCbVal) {
+        eventCbEdit(index, eventCbVal, isParam) {
             const { $alert } = this
             $alert('请确保JSON格式、数据结构或代码逻辑正确', '数据代码编辑', {
                 customClass: 'myMessageBox',
@@ -872,8 +952,13 @@ export default {
                     try {
                         eval(`(${instance.inputValue})()`)
                     } catch (error) {
-                        instance.editorErrorMessage = error
-                        return
+                        if (
+                            !error.message.includes('Cannot read property') &&
+                            !error.message.includes('is not defined')
+                        ) {
+                            instance.editorErrorMessage = error
+                            return
+                        }
                     }
 
                     done()
@@ -881,7 +966,11 @@ export default {
                 },
             })
                 .then(({ value }) => {
-                    this.formModelVal[index].callback = value
+                    if (isParam) {
+                        this.formModelVal[index].transmit = value
+                    } else {
+                        this.formModelVal[index].callback = value
+                    }
                 })
                 .catch(() => false)
         },

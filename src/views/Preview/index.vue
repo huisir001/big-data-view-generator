@@ -2,7 +2,7 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2021-01-12 18:19:19
+ * @LastEditTime: 2021-01-18 18:17:09
 -->
 <template>
     <div class="container">
@@ -46,8 +46,48 @@ export default {
             transform: 'scale(1) translate(-50%,-50%)',
         }
     },
+    watch: {
+        /* 监听图层事件变化，执行联动事件 */
+        layerChartEventsString(val, oldVal) {
+            const valObj = JSON.parse(val),
+                oldValObj = JSON.parse(oldVal)
+            valObj.forEach((item, index) => {
+                item.forEach((v, i) => {
+                    const valTransmitObj = JSON.stringify(v.transmitObj),
+                        oldTransmitObj = JSON.stringify(
+                            oldValObj[index][i].transmitObj
+                        )
+
+                    if (valTransmitObj != oldTransmitObj) {
+                        //找到联动的图层
+                        let linkageLayers = this.layers.filter((layer) =>
+                            v.linkageLayers.includes(layer.id)
+                        )
+                        //合并传参
+                        linkageLayers.forEach((layer) => {
+                            if (
+                                layer.compOptions &&
+                                layer.compOptions.apiParam
+                            ) {
+                                layer.compOptions.apiParam = {
+                                    ...layer.compOptions.apiParam,
+                                    ...v.transmitObj,
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+        },
+    },
     computed: {
         ...mapStateSystem(['pageOptions']), //系统信息
+        /* 找到事件数据并转为字符串方便监听 */
+        layerChartEventsString() {
+            return JSON.stringify(
+                this.layers.map((item) => item.compOptions.chartEvents)
+            )
+        },
     },
     methods: {
         afterAutoResizeMixinInit() {
