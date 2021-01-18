@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-13 11:00:43
+ * @LastEditTime: 2021-01-18 10:38:39
 -->
 <template>
     <el-tooltip
@@ -517,7 +517,7 @@
                                 icon="el-icon-document-copy"
                                 size="mini"
                                 title="复制"
-                                @click="formItemCopy"
+                                @click="formItemCopy(index)"
                             ></el-button>
                             <el-button
                                 type="info"
@@ -701,8 +701,13 @@ export default {
     },
     methods: {
         //复制
-        formItemCopy() {
-            this.$copyText(this.formModelVal).then(
+        formItemCopy(e) {
+            const copyStr =
+                typeof e == 'number'
+                    ? this.formModelVal[e].callback
+                    : this.formModelVal
+
+            this.$copyText(copyStr).then(
                 (res) => {
                     this.$notify({
                         title: '复制成功',
@@ -984,6 +989,9 @@ export default {
     .eventItem {
         .el-divider {
             background-color: #666668;
+        }
+        label.el-form-item__label {
+            width: 66px !important;
         }
     }
 }
