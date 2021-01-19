@@ -2,7 +2,7 @@
  * @Description: echarts公共方法（重构）
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-01-18 17:27:11
+ * @LastEditTime: 2021-01-19 11:18:29
  */
 import echarts from 'echarts'
 import '../utils/echarts.theme' //自定义主题mytheme
@@ -23,6 +23,7 @@ export default {
     data() {
         return {
             myChart: null,
+            refreshTimer: null,
         }
     },
     computed: {
@@ -72,19 +73,27 @@ export default {
 
         /* chart渲染 */
         async chartRender() {
-            const { myChart, getEchartsOptions, options, apiRequest } = this
+            const {
+                myChart,
+                getEchartsOptions,
+                options,
+                apiRequest,
+                timingRefresh,
+            } = this
 
             myChart.hideLoading()
 
             //这里处理数据请求
             if (options.useApiData) {
                 //loading
-                myChart.showLoading({
-                    color: '#dcfffe',
-                    text: '数据请求中',
-                    textColor: '#dcfffe',
-                    maskColor: 'rgba(0, 0, 0, 0.5)',
-                })
+                //如果开启定时刷新的话不显示loading
+                options.openTimingRefresh ||
+                    myChart.showLoading({
+                        color: '#dcfffe',
+                        text: '数据请求中',
+                        textColor: '#dcfffe',
+                        maskColor: 'rgba(0, 0, 0, 0.5)',
+                    })
 
                 let res = await apiRequest()
 
@@ -97,7 +106,7 @@ export default {
                     this.options.dynamicData = options.apiResHandle(res)
                 }
 
-                myChart.hideLoading()
+                options.openTimingRefresh || myChart.hideLoading()
             }
 
             myChart.setOption(getEchartsOptions(), true)
@@ -125,6 +134,9 @@ export default {
                 })
             }
 
+            //定时刷新
+            timingRefresh()
+
             //重置尺寸
             myChart.resize()
         },
@@ -139,6 +151,29 @@ export default {
                 data: apiParam || {},
                 [method == 'get' && 'params']: apiParam || {},
             })
+        },
+
+        /* 定时刷新 */
+        timingRefresh() {
+            const {
+                useApiData,
+                openTimingRefresh,
+                refreshPeriod,
+            } = this.options
+
+            if (useApiData && openTimingRefresh) {
+                //先清空
+                clearInterval(this.refreshTimer)
+                this.refreshTimer = null
+                //开始刷新
+                this.refreshTimer = setInterval(() => {
+                    this.options.lastChangeTime = Date.now()
+                }, refreshPeriod * 1000)
+            } else {
+                //关闭刷新
+                clearInterval(this.refreshTimer)
+                this.refreshTimer = null
+            }
         },
 
         /* 窗口缩放后重新调整图标尺寸 */

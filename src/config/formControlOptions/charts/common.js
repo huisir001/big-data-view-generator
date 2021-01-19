@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-18 10:25:54
+ * @LastEditTime: 2021-01-19 10:58:59
  */
 
 /* 共有 */
@@ -38,7 +38,14 @@ export const publicOpts = [
         compType: 'switch',
         label: '动态数据',
         displayItems: {
-            t: ['apiReqUrl', 'apiMethod', 'apiParam', 'apiResHandle'],
+            t: [
+                'apiReqUrl',
+                'apiMethod',
+                'apiParam',
+                'apiResHandle',
+                'openTimingRefresh',
+                'refreshPeriod',
+            ],
             f: ['chartData'],
         }, //显隐控制
     },
@@ -84,6 +91,20 @@ export const publicOpts = [
         inputType: 'textarea',
         readonly: true,
         showBtnGroup: true,
+        hide: true,
+    },
+    {
+        key: 'openTimingRefresh',
+        compType: 'switch',
+        label: '定时刷新',
+        hide: true,
+    },
+    {
+        key: 'refreshPeriod',
+        compType: 'slider',
+        label: '定时刷新周期/秒',
+        min: 1,
+        max: 15,
         hide: true,
     },
     /* 提示框 */
