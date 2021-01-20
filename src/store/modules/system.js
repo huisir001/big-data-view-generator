@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-01-15 14:37:28
+ * @LastEditTime: 2021-01-20 16:46:08
  */
 export default {
     namespaced: true,
@@ -37,17 +37,10 @@ export default {
     },
     mutations: {
         setPageOptions(state, data) {
-            let pageOptions = {
-                title: '',
-                screenSize: [1920, 1080],
-                bgColor: 'rgba(5, 26, 69, 1)',
-                useBgImage: false,
-                showGrid: false,
-                bgImage: '',
-                pid: '',
+            state.pageOptions = {
+                ...state.pageOptions,
+                ...data,
             }
-            Object.assign(pageOptions, data)
-            state.pageOptions = pageOptions
         },
         setAsideShow(state) {
             state.asideShow = !state.asideShow
