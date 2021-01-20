@@ -2,7 +2,7 @@
  * @Description: 表单
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-20 09:59:15
- * @LastEditTime: 2021-01-20 18:05:39
+ * @LastEditTime: 2021-01-20 18:08:59
 -->
 <template>
     <div style="width: 100%; height: 100%">
@@ -14,6 +14,7 @@
             <template v-if="item.type == 'input'">
                 <input
                     type="text"
+                    v-model="item.value"
                     :placeholder="item.placeholder"
                     :style="{
                         width: item.width,
