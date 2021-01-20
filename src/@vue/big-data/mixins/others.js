@@ -2,7 +2,7 @@
  * @Description: 其他非图表组件公共方法
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-01-20 10:23:02
+ * @LastEditTime: 2021-01-20 17:42:33
  */
 import autoResize from './autoResize'
 import Axios from '../utils/axios'
@@ -175,10 +175,10 @@ export default {
         },
 
         /* 窗口缩放后重新调整图标尺寸 */
-        onResize() {
-            const { myChart } = this
-            if (!myChart) return
-            myChart.resize()
-        },
+        // onResize() {
+        //     const { myChart } = this
+        //     if (!myChart) return
+        //     myChart.resize()
+        // },
     },
 }
