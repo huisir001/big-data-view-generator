@@ -2,10 +2,13 @@
  * @Description: 日期选择组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-21 17:36:59
- * @LastEditTime: 2021-01-21 18:08:11
+ * @LastEditTime: 2021-01-22 18:24:01
 -->
 <template>
-    <div :class="['sel-input', 'date', { 'name-input': name }]">
+    <div
+        :class="['sel-input', 'date', { 'name-input': name }]"
+        :style="{ width: width + 'px', height: height + 'px' }"
+    >
         <span v-if="name">{{ name }}</span>
         <input
             type="text"
@@ -14,8 +17,12 @@
             @mousedown="inputMD"
             v-model="val"
             readonly
+            :style="{ lineHeight: height + 'px', border }"
         />
-        <i class="i-date"></i>
+        <i
+            class="i-date"
+            :style="{ width: height + 'px', borderLeft: border }"
+        ></i>
         <div
             class="sel-date"
             v-show="show"
@@ -141,6 +148,9 @@ export default {
         selObj: { default: null },
         selKey: { default: 'Id' },
         dateType: { default: 1 },
+        width: { default: 150 },
+        height: { default: 30 },
+        border: { default: '1px solid #333' },
     },
     data() {
         return {
@@ -185,6 +195,7 @@ export default {
                 : '-'
         },
         top() {
+            console.log(this.month)
             let ysp = [...(this.year + '')]
             if (this.active == 1 || this.active == 5)
                 return (
@@ -226,18 +237,18 @@ export default {
             return 34 * df + 6 + 'px'
         },
         hhlPst() {
-            let hh = parseInt(this.hhmm[0])
-            ;(h12 = hh < 13 ? hh : hh - 12),
-                (rt = (h12 - 1) * 30 - 60),
-                (w = hh < 13 ? 78 : 48)
+            let hh = parseInt(this.hhmm[0]),
+                h12 = hh < 13 ? hh : hh - 12,
+                rt = (h12 - 1) * 30 - 60,
+                w = hh < 13 ? 78 : 48
             return {
                 transform: 'rotate(' + rt + 'deg)',
                 width: w + 'px',
             }
         },
         mmlPst() {
-            let mm = parseInt(this.hhmm[1])
-            rt = mm * 6 - 90
+            let mm = parseInt(this.hhmm[1]),
+                rt = mm * 6 - 90
             return {
                 transform: 'rotate(' + rt + 'deg)',
             }
@@ -339,11 +350,11 @@ export default {
             let date = new Date(),
                 year = date.getFullYear(),
                 month = (date.getMonth() + 1).toString().padStart(2, '0'),
-                dd = date.getDate().toString().padStart(2, '0')
-            hm =
-                date.getHours().toString().padStart(2, '0') +
-                ':' +
-                date.getMinutes().toString().padStart(2, '0')
+                dd = date.getDate().toString().padStart(2, '0'),
+                hm =
+                    date.getHours().toString().padStart(2, '0') +
+                    ':' +
+                    date.getMinutes().toString().padStart(2, '0')
             return t == 1
                 ? hm
                 : [year, month, dd].join(this.sp) + (t == 2 ? ' ' + hm : '')
@@ -370,7 +381,7 @@ export default {
             }
         },
         mmtRt(i) {
-            rt = 90 - i * 6
+            let rt = 90 - i * 6
             return {
                 transform: 'rotate(' + rt + 'deg)',
             }
@@ -408,9 +419,13 @@ export default {
                 let darr = v.toString().split(this.sp)
                 this.year = parseInt(darr[0])
                 this.ys = this.year - 4
-                if ([1, 2, 5].includes(this.dateType))
+                console.log([1, 2, 5].includes(this.dateType), this.dateType)
+                if ([1, 2, 5].includes(this.dateType)) {
                     this.month = parseInt(darr[1])
-                if ([1, 5].includes(this.dateType)) this.day = parseInt(darr[2])
+                }
+                if ([1, 5].includes(this.dateType)) {
+                    this.day = parseInt(darr[2])
+                }
             }
         },
     },
@@ -437,15 +452,31 @@ export default {
 </script>
 <style lang="scss" scoped>
 $select-color: #04bbb7;
+.sel-input {
+    position: relative;
+    a {
+        cursor: pointer;
+        text-decoration: none;
+        color: unset;
+    }
+    > input {
+        width: 100%;
+        height: 100%;
+    }
+}
+.name-input .sel-list {
+    left: 80px;
+}
 .sel-input.date i {
     pointer-events: none;
     position: absolute;
     right: 16px;
     top: 50%;
     transform: translate(50%, -50%);
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDNEEyQUFFOUJCMDkxMUU4OEU4NEE1QUNBODUxNzk5MiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDNEEyQUFFQUJCMDkxMUU4OEU4NEE1QUNBODUxNzk5MiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM0QTJBQUU3QkIwOTExRTg4RTg0QTVBQ0E4NTE3OTkyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkM0QTJBQUU4QkIwOTExRTg4RTg0QTVBQ0E4NTE3OTkyIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nE/kxwAAAENJREFUeNpiWXz2DAMU/AdiRgbsAC7HgkXhfzTFKHJMOCQYcGliwWEqAy4bmRhIBCxEOIcBlx+IAsNBAzHxgAIAAgwATyULXUGrhFQAAAAASUVORK5CYII=');
-    width: 12px;
-    height: 12px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDNEEyQUFFOUJCMDkxMUU4OEU4NEE1QUNBODUxNzk5MiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDNEEyQUFFQUJCMDkxMUU4OEU4NEE1QUNBODUxNzk5MiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM0QTJBQUU3QkIwOTExRTg4RTg0QTVBQ0E4NTE3OTkyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkM0QTJBQUU4QkIwOTExRTg4RTg0QTVBQ0E4NTE3OTkyIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nE/kxwAAAENJREFUeNpiWXz2DAMU/AdiRgbsAC7HgkXhfzTFKHJMOCQYcGliwWEqAy4bmRhIBCxEOIcBlx+IAsNBAzHxgAIAAgwATyULXUGrhFQAAAAASUVORK5CYII=');
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .sel-input.date .sel-date {
     position: absolute;
@@ -457,7 +488,7 @@ $select-color: #04bbb7;
     margin-top: 2px;
     font-size: 14px;
     z-index: 99;
-    color: var(--font-color);
+    color: #444;
 }
 .name-input.sel-input.date .sel-date {
     right: 0;
@@ -501,8 +532,6 @@ $select-color: #04bbb7;
     flex: 1;
     overflow: hidden;
     text-align: center;
-}
-.list-day {
 }
 .list-day > .week {
     height: 24px;
@@ -573,7 +602,7 @@ $select-color: #04bbb7;
 .list-day > .days > a:hover,
 .list-month > a:hover,
 .list-year > a:hover {
-    background: var(--select-li-hover-bg);
+    background: #fcfcfc;
 }
 .list-day > .days > a.active,
 .list-month > a.active,

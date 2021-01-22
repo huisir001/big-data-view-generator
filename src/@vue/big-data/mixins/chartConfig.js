@@ -1,8 +1,8 @@
 /*
- * @Description: 公共配置项
+ * @Description: 图表公共配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-19 10:55:19
- * @LastEditTime: 2021-01-19 15:57:09
+ * @LastEditTime: 2021-01-22 11:22:08
  */
 
 export const commonChartTypes = {

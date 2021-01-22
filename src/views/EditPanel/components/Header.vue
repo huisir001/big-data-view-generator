@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-01-15 11:28:42
+ * @LastEditTime: 2021-01-22 16:32:53
 -->
 <template>
     <div class="header">
@@ -56,6 +56,11 @@ export default {
             sessionStorage.setItem(
                 `layers`,
                 this.$store.getters['layer/layerString']
+            )
+            //缓存页面信息
+            sessionStorage.setItem(
+                `pageOptions`,
+                this.$store.getters['system/pageOptionsStr']
             )
             let routeData = this.$router.resolve({ path: '/Preview' })
             window.open(routeData.href, '_blank') //打开新窗口

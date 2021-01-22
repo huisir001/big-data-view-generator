@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-01-12 18:46:40
+ * @LastEditTime: 2021-01-22 17:50:32
 -->
 <template>
     <div
@@ -504,6 +504,7 @@ export default {
                 height: 10px;
                 background: #0ff;
                 border-radius: 50%;
+                z-index: 1;
                 &.anchor-1,
                 &.anchor-2,
                 &.anchor-3 {

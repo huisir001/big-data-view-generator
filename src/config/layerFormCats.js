@@ -2,12 +2,13 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-19 10:44:23
+ * @LastEditTime: 2021-01-22 14:53:56
  */
 import compList from './compList'
 let allCompType = [] //所有类型
 let compTypes_sjpz = [] //需要数据的类型
 let compTypes_tb = [] //图表类型
+let conpTypes_base = [] //基础组件
 
 //组件类型分发
 compList.forEach((item) => {
@@ -20,7 +21,11 @@ compList.forEach((item) => {
 
     //图表组件
     Array(1, 2).includes(item.id) &&
-        (compTypes_tb = allCompType.concat(item.list.map((li) => li.type)))
+        (compTypes_tb = compTypes_tb.concat(item.list.map((li) => li.type)))
+
+    //基础组件
+    item.id == 0 &&
+        (conpTypes_base = conpTypes_base.concat(item.list.map((li) => li.type)))
 })
 
 export default [
@@ -28,6 +33,22 @@ export default [
         category: '图层属性',
         optionsFilter: ['name', 'pos', 'width', 'height'],
         compTypeFilter: allCompType,
+    },
+    {
+        category: '主体配置',
+        optionsFilter: [
+            'type',
+            'formKey',
+            'placeholder',
+            'formWidth',
+            'formHeight',
+            'borderWidth',
+            'borderStyle',
+            'borderColor',
+            'selectOptions',
+            'dateType',
+        ],
+        compTypeFilter: conpTypes_base,
     },
     {
         category: '图表基础配置',
@@ -43,7 +64,7 @@ export default [
             'lineType',
             'opacity',
         ],
-        compTypeFilter: allCompType,
+        compTypeFilter: compTypes_tb,
     },
     {
         category: '数据配置',

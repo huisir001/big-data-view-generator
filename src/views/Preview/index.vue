@@ -2,7 +2,7 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2021-01-18 18:17:09
+ * @LastEditTime: 2021-01-22 16:36:39
 -->
 <template>
     <div class="container">
@@ -35,7 +35,6 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import autoResize from '@/mixin/autoResize'
-const { mapState: mapStateSystem } = createNamespacedHelpers('system')
 
 export default {
     name: 'Preview',
@@ -43,6 +42,7 @@ export default {
     data() {
         return {
             layers: JSON.parse(sessionStorage.getItem(`layers`)),
+            pageOptions: JSON.parse(sessionStorage.getItem(`pageOptions`)),
             transform: 'scale(1) translate(-50%,-50%)',
         }
     },
@@ -81,7 +81,6 @@ export default {
         },
     },
     computed: {
-        ...mapStateSystem(['pageOptions']), //系统信息
         /* 找到事件数据并转为字符串方便监听 */
         layerChartEventsString() {
             return JSON.stringify(
@@ -102,7 +101,7 @@ export default {
                 clientWidth / this.pageOptions.screenSize[0],
                 clientHeight / this.pageOptions.screenSize[1],
             ])
-            this.transform = `scale(${scale}) translate(-50%,-50%)`
+            //this.transform = `scale(${scale}) translate(-50%,-50%)`
         },
     },
 }
