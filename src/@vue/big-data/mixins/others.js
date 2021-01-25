@@ -2,7 +2,7 @@
  * @Description: 其他非图表组件公共方法
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-01-22 09:55:08
+ * @LastEditTime: 2021-01-25 17:52:22
  */
 import autoResize from './autoResize'
 // import Axios from '../utils/axios'

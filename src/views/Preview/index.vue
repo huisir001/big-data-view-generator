@@ -2,7 +2,7 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2021-01-22 16:36:39
+ * @LastEditTime: 2021-01-25 17:41:22
 -->
 <template>
     <div class="container">
@@ -47,22 +47,60 @@ export default {
         }
     },
     watch: {
-        /* 监听图层事件变化，执行联动事件 */
+        /* 监听图层事件变化，执行图表联动事件 */
         layerChartEventsString(val, oldVal) {
             const valObj = JSON.parse(val),
                 oldValObj = JSON.parse(oldVal)
             valObj.forEach((item, index) => {
-                item.forEach((v, i) => {
-                    const valTransmitObj = JSON.stringify(v.transmitObj),
-                        oldTransmitObj = JSON.stringify(
-                            oldValObj[index][i].transmitObj
-                        )
+                if (item) {
+                    item.forEach((v, i) => {
+                        const valTransmitObj = JSON.stringify(v.transmitObj),
+                            oldTransmitObj = JSON.stringify(
+                                oldValObj[index][i].transmitObj
+                            )
 
-                    if (valTransmitObj != oldTransmitObj) {
+                        if (valTransmitObj != oldTransmitObj) {
+                            //找到联动的图层
+                            let linkageLayers = this.layers.filter((layer) =>
+                                v.linkageLayers.includes(layer.id)
+                            )
+                            //合并传参
+                            linkageLayers.forEach((layer) => {
+                                if (
+                                    layer.compOptions &&
+                                    layer.compOptions.apiParam
+                                ) {
+                                    layer.compOptions.apiParam = {
+                                        ...layer.compOptions.apiParam,
+                                        ...v.transmitObj,
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        },
+        /* 监听图层变化，执行基础组件图层联动事件 */
+        layerBaseEventsString(val, oldVal) {
+            const valObj = JSON.parse(val),
+                oldValObj = JSON.parse(oldVal)
+
+            valObj.forEach((item, index) => {
+                if (item.linkageLayers && item.linkageLayers.length > 0) {
+                    const curEventVal = valObj[index].value,
+                        oldEventVal = oldValObj[index].value
+
+                    if (curEventVal != oldEventVal) {
                         //找到联动的图层
                         let linkageLayers = this.layers.filter((layer) =>
-                            v.linkageLayers.includes(layer.id)
+                            item.linkageLayers.includes(layer.id)
                         )
+
+                        const transmitObj = {
+                            [item.field]: item.value,
+                        }
+
                         //合并传参
                         linkageLayers.forEach((layer) => {
                             if (
@@ -71,20 +109,34 @@ export default {
                             ) {
                                 layer.compOptions.apiParam = {
                                     ...layer.compOptions.apiParam,
-                                    ...v.transmitObj,
+                                    ...transmitObj,
                                 }
+                                console.log(layer.compOptions.apiParam)
                             }
                         })
                     }
-                })
+                }
             })
         },
     },
     computed: {
-        /* 找到事件数据并转为字符串方便监听 */
+        /* 找到图表事件数据并转为字符串方便监听 */
         layerChartEventsString() {
             return JSON.stringify(
                 this.layers.map((item) => item.compOptions.chartEvents)
+            )
+        },
+        /* 找到基础组件事件数据转为字符串方便监听 */
+        layerBaseEventsString() {
+            return JSON.stringify(
+                this.layers.map(({ compOptions }) => {
+                    const { field, value, linkageLayers } = compOptions
+                    return {
+                        field,
+                        value,
+                        linkageLayers,
+                    }
+                })
             )
         },
     },

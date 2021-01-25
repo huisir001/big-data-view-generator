@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-20 16:40:32
+ * @LastEditTime: 2021-01-25 16:52:57
 -->
 <template>
     <el-tooltip
@@ -363,7 +363,11 @@
 
             <!-- 下拉选 -->
             <template v-if="formItemOption.compType == 'select'">
-                <el-select v-model="formModelVal" placeholder="请选择">
+                <el-select
+                    v-model="formModelVal"
+                    :multiple="formItemOption.multiple || false"
+                    placeholder="请选择"
+                >
                     <el-option
                         v-for="option in formItemOption.options"
                         :key="option.value"
@@ -459,6 +463,81 @@
                         </tr>
                     </tbody>
                 </table>
+            </template>
+
+            <!-- 下拉框组件选项增删 -->
+            <template v-if="formItemOption.compType == 'selectOption'">
+                <table class="formItemTable">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>字段</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in formModelVal" :key="index">
+                            <td>
+                                <el-input
+                                    v-model="item.name"
+                                    size="mini"
+                                    clearable
+                                    type="text"
+                                ></el-input>
+                            </td>
+                            <td>
+                                <el-tooltip
+                                    class="item"
+                                    effect="light"
+                                    content="请输入英文"
+                                    placement="bottom"
+                                >
+                                    <el-input
+                                        v-model="item.value"
+                                        size="mini"
+                                        clearable
+                                        type="text"
+                                    ></el-input>
+                                </el-tooltip>
+                            </td>
+                            <td width="70">
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="delSelectOption(index)"
+                                    >删除</el-button
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <el-button
+                                    size="mini"
+                                    type="primary"
+                                    @click="addSelectOption"
+                                    >+ 新增</el-button
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+
+            <!-- 表单事件联动 -->
+            <template v-if="formItemOption.compType == 'formEvent'">
+                <el-select
+                    v-model="formModelVal"
+                    multiple
+                    placeholder="请选择图层"
+                >
+                    <el-option
+                        v-for="l in linkageLayers"
+                        :key="l.id"
+                        :label="l.name"
+                        :value="l.id"
+                    >
+                    </el-option>
+                </el-select>
             </template>
 
             <!-- 事件添加器 -->
@@ -901,6 +980,14 @@ export default {
         },
         //删除下拉选数组对象
         delSelectArray(index) {
+            this.formModelVal.splice(index, 1)
+        },
+        //新增选择框组件下拉选项
+        addSelectOption() {
+            this.formModelVal.push({ name: '', value: '' })
+        },
+        //删除选择框组件下拉选项
+        delSelectOption(index) {
             this.formModelVal.splice(index, 1)
         },
         //图片选择

@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2021-01-11 16:36:13
+ * @LastEditTime: 2021-01-25 14:42:17
 -->
 <template>
     <div class="layerOptionsBox">
@@ -77,6 +77,7 @@ export default {
             /* 控制数据配置表单项显隐 */
             if (curLayer.compOptions) {
                 curLayer.formControlOptions.forEach((item) => {
+                    //switch切换
                     if (
                         item.compType == 'switch' &&
                         item.displayItems &&
@@ -95,6 +96,34 @@ export default {
                             if (
                                 item.displayItems.f &&
                                 item.displayItems.f.includes(optionItem.key)
+                            ) {
+                                optionItem.hide = curLayer.compOptions[item.key]
+                            }
+                        })
+                        this.$store.commit('layer/setLayer', curLayer)
+                    }
+                    //下拉选择框
+                    if (
+                        item.compType == 'select' &&
+                        item.options[0].displayItems &&
+                        curLayer.compOptions[item.key] !=
+                            oldCurLayer.compOptions[item.key]
+                    ) {
+                        curLayer.formControlOptions.forEach((optionItem) => {
+                            const curDisplayItems = item.options.find(
+                                (o) => o.value == curLayer.compOptions[item.key]
+                            ).displayItems
+                            if (
+                                curDisplayItems.t &&
+                                curDisplayItems.t.includes(optionItem.key)
+                            ) {
+                                optionItem.hide = !curLayer.compOptions[
+                                    item.key
+                                ]
+                            }
+                            if (
+                                curDisplayItems.f &&
+                                curDisplayItems.f.includes(optionItem.key)
                             ) {
                                 optionItem.hide = curLayer.compOptions[item.key]
                             }

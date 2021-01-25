@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-22 10:27:40
+ * @LastEditTime: 2021-01-25 16:53:33
  */
 
 /* 共有 */
@@ -32,6 +32,18 @@ export const publicOpts = [
         compType: 'number',
         layerOption: true,
     },
+    /* 样式 */
+    {
+        key: 'color',
+        label: '字体颜色',
+        compType: 'color',
+    },
+    {
+        key: 'background',
+        label: '背景颜色',
+        compType: 'color',
+    },
+
     /* 图表数据 */
     // {
     //     key: 'useApiData',
@@ -108,10 +120,10 @@ export const publicOpts = [
     //     hide: true,
     // },
     /* 事件 */
-    {
-        key: 'chartEvents',
-        compType: 'events',
-        label: null,
-        labelOnTop: true, //标签在上面
-    },
+    // {
+    //     key: 'chartEvents',
+    //     compType: 'events',
+    //     label: null,
+    //     labelOnTop: true, //标签在上面
+    // },
 ]

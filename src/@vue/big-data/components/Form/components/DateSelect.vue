@@ -2,7 +2,7 @@
  * @Description: 日期选择组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-21 17:36:59
- * @LastEditTime: 2021-01-22 18:24:01
+ * @LastEditTime: 2021-01-25 16:32:36
 -->
 <template>
     <div
@@ -12,16 +12,27 @@
         <span v-if="name">{{ name }}</span>
         <input
             type="text"
+            :placeholder="placeholder"
             @focus="inputFocus"
             @blur="inputBlur"
             @mousedown="inputMD"
             v-model="val"
             readonly
-            :style="{ lineHeight: height + 'px', border }"
+            :style="{
+                lineHeight: height + 'px',
+                border,
+                color,
+                background,
+                fontSize: height / 2 + 'px',
+            }"
         />
         <i
             class="i-date"
-            :style="{ width: height + 'px', borderLeft: border }"
+            :style="{
+                width: height + 'px',
+                borderLeft: border,
+                right: height / 2 + 1 + 'px',
+            }"
         ></i>
         <div
             class="sel-date"
@@ -29,9 +40,10 @@
             tabindex="99"
             @blur="dateBlur"
             @mousedown="dateMD"
+            :style="`top:${height}px`"
         >
             <template v-if="active != 4">
-                <div class="sd-top">
+                <div class="sd-top" v-if="top && top.length > 0">
                     <a class="a-prev" @click="pnClick(-1)"></a>
                     <a class="a-ym" @click="ymClick">{{ top }}</a>
                     <a class="a-next" @click="pnClick(1)"></a>
@@ -148,9 +160,12 @@ export default {
         selObj: { default: null },
         selKey: { default: 'Id' },
         dateType: { default: 1 },
-        width: { default: 150 },
+        width: { default: 160 },
         height: { default: 30 },
         border: { default: '1px solid #333' },
+        color: { default: '#333333' },
+        background: { default: '#ffffff' },
+        placeholder: { default: '请选择日期' },
     },
     data() {
         return {
@@ -195,13 +210,12 @@ export default {
                 : '-'
         },
         top() {
-            console.log(this.month)
             let ysp = [...(this.year + '')]
-            if (this.active == 1 || this.active == 5)
+            if (this.active == 1 || this.active == 5) {
                 return (
                     this.year + ' / ' + this.month.toString().padStart(2, '0')
                 )
-            else if (this.active == 2) {
+            } else if (this.active == 2) {
                 return this.year
             } else if (this.active == 3) {
                 return this.ys + ' - ' + (this.ys + 11)
@@ -419,7 +433,6 @@ export default {
                 let darr = v.toString().split(this.sp)
                 this.year = parseInt(darr[0])
                 this.ys = this.year - 4
-                console.log([1, 2, 5].includes(this.dateType), this.dateType)
                 if ([1, 2, 5].includes(this.dateType)) {
                     this.month = parseInt(darr[1])
                 }
@@ -462,6 +475,7 @@ $select-color: #04bbb7;
     > input {
         width: 100%;
         height: 100%;
+        padding: 2px 5px;
     }
 }
 .name-input .sel-list {
@@ -470,13 +484,13 @@ $select-color: #04bbb7;
 .sel-input.date i {
     pointer-events: none;
     position: absolute;
-    right: 16px;
     top: 50%;
     transform: translate(50%, -50%);
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDNEEyQUFFOUJCMDkxMUU4OEU4NEE1QUNBODUxNzk5MiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDNEEyQUFFQUJCMDkxMUU4OEU4NEE1QUNBODUxNzk5MiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM0QTJBQUU3QkIwOTExRTg4RTg0QTVBQ0E4NTE3OTkyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkM0QTJBQUU4QkIwOTExRTg4RTg0QTVBQ0E4NTE3OTkyIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nE/kxwAAAENJREFUeNpiWXz2DAMU/AdiRgbsAC7HgkXhfzTFKHJMOCQYcGliwWEqAy4bmRhIBCxEOIcBlx+IAsNBAzHxgAIAAgwATyULXUGrhFQAAAAASUVORK5CYII=');
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 40%;
 }
 .sel-input.date .sel-date {
     position: absolute;
@@ -484,7 +498,6 @@ $select-color: #04bbb7;
     border: #bbb;
     width: 254px;
     left: 0;
-    top: 32px;
     margin-top: 2px;
     font-size: 14px;
     z-index: 99;

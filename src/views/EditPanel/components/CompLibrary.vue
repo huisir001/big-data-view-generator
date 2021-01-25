@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2020-12-03 18:34:26
+ * @LastEditTime: 2021-01-25 10:08:49
 -->
 <template>
     <div class="compLibrary">
@@ -111,6 +111,7 @@ export default {
                         (item) => item.category == getAttr('data-category')
                     ).list[getAttr('data-index')]
 
+                    //新增
                     addLayer({
                         type: getAttr('data-type'), //组件类型
                         name: getAttr('data-title'), //组件标题

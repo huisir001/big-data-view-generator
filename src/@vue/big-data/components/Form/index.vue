@@ -2,7 +2,7 @@
  * @Description: 表单
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-20 09:59:15
- * @LastEditTime: 2021-01-22 18:21:10
+ * @LastEditTime: 2021-01-25 18:00:00
 -->
 <template>
     <div style="width: 100%; height: 100%">
@@ -17,6 +17,9 @@
                     height: options.formHeight + 'px',
                     lineHeight: options.formHeight + 'px',
                     border: `${options.borderWidth}px ${options.borderStyle} ${options.borderColor}`,
+                    color: options.color,
+                    background: options.background,
+                    fontSize: options.formHeight / 2 + 'px',
                 }"
             />
         </template>
@@ -29,6 +32,9 @@
                     height: options.formHeight + 'px',
                     lineHeight: options.formHeight + 'px',
                     border: `${options.borderWidth}px ${options.borderStyle} ${options.borderColor}`,
+                    color: options.value == '' ? '#757575' : options.color,
+                    background: options.background,
+                    fontSize: options.formHeight / 2 + 'px',
                 }"
             >
                 <option value="">{{ options.placeholder }}</option>
@@ -43,6 +49,7 @@
         </template>
         <template v-if="options.type == 'date'">
             <!-- date-type:1-5 -->
+            <!-- :sel-val="options.value" -->
             <DateSelect
                 :date-type="parseInt(options.dateType)"
                 :sel-val="options.value"
@@ -50,6 +57,9 @@
                 :height="options.formHeight"
                 :placeholder="options.placeholder"
                 :border="`${options.borderWidth}px ${options.borderStyle} ${options.borderColor}`"
+                :color="options.color"
+                :background="options.background"
+                @change="dateSelectChange"
             ></DateSelect>
         </template>
     </div>
@@ -67,6 +77,11 @@ export default {
     data() {
         return { Config }
     },
+    methods: {
+        dateSelectChange(e) {
+            this.options.value = e
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -77,5 +92,8 @@ export default {
     &:hover {
         outline: none;
     }
+}
+select.formInput {
+    padding: 2px 1px;
 }
 </style>

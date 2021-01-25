@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2021-01-15 15:00:15
+ * @LastEditTime: 2021-01-25 16:30:37
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -27,11 +27,23 @@ export default {
             layer.locked = false //解锁图层
             state.layers.forEach((item) => item.active && (item.active = false)) //移除之前已选定图层
             layer.active = true //是否选定，默认刚新增的图层是选定的
+
+            //图层尺寸（不同组件）
+            let layerSize = {}
+            switch (layer.type) {
+                case 'Form':
+                    layerSize = { width: 162, height: 32 }
+                    break
+                default:
+                    layerSize = { width: 300, height: 200 }
+                    break
+            }
+
+            //合并
             const NewLayer = {
                 show: true, //图层显隐，默认显示
                 zIndex: 99, //默认层级
-                width: 300, //默认宽
-                height: 200, //默认高
+                ...layerSize,
                 ...layer,
             }
             //新增

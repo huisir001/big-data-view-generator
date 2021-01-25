@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-22 14:53:56
+ * @LastEditTime: 2021-01-25 16:57:39
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -37,8 +37,10 @@ export default [
     {
         category: '主体配置',
         optionsFilter: [
+            'color',
+            'background',
             'type',
-            'formKey',
+            'field',
             'placeholder',
             'formWidth',
             'formHeight',
@@ -47,6 +49,7 @@ export default [
             'borderColor',
             'selectOptions',
             'dateType',
+            'linkageLayers',
         ],
         compTypeFilter: conpTypes_base,
     },
