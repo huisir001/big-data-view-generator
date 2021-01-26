@@ -2,7 +2,7 @@
  * @Description: 表单配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-22 10:14:38
- * @LastEditTime: 2021-01-25 17:15:02
+ * @LastEditTime: 2021-01-26 11:38:30
  */
 
 import { publicOpts } from './common'
@@ -17,14 +17,13 @@ export default [
                 value: 'text',
                 label: '文本框',
                 displayItems: {
-                    f: ['selectOptions', 'dateType'],
+                    f: ['dateType'],
                 },
             },
             {
                 value: 'select',
                 label: '下拉选框',
                 displayItems: {
-                    t: ['selectOptions'],
                     f: ['dateType'],
                 },
             },
@@ -33,7 +32,6 @@ export default [
                 label: '日期选择',
                 displayItems: {
                     t: ['dateType'],
-                    f: ['selectOptions'],
                 },
             },
         ],
@@ -52,17 +50,15 @@ export default [
         hide: true,
     },
     {
-        key: 'selectOptions',
-        label: '下拉选项',
-        compType: 'selectOption',
-        labelOnTop: true,
-        hide: true,
-    },
-    {
         key: 'field',
         label: '表单字段',
         compType: 'input',
         tooltip: '请输入英文字段',
+    },
+    {
+        key: 'value',
+        label: '默认值',
+        compType: 'input',
     },
     {
         key: 'linkageLayers',
@@ -110,5 +106,24 @@ export default [
         label: '边框颜色',
         compType: 'color',
     },
+    {
+        key: 'note',
+        label: '以下配置在表单类型为下拉选框时有效',
+        labelOnTop: true,
+    },
     ...publicOpts,
+    {
+        key: 'selectOptions',
+        label: '下拉选项',
+        compType: 'selectOption',
+    },
+    {
+        key: 'selectOptions',
+        compType: 'input',
+        label: '数据预览',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: false,
+        stringify: true, //需要转义为字符串显示在表单中
+    },
 ]

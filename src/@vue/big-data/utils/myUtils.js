@@ -2,7 +2,7 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2020-12-31 16:11:07
+ * @LastEditTime: 2021-01-26 16:09:07
  */
 
 //延时防抖
@@ -105,4 +105,33 @@ export const ObjVerify = (typeObj, testObj) => {
             )
         }
     }
+}
+
+//loading遮罩
+export const myLoading = {
+    show: function ($dom) {
+        if ($dom.style.position == '' || $dom.style.position == 'static') {
+            $dom.style.position = 'relative'
+        }
+
+        if (!document.querySelector('style#myLoading')) {
+            let loadingStyle = document.createElement('style')
+            loadingStyle.id = 'myLoading'
+            loadingStyle.innerHTML =
+                '.myloadingIcon{width: 6px;height: 6px;border-radius: 50%;-webkit-animation: typing 1s linear infinite alternate;-moz-animation: Typing 1s linear infinite alternate;animation: typing 1s linear infinite alternate;margin: 46px auto;position: relative;left: -12px;}@-webkit-keyframes typing{0%{background-color: rgba(255,255,255, 1);box-shadow: 12px 0px 0px 0px rgba(255,255,255,0.2), 24px 0px 0px 0px rgba(255,255,255,0.2);}25%{ background-color: rgba(255,255,255, 0.4);box-shadow: 12px 0px 0px 0px rgba(255,255,255,2), 24px 0px 0px 0px rgba(255,255,255,0.2);}75%{ background-color: rgba(255,255,255, 0.4);box-shadow: 12px 0px 0px 0px rgba(255,255,255,0.2), 24px 0px 0px 0px rgba(255,255,255,1);}}@-moz-keyframes typing{0%{background-color: rgba(255,255,255, 1);box-shadow: 12px 0px 0px 0px rgba(255,255,255,0.2), 24px 0px 0px 0px rgba(255,255,255,0.2);}25%{ background-color: rgba(255,255,255, 0.4);box-shadow: 12px 0px 0px 0px rgba(255,255,255,2), 24px 0px 0px 0px rgba(255,255,255,0.2);}75%{ background-color: rgba(255,255,255, 0.4);box-shadow: 12px 0px 0px 0px rgba(255,255,255,0.2), 24px 0px 0px 0px rgba(255,255,255,1);}}@keyframes typing{0%{background-color: rgba(255,255,255, 1);box-shadow: 12px 0px 0px 0px rgba(255,255,255,0.2), 24px 0px 0px 0px rgba(255,255,255,0.2);}25%{ background-color: rgba(255,255,255, 0.4);box-shadow: 12px 0px 0px 0px rgba(255,255,255,2), 24px 0px 0px 0px rgba(255,255,255,0.2);}75%{ background-color: rgba(255,255,255, 0.4);box-shadow: 12px 0px 0px 0px rgba(255,255,255,0.2), 24px 0px 0px 0px rgba(255,255,255,1);}}'
+            document.querySelector('head').appendChild(loadingStyle)
+        }
+
+        let newNode = document.createElement('div')
+        newNode.className = 'myloading'
+        newNode.style =
+            'position:absolute;width:100%;height:100%;display:flex;justify-content:center;align-items:center;top:0;left:0;background:rgba(0, 0, 0, 0.4);'
+        newNode.innerHTML = '<span class="myloadingIcon"></span>'
+        $dom.appendChild(newNode)
+
+        return $dom
+    },
+    hide: function ($dom) {
+        $dom.querySelector('.myloading').remove()
+    },
 }

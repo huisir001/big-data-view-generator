@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-25 16:57:39
+ * @LastEditTime: 2021-01-26 11:38:59
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -35,25 +35,6 @@ export default [
         compTypeFilter: allCompType,
     },
     {
-        category: '主体配置',
-        optionsFilter: [
-            'color',
-            'background',
-            'type',
-            'field',
-            'placeholder',
-            'formWidth',
-            'formHeight',
-            'borderWidth',
-            'borderStyle',
-            'borderColor',
-            'selectOptions',
-            'dateType',
-            'linkageLayers',
-        ],
-        compTypeFilter: conpTypes_base,
-    },
-    {
         category: '图表基础配置',
         optionsFilter: [
             'title',
@@ -80,8 +61,29 @@ export default [
             'apiResHandle',
             'openTimingRefresh',
             'refreshPeriod',
+            'selectOptions',
+            'note',
         ],
         compTypeFilter: compTypes_sjpz,
+    },
+    {
+        category: '主体配置',
+        optionsFilter: [
+            'color',
+            'background',
+            'type',
+            'field',
+            'value',
+            'placeholder',
+            'formWidth',
+            'formHeight',
+            'borderWidth',
+            'borderStyle',
+            'borderColor',
+            'dateType',
+            'linkageLayers',
+        ],
+        compTypeFilter: conpTypes_base,
     },
     {
         category: '图例配置',

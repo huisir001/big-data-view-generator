@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-25 16:52:57
+ * @LastEditTime: 2021-01-26 11:27:40
 -->
 <template>
     <el-tooltip
@@ -467,11 +467,11 @@
 
             <!-- 下拉框组件选项增删 -->
             <template v-if="formItemOption.compType == 'selectOption'">
-                <table class="formItemTable">
+                <table class="formItemTable selectOptionFormTable">
                     <thead>
                         <tr>
                             <th>名称</th>
-                            <th>字段</th>
+                            <th>值</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -481,31 +481,22 @@
                                 <el-input
                                     v-model="item.name"
                                     size="mini"
-                                    clearable
                                     type="text"
                                 ></el-input>
                             </td>
                             <td>
-                                <el-tooltip
-                                    class="item"
-                                    effect="light"
-                                    content="请输入英文"
-                                    placement="bottom"
-                                >
-                                    <el-input
-                                        v-model="item.value"
-                                        size="mini"
-                                        clearable
-                                        type="text"
-                                    ></el-input>
-                                </el-tooltip>
+                                <el-input
+                                    v-model="item.value"
+                                    size="mini"
+                                    type="text"
+                                ></el-input>
                             </td>
-                            <td width="70">
+                            <td width="50">
                                 <el-button
                                     size="mini"
                                     type="danger"
                                     @click="delSelectOption(index)"
-                                    >删除</el-button
+                                    >DEL</el-button
                                 >
                             </td>
                         </tr>
@@ -1130,6 +1121,12 @@ export default {
         width: 24px !important;
         line-height: 12px !important;
     }
+}
+.selectOptionFormTable .el-input__inner {
+    padding: 0 5px;
+    border: 1px solid #161f28;
+    height: 24px !important;
+    line-height: 24px !important;
 }
 .formOptions {
     .formItemTable {

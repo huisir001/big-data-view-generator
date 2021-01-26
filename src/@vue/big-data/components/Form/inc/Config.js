@@ -2,15 +2,16 @@
  * @Description: 参数配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-21 17:35:49
- * @LastEditTime: 2021-01-25 17:24:44
+ * @LastEditTime: 2021-01-26 14:30:01
  */
 
 import { ObjVerify } from '../../../utils/myUtils'
+import { commonTypes, commonDefaultVal } from '../../../mixins/baseCompConfig'
 
 class Config {
     constructor(options = {}) {
         const optionsTypeObj = {
-            lastChangeTime: Number, //reset时间戳
+            ...commonTypes,
             type: String, //表单类型，支持三种：text/select/date
             value: String, //表单值
             field: String, //表单字段
@@ -32,6 +33,7 @@ class Config {
 
         //默认配置
         this.defaultOptions = {
+            ...commonDefaultVal,
             type: 'text',
             field: '',
             value: '',

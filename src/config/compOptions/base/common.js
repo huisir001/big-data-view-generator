@@ -10,5 +10,13 @@ export const publicOpts = {
     lastChangeTime: Date.now(),
     color: '#444444',
     background: '#ffffff',
+    /* 数据 */
+    useApiData: false,
+    apiReqUrl: 'http://localhost/api',
+    apiMethod: 'get',
+    apiParam: {},
+    apiResHandle: `function(res){\n  console.log(res)\n  return res\n}`,
+    openTimingRefresh: false,
+    refreshPeriod: 3,
     // chartEvents: [],
 }
