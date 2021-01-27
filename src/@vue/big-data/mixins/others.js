@@ -2,7 +2,7 @@
  * @Description: 其他非图表组件公共方法
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-01-26 16:50:09
+ * @LastEditTime: 2021-01-27 15:09:18
  */
 import autoResize from './autoResize'
 import Axios from '../utils/axios'
@@ -21,7 +21,8 @@ export default {
     },
     data() {
         return {
-            // refreshTimer: null,
+            refreshTimer: null,
+            compLoading: null,
         }
     },
     computed: {
@@ -29,14 +30,13 @@ export default {
             return new this.Config(this.options).options
         },
         jsonStrOptions() {
-            //转下字符串以防无法监听
             return JSON.stringify(this.options)
         },
     },
     watch: {
-        jsonStrOptions(val) {
+        jsonStrOptions() {
             //实时数据改变
-            console.log(val)
+            this.getData()
         },
     },
     mounted() {
@@ -46,24 +46,50 @@ export default {
         /* 数据获取及处理 */
         async getData() {
             const { $el, options, apiRequest, timingRefresh } = this
-            // //这里处理数据请求
+
+            //表单组件非下拉选项时不请求
+            if (
+                options.selectOptions &&
+                options.type != 'select' &&
+                options.useApiData
+            ) {
+                this.options.useApiData = false
+                window.alert('请在表单类型为“下拉选框”时开启数据请求!')
+                return
+            }
+
+            //关闭先前loading
+            myLoading.hide(this.compLoading)
+
+            //这里处理数据请求
             if (options.useApiData) {
                 //loading
                 //如果开启定时刷新的话不显示loading
-                options.openTimingRefresh || myLoading.show($el)
+                options.openTimingRefresh ||
+                    (this.compLoading = myLoading.show($el))
 
                 let res = await apiRequest()
                 if (!options.apiResHandle) {
-                    this.options.dynamicData = res
-                } else if (typeof options.apiResHandle == 'string') {
-                    const apiResHandle = eval(`(${options.apiResHandle})`)
-                    this.options.dynamicData = apiResHandle(res)
+                    if (options.selectOptions) {
+                        this.options.selectOptions = res
+                    } else {
+                        this.options.dynamicData = res
+                    }
                 } else {
-                    this.options.dynamicData = options.apiResHandle(res)
+                    const apiResHandle =
+                        typeof options.apiResHandle == 'string'
+                            ? eval(`(${options.apiResHandle})`)
+                            : options.apiResHandle
+
+                    if (options.selectOptions) {
+                        this.options.selectOptions = apiResHandle(res)
+                    } else {
+                        this.options.dynamicData = apiResHandle(res)
+                    }
                 }
 
                 //关闭loading
-                options.openTimingRefresh || myLoading.hide($el)
+                options.openTimingRefresh || myLoading.hide(this.compLoading)
             }
             // //事件绑定
             // if (options.chartEvents && options.chartEvents.length > 0) {
@@ -85,10 +111,8 @@ export default {
             //         }
             //     })
             // }
-            // //定时刷新
-            // timingRefresh()
-            // //重置尺寸
-            // myChart.resize()
+            //定时刷新
+            timingRefresh()
         },
         /* 处理数据请求 */
         apiRequest() {
@@ -108,6 +132,7 @@ export default {
                 openTimingRefresh,
                 refreshPeriod,
             } = this.options
+
             if (useApiData && openTimingRefresh) {
                 //先清空
                 clearInterval(this.refreshTimer)

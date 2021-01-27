@@ -2,7 +2,7 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2021-01-26 16:09:07
+ * @LastEditTime: 2021-01-27 14:56:49
  */
 
 //延时防抖
@@ -129,9 +129,9 @@ export const myLoading = {
         newNode.innerHTML = '<span class="myloadingIcon"></span>'
         $dom.appendChild(newNode)
 
-        return $dom
+        return newNode
     },
-    hide: function ($dom) {
-        $dom.querySelector('.myloading').remove()
+    hide: function (node) {
+        node && node.remove()
     },
 }
