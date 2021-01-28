@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-01-13 10:59:52
+ * @LastEditTime: 2021-01-28 11:52:10
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -47,6 +47,14 @@ const routes = [
             title: '预览页面',
         },
         component: () => import('@/views/Preview'),
+    },
+    {
+        path: '/test',
+        name: 'Test',
+        meta: {
+            title: '测试',
+        },
+        component: () => import('@/@vue/big-data/components/Table'),
     },
 ]
 
