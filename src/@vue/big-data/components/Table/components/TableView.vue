@@ -1,41 +1,27 @@
+<!--
+ * @Description: 表格组件-不支持排序，排序让后端去处理
+ * @Autor: HuiSir<273250950@qq.com>
+ * @Date: 2021-01-28 10:22:59
+ * @LastEditTime: 2021-01-28 18:14:11
+-->
 <template>
-    <div class="ozn-component" :class="cssStyle">
-        <table class="ozn-table">
+    <div class="hs-component" :class="cssStyle">
+        <table class="hs-table">
             <thead>
                 <tr>
-                    <th
-                        v-for="(col, idx) in headers"
-                        :key="idx"
-                        @click="sortBy(idx)"
-                    >
-                        <template v-if="sortEnabled">
-                            <template v-if="sortColumn == idx">
-                                <i
-                                    v-if="sortOrder == 'desc'"
-                                    class="icofont-arrow-up icofont-md active"
-                                ></i>
-                                <i
-                                    v-else
-                                    class="icofont-arrow-down icofont-md active"
-                                ></i>
-                            </template>
-                            <template v-else>
-                                <i
-                                    v-if="col.sortable"
-                                    class="icofont-sort icofont-md"
-                                ></i>
-                            </template>
-                        </template>
-                        <span> {{ col.label }}</span>
+                    <th v-for="(col, idx) in headers" :key="idx">
+                        <span>{{ col.label }}</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
+                <!-- 有数据时 -->
                 <template v-if="numRows > 0">
                     <tr v-for="(row, idx) in visibleRows" :key="idx">
                         <slot name="items" :row="row"></slot>
                     </tr>
                 </template>
+                <!-- 数据为空时 -->
                 <template v-else>
                     <tr>
                         <td :colspan="numColumns">
@@ -79,12 +65,6 @@ export default {
             },
             required: true,
         },
-        sort: {
-            type: Object,
-            default() {
-                return {}
-            },
-        },
         pagination: {
             type: Object,
             default() {
@@ -98,19 +78,12 @@ export default {
     },
     data() {
         return {
-            sortDefault: {
-                field: null,
-                type: 'asc',
-            },
             paginationDefault: {
                 enabled: true,
                 itemsPerPage: 5,
                 align: 'right',
                 visualStyle: 'buttons',
             },
-            sortColumn: null,
-            sortField: null,
-            sortOrder: null,
             visibleRows: {},
             tableRows: {},
             page: 1,
@@ -123,14 +96,8 @@ export default {
         },
     },
     computed: {
-        sortOptions() {
-            return Object.assign(this.sortDefault, this.sort)
-        },
         paginationOptions() {
             return Object.assign(this.paginationDefault, this.pagination)
-        },
-        sortEnabled() {
-            return this.sortOptions.field != null && this.numRows > 0
         },
         paginationEnabled() {
             return (
@@ -139,6 +106,7 @@ export default {
                 this.numRows > 0
             )
         },
+        //数据条数
         numRows() {
             return this.rows.length
         },
@@ -153,7 +121,6 @@ export default {
     },
     mounted() {
         this.tableRows = this.rows.slice(0) // Para que haga una copia del array
-        if (this.sortEnabled) this.initSort()
         this.selectVisibleRows()
     },
     methods: {
@@ -170,65 +137,14 @@ export default {
                 this.visibleRows = this.tableRows.slice(rowFirst, rowLast)
             } else this.visibleRows = this.tableRows.slice(0)
         },
-        initSort: function () {
-            this.sortOrder = this.sortOptions.order === 'asc' ? 'asc' : 'desc'
-
-            let defaultSortColumn = null
-
-            for (let x = 0; x < this.headers.length; x++) {
-                if (
-                    this.headers[x].sortable &&
-                    this.headers[x].field == this.sortOptions.field
-                ) {
-                    defaultSortColumn = x
-                    break
-                }
-            }
-
-            if (defaultSortColumn != null) this.sortBy(defaultSortColumn)
-        },
-        sortBy: function (idx) {
-            if (this.sortEnabled && this.headers[idx].sortable) {
-                if (this.sortColumn == idx) {
-                    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc'
-                    this.tableRows.reverse()
-                } else {
-                    this.sortColumn = idx
-                    this.sortOrder = 'asc'
-                    this.sortField = this.headers[idx].field
-
-                    if (this.headers[idx].type == 'Number') {
-                        this.tableRows.sort(
-                            (a, b) => a[this.sortField] - b[this.sortField]
-                        )
-                    } else {
-                        this.tableRows.sort((a, b) =>
-                            a[this.sortField].localeCompare(b[this.sortField])
-                        )
-                    }
-                }
-
-                this.page = 1
-
-                this.selectVisibleRows()
-            }
-        },
     },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import url(./style/icofont.scss);
-.material-icons {
-    font-size: 1rem;
-    display: inline-block;
-    vertical-align: middle;
-    cursor: pointer;
-}
-// Default table styles
 .ozn {
-    .ozn-table {
+    .hs-table {
         border-collapse: collapse;
         width: 100%;
         thead {
@@ -238,13 +154,6 @@ export default {
                 height: 48px;
                 text-align: left;
                 font-size: 1em;
-                cursor: pointer;
-                &:hover {
-                    span {
-                        text-decoration: underline;
-                        text-decoration-style: dotted;
-                    }
-                }
                 i {
                     color: #aaa;
                     &.active {

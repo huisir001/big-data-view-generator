@@ -2,7 +2,7 @@
  * @Description: 表格组件-支持简单展示功能和样式调整
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-01-28 14:13:24
+ * @LastEditTime: 2021-01-28 18:13:43
 -->
 <template>
     <div style="width: 500px; height: 200px">
@@ -24,7 +24,7 @@
             </template>
 
             <template v-slot:no-data>
-                <span>No data</span>
+                <div class="no_data">暂无数据</div>
             </template>
         </TableView>
     </div>
@@ -43,6 +43,7 @@ export default {
         return {
             columns: columns,
             items: rows,
+            // items: [],
             sort1: {
                 field: 'first_name',
                 order: 'asc',
@@ -50,7 +51,7 @@ export default {
             pagination: {
                 itemsPerPage: 7,
                 align: 'center',
-                visualStyle: 'select',
+                // visualStyle: 'select',
             },
         }
     },
@@ -58,9 +59,12 @@ export default {
 </script>
 
 <style lang="scss">
+.no_data {
+    text-align: center;
+}
 .custom-style {
     // Table styles
-    .ozn-table {
+    .hs-table {
         border-collapse: collapse;
         width: 100%;
         thead {
@@ -72,13 +76,6 @@ export default {
                 font-size: 1em;
                 color: #fff;
                 background-color: #7cc3fd;
-                cursor: pointer;
-                &:hover {
-                    span {
-                        text-decoration: underline;
-                        text-decoration-style: dotted;
-                    }
-                }
                 i {
                     color: #ffffff;
                     &.active {
@@ -108,7 +105,7 @@ export default {
         }
     }
     // Paginator styles
-    .ozn-paginator {
+    .hs-paginator {
         margin-top: 0.5em;
         select {
             border: 1px solid #7cc3fd;
