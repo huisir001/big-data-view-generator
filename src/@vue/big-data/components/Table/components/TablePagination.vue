@@ -80,13 +80,13 @@ button {
         display: inline-block;
     }
     &.hs-prev {
-        margin-right: 0.5rem;
+        margin-right: 10px;
         .caret {
             margin-right: 2px;
         }
     }
     &.hs-next {
-        margin-left: 0.5rem;
+        margin-left: 10px;
         .caret {
             margin-left: 2px;
         }
@@ -101,25 +101,22 @@ button {
 .hs-center {
     text-align: center;
 }
-// Default paginator styles
-.hs {
-    .hs-paginator {
-        margin: 0.5em 0;
-        span {
-            display: inline-block;
-            vertical-align: middle;
-        }
-        button {
-            border: 1px solid #ccc;
-            outline: none;
-            background-color: #fff;
-        }
-        select {
-            margin: 0 10px;
-            border: 1px solid #ccc;
-            outline: none;
-            background-color: #fff;
-        }
+.hs-paginator {
+    height: 22px;
+    margin-top: 8px;
+    select {
+        border: 1px solid #7cc3fd;
+        border-radius: 8px;
+        color: #ffffff;
+        background-color: #7cc3fd;
+        outline: none;
+    }
+    button {
+        border: 1px solid #7cc3fd;
+        border-radius: 8px;
+        color: #ffffff;
+        background-color: #7cc3fd;
+        outline: none;
     }
 }
 </style>

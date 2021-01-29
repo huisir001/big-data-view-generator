@@ -2,19 +2,23 @@ export const columns = [
     {
         label: 'First Name',
         field: 'first_name',
-        sortable: true,
-        type: 'String',
+        fixed: true,
+        fixedPos: 'left',
     },
-    { label: 'Last Name', field: 'last_name', sortable: true, type: 'String' },
-    { label: 'Email', field: 'email', sortable: true, type: 'String' },
-    { label: 'Age', field: 'age', sortable: true, type: 'String' },
-    { label: 'Country', field: 'country', sortable: true, type: 'String' },
-    { label: 'Category', field: 'category', sortable: true, type: 'String' },
+    {
+        label: 'Last Name',
+        field: 'last_name',
+    },
+    { label: 'Email', field: 'email' },
+    { label: 'Age', field: 'age' },
+    { label: 'Country', field: 'country' },
+    { label: 'Category', field: 'category' },
     {
         label: 'Last Update',
         field: 'last_update',
-        sortable: true,
-        type: 'String',
+        fixed: true,
+        fixedPos: 'right',
+        width: 120,
     },
 ]
 
