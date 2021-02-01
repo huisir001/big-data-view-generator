@@ -1,7 +1,7 @@
 <template>
     <div class="hs-paginator" :class="alignClass">
         <template v-if="paginationOptions.visualStyle === 'select'">
-            <span>Page </span>
+            <span style="margin-right: 5px">第</span>
             <select @change="onChange">
                 <option
                     v-for="index in totalPages"
@@ -12,23 +12,19 @@
                     {{ index }}
                 </option>
             </select>
-            <span> of {{ totalPages }}</span>
+            <span style="margin-left: 5px">页 共{{ totalPages }}页</span>
         </template>
         <template v-else>
             <button
-                class="hs-prev"
-                v-if="prevPage > 0"
-                @click="goToPage(prevPage)"
+                :class="{ 'hs-prev': true, disable: prevPage <= 0 }"
+                @click="prevPage > 0 && goToPage(prevPage)"
             >
                 <span class="caret">◀</span>
             </button>
-            <span
-                >Page <strong>{{ page }}</strong> of {{ totalPages }}</span
-            >
+            <span>第{{ page }}页 共{{ totalPages }}页</span>
             <button
-                class="hs-next"
-                v-if="nextPage <= totalPages"
-                @click="goToPage(nextPage)"
+                :class="{ 'hs-next': true, disable: nextPage > totalPages }"
+                @click="nextPage <= totalPages && goToPage(nextPage)"
             >
                 <span class="caret">▶</span>
             </button>
@@ -91,25 +87,39 @@ button {
             margin-left: 2px;
         }
     }
-}
-.hs-left {
-    text-align: left;
-}
-.hs-right {
-    text-align: right;
-}
-.hs-center {
-    text-align: center;
+    &.disable {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 .hs-paginator {
-    height: 22px;
+    height: 20px;
     margin-top: 8px;
+    font-family: cursive;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.hs-left {
+        text-align: left;
+        justify-content: flex-start;
+    }
+    &.hs-right {
+        text-align: right;
+        justify-content: flex-end;
+    }
+    &.hs-center {
+        text-align: center;
+    }
     select {
         border: 1px solid #7cc3fd;
         border-radius: 8px;
         color: #ffffff;
         background-color: #7cc3fd;
         outline: none;
+        height: 18px;
+        line-height: 18px;
     }
     button {
         border: 1px solid #7cc3fd;

@@ -2,8 +2,7 @@ export const columns = [
     {
         label: 'First Name',
         field: 'first_name',
-        fixed: true,
-        fixedPos: 'left',
+        fixed: 'left',
     },
     {
         label: 'Last Name',
@@ -16,8 +15,7 @@ export const columns = [
     {
         label: 'Last Update',
         field: 'last_update',
-        fixed: true,
-        fixedPos: 'right',
+        fixed: 'right',
         width: 120,
     },
 ]

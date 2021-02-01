@@ -2,7 +2,7 @@
  * @Description: 表格组件-不支持排序，排序让后端去处理
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-01-29 18:42:09
+ * @LastEditTime: 2021-02-01 16:52:36
 -->
 <template>
     <div class="hs-component">
@@ -19,12 +19,12 @@
                             :key="idx"
                             :class="{
                                 fixed: col.fixed,
-                                left: col.fixed && col.fixedPos == 'left',
-                                right: col.fixed && col.fixedPos == 'right',
+                                left: col.fixed && col.fixed == 'left',
+                                right: col.fixed && col.fixed == 'right',
                                 last: fixedLeftHeadersLast == col.field,
                                 first: fixedRightHeadersLast == col.field,
                             }"
-                            :ref="col.fixed ? col.fixedPos : 'th_other'"
+                            :ref="col.fixed ? col.fixed : 'th_other'"
                             :style="{ width: col.width + 'px' }"
                         >
                             <span>{{ col.label }}</span>
@@ -44,15 +44,13 @@
                                 :key="j"
                                 :class="{
                                     fixed: col.fixed,
-                                    left: col.fixed && col.fixedPos == 'left',
-                                    right: col.fixed && col.fixedPos == 'right',
+                                    left: col.fixed && col.fixed == 'left',
+                                    right: col.fixed && col.fixed == 'right',
                                     last: fixedLeftHeadersLast == col.field,
                                     first: fixedRightHeadersLast == col.field,
                                 }"
                                 :ref="
-                                    col.fixed
-                                        ? col.fixedPos + '_' + i
-                                        : 'td_other'
+                                    col.fixed ? col.fixed + '_' + i : 'td_other'
                                 "
                             >
                                 {{ row[col.field] }}
@@ -63,7 +61,7 @@
                     <template v-else>
                         <tr>
                             <td :colspan="numColumns">
-                                <slot name="no-data"></slot>
+                                <div class="no_data">暂无数据</div>
                             </td>
                         </tr>
                     </template>
@@ -125,17 +123,23 @@ export default {
             this.tableRows = this.rows.slice(0)
             this.selectVisibleRows()
         },
+        page(val, oldVal) {
+            const { totalPages, $nextTick, fixedColSetPos } = this
+            //如若上一页是最后一页，那么重新执行列位置固定
+            if (oldVal == totalPages) {
+                //页面完全渲染结束之后调用,否则会找不到元素
+                $nextTick(() => {
+                    fixedColSetPos()
+                })
+            }
+        },
     },
     computed: {
         //hearder 根据固定列排序
         headersArrange() {
             const headers = this.headers
-            let leftArr = headers.filter(
-                    (h) => h.fixed && h.fixedPos == 'left'
-                ),
-                rightArr = headers.filter(
-                    (h) => h.fixed && h.fixedPos == 'right'
-                ),
+            let leftArr = headers.filter((h) => h.fixed && h.fixed == 'left'),
+                rightArr = headers.filter((h) => h.fixed && h.fixed == 'right'),
                 midArr = headers.filter((h) => !h.fixed)
             return leftArr.concat(midArr).concat(rightArr)
         },
@@ -163,16 +167,12 @@ export default {
         },
         //固定在左侧的最后一列
         fixedLeftHeadersLast() {
-            var cols = this.headers.filter(
-                (h) => h.fixed && h.fixedPos == 'left'
-            )
+            var cols = this.headers.filter((h) => h.fixed && h.fixed == 'left')
             return cols.length > 0 ? cols[cols.length - 1].field : null
         },
         //固定在右侧的第一列
         fixedRightHeadersLast() {
-            var cols = this.headers.filter(
-                (h) => h.fixed && h.fixedPos == 'right'
-            )
+            var cols = this.headers.filter((h) => h.fixed && h.fixed == 'right')
             return cols.length > 0 ? cols[0].field : null
         },
     },
@@ -260,7 +260,7 @@ export default {
         top: -1px;
     }
     &.left.last::after {
-        right: -6px;
+        right: -7px;
         background: linear-gradient(
             to left,
             rgba(0, 0, 0, 0),
@@ -268,7 +268,7 @@ export default {
         );
     }
     &.right.first::after {
-        left: -6px;
+        left: -7px;
         background: linear-gradient(
             to right,
             rgba(0, 0, 0, 0),
@@ -283,35 +283,31 @@ export default {
         height: calc(100% - 30px);
         overflow: auto;
         background: #7cc3fd;
+        /* 设置滚动条的样式 */
         &::-webkit-scrollbar {
-            display: none;
+            display: block;
+            width: 10px;
+            height: 10px;
         }
-        &:hover {
-            /* 设置滚动条的样式 */
-            &::-webkit-scrollbar {
-                display: block;
-                width: 10px;
-                height: 10px;
-            }
-            /*滚动槽*/
-            &::-webkit-scrollbar-track {
-                background: rgba(0, 0, 0, 0.1);
-                margin-top: 48px;
-            }
-            /* 滚动条滑块 */
-            &::-webkit-scrollbar-thumb {
-                background: rgba(0, 0, 0, 0.2);
-            }
-            /* 横向纵向滚动条交汇处 */
-            &::-webkit-scrollbar-corner {
-                background: rgba(0, 0, 0, 0);
-            }
+        /*滚动槽*/
+        &::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            margin-top: 48px;
+        }
+        /* 滚动条滑块 */
+        &::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        /* 横向纵向滚动条交汇处 */
+        &::-webkit-scrollbar-corner {
+            background: rgba(0, 0, 0, 0);
         }
         .hs-table {
             border-collapse: collapse;
             width: 100%;
             table-layout: auto; /* 单元格尺寸自适应 */
             // table-layout: fixed; /* 单元格尺寸自定义 */
+            min-height: 100%;
             thead {
                 th {
                     border-bottom: 1px solid #ffffff;
@@ -340,6 +336,9 @@ export default {
                     &:nth-child(even) > td {
                         background-color: #fafaeb;
                     }
+                    &:last-child > td {
+                        border-bottom: 0;
+                    }
                 }
                 td {
                     border-bottom: 1px solid #ffffff;
@@ -347,6 +346,9 @@ export default {
                     height: 48px;
                     font-size: 12px;
                     white-space: nowrap; /* 不允许换行 */
+                    &:first-child {
+                        border-left: 0;
+                    }
                     &.fixed {
                         position: sticky;
                         z-index: 1;
@@ -362,5 +364,8 @@ export default {
             }
         }
     }
+}
+.no_data {
+    text-align: center;
 }
 </style>
