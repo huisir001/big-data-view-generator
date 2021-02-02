@@ -2,44 +2,44 @@
  * @Description: 表单
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-20 09:59:15
- * @LastEditTime: 2021-01-25 18:00:00
+ * @LastEditTime: 2021-02-02 10:02:09
 -->
 <template>
     <div style="width: 100%; height: 100%">
-        <template v-if="options.type == 'text'">
+        <template v-if="myOptions.type == 'text'">
             <input
                 type="text"
-                v-model="options.value"
+                v-model="myOptions.value"
                 class="formInput"
-                :placeholder="options.placeholder"
+                :placeholder="myOptions.placeholder"
                 :style="{
-                    width: options.formWidth + 'px',
-                    height: options.formHeight + 'px',
-                    lineHeight: options.formHeight + 'px',
-                    border: `${options.borderWidth}px ${options.borderStyle} ${options.borderColor}`,
-                    color: options.color,
-                    background: options.background,
-                    fontSize: options.formHeight / 2 + 'px',
+                    width: myOptions.formWidth + 'px',
+                    height: myOptions.formHeight + 'px',
+                    lineHeight: myOptions.formHeight + 'px',
+                    border: `${myOptions.borderWidth}px ${myOptions.borderStyle} ${myOptions.borderColor}`,
+                    color: myOptions.color,
+                    background: myOptions.background,
+                    fontSize: myOptions.formHeight / 2 + 'px',
                 }"
             />
         </template>
-        <template v-if="options.type == 'select'">
+        <template v-if="myOptions.type == 'select'">
             <select
-                v-model="options.value"
+                v-model="myOptions.value"
                 class="formInput"
                 :style="{
-                    width: options.formWidth + 'px',
-                    height: options.formHeight + 'px',
-                    lineHeight: options.formHeight + 'px',
-                    border: `${options.borderWidth}px ${options.borderStyle} ${options.borderColor}`,
-                    color: options.value == '' ? '#757575' : options.color,
-                    background: options.background,
-                    fontSize: options.formHeight / 2 + 'px',
+                    width: myOptions.formWidth + 'px',
+                    height: myOptions.formHeight + 'px',
+                    lineHeight: myOptions.formHeight + 'px',
+                    border: `${myOptions.borderWidth}px ${myOptions.borderStyle} ${myOptions.borderColor}`,
+                    color: myOptions.value == '' ? '#757575' : myOptions.color,
+                    background: myOptions.background,
+                    fontSize: myOptions.formHeight / 2 + 'px',
                 }"
             >
-                <option value="">{{ options.placeholder }}</option>
+                <option value="">{{ myOptions.placeholder }}</option>
                 <option
-                    v-for="o in options.selectOptions"
+                    v-for="o in myOptions.selectOptions"
                     :key="o.value"
                     :value="o.value"
                 >
@@ -47,18 +47,18 @@
                 </option>
             </select>
         </template>
-        <template v-if="options.type == 'date'">
+        <template v-if="myOptions.type == 'date'">
             <!-- date-type:1-5 -->
-            <!-- :sel-val="options.value" -->
+            <!-- :sel-val="myOptions.value" -->
             <DateSelect
-                :date-type="parseInt(options.dateType)"
-                :sel-val="options.value"
-                :width="options.formWidth"
-                :height="options.formHeight"
-                :placeholder="options.placeholder"
-                :border="`${options.borderWidth}px ${options.borderStyle} ${options.borderColor}`"
-                :color="options.color"
-                :background="options.background"
+                :date-type="parseInt(myOptions.dateType)"
+                :sel-val="myOptions.value"
+                :width="myOptions.formWidth"
+                :height="myOptions.formHeight"
+                :placeholder="myOptions.placeholder"
+                :border="`${myOptions.borderWidth}px ${myOptions.borderStyle} ${myOptions.borderColor}`"
+                :color="myOptions.color"
+                :background="myOptions.background"
                 @change="dateSelectChange"
             ></DateSelect>
         </template>
@@ -79,7 +79,7 @@ export default {
     },
     methods: {
         dateSelectChange(e) {
-            this.options.value = e
+            this.myOptions.value = e
         },
     },
 }

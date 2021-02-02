@@ -2,7 +2,7 @@
  * @Description: 表格参数配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-01 11:46:53
- * @LastEditTime: 2021-02-01 18:14:00
+ * @LastEditTime: 2021-02-02 16:17:50
  */
 import { ObjVerify } from '../../../utils/myUtils'
 import { tableColsMock, compDataMock } from './mockData'
@@ -18,7 +18,7 @@ class Config {
             ...commonTypes,
             tableCols: Array, //表格字段配置
             tableData: Array, //表格静态数据
-            wrap: Boolean, //是否允许换行，默认不换行false
+            nowrap: Boolean, //是否不允许换行，默认不换行true
             tableLayoutAuto: Boolean, //是否自动布局，默认自动，若非自动布局（自动宽度），则根据每个字段自定义的宽度布局
             cellCentered: Boolean, //单元格居中，默认不居中（居左）
             thHeight: Number, //表头行高
@@ -32,11 +32,11 @@ class Config {
             tdFontSize: Number, //表体文字大小
             showTableOutBorder: Boolean, //显示表格外边框
             tableOutBorderStyle: String, //表格外边框线型 solid/dashed/dotted/double/groove
-            tableOutBorderWidth: Number, //表格外边框线粗
+            tableOutBorderWidth: Number, //表格外边框线宽
             tableOutBorderColor: String, //表格外边框颜色
             showTableCelBorder: Boolean, //显示单元格边框
             tableCelBorderStyle: String, //单元格边框线型 solid/dashed/dotted/double/groove
-            tableCelBorderWidth: Number, //单元格边框线型
+            tableCelBorderWidth: Number, //单元格边框线宽
             tableCelBorderColor: String, //单元格边框颜色
             showPage: Boolean, //开启分页
             itemsPerPage: Number, //每页条数
@@ -63,7 +63,7 @@ class Config {
         this.defaultOptions = {
             ...commonDefaultVal,
             ...TableData,
-            wrap: false,
+            nowrap: true,
             tableLayoutAuto: true,
             cellCentered: false,
             thHeight: 40,
@@ -82,7 +82,7 @@ class Config {
             showTableCelBorder: false,
             tableCelBorderStyle: 'solid',
             tableCelBorderWidth: 1,
-            tableCelBorderColor: '#ffffff',
+            tableCelBorderColor: '#333333',
             showPage: true,
             itemsPerPage: 10,
             pageNavAlign: 'center',

@@ -1,5 +1,17 @@
 <template>
-    <div class="hs-paginator" :class="alignClass">
+    <div
+        class="hs-paginator"
+        :class="alignClass"
+        :style="{
+            fontSize: paginationOptions.fontSize + 'px',
+            color: paginationOptions.fontColor,
+            '--btnBgColor': btnBgColor,
+            '--btnFontColor': btnFontColor,
+            '--btnFontSize': paginationOptions.fontSize - 4 + 'px',
+            '--btnHeight': paginationOptions.fontSize + 4 + 'px',
+            '--navHeight': paginationOptions.fontSize + 6 + 'px',
+        }"
+    >
         <template v-if="paginationOptions.visualStyle === 'select'">
             <span style="margin-right: 5px">第</span>
             <select @change="onChange">
@@ -39,6 +51,8 @@ export default {
         page: Number,
         totalPages: Number,
         paginationOptions: Object,
+        btnBgColor: String,
+        btnFontColor: String,
     },
     data() {
         return {}
@@ -71,7 +85,6 @@ button {
     vertical-align: middle;
     cursor: pointer;
     .caret {
-        font-size: 12px;
         transform: scaleX(0.6);
         display: inline-block;
     }
@@ -93,11 +106,10 @@ button {
     }
 }
 .hs-paginator {
-    height: 20px;
+    height: var(--navHeight);
+    line-height: var(--navHeight);
     margin-top: 8px;
-    font-family: cursive;
-    font-size: 15px;
-    line-height: 20px;
+    font-family: Arial;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -112,20 +124,15 @@ button {
     &.hs-center {
         text-align: center;
     }
-    select {
-        border: 1px solid #7cc3fd;
-        border-radius: 8px;
-        color: #ffffff;
-        background-color: #7cc3fd;
-        outline: none;
-        height: 18px;
-        line-height: 18px;
-    }
+    select,
     button {
-        border: 1px solid #7cc3fd;
+        color: var(--btnFontColor);
+        background-color: var(--btnBgColor);
+        height: var(--btnHeight);
+        line-height: var(--btnHeight);
+        font-size: var(--btnFontSize);
+        border: none;
         border-radius: 8px;
-        color: #ffffff;
-        background-color: #7cc3fd;
         outline: none;
     }
 }

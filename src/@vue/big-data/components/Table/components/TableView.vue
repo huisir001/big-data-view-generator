@@ -2,16 +2,29 @@
  * @Description: 表格组件-不支持排序，排序让后端去处理
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-01 16:52:36
+ * @LastEditTime: 2021-02-02 15:51:03
 -->
 <template>
-    <div class="hs-component">
+    <div class="hs-table">
         <div
             class="tableBox"
             @scroll="tableBoxScroll"
-            :class="{ scrollLeft, scrollRight }"
+            :style="tableStyleVar"
+            :class="{
+                scrollLeft,
+                scrollRight,
+                nowrap: tableStyles.nowrap,
+                cellcenter: tableStyles.cellCentered,
+                outBorder: tableStyles.showTableOutBorder,
+                celBorder: tableStyles.showTableCelBorder,
+            }"
         >
-            <table class="hs-table">
+            <table
+                :class="{
+                    'hs-table': true,
+                    layoutAuto: tableStyles.tableLayoutAuto,
+                }"
+            >
                 <thead>
                     <tr>
                         <th
@@ -73,7 +86,9 @@
             v-if="paginationEnabled"
             :page="page"
             :total-pages="totalPages"
-            :pagination-options="paginationOptions"
+            :pagination-options="pagination"
+            :btn-bg-color="tableStyles.thBgColor"
+            :btn-font-color="tableStyles.thFontColor"
             @new-page="onNewPage"
         />
     </div>
@@ -98,19 +113,49 @@ export default {
             default: [],
             required: true,
         },
+        tableStyles: {
+            type: Object,
+            default() {
+                return {
+                    nowrap: true,
+                    tableLayoutAuto: true,
+                    cellCentered: false,
+                    thHeight: 40,
+                    tdHeight: 40,
+                    thBgColor: '#7cc3fd',
+                    tdOddBgColor: '#e9f5ff',
+                    tdEvenBgColor: '#fafaeb',
+                    thFontColor: '#ffffff',
+                    tdFontColor: '#444444',
+                    thFontSize: 13,
+                    tdFontSize: 12,
+                    showTableOutBorder: false,
+                    tableOutBorderStyle: 'solid',
+                    tableOutBorderWidth: 1,
+                    tableOutBorderColor: '#333333',
+                    showTableCelBorder: false,
+                    tableCelBorderStyle: 'solid',
+                    tableCelBorderWidth: 1,
+                    tableCelBorderColor: '#ffffff',
+                }
+            },
+        },
         pagination: {
             type: Object,
-            default: [],
+            default() {
+                return {
+                    enabled: true, //允许分页
+                    itemsPerPage: 5,
+                    align: 'right',
+                    visualStyle: 'buttons',
+                    fontSize: 15,
+                    fontColor: '#444444',
+                }
+            },
         },
     },
     data() {
         return {
-            paginationDefault: {
-                enabled: true,
-                itemsPerPage: 5,
-                align: 'right',
-                visualStyle: 'buttons',
-            },
             visibleRows: {},
             tableRows: {},
             page: 1,
@@ -143,13 +188,10 @@ export default {
                 midArr = headers.filter((h) => !h.fixed)
             return leftArr.concat(midArr).concat(rightArr)
         },
-        paginationOptions() {
-            return Object.assign(this.paginationDefault, this.pagination)
-        },
         paginationEnabled() {
             return (
-                this.paginationOptions.enabled &&
-                this.paginationOptions.itemsPerPage > 0 &&
+                this.pagination.enabled &&
+                this.pagination.itemsPerPage > 0 &&
                 this.numRows > 0
             )
         },
@@ -162,7 +204,7 @@ export default {
         },
         totalPages() {
             return this.paginationEnabled
-                ? Math.ceil(this.numRows / this.paginationOptions.itemsPerPage)
+                ? Math.ceil(this.numRows / this.pagination.itemsPerPage)
                 : null
         },
         //固定在左侧的最后一列
@@ -174,6 +216,39 @@ export default {
         fixedRightHeadersLast() {
             var cols = this.headers.filter((h) => h.fixed && h.fixed == 'right')
             return cols.length > 0 ? cols[0].field : null
+        },
+        //表格样式动态变量
+        tableStyleVar() {
+            const {
+                thHeight,
+                tdHeight,
+                thBgColor,
+                tdOddBgColor,
+                tdEvenBgColor,
+                thFontColor,
+                tdFontColor,
+                thFontSize,
+                tdFontSize,
+                tableOutBorderStyle,
+                tableOutBorderWidth,
+                tableOutBorderColor,
+                tableCelBorderStyle,
+                tableCelBorderWidth,
+                tableCelBorderColor,
+            } = this.tableStyles
+            return {
+                '--thHeight': thHeight + 'px',
+                '--tdHeight': tdHeight + 'px',
+                '--thBgColor': thBgColor,
+                '--tdOddBgColor': tdOddBgColor,
+                '--tdEvenBgColor': tdEvenBgColor,
+                '--thFontColor': thFontColor,
+                '--tdFontColor': tdFontColor,
+                '--thFontSize': thFontSize + 'px',
+                '--tdFontSize': tdFontSize + 'px',
+                '--tableOutBorder': `${tableOutBorderWidth}px ${tableOutBorderStyle} ${tableOutBorderColor}`,
+                '--tableCelBorder': `${tableCelBorderWidth}px ${tableCelBorderStyle} ${tableCelBorderColor}`,
+            }
         },
     },
     mounted() {
@@ -193,9 +268,9 @@ export default {
         selectVisibleRows: function () {
             if (this.paginationEnabled) {
                 const rowFirst =
-                    this.page * this.paginationOptions.itemsPerPage -
-                    this.paginationOptions.itemsPerPage
-                const rowLast = this.page * this.paginationOptions.itemsPerPage
+                    this.page * this.pagination.itemsPerPage -
+                    this.pagination.itemsPerPage
+                const rowLast = this.page * this.pagination.itemsPerPage
                 this.visibleRows = this.tableRows.slice(rowFirst, rowLast)
             } else this.visibleRows = this.tableRows.slice(0)
         },
@@ -276,13 +351,14 @@ export default {
         );
     }
 }
-.hs-component {
+.hs-table {
     height: 100%;
     width: 100%;
     .tableBox {
         height: calc(100% - 30px);
         overflow: auto;
         background: #7cc3fd;
+        line-height: 1.2;
         /* 设置滚动条的样式 */
         &::-webkit-scrollbar {
             display: block;
@@ -292,7 +368,7 @@ export default {
         /*滚动槽*/
         &::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.1);
-            margin-top: 48px;
+            margin-top: var(--thHeight);
         }
         /* 滚动条滑块 */
         &::-webkit-scrollbar-thumb {
@@ -305,49 +381,50 @@ export default {
         .hs-table {
             border-collapse: collapse;
             width: 100%;
-            table-layout: auto; /* 单元格尺寸自适应 */
-            // table-layout: fixed; /* 单元格尺寸自定义 */
+            table-layout: fixed; /* 单元格尺寸自定义 */
             min-height: 100%;
+            &.layoutAuto {
+                table-layout: auto !important; /* 单元格尺寸自适应 */
+            }
             thead {
                 th {
-                    border-bottom: 1px solid #ffffff;
+                    height: var(--thHeight);
+                    font-size: var(--thFontSize);
+                    background-color: var(--thBgColor);
+                    color: var(--thFontColor);
                     padding: 0 10px;
-                    height: 48px;
                     text-align: left;
-                    font-size: 12px;
-                    color: #fff;
-                    background-color: #7cc3fd;
                     position: sticky;
                     top: 0;
                     z-index: 2;
-                    white-space: nowrap; /* 不允许换行 */
                     &.fixed {
-                        position: sticky;
                         z-index: 3;
                         @include fixed-shandow;
+                    }
+                    &:first-child {
+                        border-left: none !important;
                     }
                 }
             }
             tbody {
                 tr {
                     &:nth-child(odd) > td {
-                        background-color: #e9f5ff;
+                        background-color: var(--tdOddBgColor);
                     }
                     &:nth-child(even) > td {
-                        background-color: #fafaeb;
+                        background-color: var(--tdEvenBgColor);
                     }
                     &:last-child > td {
-                        border-bottom: 0;
+                        border-bottom: none !important;
                     }
                 }
                 td {
-                    border-bottom: 1px solid #ffffff;
+                    height: var(--tdHeight);
+                    font-size: var(--tdFontSize);
+                    color: var(--tdFontColor);
                     padding: 0 10px;
-                    height: 48px;
-                    font-size: 12px;
-                    white-space: nowrap; /* 不允许换行 */
                     &:first-child {
-                        border-left: 0;
+                        border-left: none !important;
                     }
                     &.fixed {
                         position: sticky;
@@ -361,6 +438,28 @@ export default {
         &.scrollRight .right {
             &::after {
                 display: none !important;
+            }
+        }
+        &.nowrap {
+            th,
+            td {
+                white-space: nowrap !important; /* 不换行 */
+            }
+        }
+        &.cellcenter {
+            th,
+            td {
+                text-align: center !important;
+            }
+        }
+        &.outBorder {
+            border: var(--tableOutBorder);
+        }
+        &.celBorder {
+            th,
+            td {
+                border-bottom: var(--tableCelBorder);
+                border-left: var(--tableCelBorder);
             }
         }
     }
