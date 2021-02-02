@@ -2,7 +2,7 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2021-01-22 14:47:06
+ * @LastEditTime: 2021-02-02 18:44:01
  */
 import {
     coBarChart,
@@ -20,8 +20,8 @@ import {
     fcoRadarChart,
     fcoScatterChart,
 } from './formControlOptions/charts'
-import { coForm } from './compOptions/base'
-import { fcoForm } from './formControlOptions/base'
+import { coForm, coTable } from './compOptions/base'
+import { fcoForm, fcoTable } from './formControlOptions/base'
 
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
@@ -37,6 +37,13 @@ export default [
                 pic: require('@/assets/img/compList/form.png'),
                 compOptions: coForm,
                 formControlOptions: fcoForm,
+            },
+            {
+                title: '表格',
+                type: 'Table',
+                pic: require('@/assets/img/compList/table.png'),
+                compOptions: coTable,
+                formControlOptions: fcoTable,
             },
         ],
     },

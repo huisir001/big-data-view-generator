@@ -2,7 +2,7 @@
  * @Description: 表单配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-22 10:14:38
- * @LastEditTime: 2021-01-26 11:38:30
+ * @LastEditTime: 2021-02-02 17:31:39
  */
 
 import { publicOpts } from './common'
@@ -104,6 +104,16 @@ export default [
     {
         key: 'borderColor',
         label: '边框颜色',
+        compType: 'color',
+    },
+    {
+        key: 'color',
+        label: '字体颜色',
+        compType: 'color',
+    },
+    {
+        key: 'background',
+        label: '背景颜色',
         compType: 'color',
     },
     {

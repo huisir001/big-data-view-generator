@@ -9,6 +9,8 @@ import { publicOpts } from './common'
 
 export default {
     ...publicOpts,
+    color: '#444444',
+    background: '#ffffff',
     type: 'text',
     field: 'field',
     value: '',

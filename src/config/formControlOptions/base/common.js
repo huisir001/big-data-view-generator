@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-26 10:59:02
+ * @LastEditTime: 2021-02-02 17:31:15
  */
 
 /* 共有 */
@@ -31,17 +31,6 @@ export const publicOpts = [
         label: '高度',
         compType: 'number',
         layerOption: true,
-    },
-    /* 样式 */
-    {
-        key: 'color',
-        label: '字体颜色',
-        compType: 'color',
-    },
-    {
-        key: 'background',
-        label: '背景颜色',
-        compType: 'color',
     },
 
     /* 图表数据 */

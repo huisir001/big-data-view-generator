@@ -2,17 +2,15 @@
  * @Description: 表格组件-支持简单展示功能和样式调整
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-02 15:30:06
+ * @LastEditTime: 2021-02-02 18:48:34
 -->
 <template>
-    <div style="width: 500px; height: 200px">
-        <TableView
-            :headers="myOptions.tableCols"
-            :rows="rows"
-            :tableStyles="tableStyles"
-            :pagination="pagination"
-        ></TableView>
-    </div>
+    <TableView
+        :headers="myOptions.tableCols"
+        :rows="rows"
+        :tableStyles="tableStyles"
+        :pagination="pagination"
+    ></TableView>
 </template>
 
 <script>
@@ -21,11 +19,11 @@ import others from '../../mixins/others'
 import TableView from './components/TableView'
 
 export default {
-    name: 'App',
+    name: 'Table',
+    mixins: [others],
     components: {
         TableView,
     },
-    mixins: [others],
     data() {
         return { Config }
     },
@@ -100,9 +98,6 @@ export default {
                 fontColor: pageNavFontColor,
             }
         },
-    },
-    mounted() {
-        console.log(this.myOptions)
     },
 }
 </script>

@@ -2,7 +2,7 @@
  * @Description: 表格参数配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-01 11:46:53
- * @LastEditTime: 2021-02-02 16:17:50
+ * @LastEditTime: 2021-02-02 18:48:54
  */
 import { ObjVerify } from '../../../utils/myUtils'
 import { tableColsMock, compDataMock } from './mockData'
@@ -31,12 +31,12 @@ class Config {
             thFontSize: Number, //表头文字大小
             tdFontSize: Number, //表体文字大小
             showTableOutBorder: Boolean, //显示表格外边框
-            tableOutBorderStyle: String, //表格外边框线型 solid/dashed/dotted/double/groove
             tableOutBorderWidth: Number, //表格外边框线宽
+            tableOutBorderStyle: String, //表格外边框线型 solid/dashed/dotted/double/groove
             tableOutBorderColor: String, //表格外边框颜色
             showTableCelBorder: Boolean, //显示单元格边框
-            tableCelBorderStyle: String, //单元格边框线型 solid/dashed/dotted/double/groove
             tableCelBorderWidth: Number, //单元格边框线宽
+            tableCelBorderStyle: String, //单元格边框线型 solid/dashed/dotted/double/groove
             tableCelBorderColor: String, //单元格边框颜色
             showPage: Boolean, //开启分页
             itemsPerPage: Number, //每页条数

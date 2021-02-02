@@ -2,7 +2,7 @@
  * @Description: 组件注册
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-25 10:20:54
- * @LastEditTime: 2021-01-22 09:56:39
+ * @LastEditTime: 2021-02-02 18:43:35
  */
 // 导入组件
 import {
@@ -38,6 +38,7 @@ import {
 } from './components/BorderBox'
 
 import Form from './components/Form'
+import Table from './components/Table'
 
 // 存储组件列表
 const components = {
@@ -69,6 +70,7 @@ const components = {
     BorderBox12,
     BorderBox13,
     Form,
+    Table,
 }
 
 // 定义 install 方法
