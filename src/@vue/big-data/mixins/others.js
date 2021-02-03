@@ -2,14 +2,12 @@
  * @Description: 其他非图表组件公共方法
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-02-02 10:07:21
+ * @LastEditTime: 2021-02-03 14:58:22
  */
-import autoResize from './autoResize'
 import Axios from '../utils/axios'
 import { myLoading } from '../utils/myUtils'
 
 export default {
-    mixins: [autoResize],
     props: {
         options: {
             //参数

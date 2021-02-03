@@ -2,7 +2,7 @@
  * @Description: 模拟数据 Table
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-01 17:59:22
- * @LastEditTime: 2021-02-02 16:22:39
+ * @LastEditTime: 2021-02-03 17:00:54
  */
 export const tableColsMock = [
     {
@@ -15,7 +15,7 @@ export const tableColsMock = [
     { label: '年龄', field: 'age' },
 ]
 
-export const compDataMock = [
+export const tableDataMock = [
     {
         name: '张三',
         email: 'zhangsan@aaa.edu',

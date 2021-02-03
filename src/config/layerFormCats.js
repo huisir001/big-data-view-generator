@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-01-26 11:38:59
+ * @LastEditTime: 2021-02-03 17:05:08
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -63,6 +63,7 @@ export default [
             'refreshPeriod',
             'selectOptions',
             'note',
+            'staticData',
         ],
         compTypeFilter: compTypes_sjpz,
     },
@@ -82,6 +83,7 @@ export default [
             'borderColor',
             'dateType',
             'linkageLayers',
+            'tableCols',
         ],
         compTypeFilter: conpTypes_base,
     },

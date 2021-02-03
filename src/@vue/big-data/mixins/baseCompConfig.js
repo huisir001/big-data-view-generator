@@ -2,7 +2,7 @@
  * @Description: 基础组件公共配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-22 11:21:45
- * @LastEditTime: 2021-02-01 18:12:34
+ * @LastEditTime: 2021-02-03 17:02:41
  */
 
 export const commonTypes = {
@@ -38,10 +38,10 @@ export const compDataVerify = (options, requireParams) => {
     if (optionsLen > 0) {
         requireParams.forEach((param) => {
             switch (param) {
-                case 'compData':
-                    if (!options.useApiData && !options.compData) {
+                case 'staticData':
+                    if (!options.useApiData && !options.staticData) {
                         throw new Error(
-                            'Lack of data, Please send "compData" in parent component.'
+                            'Lack of data, Please send "staticData" in parent component.'
                         )
                     } else if (options.useApiData && !options.apiReqUrl) {
                         throw new Error(

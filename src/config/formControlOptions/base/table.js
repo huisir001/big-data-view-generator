@@ -2,12 +2,62 @@
  * @Description: 表格配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-02 17:18:04
- * @LastEditTime: 2021-02-02 18:21:04
+ * @LastEditTime: 2021-02-03 18:10:07
  */
 
 import { publicOpts } from './common'
 export default [
     ...publicOpts,
+    {
+        key: 'staticData',
+        compType: 'input',
+        label: '表格数据',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+        stringify: true, //需要转义为字符串显示在表单中
+    },
+    {
+        key: 'tableCols',
+        compType: 'complexArray',
+        label: '列项配置',
+        labelOnTop: true,
+        cols: [
+            {
+                lable: '标签',
+                field: 'label',
+                type: 'text',
+                default: '',
+            },
+            {
+                lable: '字段',
+                field: 'field',
+                type: 'text',
+                default: '',
+            },
+            {
+                lable: '固定',
+                field: 'fixed',
+                type: 'select',
+                options: [
+                    { value: 'left', label: '左侧' },
+                    { value: 'right', label: '右侧' },
+                ],
+                width: 70,
+                default: 'left',
+                allowEmpty: true,
+            },
+            {
+                lable: '宽度',
+                field: 'width',
+                type: 'number',
+                width: 70,
+                min: 12,
+                default: 50,
+                allowEmpty: true,
+            },
+        ],
+    },
     {
         key: 'nowrap',
         compType: 'switch',

@@ -2,7 +2,7 @@
  * @Description: 表格组件-支持简单展示功能和样式调整
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-02 18:48:34
+ * @LastEditTime: 2021-02-03 17:03:50
 -->
 <template>
     <TableView
@@ -32,7 +32,7 @@ export default {
             const { myOptions } = this
             return myOptions.useApiData
                 ? myOptions.dynamicData
-                : myOptions.compData
+                : myOptions.staticData
         },
         tableStyles() {
             const {

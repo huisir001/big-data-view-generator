@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-01-26 11:27:40
+ * @LastEditTime: 2021-02-03 19:10:16
 -->
 <template>
     <el-tooltip
@@ -213,7 +213,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="3">
                                 <el-button
                                     size="mini"
                                     type="primary"
@@ -279,7 +279,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="3">
                                 <el-button
                                     size="mini"
                                     type="primary"
@@ -501,11 +501,138 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="3">
                                 <el-button
                                     size="mini"
                                     type="primary"
                                     @click="addSelectOption"
+                                    >+ 新增</el-button
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+
+            <!-- 复合数组增删组件 -->
+            <template v-if="formItemOption.compType == 'complexArray'">
+                <table class="formItemTable cAFormTable">
+                    <thead>
+                        <tr>
+                            <th
+                                v-for="col in formItemOption.cols"
+                                :key="col.field"
+                                :style="{
+                                    width: col.width
+                                        ? col.width + 'px'
+                                        : 'auto',
+                                }"
+                            >
+                                {{ col.lable }}
+                            </th>
+                            <th width="36">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in formModelVal" :key="index">
+                            <td
+                                v-for="col in formItemOption.cols"
+                                :key="col.field"
+                            >
+                                <template v-if="item.hasOwnProperty(col.field)">
+                                    <el-input
+                                        v-if="col.type == 'text'"
+                                        v-model="item[col.field]"
+                                        size="mini"
+                                        type="text"
+                                        class="textArrayModifierInput"
+                                        :style="{
+                                            width: col.allowEmpty
+                                                ? 'calc(100% - 16px)'
+                                                : '100%',
+                                        }"
+                                    ></el-input>
+                                    <el-select
+                                        v-if="col.type == 'select'"
+                                        size="small"
+                                        v-model="item[col.field]"
+                                        placeholder="请选择"
+                                        class="selectArrayModifierInput"
+                                        :style="{
+                                            width: col.allowEmpty
+                                                ? 'calc(100% - 16px)'
+                                                : '100%',
+                                        }"
+                                    >
+                                        <el-option
+                                            v-for="option in col.options"
+                                            :key="option.value"
+                                            :label="option.label"
+                                            :value="option.value"
+                                        >
+                                        </el-option>
+                                    </el-select>
+                                    <el-input-number
+                                        v-if="col.type == 'number'"
+                                        size="small"
+                                        v-model="item[col.field]"
+                                        controls-position="right"
+                                        :min="
+                                            col.min
+                                                ? col.min
+                                                : col.min === 0
+                                                ? 0
+                                                : -Infinity
+                                        "
+                                        :max="
+                                            col.max
+                                                ? col.max
+                                                : col.max === 0
+                                                ? 0
+                                                : Infinity
+                                        "
+                                        class="numberArrayModifierInput"
+                                        :style="{
+                                            width: col.allowEmpty
+                                                ? 'calc(100% - 16px)'
+                                                : '100%',
+                                        }"
+                                    ></el-input-number>
+                                    <!-- 允许为空 -->
+                                    <i
+                                        v-if="col.allowEmpty"
+                                        class="el-icon-error allowEmpty"
+                                        title="不传此项"
+                                        @click="
+                                            setArrayItemEmpty(index, col.field)
+                                        "
+                                    ></i>
+                                </template>
+                                <i
+                                    v-else
+                                    class="el-icon-circle-plus allowEmpty"
+                                    title="添加此项"
+                                    @click="
+                                        cancelArrayItemEmpty(index, col.field)
+                                    "
+                                ></i>
+                            </td>
+                            <td>
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    icon="el-icon-delete"
+                                    style="padding: 3px 4px"
+                                    @click="delComplexArray(index)"
+                                ></el-button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td :colspan="formItemOption.cols.length + 1">
+                                <el-button
+                                    size="mini"
+                                    type="primary"
+                                    @click="addComplexArray"
                                     >+ 新增</el-button
                                 >
                             </td>
@@ -921,15 +1048,17 @@ export default {
                     //数据格式验证
                     let FormModelVal = JSON.parse(formModelVal),
                         flag = true
-                    Object.keys(FormModelVal).forEach((item) => {
-                        if (
-                            (jsonObj[item] != 0 && !jsonObj[item]) ||
-                            FormModelVal[item].constructor.name !=
-                                jsonObj[item].constructor.name
-                        ) {
-                            flag = false
-                        }
-                    })
+                    if (!FormModelVal instanceof Array) {
+                        Object.keys(FormModelVal).forEach((item) => {
+                            if (
+                                (jsonObj[item] != 0 && !jsonObj[item]) ||
+                                FormModelVal[item].constructor.name !=
+                                    jsonObj[item].constructor.name
+                            ) {
+                                flag = false
+                            }
+                        })
+                    }
 
                     if (flag) {
                         done()
@@ -980,6 +1109,36 @@ export default {
         //删除选择框组件下拉选项
         delSelectOption(index) {
             this.formModelVal.splice(index, 1)
+        },
+        //新增复合数组项
+        addComplexArray() {
+            let newArrItem = {}
+            this.formItemOption.cols.forEach((col) => {
+                if (!col.allowEmpty) {
+                    newArrItem[col.field] = col.default
+                }
+            })
+            this.formModelVal.push(newArrItem)
+        },
+        //删除复合数组项
+        delComplexArray(index) {
+            this.formModelVal.splice(index, 1)
+        },
+        //置空数组项某字段
+        setArrayItemEmpty(index, key) {
+            let curItem = this.formModelVal[index]
+            delete curItem[key]
+            //强制更新，解决无法实时监听问题
+            this.$set(this.formModelVal, index, curItem)
+        },
+        //添加数组项某字段
+        cancelArrayItemEmpty(index, key) {
+            let curItem = this.formModelVal[index]
+            curItem[key] = this.formItemOption.cols.find(
+                (col) => col.field == key
+            ).default
+            //强制更新，解决无法实时监听问题
+            this.$set(this.formModelVal, index, curItem)
         },
         //图片选择
         imageSelect(picUrl) {
@@ -1112,13 +1271,14 @@ export default {
 .numberArrayModifierInput {
     line-height: 25px !important;
     .el-input__inner {
-        padding-left: 10px !important;
+        padding: 0 20px 0 5px !important;
         height: 26px !important;
         line-height: 26px !important;
+        border: 1px solid #161f28;
     }
     span.el-input-number__decrease,
     span.el-input-number__increase {
-        width: 24px !important;
+        width: 20px !important;
         line-height: 12px !important;
     }
 }
@@ -1127,6 +1287,32 @@ export default {
     border: 1px solid #161f28;
     height: 24px !important;
     line-height: 24px !important;
+}
+.textArrayModifierInput .el-input__inner {
+    padding: 0 5px;
+    border: 1px solid #161f28;
+    height: 26px !important;
+    line-height: 26px !important;
+}
+.selectArrayModifierInput {
+    .el-input__inner {
+        padding-left: 5px;
+        padding-right: 18px !important;
+        border: 1px solid #161f28;
+        height: 26px !important;
+        line-height: 26px !important;
+    }
+    .el-input--small .el-input__icon {
+        line-height: 26px;
+        font-size: 12px !important;
+        width: 12px;
+        height: 26px;
+    }
+}
+i.allowEmpty {
+    cursor: pointer;
+    color: #85bff8;
+    margin-left: 1px;
 }
 .formOptions {
     .formItemTable {

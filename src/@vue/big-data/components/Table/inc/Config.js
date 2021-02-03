@@ -2,10 +2,10 @@
  * @Description: 表格参数配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-01 11:46:53
- * @LastEditTime: 2021-02-02 18:48:54
+ * @LastEditTime: 2021-02-03 17:04:24
  */
 import { ObjVerify } from '../../../utils/myUtils'
-import { tableColsMock, compDataMock } from './mockData'
+import { tableColsMock, tableDataMock } from './mockData'
 import {
     commonTypes,
     commonDefaultVal,
@@ -17,7 +17,7 @@ class Config {
         const optionsTypeObj = {
             ...commonTypes,
             tableCols: Array, //表格字段配置
-            tableData: Array, //表格静态数据
+            staticData: Array, //静态数据
             nowrap: Boolean, //是否不允许换行，默认不换行true
             tableLayoutAuto: Boolean, //是否自动布局，默认自动，若非自动布局（自动宽度），则根据每个字段自定义的宽度布局
             cellCentered: Boolean, //单元格居中，默认不居中（居左）
@@ -50,13 +50,13 @@ class Config {
         ObjVerify(optionsTypeObj, options)
 
         //数据为必传项，这里验证一下(当父组件传options参数的时候)
-        const OptionsLen = compDataVerify(options, ['compData', 'tableCols'])
+        const OptionsLen = compDataVerify(options, ['staticData', 'tableCols'])
         const TableData =
             OptionsLen > 0
                 ? {}
                 : {
                       tableCols: tableColsMock,
-                      compData: compDataMock,
+                      staticData: tableDataMock,
                   }
 
         //默认配置
