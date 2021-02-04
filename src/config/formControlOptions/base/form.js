@@ -2,7 +2,7 @@
  * @Description: 表单配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-22 10:14:38
- * @LastEditTime: 2021-02-02 17:31:39
+ * @LastEditTime: 2021-02-04 10:46:02
  */
 
 import { publicOpts } from './common'
@@ -125,7 +125,22 @@ export default [
     {
         key: 'selectOptions',
         label: '下拉选项',
-        compType: 'selectOption',
+        compType: 'complexArray',
+        btnColWidth: 50, //操作列宽度
+        cols: [
+            {
+                lable: '名称',
+                field: 'name',
+                type: 'text',
+                default: '',
+            },
+            {
+                lable: '值',
+                field: 'value',
+                type: 'text',
+                default: '',
+            },
+        ],
     },
     {
         key: 'selectOptions',

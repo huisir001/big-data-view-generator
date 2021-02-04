@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-02-03 19:10:16
+ * @LastEditTime: 2021-02-04 15:37:43
 -->
 <template>
     <el-tooltip
@@ -168,64 +168,6 @@
                 ></el-input-number>
             </template>
 
-            <!-- 数字数组增删组件 -->
-            <template v-if="formItemOption.compType == 'numberArrayModifier'">
-                <table class="formItemTable numberArray">
-                    <thead>
-                        <tr>
-                            <th>下标</th>
-                            <th>数组项</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(_, index) in formModelVal" :key="index">
-                            <td width="60">{{ index }}</td>
-                            <td>
-                                <el-input-number
-                                    size="small"
-                                    v-model="formModelVal[index]"
-                                    controls-position="right"
-                                    :min="
-                                        formItemOption.min
-                                            ? formItemOption.min
-                                            : formItemOption.min === 0
-                                            ? 0
-                                            : -Infinity
-                                    "
-                                    :max="
-                                        formItemOption.max
-                                            ? formItemOption.max
-                                            : formItemOption.max === 0
-                                            ? 0
-                                            : Infinity
-                                    "
-                                    class="numberArrayModifierInput"
-                                ></el-input-number>
-                            </td>
-                            <td width="70">
-                                <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="delNumberArray(index)"
-                                    >删除</el-button
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <el-button
-                                    size="mini"
-                                    type="primary"
-                                    @click="addNumberArray"
-                                    >+ 新增</el-button
-                                >
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </template>
-
             <!-- 字符串数组 -->
             <template v-if="formItemOption.compType == 'stringArray'">
                 <el-input
@@ -239,57 +181,6 @@
                         index < 2 ? 0 : 2
                     }%;`"
                 ></el-input>
-            </template>
-
-            <!-- 下拉框数组增删组件 -->
-            <template v-if="formItemOption.compType == 'selectArrayModifier'">
-                <table class="formItemTable selectArray">
-                    <thead>
-                        <tr>
-                            <th>下标</th>
-                            <th>数组项</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(_, index) in formModelVal" :key="index">
-                            <td width="60">{{ index }}</td>
-                            <td>
-                                <el-select
-                                    size="small"
-                                    v-model="formModelVal[index]"
-                                    placeholder="请选择"
-                                >
-                                    <el-option
-                                        v-for="option in formItemOption.options"
-                                        :key="option.value"
-                                        :label="option.label"
-                                        :value="option.value"
-                                    >
-                                    </el-option>
-                                </el-select>
-                            </td>
-                            <td width="70">
-                                <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="delSelectArray(index)"
-                                    >删除</el-button
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <el-button
-                                    size="mini"
-                                    type="primary"
-                                    @click="addSelectArray"
-                                    >+ 新增</el-button
-                                >
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </template>
 
             <!-- 滑块 -->
@@ -465,39 +356,72 @@
                 </table>
             </template>
 
-            <!-- 下拉框组件选项增删 -->
-            <template v-if="formItemOption.compType == 'selectOption'">
-                <table class="formItemTable selectOptionFormTable">
+            <!-- 基本数组增删组件 -->
+            <template v-if="formItemOption.compType == 'baseArray'">
+                <table class="formItemTable bAFormTable">
                     <thead>
                         <tr>
-                            <th>名称</th>
-                            <th>值</th>
-                            <th>操作</th>
+                            <th width="60">下标</th>
+                            <th>数组项</th>
+                            <th width="60">操作</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in formModelVal" :key="index">
+                        <tr v-for="(_, index) in formModelVal" :key="index">
+                            <td>{{ index }}</td>
                             <td>
                                 <el-input
-                                    v-model="item.name"
+                                    v-if="formItemOption.itemType == 'text'"
+                                    v-model="formModelVal[index]"
+                                    class="textArrayModifierInput"
                                     size="mini"
                                     type="text"
                                 ></el-input>
+                                <el-select
+                                    v-if="formItemOption.itemType == 'select'"
+                                    v-model="formModelVal[index]"
+                                    class="selectArrayModifierInput"
+                                    placeholder="请选择"
+                                    size="small"
+                                >
+                                    <el-option
+                                        v-for="option in formItemOption.options"
+                                        :key="option.value"
+                                        :label="option.label"
+                                        :value="option.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                                <el-input-number
+                                    v-if="formItemOption.itemType == 'number'"
+                                    v-model="formModelVal[index]"
+                                    class="numberArrayModifierInput"
+                                    controls-position="right"
+                                    size="small"
+                                    :min="
+                                        formModelVal.min
+                                            ? formModelVal.min
+                                            : formModelVal.min === 0
+                                            ? 0
+                                            : -Infinity
+                                    "
+                                    :max="
+                                        formModelVal.max
+                                            ? formModelVal.max
+                                            : formModelVal.max === 0
+                                            ? 0
+                                            : Infinity
+                                    "
+                                ></el-input-number>
                             </td>
                             <td>
-                                <el-input
-                                    v-model="item.value"
-                                    size="mini"
-                                    type="text"
-                                ></el-input>
-                            </td>
-                            <td width="50">
                                 <el-button
                                     size="mini"
                                     type="danger"
-                                    @click="delSelectOption(index)"
-                                    >DEL</el-button
-                                >
+                                    icon="el-icon-delete"
+                                    style="padding: 3px 4px"
+                                    @click="delBaseArray(index)"
+                                ></el-button>
                             </td>
                         </tr>
                         <tr>
@@ -505,7 +429,7 @@
                                 <el-button
                                     size="mini"
                                     type="primary"
-                                    @click="addSelectOption"
+                                    @click="addBaseArray"
                                     >+ 新增</el-button
                                 >
                             </td>
@@ -530,7 +454,9 @@
                             >
                                 {{ col.lable }}
                             </th>
-                            <th width="36">操作</th>
+                            <th :width="formItemOption.btnColWidth || 36">
+                                操作
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -543,9 +469,9 @@
                                     <el-input
                                         v-if="col.type == 'text'"
                                         v-model="item[col.field]"
+                                        class="textArrayModifierInput"
                                         size="mini"
                                         type="text"
-                                        class="textArrayModifierInput"
                                         :style="{
                                             width: col.allowEmpty
                                                 ? 'calc(100% - 16px)'
@@ -554,10 +480,10 @@
                                     ></el-input>
                                     <el-select
                                         v-if="col.type == 'select'"
-                                        size="small"
                                         v-model="item[col.field]"
-                                        placeholder="请选择"
+                                        size="small"
                                         class="selectArrayModifierInput"
+                                        placeholder="请选择"
                                         :style="{
                                             width: col.allowEmpty
                                                 ? 'calc(100% - 16px)'
@@ -574,9 +500,10 @@
                                     </el-select>
                                     <el-input-number
                                         v-if="col.type == 'number'"
-                                        size="small"
                                         v-model="item[col.field]"
+                                        class="numberArrayModifierInput"
                                         controls-position="right"
+                                        size="small"
                                         :min="
                                             col.min
                                                 ? col.min
@@ -591,7 +518,6 @@
                                                 ? 0
                                                 : Infinity
                                         "
-                                        class="numberArrayModifierInput"
                                         :style="{
                                             width: col.allowEmpty
                                                 ? 'calc(100% - 16px)'
@@ -1086,28 +1012,12 @@ export default {
         deleteColor(index) {
             this.formModelVal.splice(index, 1)
         },
-        //新增数字数组对象
-        addNumberArray() {
-            this.formModelVal.push(80)
+        //新增基本数组项
+        addBaseArray() {
+            this.formModelVal.push(this.formItemOption.default)
         },
-        //删除数字数组对象
-        delNumberArray(index) {
-            this.formModelVal.splice(index, 1)
-        },
-        //新增下拉选数组对象
-        addSelectArray() {
-            this.formModelVal.push('')
-        },
-        //删除下拉选数组对象
-        delSelectArray(index) {
-            this.formModelVal.splice(index, 1)
-        },
-        //新增选择框组件下拉选项
-        addSelectOption() {
-            this.formModelVal.push({ name: '', value: '' })
-        },
-        //删除选择框组件下拉选项
-        delSelectOption(index) {
+        //删除基本数组项
+        delBaseArray(index) {
             this.formModelVal.splice(index, 1)
         },
         //新增复合数组项
@@ -1282,12 +1192,6 @@ export default {
         line-height: 12px !important;
     }
 }
-.selectOptionFormTable .el-input__inner {
-    padding: 0 5px;
-    border: 1px solid #161f28;
-    height: 24px !important;
-    line-height: 24px !important;
-}
 .textArrayModifierInput .el-input__inner {
     padding: 0 5px;
     border: 1px solid #161f28;
@@ -1336,13 +1240,6 @@ i.allowEmpty {
         .el-slider__runway {
             width: calc(100% - 20px);
             margin-left: 10px;
-        }
-        &.numberArray,
-        &.selectArray {
-            td,
-            th {
-                padding: 5px;
-            }
         }
     }
     .eventItem {

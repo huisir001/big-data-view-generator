@@ -2,7 +2,7 @@
  * @Description: 配置Option ScatterChart
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-01-08 17:55:16
+ * @LastEditTime: 2021-02-04 15:08:43
  */
 import { publicOpts, legendOpts, backGauge } from './common'
 export default [
@@ -316,8 +316,9 @@ export default [
     },
     {
         key: 'symbolType',
-        compType: 'selectArrayModifier',
+        compType: 'baseArray',
         label: '浮点标志图类型',
+        itemType: 'select',
         options: [
             { value: 'circle', label: '圆' },
             { value: 'rectangle', label: '矩形' },
@@ -326,6 +327,7 @@ export default [
             { value: 'diamond', label: '菱形' },
             { value: 'triangle', label: '三角形' },
         ],
+        default: 'circle',
         labelOnTop: true,
     },
     {

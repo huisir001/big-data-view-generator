@@ -2,7 +2,7 @@
  * @Description: 配置Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2020-12-31 10:01:26
+ * @LastEditTime: 2021-02-04 15:35:28
  */
 import { publicOpts, legendOpts } from './common'
 export default [
@@ -66,9 +66,11 @@ export default [
     },
     {
         key: 'radius',
-        compType: 'numberArrayModifier',
+        compType: 'baseArray',
         label: '饼图半径(%)',
         labelOnTop: true,
+        itemType: 'number',
+        default: 80,
         tooltip:
             '这里可以调整数组，<br>以显示环形图或嵌套饼图。<br>嵌套饼图只支持一层。',
     },
