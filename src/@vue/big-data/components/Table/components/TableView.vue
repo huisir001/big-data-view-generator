@@ -1,9 +1,12 @@
 <!--
- * @Description: 表格组件-不支持排序，排序让后端去处理
+ * @Description: 表格组件-不支持排序
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-04 18:20:12
+ * @LastEditTime: 2021-02-04 18:25:57
 -->
+
+<!-- 动态数据传递有报错 待调试 -->
+
 <template>
     <div class="hs-table" :style="tableStyleVar">
         <div
