@@ -2,11 +2,8 @@
  * @Description: 表格组件-不支持排序
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-04 18:25:57
+ * @LastEditTime: 2021-02-04 18:33:56
 -->
-
-<!-- 动态数据传递有报错 待调试 -->
-
 <template>
     <div class="hs-table" :style="tableStyleVar">
         <div
@@ -247,6 +244,7 @@ export default {
                 tableCelBorderStyle,
                 tableCelBorderWidth,
                 tableCelBorderColor,
+                showTableCelBorder,
             } = this.tableStyles
             return {
                 '--thHeight': thHeight + 'px',
@@ -258,6 +256,10 @@ export default {
                 '--tdFontColor': tdFontColor,
                 '--thFontSize': thFontSize + 'px',
                 '--tdFontSize': tdFontSize + 'px',
+                '--scrollbarMarginTop':
+                    thHeight -
+                    (showTableCelBorder ? tableCelBorderWidth / 2 : 0) +
+                    'px',
                 '--tableOutBorder': `${tableOutBorderWidth}px ${tableOutBorderStyle} ${tableOutBorderColor}`,
                 '--tableCelBorder': `${tableCelBorderWidth}px ${tableCelBorderStyle} ${tableCelBorderColor}`,
             }
@@ -386,7 +388,7 @@ export default {
         /*滚动槽*/
         &::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.1);
-            margin-top: var(--thHeight);
+            margin-top: var(--scrollbarMarginTop);
         }
         /* 滚动条滑块 */
         &::-webkit-scrollbar-thumb {
