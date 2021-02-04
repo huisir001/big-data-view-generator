@@ -2,7 +2,7 @@
  * @Description: 配置公共Option
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-29 18:13:39
- * @LastEditTime: 2021-02-02 17:31:15
+ * @LastEditTime: 2021-02-04 17:43:17
  */
 
 /* 共有 */
@@ -47,7 +47,7 @@ export const publicOpts = [
                 'openTimingRefresh',
                 'refreshPeriod',
             ],
-            f: ['selectOptions'],
+            f: ['selectOptions', 'staticData'],
         }, //显隐控制
     },
     {

@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-02-03 17:05:08
+ * @LastEditTime: 2021-02-04 17:52:05
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -84,8 +84,40 @@ export default [
             'dateType',
             'linkageLayers',
             'tableCols',
+            'showPage',
+            'itemsPerPage',
+            'pageNavAlign',
+            'pageNavStyle',
+            'pageNavFontSize',
+            'pageNavFontColor',
         ],
         compTypeFilter: conpTypes_base,
+    },
+    {
+        category: '样式配置',
+        optionsFilter: [
+            'nowrap',
+            'tableLayoutAuto',
+            'cellCentered',
+            'thHeight',
+            'tdHeight',
+            'thBgColor',
+            'tdOddBgColor',
+            'tdEvenBgColor',
+            'thFontColor',
+            'tdFontColor',
+            'thFontSize',
+            'tdFontSize',
+            'showTableOutBorder',
+            'tableOutBorderWidth',
+            'tableOutBorderStyle',
+            'tableOutBorderColor',
+            'showTableCelBorder',
+            'tableCelBorderWidth',
+            'tableCelBorderStyle',
+            'tableCelBorderColor',
+        ],
+        compTypeFilter: ['Table'],
     },
     {
         category: '图例配置',

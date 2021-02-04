@@ -2,59 +2,38 @@
  * @Description: 表格组件-不支持排序，排序让后端去处理
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-02 15:51:03
+ * @LastEditTime: 2021-02-04 18:20:12
 -->
 <template>
-    <div class="hs-table">
+    <div class="hs-table" :style="tableStyleVar">
         <div
-            class="tableBox"
-            @scroll="tableBoxScroll"
-            :style="tableStyleVar"
             :class="{
-                scrollLeft,
-                scrollRight,
-                nowrap: tableStyles.nowrap,
-                cellcenter: tableStyles.cellCentered,
+                borderBox: true,
                 outBorder: tableStyles.showTableOutBorder,
-                celBorder: tableStyles.showTableCelBorder,
             }"
         >
-            <table
+            <div
+                class="tableBox"
+                @scroll="tableBoxScroll"
                 :class="{
-                    'hs-table': true,
-                    layoutAuto: tableStyles.tableLayoutAuto,
+                    scrollLeft,
+                    scrollRight,
+                    nowrap: tableStyles.nowrap,
+                    cellcenter: tableStyles.cellCentered,
+                    celBorder: tableStyles.showTableCelBorder,
                 }"
             >
-                <thead>
-                    <tr>
-                        <th
-                            v-for="(col, idx) in headersArrange"
-                            :key="idx"
-                            :class="{
-                                fixed: col.fixed,
-                                left: col.fixed && col.fixed == 'left',
-                                right: col.fixed && col.fixed == 'right',
-                                last: fixedLeftHeadersLast == col.field,
-                                first: fixedRightHeadersLast == col.field,
-                            }"
-                            :ref="col.fixed ? col.fixed : 'th_other'"
-                            :style="{ width: col.width + 'px' }"
-                        >
-                            <span>{{ col.label }}</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 有数据时 -->
-                    <template v-if="numRows > 0">
-                        <tr
-                            v-for="(row, i) in visibleRows"
-                            :key="i"
-                            :class="'row_' + i"
-                        >
-                            <td
-                                v-for="(col, j) in headersArrange"
-                                :key="j"
+                <table
+                    :class="{
+                        'hs-table': true,
+                        layoutAuto: tableStyles.tableLayoutAuto,
+                    }"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                v-for="(col, idx) in headersArrange"
+                                :key="idx"
                                 :class="{
                                     fixed: col.fixed,
                                     left: col.fixed && col.fixed == 'left',
@@ -62,24 +41,54 @@
                                     last: fixedLeftHeadersLast == col.field,
                                     first: fixedRightHeadersLast == col.field,
                                 }"
-                                :ref="
-                                    col.fixed ? col.fixed + '_' + i : 'td_other'
-                                "
+                                :ref="col.fixed ? col.fixed : 'th_other'"
+                                :style="{ width: col.width + 'px' }"
                             >
-                                {{ row[col.field] }}
-                            </td>
+                                <span>{{ col.label }}</span>
+                            </th>
                         </tr>
-                    </template>
-                    <!-- 数据为空时 -->
-                    <template v-else>
-                        <tr>
-                            <td :colspan="numColumns">
-                                <div class="no_data">暂无数据</div>
-                            </td>
-                        </tr>
-                    </template>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <!-- 有数据时 -->
+                        <template v-if="numRows > 0">
+                            <tr
+                                v-for="(row, i) in visibleRows"
+                                :key="i"
+                                :class="'row_' + i"
+                            >
+                                <td
+                                    v-for="(col, j) in headersArrange"
+                                    :key="j"
+                                    :class="{
+                                        fixed: col.fixed,
+                                        left: col.fixed && col.fixed == 'left',
+                                        right:
+                                            col.fixed && col.fixed == 'right',
+                                        last: fixedLeftHeadersLast == col.field,
+                                        first:
+                                            fixedRightHeadersLast == col.field,
+                                    }"
+                                    :ref="
+                                        col.fixed
+                                            ? col.fixed + '_' + i
+                                            : 'td_other'
+                                    "
+                                >
+                                    {{ row[col.field] }}
+                                </td>
+                            </tr>
+                        </template>
+                        <!-- 数据为空时 -->
+                        <template v-else>
+                            <tr>
+                                <td :colspan="numColumns">
+                                    <div class="no_data">暂无数据</div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <TablePagination
@@ -354,10 +363,16 @@ export default {
 .hs-table {
     height: 100%;
     width: 100%;
-    .tableBox {
+    .borderBox {
         height: calc(100% - 30px);
+        &.outBorder {
+            border: var(--tableOutBorder);
+        }
+    }
+    .tableBox {
+        height: 100%;
         overflow: auto;
-        background: #7cc3fd;
+        background: var(--thBgColor);
         line-height: 1.2;
         /* 设置滚动条的样式 */
         &::-webkit-scrollbar {
@@ -451,9 +466,6 @@ export default {
             td {
                 text-align: center !important;
             }
-        }
-        &.outBorder {
-            border: var(--tableOutBorder);
         }
         &.celBorder {
             th,
