@@ -65,7 +65,7 @@
     </div>
 </template>
 <script>
-import Config from './inc/Config'
+import Config from './Config'
 import others from '../../mixins/others'
 import DateSelect from './components/DateSelect'
 export default {

@@ -2,11 +2,11 @@
  * @Description: 参数配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-21 17:35:49
- * @LastEditTime: 2021-01-26 14:30:01
+ * @LastEditTime: 2021-02-05 15:37:50
  */
 
-import { ObjVerify } from '../../../utils/myUtils'
-import { commonTypes, commonDefaultVal } from '../../../mixins/baseCompConfig'
+import { ObjVerify } from '../../utils/myUtils'
+import { commonTypes, commonDefaultVal } from '../../mixins/baseCompConfig'
 
 class Config {
     constructor(options = {}) {
