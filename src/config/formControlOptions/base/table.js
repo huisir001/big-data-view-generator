@@ -2,7 +2,7 @@
  * @Description: 表格配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-02 17:18:04
- * @LastEditTime: 2021-02-04 18:02:12
+ * @LastEditTime: 2021-02-05 09:45:32
  */
 
 import { publicOpts } from './common'
@@ -15,7 +15,7 @@ export default [
         inputType: 'textarea',
         readonly: true,
         showBtnGroup: true,
-        stringify: true, //需要转义为字符串显示在表单中
+        stringify: true,
     },
     {
         key: 'nowrap',
@@ -26,6 +26,7 @@ export default [
         key: 'tableLayoutAuto',
         compType: 'switch',
         label: '自动布局',
+        tooltip: '若此处关闭自动布局<br>单元格宽度须完全靠自定义',
     },
     {
         key: 'cellCentered',
@@ -43,6 +44,8 @@ export default [
         compType: 'number',
         label: '表体行高',
         min: 15,
+        tooltip:
+            '若行数较少无法填满图层<br>行高会自适应填充图层<br>则此处设置的行高无效',
     },
     {
         key: 'thFontSize',

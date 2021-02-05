@@ -2,7 +2,7 @@
  * @Description: 表格组件-不支持排序
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-04 18:33:56
+ * @LastEditTime: 2021-02-05 10:12:20
 -->
 <template>
     <div class="hs-table" :style="tableStyleVar">
@@ -187,8 +187,16 @@ export default {
                 })
             }
         },
+        itemsPerPage() {
+            //每页条数变化重新渲染
+            this.selectVisibleRows()
+        },
     },
     computed: {
+        itemsPerPage() {
+            //每页条数
+            return this.pagination.itemsPerPage
+        },
         //hearder 根据固定列排序
         headersArrange() {
             const headers = this.headers
@@ -260,6 +268,9 @@ export default {
                     thHeight -
                     (showTableCelBorder ? tableCelBorderWidth / 2 : 0) +
                     'px',
+                '--borderBoxHeight': `calc(100% - ${
+                    this.pagination.fontSize + 15
+                }px)`,
                 '--tableOutBorder': `${tableOutBorderWidth}px ${tableOutBorderStyle} ${tableOutBorderColor}`,
                 '--tableCelBorder': `${tableCelBorderWidth}px ${tableCelBorderStyle} ${tableCelBorderColor}`,
             }
@@ -267,7 +278,7 @@ export default {
     },
     mounted() {
         const { rows, selectVisibleRows, $nextTick, fixedColSetPos } = this
-        this.tableRows = rows.slice(0) // Para que haga una copia del array
+        this.tableRows = rows.slice(0)
         selectVisibleRows()
         //页面完全渲染结束之后调用
         $nextTick(() => {
@@ -336,7 +347,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @mixin fixed-shandow {
     &.left.last::after,
@@ -369,7 +379,7 @@ export default {
     height: 100%;
     width: 100%;
     .borderBox {
-        height: calc(100% - 30px);
+        height: var(--borderBoxHeight);
         &.outBorder {
             border: var(--tableOutBorder);
         }

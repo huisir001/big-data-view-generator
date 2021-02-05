@@ -2,7 +2,7 @@
  * @Description: 其他非图表组件公共方法
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-02-03 14:58:22
+ * @LastEditTime: 2021-02-05 10:29:40
  */
 import Axios from '../utils/axios'
 import { myLoading } from '../utils/myUtils'
@@ -89,6 +89,7 @@ export default {
                 //关闭loading
                 options.openTimingRefresh || myLoading.hide(this.compLoading)
             }
+
             // //事件绑定
             // if (options.chartEvents && options.chartEvents.length > 0) {
             //     options.chartEvents.forEach((item) => {

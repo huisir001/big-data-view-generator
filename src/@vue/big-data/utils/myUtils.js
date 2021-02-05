@@ -2,7 +2,7 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2021-01-27 14:56:49
+ * @LastEditTime: 2021-02-05 10:20:16
  */
 
 //延时防抖
@@ -125,7 +125,7 @@ export const myLoading = {
         let newNode = document.createElement('div')
         newNode.className = 'myloading'
         newNode.style =
-            'position:absolute;width:100%;height:100%;display:flex;justify-content:center;align-items:center;top:0;left:0;background:rgba(0, 0, 0, 0.4);'
+            'position:absolute;z-index:9;width:100%;height:100%;display:flex;justify-content:center;align-items:center;top:0;left:0;background:rgba(0, 0, 0, 0.4);'
         newNode.innerHTML = '<span class="myloadingIcon"></span>'
         $dom.appendChild(newNode)
 
