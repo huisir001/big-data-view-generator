@@ -2,7 +2,7 @@
  * @Description: 组件注册
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-25 10:20:54
- * @LastEditTime: 2021-02-02 18:43:35
+ * @LastEditTime: 2021-02-07 10:42:42
  */
 // 导入组件
 import {
@@ -39,6 +39,7 @@ import {
 
 import Form from './components/Form'
 import Table from './components/Table'
+import { BasicText, TimeText } from './components/Text'
 
 // 存储组件列表
 const components = {
@@ -71,6 +72,8 @@ const components = {
     BorderBox13,
     Form,
     Table,
+    BasicText,
+    // TimeText,
 }
 
 // 定义 install 方法

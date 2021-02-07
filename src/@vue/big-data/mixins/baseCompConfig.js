@@ -2,7 +2,7 @@
  * @Description: 基础组件公共配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-22 11:21:45
- * @LastEditTime: 2021-02-03 17:02:41
+ * @LastEditTime: 2021-02-07 10:19:46
  */
 
 export const commonTypes = {
@@ -39,7 +39,11 @@ export const compDataVerify = (options, requireParams) => {
         requireParams.forEach((param) => {
             switch (param) {
                 case 'staticData':
-                    if (!options.useApiData && !options.staticData) {
+                    if (
+                        !options.useApiData &&
+                        !options.staticData &&
+                        options.staticData != ''
+                    ) {
                         throw new Error(
                             'Lack of data, Please send "staticData" in parent component.'
                         )
@@ -50,7 +54,7 @@ export const compDataVerify = (options, requireParams) => {
                     }
                     break
                 default:
-                    if (!options[param]) {
+                    if (!options[param] && options[param] != '') {
                         throw new Error(
                             `Lack of data, Please send "${param}" in parent component.`
                         )

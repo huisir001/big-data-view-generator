@@ -2,18 +2,18 @@
  * @Description: 基础文本
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-05 10:42:42
- * @LastEditTime: 2021-02-05 16:26:18
+ * @LastEditTime: 2021-02-07 18:55:31
 -->
 <template>
     <div class="basic-text" :style="textStyle">
         <template v-if="myOptions.isLink">
             <a :href="myOptions.href" :target="myOptions.target || '_self'">
-                <template v-if="myOptions.isHtml" v-html="content"></template>
+                <div v-if="myOptions.isHtml" v-html="content"></div>
                 <template v-else>{{ content }}</template>
             </a>
         </template>
         <template v-else>
-            <template v-if="myOptions.isHtml" v-html="content"></template>
+            <div v-if="myOptions.isHtml" v-html="content"></div>
             <template v-else>{{ content }}</template>
         </template>
     </div>
@@ -21,7 +21,7 @@
 
 <script>
 import Config from './Config'
-import others from '../../mixins/others'
+import others from '../../../mixins/others'
 export default {
     name: 'BasicText',
     mixins: [others],

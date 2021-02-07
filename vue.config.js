@@ -2,7 +2,7 @@
  * @Description:vue配置文件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:45:17
- * @LastEditTime: 2020-12-09 16:00:08
+ * @LastEditTime: 2021-02-07 10:40:34
  */
 const MYCONFIG = {
     //初始化配置
@@ -13,7 +13,7 @@ const MYCONFIG = {
 module.exports = {
     publicPath: '',
     assetsDir: 'assets',
-    productionSourceMap: true,
+    productionSourceMap: false,
     chainWebpack: (config) => {
         config.plugin('html').tap((args) => {
             //初始化配置

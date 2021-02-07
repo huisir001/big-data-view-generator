@@ -2,7 +2,7 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-02-04 17:52:05
+ * @LastEditTime: 2021-02-07 18:33:25
  */
 import compList from './compList'
 let allCompType = [] //所有类型
@@ -90,6 +90,10 @@ export default [
             'pageNavStyle',
             'pageNavFontSize',
             'pageNavFontColor',
+            'isHtml',
+            'isLink',
+            'href',
+            'target',
         ],
         compTypeFilter: conpTypes_base,
     },
@@ -116,8 +120,21 @@ export default [
             'tableCelBorderWidth',
             'tableCelBorderStyle',
             'tableCelBorderColor',
+            'fontFamily',
+            'fontSize',
+            'fontColor',
+            'fontWeight',
+            'textDecoration',
+            'textIndent',
+            'textAlign',
+            'background',
+            'showTextShadow',
+            'textShadowColor',
+            'textShadowBlur',
+            'textShadowOffsetX',
+            'textShadowOffsetY',
         ],
-        compTypeFilter: ['Table'],
+        compTypeFilter: ['Table', 'BasicText'],
     },
     {
         category: '图例配置',

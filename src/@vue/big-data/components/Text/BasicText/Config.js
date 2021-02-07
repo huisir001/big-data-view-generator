@@ -2,15 +2,20 @@
  * @Description: 基础文本参数配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-05 15:33:56
- * @LastEditTime: 2021-02-05 16:23:36
+ * @LastEditTime: 2021-02-07 18:39:38
  */
 import { ObjVerify } from '../../../utils/myUtils'
-import { commonTypes, commonDefaultVal } from '../../../mixins/baseCompConfig'
+import {
+    commonTypes,
+    commonDefaultVal,
+    compDataVerify,
+} from '../../../mixins/baseCompConfig'
 
 class Config {
     constructor(options = {}) {
         const optionsTypeObj = {
             ...commonTypes,
+            staticData: String, //静态数据
             isHtml: Boolean, //是否含HTML标签
             isLink: Boolean, //是否添加超链接
             href: String, //跳转链接（带http://前缀,也可以为`javascript:`代码）
@@ -33,13 +38,19 @@ class Config {
         //类型验证
         ObjVerify(optionsTypeObj, options)
 
+        //数据为必传项，这里验证一下(当父组件传options参数的时候)
+        const OptionsLen = compDataVerify(options, ['staticData'])
+        const _data = OptionsLen > 0 ? {} : { staticData: '示例文字' }
+
         //默认配置
         this.defaultOptions = {
             ...commonDefaultVal,
+            ..._data,
             isHtml: false,
             isLink: false,
             href: '',
             target: '_blank',
+            fontFamily: 'auto',
             fontSize: 15,
             fontColor: '#cccccc',
             fontWeight: 'normal',

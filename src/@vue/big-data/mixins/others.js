@@ -2,7 +2,7 @@
  * @Description: 其他非图表组件公共方法
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-02-05 10:29:40
+ * @LastEditTime: 2021-02-07 18:52:59
  */
 import Axios from '../utils/axios'
 import { myLoading } from '../utils/myUtils'

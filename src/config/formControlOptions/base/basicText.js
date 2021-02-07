@@ -2,16 +2,24 @@
  * @Description: 基础文本组件配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-05 16:40:53
- * @LastEditTime: 2021-02-05 17:59:22
+ * @LastEditTime: 2021-02-07 18:47:28
  */
 
 import { publicOpts } from './common'
 export default [
     ...publicOpts,
     {
+        key: 'staticData',
+        compType: 'input',
+        label: '表格数据',
+        inputType: 'textarea',
+        readonly: true,
+        showBtnGroup: true,
+    },
+    {
         key: 'isHtml',
         compType: 'switch',
-        label: '渲染HTML标签',
+        label: '渲染HTML',
         tooltip: '可添加p标签用于分段<br>添加br标签用于换行',
     },
     {
@@ -19,7 +27,7 @@ export default [
         compType: 'switch',
         label: '添加超链',
         displayItems: {
-            t: ['href'],
+            t: ['href', 'target'],
         }, //显隐控制
     },
     {
@@ -39,6 +47,7 @@ export default [
             { value: '_parent', label: '父框架中打开' },
             { value: '_top', label: '当前窗口中打开' },
         ],
+        hide: true,
     },
     {
         key: 'fontFamily',
@@ -48,9 +57,9 @@ export default [
     {
         key: 'fontSize',
         compType: 'slider',
-        label: '字号',
+        label: '文本字号',
         min: 12,
-        max: 50,
+        max: 100,
     },
     {
         key: 'fontColor',
