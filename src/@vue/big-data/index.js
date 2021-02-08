@@ -2,7 +2,7 @@
  * @Description: 组件注册
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-25 10:20:54
- * @LastEditTime: 2021-02-07 10:42:42
+ * @LastEditTime: 2021-02-08 16:14:20
  */
 // 导入组件
 import {
@@ -73,7 +73,7 @@ const components = {
     Form,
     Table,
     BasicText,
-    // TimeText,
+    TimeText,
 }
 
 // 定义 install 方法

@@ -2,7 +2,7 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2021-02-05 10:20:16
+ * @LastEditTime: 2021-02-08 11:34:42
  */
 
 //延时防抖
@@ -63,6 +63,50 @@ export const colorToRgba = (sHex, alpha = 1) => {
     } else {
         return sHex
     }
+}
+
+//日期格式化 timeStamp可以是日期对象，也可以是时间戳
+export const formatDate = (timeStamp, timeType) => {
+    //统一按24小时制
+    if (
+        !timeStamp instanceof Date &&
+        timeStamp.constructor.name != 'String' &&
+        timeStamp.constructor.name != 'Number'
+    ) {
+        throw new Error(
+            `[Argument type error]: type check failed for argument "${timeStamp}".`
+        )
+    }
+    const date =
+        timeStamp instanceof Date ? timeStamp : new Date(parseInt(timeStamp))
+    const getFullNum = (num) => (num < 10 ? '0' + num : num) //小于两位补零
+    const format = {
+        yyyy: date.getFullYear(),
+        M: date.getMonth() + 1,
+        d: date.getDate(),
+        h: date.getHours(),
+        m: date.getMinutes(),
+        s: date.getSeconds(),
+        MM: getFullNum(date.getMonth() + 1),
+        dd: getFullNum(date.getDate()),
+        hh: getFullNum(date.getHours()),
+        mm: getFullNum(date.getMinutes()),
+        ss: getFullNum(date.getSeconds()),
+        day: ['日', '一', '二', '三', '四', '五', '六'][date.getDay()],
+    }
+    let reformat = function (typeStr, str) {
+        if (typeStr.includes(str) && typeStr.split(str).length - 1 == 1) {
+            return typeStr.replace(str, format[str])
+        } else {
+            return typeStr
+        }
+    }
+
+    let result
+    for (let key in format) {
+        result = reformat(result || timeType || 'yyyy-MM-dd', key)
+    }
+    return result
 }
 
 //对象数据验证

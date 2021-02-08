@@ -1,20 +1,42 @@
 /*
- * @Description: 基础文本组件配置项
+ * @Description: 时间文本组件配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-05 16:40:53
- * @LastEditTime: 2021-02-08 09:19:52
+ * @LastEditTime: 2021-02-08 16:35:15
  */
 
-import { publicOpts } from './common'
 export default [
-    ...publicOpts,
     {
-        key: 'staticData',
+        key: 'name',
+        label: '图层名称',
         compType: 'input',
-        label: '文本内容',
-        inputType: 'textarea',
-        readonly: true,
-        showBtnGroup: true,
+        layerOption: true,
+    },
+    {
+        key: 'pos',
+        label: '坐标',
+        compType: 'numberArray', //position类型为固定格式如[10,10]
+        layerOption: true, //图层本身配置
+    },
+    {
+        key: 'width',
+        label: '宽度',
+        compType: 'number',
+        layerOption: true,
+    },
+    {
+        key: 'height',
+        label: '高度',
+        compType: 'number',
+        layerOption: true,
+    },
+
+    {
+        key: 'timeFormat',
+        compType: 'input',
+        label: '时间格式',
+        tooltip:
+            '时间匹配规则：<br>年-yyyy<br>月份-MM<br>日期-dd<br>小时-hh<br>分钟-mm<br>秒-ss<br>星期-day',
     },
     {
         key: 'isHtml',
@@ -23,30 +45,18 @@ export default [
         tooltip: '可添加p标签用于分段<br>添加br标签用于换行',
     },
     {
-        key: 'isLink',
+        key: 'openTimingRefresh',
         compType: 'switch',
-        label: '添加超链',
+        label: '定时刷新',
         displayItems: {
-            t: ['href', 'target'],
+            t: ['refreshPeriod'],
         }, //显隐控制
     },
     {
-        key: 'href',
-        compType: 'input',
-        label: '跳转链接',
-        tooltip: '请填写带`http://`的链接<br>也可以使用`javascript:`执行js脚本',
-        hide: true,
-    },
-    {
-        key: 'target',
-        label: '跳转方式',
-        compType: 'select',
-        options: [
-            { value: '_blank', label: '新窗口打开' },
-            { value: '_self', label: '当前框架中打开' },
-            { value: '_parent', label: '父框架中打开' },
-            { value: '_top', label: '当前窗口中打开' },
-        ],
+        key: 'refreshPeriod',
+        compType: 'slider',
+        label: '定时刷新周期/秒',
+        min: 1,
         hide: true,
     },
     {
@@ -60,6 +70,12 @@ export default [
         label: '文本字号',
         min: 12,
         max: 100,
+    },
+    {
+        key: 'wordSpacing',
+        compType: 'slider',
+        label: '文字间距',
+        min: 0,
     },
     {
         key: 'fontColor',
@@ -86,13 +102,6 @@ export default [
             { value: 'underline', label: '下划线' },
             { value: 'line-through', label: '删除线' },
         ],
-    },
-    {
-        key: 'textIndent',
-        compType: 'slider',
-        label: '缩进/em',
-        min: 0,
-        max: 10,
     },
     {
         key: 'textAlign',

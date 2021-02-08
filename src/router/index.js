@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-02 16:36:46
+ * @LastEditTime: 2021-02-08 09:32:07
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -48,14 +48,14 @@ const routes = [
         },
         component: () => import('@/views/Preview'),
     },
-    // {
-    //     path: '/test',
-    //     name: 'Test',
-    //     meta: {
-    //         title: '测试',
-    //     },
-    //     component: () => import('@/@vue/big-data/components/Table'),
-    // },
+    {
+        path: '/test',
+        name: 'Test',
+        meta: {
+            title: '测试',
+        },
+        component: () => import('@/@vue/big-data/components/Text/TimeText'),
+    },
 ]
 
 const router = new VueRouter({

@@ -2,7 +2,7 @@
  * @Description: 其他非图表组件公共方法
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月4日 09:26:38
- * @LastEditTime: 2021-02-07 18:52:59
+ * @LastEditTime: 2021-02-08 16:20:18
  */
 import Axios from '../utils/axios'
 import { myLoading } from '../utils/myUtils'
@@ -110,6 +110,7 @@ export default {
             //         }
             //     })
             // }
+
             //定时刷新
             timingRefresh()
         },
@@ -126,13 +127,13 @@ export default {
         },
         /* 定时刷新 */
         timingRefresh() {
-            const {
-                useApiData,
-                openTimingRefresh,
-                refreshPeriod,
-            } = this.options
+            const { openTimingRefresh, refreshPeriod } = this.options
+            const hasProp = this.options.hasOwnProperty('useApiData')
 
-            if (useApiData && openTimingRefresh) {
+            if (
+                (hasProp && this.options.useApiData && openTimingRefresh) ||
+                (!hasProp && openTimingRefresh)
+            ) {
                 //先清空
                 clearInterval(this.refreshTimer)
                 this.refreshTimer = null

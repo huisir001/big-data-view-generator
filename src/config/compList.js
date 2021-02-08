@@ -2,7 +2,7 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2021-02-07 10:49:24
+ * @LastEditTime: 2021-02-08 16:51:56
  */
 import {
     coBarChart,
@@ -20,8 +20,13 @@ import {
     fcoRadarChart,
     fcoScatterChart,
 } from './formControlOptions/charts'
-import { coForm, coTable, coBasicText } from './compOptions/base'
-import { fcoForm, fcoTable, fcoBasicText } from './formControlOptions/base'
+import { coForm, coTable, coBasicText, coTimeText } from './compOptions/base'
+import {
+    fcoForm,
+    fcoTable,
+    fcoBasicText,
+    fcoTimeText,
+} from './formControlOptions/base'
 
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
@@ -37,6 +42,13 @@ export default [
                 pic: require('@/assets/img/compList/basicText.png'),
                 compOptions: coBasicText,
                 formControlOptions: fcoBasicText,
+            },
+            {
+                title: '时间文本',
+                type: 'TimeText',
+                pic: require('@/assets/img/compList/timeText.png'),
+                compOptions: coTimeText,
+                formControlOptions: fcoTimeText,
             },
             {
                 title: '表单',
