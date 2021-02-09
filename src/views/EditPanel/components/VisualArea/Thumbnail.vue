@@ -2,7 +2,7 @@
  * @Description: 缩略图/导览图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-01-12 18:18:37
+ * @LastEditTime: 2021-02-09 12:08:43
 -->
 <template>
     <div class="thumbnail" :style="thumbnailStyle">
@@ -39,17 +39,15 @@
         <div
             class="slider"
             :style="sliderStyle"
-            @mousemove="sliderMove"
-            @mousedown="sliderDown"
-            @mouseup="sliderDown"
-            @mouseleave="sliderLeave"
+            @mousedown.prevent="sliderClick"
+            @mouseup.prevent="sliderClick"
         ></div>
     </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations } = createNamespacedHelpers('system')
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers('system')
 export default {
     name: 'Thumbnail',
     props: ['visualAreaSize', 'platformSize'],
@@ -59,6 +57,10 @@ export default {
             sliderMouseEnter: false,
             sliderMouseOffset: [0, 0],
             sliderPos: [0, 0],
+            initialSliderPos: [0, 0], //记录初始滑块位置
+            /* Dom层事件状态 */
+            domMouseEnter: false, //鼠标按下
+            mouseMoveState: false, //鼠标拖动状态
         }
     },
     computed: {
@@ -135,28 +137,75 @@ export default {
             this.sliderEmit(val)
         },
     },
+    mounted() {
+        //document添加事件
+        const {
+            domAddEventListener,
+            domMousedown,
+            domMousemove,
+            domMouseup,
+        } = this
+        domAddEventListener({
+            evType: 'onmousedown',
+            func: domMousedown,
+        })
+        domAddEventListener({
+            evType: 'onmousemove',
+            func: domMousemove,
+        })
+        domAddEventListener({
+            evType: 'onmouseup',
+            func: domMouseup,
+        })
+    },
     methods: {
         ...mapMutations(['setBlueprintScale', 'setPlatformPos']),
-        //鼠标按下抬起
-        sliderDown({ type, offsetX, offsetY }) {
-            this.sliderMouseEnter = type == 'mousedown'
-            this.sliderMouseOffset = [offsetX, offsetY]
-            return false
+        ...mapActions(['domAddEventListener']),
+        //全局鼠标按下
+        domMousedown({ button }) {
+            if (button != 0) return false //非鼠标左键return
+            //状态改变
+            this.domMouseEnter = true
         },
-        //鼠标滑动
-        sliderMove({ offsetX, offsetY }) {
-            let { sliderMouseEnter, sliderMouseOffset, sliderPos } = this
-            if (sliderMouseEnter) {
+        //全局鼠标拖拽
+        domMousemove({ button, clientX, clientY }) {
+            //非鼠标左键return
+            if (button != 0) return false
+            //拖动指示
+            this.mouseMoveState = true
+            //滑块拖动
+            let {
+                sliderMouseEnter,
+                sliderMouseOffset,
+                sliderPos,
+                domMouseEnter,
+                initialSliderPos,
+            } = this
+            if (sliderMouseEnter && domMouseEnter) {
                 this.sliderPos = [
-                    sliderPos[0] + offsetX - sliderMouseOffset[0],
-                    sliderPos[1] + offsetY - sliderMouseOffset[1],
+                    initialSliderPos[0] + clientX - sliderMouseOffset[0],
+                    initialSliderPos[1] + clientY - sliderMouseOffset[1],
                 ]
             }
-            return false
         },
-        //鼠标区域离开
-        sliderLeave() {
+        //全局鼠标抬起
+        domMouseup({ button }) {
+            if (button != 0) return false //非鼠标左键return
+            //状态改变
+            this.domMouseEnter = false
             this.sliderMouseEnter = false
+        },
+        //滑块鼠标按下抬起
+        sliderClick({ type, button, clientX, clientY }) {
+            //以下内容非鼠标左键return
+            if (button != 0) return false
+            this.sliderMouseEnter = type == 'mousedown'
+            //记录鼠标位置
+            this.sliderMouseOffset = [clientX, clientY]
+            //鼠标按下重置拖动状态
+            this.sliderMouseEnter && (this.mouseMoveState = false)
+            //记录滑块初始位置状态
+            this.initialSliderPos = JSON.parse(JSON.stringify(this.sliderPos))
             return false
         },
         //限制滑块及视图跟随
