@@ -2,7 +2,7 @@
  * @Description: 组件注册
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-25 10:20:54
- * @LastEditTime: 2021-02-08 16:14:20
+ * @LastEditTime: 2021-02-18 11:31:07
  */
 // 导入组件
 import {
@@ -21,22 +21,7 @@ import {
     ProgressChart5,
     ProgressChart6,
 } from './components/Charts'
-import {
-    BorderBox1,
-    BorderBox2,
-    BorderBox3,
-    BorderBox4,
-    BorderBox5,
-    BorderBox6,
-    BorderBox7,
-    BorderBox8,
-    BorderBox9,
-    BorderBox10,
-    BorderBox11,
-    BorderBox12,
-    BorderBox13,
-} from './components/BorderBox'
-
+import BorderBox from './components/BorderBox'
 import Form from './components/Form'
 import Table from './components/Table'
 import { BasicText, TimeText } from './components/Text'
@@ -57,19 +42,7 @@ const components = {
     ProgressChart4,
     ProgressChart5,
     ProgressChart6,
-    BorderBox1,
-    BorderBox2,
-    BorderBox3,
-    BorderBox4,
-    BorderBox5,
-    BorderBox6,
-    BorderBox7,
-    BorderBox8,
-    BorderBox9,
-    BorderBox10,
-    BorderBox11,
-    BorderBox12,
-    BorderBox13,
+    BorderBox,
     Form,
     Table,
     BasicText,

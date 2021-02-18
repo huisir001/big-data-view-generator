@@ -2,27 +2,35 @@
  * @Description: 边框组件10
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-07 18:03:24
- * @LastEditTime: 2020-09-08 14:41:14
+ * @LastEditTime: 2021-02-18 11:36:30
 -->
 <template>
-    <div class="border-box-10"
-         :style="`box-shadow: inset 0 0 25px 3px ${color[0]}`">
-        <svg class="border-svg-container"
-             :width="width"
-             :height="height">
-            <polygon :fill="backgroundColor"
-                     :points="`
-                        4, 0 ${width - 4}, 0 ${width}, 4 ${width}, ${height - 4} ${width - 4}, ${height}
+    <div
+        class="border-box-10"
+        :style="`box-shadow: inset 0 0 25px 3px ${color[0]}`"
+    >
+        <svg class="border-svg-container" :width="width" :height="height">
+            <polygon
+                :fill="backgroundColor"
+                :points="`
+                        4, 0 ${width - 4}, 0 ${width}, 4 ${width}, ${
+                    height - 4
+                } ${width - 4}, ${height}
                         4, ${height} 0, ${height - 4} 0, 4
-                    `" />
+                    `"
+            />
         </svg>
-        <svg width="150px"
-             height="150px"
-             :key="item"
-             v-for="item in border"
-             :class="`${item} border-svg-container`">
-            <polygon :fill="color[1]"
-                     points="40, 0 5, 0 0, 5 0, 16 3, 19 3, 7 7, 3 35, 3" />
+        <svg
+            width="150px"
+            height="150px"
+            :key="item"
+            v-for="item in border"
+            :class="`${item} border-svg-container`"
+        >
+            <polygon
+                :fill="color[1]"
+                points="40, 0 5, 0 0, 5 0, 16 3, 19 3, 7 7, 3 35, 3"
+            />
         </svg>
         <div class="border-box-content">
             <slot></slot>
@@ -31,11 +39,8 @@
 </template>
 
 <script>
-import autoResize from '../../mixins/autoResize'
-
 export default {
     name: 'BorderBox10',
-    mixins: [autoResize],
     props: {
         color: {
             //线条色

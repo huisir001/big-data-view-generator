@@ -2,54 +2,48 @@
  * @Description: 边框组件8
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-07 18:00:52
- * @LastEditTime: 2020-09-08 14:40:57
+ * @LastEditTime: 2021-02-18 11:35:58
 -->
 <template>
     <div class="border-box-8">
-        <svg class="border-svg-container"
-             :width="width"
-             :height="height">
+        <svg class="border-svg-container" :width="width" :height="height">
             <defs>
-                <path :id="path"
-                      :d="pathD"
-                      fill="transparent" />
-                <radialGradient :id="gradient"
-                                cx="50%"
-                                cy="50%"
-                                r="50%">
-                    <stop offset="0%"
-                          stop-color="#fff"
-                          stop-opacity="1" />
-                    <stop offset="100%"
-                          stop-color="#fff"
-                          stop-opacity="0" />
+                <path :id="path" :d="pathD" fill="transparent" />
+                <radialGradient :id="gradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="1" />
+                    <stop offset="100%" stop-color="#fff" stop-opacity="0" />
                 </radialGradient>
                 <mask :id="mask">
-                    <circle cx="0"
-                            cy="0"
-                            r="150"
-                            :fill="`url(#${gradient})`">
-                        <animateMotion :dur="`${dur}s`"
-                                       :path="pathD"
-                                       rotate="auto"
-                                       repeatCount="indefinite" />
+                    <circle cx="0" cy="0" r="150" :fill="`url(#${gradient})`">
+                        <animateMotion
+                            :dur="`${dur}s`"
+                            :path="pathD"
+                            rotate="auto"
+                            repeatCount="indefinite"
+                        />
                     </circle>
                 </mask>
             </defs>
-            <polygon :fill="backgroundColor"
-                     :points="`5, 5 ${width - 5}, 5 ${width - 5} ${height - 5} 5, ${height - 5}`" />
-            <use :stroke="color[0]"
-                 stroke-width="1"
-                 :xlink:href="`#${path}`" />
-            <use :stroke="color[1]"
-                 stroke-width="3"
-                 :xlink:href="`#${path}`"
-                 :mask="`url(#${mask})`">
-                <animate attributeName="stroke-dasharray"
-                         :from="`0, ${length}`"
-                         :to="`${length}, 0`"
-                         :dur="`${dur}s`"
-                         repeatCount="indefinite" />
+            <polygon
+                :fill="backgroundColor"
+                :points="`5, 5 ${width - 5}, 5 ${width - 5} ${height - 5} 5, ${
+                    height - 5
+                }`"
+            />
+            <use :stroke="color[0]" stroke-width="1" :xlink:href="`#${path}`" />
+            <use
+                :stroke="color[1]"
+                stroke-width="3"
+                :xlink:href="`#${path}`"
+                :mask="`url(#${mask})`"
+            >
+                <animate
+                    attributeName="stroke-dasharray"
+                    :from="`0, ${length}`"
+                    :to="`${length}, 0`"
+                    :dur="`${dur}s`"
+                    repeatCount="indefinite"
+                />
             </use>
         </svg>
         <div class="border-box-content">
@@ -59,12 +53,10 @@
 </template>
 
 <script>
-import autoResize from '../../mixins/autoResize'
-import { getRanId } from '@/utils/myUtils'
+import { getRanId } from '../../../utils/myUtils'
 
 export default {
     name: 'BorderBox8',
-    mixins: [autoResize],
     props: {
         color: {
             //线条色
