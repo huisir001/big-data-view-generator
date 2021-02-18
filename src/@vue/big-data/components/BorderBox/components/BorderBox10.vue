@@ -39,8 +39,10 @@
 </template>
 
 <script>
+import autoResize from '../../../mixins/autoResize'
 export default {
     name: 'BorderBox10',
+    mixins: [autoResize],
     props: {
         color: {
             //线条色

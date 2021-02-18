@@ -2,7 +2,7 @@
  * @Description: 边框组件7
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-07 18:02:15
- * @LastEditTime: 2021-02-18 11:35:33
+ * @LastEditTime: 2021-02-18 15:06:42
 -->
 <template>
     <div
@@ -63,8 +63,10 @@
 </template>
 
 <script>
+import autoResize from '../../../mixins/autoResize'
 export default {
     name: 'BorderBox7',
+    mixins: [autoResize],
     props: {
         color: {
             //线条色

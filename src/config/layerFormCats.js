@@ -2,13 +2,14 @@
  * @Description: 右侧栏图层配置面板表单分类
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-11-13 17:45:47
- * @LastEditTime: 2021-02-08 16:31:21
+ * @LastEditTime: 2021-02-18 17:38:04
  */
 import compList from './compList'
 let allCompType = [] //所有类型
 let compTypes_sjpz = [] //需要数据的类型
 let compTypes_tb = [] //图表类型
 let conpTypes_base = [] //基础组件
+let conpTypes_media = [] //媒体组件
 
 //组件类型分发
 compList.forEach((item) => {
@@ -26,6 +27,12 @@ compList.forEach((item) => {
     //基础组件
     item.id == 0 &&
         (conpTypes_base = conpTypes_base.concat(item.list.map((li) => li.type)))
+
+    //媒体组件
+    item.id == 3 &&
+        (conpTypes_media = conpTypes_media.concat(
+            item.list.map((li) => li.type)
+        ))
 })
 
 export default [
@@ -65,7 +72,7 @@ export default [
             'note',
             'staticData',
         ],
-        compTypeFilter: compTypes_sjpz,
+        compTypeFilter: compTypes_sjpz.filter((item) => item != 'BorderBox'),
     },
     {
         category: '主体配置',
@@ -90,8 +97,16 @@ export default [
             'isLink',
             'href',
             'target',
+            'borderBoxId',
+            'useDefaultColor',
+            'colors',
+            'bgColor',
+            'reverse',
+            'transDur',
+            'titleWidth',
+            'title',
         ],
-        compTypeFilter: conpTypes_base,
+        compTypeFilter: [...conpTypes_base, ...conpTypes_media],
     },
     {
         category: '样式配置',

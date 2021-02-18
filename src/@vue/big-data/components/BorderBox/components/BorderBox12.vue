@@ -124,10 +124,12 @@
 </template>
 
 <script>
+import autoResize from '../../../mixins/autoResize'
 import { getRanId, colorToRgba } from '../../../utils/myUtils'
 
 export default {
     name: 'BorderBox12',
+    mixins: [autoResize],
     props: {
         color: {
             //线条色

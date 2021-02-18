@@ -2,7 +2,7 @@
  * @Description: 表单分发组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月30日 10:36:54
- * @LastEditTime: 2021-02-04 15:37:43
+ * @LastEditTime: 2021-02-18 17:46:31
 -->
 <template>
     <el-tooltip
@@ -413,6 +413,12 @@
                                             : Infinity
                                     "
                                 ></el-input-number>
+                                <el-color-picker
+                                    v-if="formItemOption.itemType == 'color'"
+                                    v-model="formModelVal[index]"
+                                    size="mini"
+                                    show-alpha
+                                ></el-color-picker>
                             </td>
                             <td>
                                 <el-button

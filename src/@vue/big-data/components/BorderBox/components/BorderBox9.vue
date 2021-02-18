@@ -2,7 +2,7 @@
  * @Description: 边框组件9
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-07 18:00:52
- * @LastEditTime: 2021-02-18 11:36:22
+ * @LastEditTime: 2021-02-18 15:06:49
 -->
 <template>
     <div class="border-box-9">
@@ -161,10 +161,12 @@
 </template>
 
 <script>
+import autoResize from '../../../mixins/autoResize'
 import { getRanId } from '../../../utils/myUtils'
 
 export default {
     name: 'BorderBox9',
+    mixins: [autoResize],
     props: {
         color: {
             //线条色

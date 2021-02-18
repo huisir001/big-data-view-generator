@@ -2,16 +2,23 @@
  * @Description: 内置图框
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-18 11:03:28
- * @LastEditTime: 2021-02-18 11:51:23
+ * @LastEditTime: 2021-02-18 16:33:25
 -->
 <template>
-    <component :is="myOptions.borderBoxId"></component>
+    <component
+        :is="`BorderBox${myOptions.borderBoxId}`"
+        :color="myOptions.useDefaultColor ? undefined : myOptions.colors"
+        :backgroundColor="myOptions.bgColor"
+        :reverse="myOptions.reverse"
+        :dur="myOptions.transDur"
+        :titleWidth="myOptions.titleWidth"
+        :title="myOptions.title"
+    ></component>
 </template>
 
 <script>
-// import Config from './inc/Config'
+import Config from './Config'
 import others from '../../mixins/others'
-import autoResize from '../../mixins/autoResize'
 import {
     BorderBox1,
     BorderBox2,
@@ -30,7 +37,7 @@ import {
 
 export default {
     name: 'BorderBox',
-    mixins: [autoResize, others],
+    mixins: [others],
     components: {
         BorderBox1,
         BorderBox2,
@@ -47,7 +54,7 @@ export default {
         BorderBox13,
     },
     data() {
-        // return { Config }
+        return { Config }
     },
 }
 </script>

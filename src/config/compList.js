@@ -2,7 +2,7 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2021-02-08 16:51:56
+ * @LastEditTime: 2021-02-18 17:22:59
  */
 import {
     coBarChart,
@@ -27,6 +27,8 @@ import {
     fcoBasicText,
     fcoTimeText,
 } from './formControlOptions/base'
+import { coBorderBox } from './compOptions/media'
+import { fcoBorderBox } from './formControlOptions/media'
 
 /*
  * list中的type为图表组件的名称，与实际组件的名称一致，不可随意更改
@@ -129,11 +131,14 @@ export default [
     {
         id: 3,
         category: '媒体组件',
-        list: [],
-    },
-    {
-        id: 4,
-        category: '边框组件',
-        list: [],
+        list: [
+            {
+                title: '内置SVG边框',
+                type: 'BorderBox',
+                pic: require('@/assets/img/compList/borderBox.png'),
+                compOptions: coBorderBox,
+                formControlOptions: fcoBorderBox,
+            },
+        ],
     },
 ]

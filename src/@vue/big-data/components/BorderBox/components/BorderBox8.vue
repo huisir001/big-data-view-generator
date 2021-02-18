@@ -53,10 +53,12 @@
 </template>
 
 <script>
+import autoResize from '../../../mixins/autoResize'
 import { getRanId } from '../../../utils/myUtils'
 
 export default {
     name: 'BorderBox8',
+    mixins: [autoResize],
     props: {
         color: {
             //线条色
