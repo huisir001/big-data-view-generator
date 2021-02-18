@@ -2,7 +2,7 @@
  * @Description: 时间文本组件配置项
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-05 16:40:53
- * @LastEditTime: 2021-02-08 16:35:15
+ * @LastEditTime: 2021-02-18 10:06:46
  */
 
 export default [

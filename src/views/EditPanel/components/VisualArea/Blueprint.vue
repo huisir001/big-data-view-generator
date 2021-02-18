@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-01-22 17:50:32
+ * @LastEditTime: 2021-02-18 10:30:15
 -->
 <template>
     <div
@@ -178,6 +178,8 @@ export default {
                 setActiveLayer,
             } = this
 
+            console.log(layer)
+
             if (curkeydownCodes.includes(17)) {
                 //多选时，鼠标抬起为选定，单选时鼠标按下即为选定
                 //取消选定时，判断是否有拖动，没拖动的话则取消选定
@@ -191,6 +193,7 @@ export default {
             } else {
                 //如果没有选定，则选定，如果已选定，则无效
                 //只有按下才选定，抬起不选定
+                console.log(layer)
                 if (
                     !this.activeLayers.find((item) => item.id == layer.id) &&
                     layerMouseEnter

@@ -2,7 +2,7 @@
  * @Description: 缩略图/导览图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-02-09 12:08:43
+ * @LastEditTime: 2021-02-18 10:49:22
 -->
 <template>
     <div class="thumbnail" :style="thumbnailStyle">
@@ -26,7 +26,7 @@
             <i
                 class="el-icon-refresh-left"
                 title="还原"
-                @click="setBlueprintScale(0)"
+                @click="setThumbnailRefresh"
             ></i>
         </div>
         <!-- 操作面板区 -->
@@ -247,6 +247,10 @@ export default {
                 offsetX - this.sliderSize[0] / 2,
                 offsetY - this.sliderSize[1] / 2,
             ]
+        },
+        setThumbnailRefresh() {
+            this.setBlueprintScale(0)
+            this.sliderPos = [0, 0]
         },
     },
 }

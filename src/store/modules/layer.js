@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2021-01-25 16:30:37
+ * @LastEditTime: 2021-02-18 10:07:11
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -33,6 +33,12 @@ export default {
             switch (layer.type) {
                 case 'Form':
                     layerSize = { width: 162, height: 32 }
+                    break
+                case 'TimeText':
+                    layerSize = { width: 210, height: 22 }
+                    break
+                case 'BasicText':
+                    layerSize = { width: 250, height: 50 }
                     break
                 default:
                     layerSize = { width: 300, height: 200 }
