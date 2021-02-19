@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-02-19 17:04:57
+ * @LastEditTime: 2021-02-19 17:27:25
 -->
 <template>
     <div
@@ -34,11 +34,13 @@
                 layersCache[item.id] ? layersCache[item.id].pos[1] : item.pos[1]
             }px;z-index:${item.zIndex};`"
         >
-            <!-- 位置标线/缩放锚点 -->
+            <!-- 位置标线 -->
             <template v-if="item.active || item.hover">
                 <div class="posLine-x"></div>
                 <div class="posLine-y"></div>
-                <!-- 锚点 -->
+            </template>
+            <!-- 缩放锚点 -->
+            <template v-if="item.active">
                 <div
                     v-for="anchor in 8"
                     :key="anchor"
@@ -458,7 +460,7 @@ export default {
     .viewItem {
         position: absolute;
         cursor: move;
-        border: 1px solid rgba(117, 242, 247, 0.2);
+        border: 1px solid transparent;
         $border-act: 1px dashed #0ff;
         &::after {
             content: '';
