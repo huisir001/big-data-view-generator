@@ -2,7 +2,7 @@
  * @Description: 表格组件-不支持排序
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-28 10:22:59
- * @LastEditTime: 2021-02-05 10:12:20
+ * @LastEditTime: 2021-02-19 10:51:02
 -->
 <template>
     <div class="hs-table" :style="tableStyleVar">
@@ -425,6 +425,7 @@ export default {
                     padding: 0 10px;
                     text-align: left;
                     position: sticky;
+                    pointer-events: none;
                     top: 0;
                     z-index: 2;
                     &.fixed {
@@ -458,6 +459,7 @@ export default {
                     }
                     &.fixed {
                         position: sticky;
+                        pointer-events: none;
                         z-index: 1;
                         @include fixed-shandow;
                     }
