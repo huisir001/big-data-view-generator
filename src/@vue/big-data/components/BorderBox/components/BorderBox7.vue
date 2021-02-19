@@ -63,10 +63,8 @@
 </template>
 
 <script>
-import autoResize from '../../../mixins/autoResize'
 export default {
     name: 'BorderBox7',
-    mixins: [autoResize],
     props: {
         color: {
             //线条色
@@ -81,6 +79,8 @@ export default {
             type: String,
             default: 'transparent',
         },
+        width: Number,
+        height: Number,
     },
 }
 </script>

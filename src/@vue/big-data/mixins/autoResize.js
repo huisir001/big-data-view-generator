@@ -2,7 +2,7 @@
  * @Description: resize及DOM样式变动监听器
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-02 17:32:53
- * @LastEditTime: 2020-11-20 16:57:22
+ * @LastEditTime: 2021-02-19 10:16:28
  */
 import {
     debounce, //防抖

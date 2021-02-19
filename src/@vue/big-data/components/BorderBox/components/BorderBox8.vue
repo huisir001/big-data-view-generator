@@ -2,7 +2,7 @@
  * @Description: 边框组件8
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-07 18:00:52
- * @LastEditTime: 2021-02-18 11:35:58
+ * @LastEditTime: 2021-02-19 10:40:53
 -->
 <template>
     <div class="border-box-8">
@@ -53,12 +53,10 @@
 </template>
 
 <script>
-import autoResize from '../../../mixins/autoResize'
 import { getRanId } from '../../../utils/myUtils'
 
 export default {
     name: 'BorderBox8',
-    mixins: [autoResize],
     props: {
         color: {
             //线条色
@@ -83,6 +81,8 @@ export default {
             type: Boolean,
             default: false,
         },
+        width: Number,
+        height: Number,
     },
     data() {
         const id = getRanId()

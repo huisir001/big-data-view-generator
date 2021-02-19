@@ -2,7 +2,7 @@
  * @Description: 边框组件13
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-07 18:04:14
- * @LastEditTime: 2021-02-18 15:07:08
+ * @LastEditTime: 2021-02-19 10:41:37
 -->
 <template>
     <div class="border-box-13">
@@ -49,10 +49,8 @@
 </template>
 
 <script>
-import autoResize from '../../../mixins/autoResize'
 export default {
     name: 'BorderBox13',
-    mixins: [autoResize],
     props: {
         color: {
             //线条色
@@ -67,6 +65,8 @@ export default {
             type: String,
             default: 'transparent',
         },
+        width: Number,
+        height: Number,
     },
 }
 </script>

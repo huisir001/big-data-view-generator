@@ -2,7 +2,7 @@
  * @Description: 边框组件11
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-07 18:00:52
- * @LastEditTime: 2021-02-18 15:06:57
+ * @LastEditTime: 2021-02-19 10:41:16
 -->
 <template>
     <div class="border-box-11">
@@ -299,12 +299,10 @@
 </template>
 
 <script>
-import autoResize from '../../../mixins/autoResize'
 import { getRanId, colorToRgba } from '../../../utils/myUtils'
 
 export default {
     name: 'BorderBox11',
-    mixins: [autoResize],
     props: {
         color: {
             //线条色
@@ -329,6 +327,8 @@ export default {
             type: String,
             default: 'transparent',
         },
+        width: Number,
+        height: Number,
     },
     data() {
         const id = getRanId()
