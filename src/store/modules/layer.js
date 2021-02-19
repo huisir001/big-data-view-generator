@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2021-02-19 15:08:51
+ * @LastEditTime: 2021-02-19 17:00:14
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -27,6 +27,7 @@ export default {
             layer.locked = false //解锁图层
             state.layers.forEach((item) => item.active && (item.active = false)) //移除之前已选定图层
             layer.active = true //是否选定，默认刚新增的图层是选定的
+            layer.hover = false //激活
 
             //图层尺寸（不同组件）
             let layerSize = {}

@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-02-19 10:53:05
+ * @LastEditTime: 2021-02-19 17:04:57
 -->
 <template>
     <div
@@ -15,7 +15,12 @@
             v-for="(item, index) in layers"
             v-show="item.show"
             :key="index"
-            :class="{ viewItem: true, act: item.active, locked: item.locked }"
+            :class="{
+                viewItem: true,
+                act: item.active,
+                locked: item.locked,
+                hover: item.hover,
+            }"
             :data-index="index"
             @mousedown.prevent="layerClick"
             @mouseup.prevent="layerClick"
@@ -30,7 +35,7 @@
             }px;z-index:${item.zIndex};`"
         >
             <!-- 位置标线/缩放锚点 -->
-            <template v-if="item.active">
+            <template v-if="item.active || item.hover">
                 <div class="posLine-x"></div>
                 <div class="posLine-y"></div>
                 <!-- 锚点 -->
@@ -480,7 +485,8 @@ export default {
                 opacity: 1;
             }
         }
-        &.act {
+        &.act,
+        &.hover {
             @include act;
             .posLine-x {
                 position: absolute;
