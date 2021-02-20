@@ -2,7 +2,7 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2021-01-15 14:38:58
+ * @LastEditTime: 2021-02-20 10:35:15
 -->
 <template>
     <el-container>
@@ -19,7 +19,11 @@
                 <el-tab-pane label="可用组件" name="comp">
                     <slot name="compLibrary"></slot>
                 </el-tab-pane>
-                <el-tab-pane label="图层管理" name="layer">
+                <el-tab-pane
+                    v-if="layers.length > 0"
+                    label="图层管理"
+                    name="layer"
+                >
                     <slot name="layerList"></slot>
                 </el-tab-pane>
             </el-tabs>
@@ -42,6 +46,10 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('system')
+const {
+    mapState: mapStateLayer,
+    mapGetters: mapGettersLayer,
+} = createNamespacedHelpers('layer')
 export default {
     name: 'Layout',
     data() {
@@ -51,6 +59,16 @@ export default {
     },
     computed: {
         ...mapState(['pageOptions', 'asideShow']),
+        ...mapStateLayer(['layers']),
+        ...mapGettersLayer(['layerString']),
+    },
+    watch: {
+        layerString(val) {
+            const layers = JSON.parse(val)
+            if (layers.length == 0) {
+                this.asideTabAcName = 'comp'
+            }
+        },
     },
     methods: {
         asideTabClick() {

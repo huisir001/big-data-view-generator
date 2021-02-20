@@ -2,30 +2,49 @@
  * @Description: 图层面板(图层列表)
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:21:50
- * @LastEditTime: 2021-02-19 17:13:56
+ * @LastEditTime: 2021-02-20 15:16:01
 -->
 <template>
     <div class="layerList">
         <div
-            v-for="(layer, index) in layers"
+            v-for="(layer, index) in layersReverse"
             :class="{ layer: true, act: layer.active }"
             :key="index"
             :data-layerindex="index"
             @mouseenter.prevent="layerHover"
             @mouseleave.prevent="layerHover"
+            @contextmenu.prevent="layerCtxMenu"
             @click="layerSelect"
         >
             <img class="icon" :src="iconImgs[layer.type]" />
             <div class="cont">
                 <div class="name">{{ layer.name }}</div>
-                <div class="layerid">ID：{{ layer.id }}</div>
+                <div class="layerid">
+                    <span>ID：{{ layer.id }}</span>
+                </div>
+            </div>
+            <div class="indicator">
+                <i
+                    :class="{
+                        'el-icon-view': !layer.show,
+                        not: !layer.show,
+                    }"
+                ></i>
+                <i
+                    :class="{
+                        'el-icon-lock': layer.locked,
+                    }"
+                ></i>
             </div>
         </div>
     </div>
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('system')
+const {
+    mapState: mapStateSystem,
+    mapMutations: mapMutationSystem,
+} = createNamespacedHelpers('system')
 const {
     mapState: mapStateLayer,
     mapMutations,
@@ -54,9 +73,15 @@ export default {
     computed: {
         ...mapStateLayer(['layers']),
         ...mapGetters(['activeLayers']),
+        ...mapStateSystem(['curkeydownCodes']), //系统信息
+        layersReverse() {
+            let copyLayer = JSON.parse(JSON.stringify(this.layers))
+            return copyLayer.reverse()
+        },
     },
     methods: {
         ...mapMutations(['setLayer']), //修改图层，设置选定图层
+        ...mapMutationSystem(['setShowLayerCtxMenu', 'setLayerCtxMenu']),
         //改变图层选定状态
         setActiveLayer(layer, bool) {
             let newLayer = { ...layer }
@@ -69,21 +94,58 @@ export default {
             newLayer.hover = bool
             this.setLayer(newLayer)
         },
+        //图层激活
         layerHover({ type, target }) {
-            let { setHoverLayer, layers } = this
+            let { setHoverLayer, layersReverse } = this
             if (type == 'mouseenter') {
-                setHoverLayer(layers[target.dataset.layerindex], true)
+                setHoverLayer(layersReverse[target.dataset.layerindex], true)
             } else {
-                setHoverLayer(layers[target.dataset.layerindex], false)
+                setHoverLayer(layersReverse[target.dataset.layerindex], false)
             }
         },
+        //图层选定
         layerSelect({ target }) {
-            let { setActiveLayer, layers, activeLayers } = this
-            //单选时只选定一个，取消其他选定的图层
-            activeLayers.forEach((item) => {
-                setActiveLayer(item, false)
+            const {
+                setActiveLayer,
+                layersReverse,
+                activeLayers,
+                curkeydownCodes,
+            } = this
+            const curLayer = layersReverse[target.dataset.layerindex]
+
+            // 若已锁定，提示先解锁
+            if (curLayer.locked) {
+                this.$message({
+                    type: 'error',
+                    message: '请先解锁',
+                })
+                return
+            }
+
+            if (curkeydownCodes.includes(17)) {
+                //多选(多选时若已选定则取消选定)
+                setActiveLayer(curLayer, !target.className.includes('act'))
+            } else {
+                //单选时若已选定则不执行
+                if (target.className.includes('act')) return
+                //单选时只选定一个，取消其他选定的图层
+                activeLayers.forEach((item) => {
+                    setActiveLayer(item, false)
+                })
+                setActiveLayer(curLayer, true)
+            }
+        },
+        //图层右键菜单事件
+        layerCtxMenu({ clientX, clientY, target }) {
+            const { setShowLayerCtxMenu, setLayerCtxMenu, layersReverse } = this
+            //显示菜单
+            setShowLayerCtxMenu(true)
+            //设置当前菜单(判断当前右键事件是在图层上点击还是面板上)
+            setLayerCtxMenu({
+                pos: [clientX, clientY],
+                layer: layersReverse[target.dataset.layerindex],
+                isSetPanel: true,
             })
-            setActiveLayer(layers[target.dataset.layerindex], true)
         },
     },
 }
@@ -99,6 +161,7 @@ export default {
         align-items: center;
         padding: 10px;
         cursor: pointer;
+        border-bottom: 1px solid #212528;
         &::after {
             content: '';
             position: absolute;
@@ -116,9 +179,12 @@ export default {
             background: #33434f;
         }
         .cont {
-            width: 158px;
+            width: 143px;
             margin-left: 10px;
-            > * {
+            .name {
+                font-size: 13px;
+                color: #a2c1e1;
+                font-family: auto, songti;
                 height: 18px;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -127,14 +193,23 @@ export default {
                 -webkit-line-clamp: 1;
                 word-break: break-all;
             }
-            .name {
-                font-size: 13px;
-                color: #a2c1e1;
-                font-family: auto, songti;
-            }
             .layerid {
                 color: #898989;
                 font-size: 12px;
+            }
+        }
+        .indicator {
+            color: #607d8b;
+            font-size: 12px;
+            width: 12px;
+            position: absolute;
+            right: 8px;
+            [class^='el-icon-'].not::after {
+                content: '—';
+                font-size: 12px;
+                transform: rotate(-45deg) translate(-11px, -6px);
+                display: inline-block;
+                width: 0;
             }
         }
         &:hover {
@@ -150,6 +225,9 @@ export default {
             }
             .cont .layerid {
                 color: #777;
+            }
+            .indicator {
+                color: #33434f;
             }
         }
     }

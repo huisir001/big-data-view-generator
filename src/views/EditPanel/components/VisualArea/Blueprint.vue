@@ -2,7 +2,7 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-02-19 17:27:25
+ * @LastEditTime: 2021-02-20 11:25:46
 -->
 <template>
     <div
@@ -479,10 +479,9 @@ export default {
             @include act;
         }
         &.locked {
-            border: none;
             cursor: default;
             &:hover {
-                border: none;
+                border: 1px solid transparent;
                 background-color: transparent;
                 opacity: 1;
             }

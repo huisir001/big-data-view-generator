@@ -2,7 +2,7 @@
  * @Description: 图层右键菜单(右键菜单)
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:19:54
- * @LastEditTime: 2020-11-20 10:06:48
+ * @LastEditTime: 2021-02-20 15:38:57
 -->
 <template>
     <div
@@ -126,11 +126,22 @@ export default {
                     name: '锁定',
                     icon: 'el-icon-lock',
                     disabled:
-                        layerCtxMenu.layer != null
+                        layerCtxMenu.isSetPanel && !layerCtxMenu.layer.locked
+                            ? false
+                            : layerCtxMenu.layer != null
                             ? layerCtxMenu.layer.locked
                             : activeLayers.length == 0, //在面板上右键时，判断当前是否有选定图层
                     func() {
-                        //可以锁定多个图层
+                        // 在图层管理面板只能锁定单个图层
+                        if (layerCtxMenu.isSetPanel) {
+                            let curLayer = { ...layerCtxMenu.layer }
+                            curLayer.locked = true
+                            curLayer.active = false //上锁后移除选定
+                            setLayer(curLayer)
+                            return
+                        }
+
+                        //在编辑区可以锁定多个图层
                         //找到已选定的图层
                         layers.forEach((item) => {
                             if (
@@ -196,44 +207,80 @@ export default {
                     },
                 },
                 {
-                    name: '删除选定',
+                    name: layerCtxMenu.isSetPanel ? '删除图层' : '删除选定',
                     icon: 'el-icon-delete',
-                    disabled: activeLayers.length == 0,
+                    disabled: layerCtxMenu.isSetPanel
+                        ? false
+                        : activeLayers.length == 0,
                     func: () => {
-                        //可以删除多个图层
-                        this.$confirm(
-                            '此操作将永久删除已选定的图层, 是否继续?',
-                            '提示',
-                            {
-                                confirmButtonText: '确定删除',
-                                cancelButtonText: '取消',
-                                type: 'warning',
-                            }
-                        )
-                            .then(() => {
-                                //已选定的图层
-                                //执行删除
-                                activeLayers.forEach((item) => {
-                                    delLayer(item)
+                        // 在管理面板可以删除单个图层 也可以删除多个图层
+                        if (
+                            layerCtxMenu.isSetPanel &&
+                            !layerCtxMenu.layer.active
+                        ) {
+                            // 在管理面板删除未选定的单个图层
+                            this.$confirm(
+                                '删除图层不可恢复, 是否继续?',
+                                '提示',
+                                {
+                                    confirmButtonText: '确定删除',
+                                    cancelButtonText: '取消',
+                                    type: 'warning',
+                                }
+                            )
+                                .then(() => {
+                                    delLayer(layerCtxMenu.layer)
+                                    //提示
+                                    this.$message({
+                                        type: 'success',
+                                        message: '删除成功!',
+                                    })
                                 })
-                                //提示
-                                this.$message({
-                                    type: 'success',
-                                    message: '删除成功!',
+                                .catch(() => {
+                                    this.$message({
+                                        type: 'info',
+                                        message: '已取消删除',
+                                    })
                                 })
-                            })
-                            .catch(() => {
-                                this.$message({
-                                    type: 'info',
-                                    message: '已取消删除',
+                        } else {
+                            // 在管理面板或编辑区删除多个图层
+                            this.$confirm(
+                                '此操作将永久删除已选定的图层, 是否继续?',
+                                '提示',
+                                {
+                                    confirmButtonText: '确定删除',
+                                    cancelButtonText: '取消',
+                                    type: 'warning',
+                                }
+                            )
+                                .then(() => {
+                                    //已选定的图层
+                                    //执行删除
+                                    activeLayers.forEach((item) => {
+                                        delLayer(item)
+                                    })
+                                    //提示
+                                    this.$message({
+                                        type: 'success',
+                                        message: '删除成功!',
+                                    })
                                 })
-                            })
+                                .catch(() => {
+                                    this.$message({
+                                        type: 'info',
+                                        message: '已取消删除',
+                                    })
+                                })
+                        }
                     },
                 },
                 {
                     name: '取消选定',
                     icon: 'el-icon-thumb not',
-                    disabled: activeLayers.length == 0, //有选定图层
+                    disabled:
+                        layerCtxMenu.isSetPanel && !layerCtxMenu.layer.active
+                            ? true
+                            : activeLayers.length == 0, //有选定图层
                     func() {
                         activeLayers.forEach((item) => {
                             item.active = false //取消选定
@@ -242,10 +289,23 @@ export default {
                     },
                 },
                 {
-                    name: '隐藏选定',
+                    name: layerCtxMenu.isSetPanel ? '隐藏图层' : '隐藏选定',
                     icon: 'el-icon-view not',
-                    disabled: activeLayers.length == 0, //有选定图层
+                    disabled:
+                        layerCtxMenu.isSetPanel && layerCtxMenu.layer.show
+                            ? false
+                            : layerCtxMenu.isSetPanel
+                            ? true
+                            : activeLayers.length == 0, //有选定图层
                     func() {
+                        // 管理面板只能隐藏单个
+                        if (layerCtxMenu.isSetPanel) {
+                            let curLayer = { ...layerCtxMenu.layer }
+                            curLayer.show = false
+                            curLayer.active = false //取消选定
+                            setLayer(curLayer)
+                            return
+                        }
                         activeLayers.forEach((item) => {
                             item.show = false
                             item.active = false //取消选定
@@ -254,10 +314,23 @@ export default {
                     },
                 },
                 {
-                    name: '显示所有',
+                    name: layerCtxMenu.isSetPanel ? '取消隐藏' : '显示所有',
                     icon: 'el-icon-view',
-                    disabled: hiddenLayers.length == 0, //有选定图层
+                    disabled:
+                        layerCtxMenu.isSetPanel && !layerCtxMenu.layer.show
+                            ? false
+                            : layerCtxMenu.isSetPanel
+                            ? true
+                            : hiddenLayers.length == 0, //有选定图层
                     func() {
+                        // 管理面板取消单个
+                        if (layerCtxMenu.isSetPanel) {
+                            let curLayer = { ...layerCtxMenu.layer }
+                            curLayer.show = true
+                            setLayer(curLayer)
+                            return
+                        }
+
                         hiddenLayers.forEach((item) => {
                             item.show = true
                             setLayer(item)
