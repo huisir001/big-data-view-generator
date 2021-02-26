@@ -2,7 +2,7 @@
  * @Description: 启动页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月24日 18:08:41
- * @LastEditTime: 2021-02-26 17:04:02
+ * @LastEditTime: 2021-01-13 14:28:40
 -->
 <template>
     <div class="startup" @contextmenu.prevent>
@@ -18,56 +18,20 @@
                 >作 品 编 辑</el-button
             >
         </div>
-        <div class="userInfo">
-            <!-- 判断登录状态，显示不同按钮 -->
-            <div v-if="!$store.state.isLogin" @click="showLoginBox = true">
-                登录
-            </div>
-            <div v-if="!$store.state.isLogin" @click="showSignupBox = true">
-                注册
-            </div>
-            <div v-if="$store.state.isLogin">退出</div>
-        </div>
-        <!-- 登录弹窗 -->
-        <LoginBox :show="showLoginBox" @modelShow="modelLoginShow"></LoginBox>
-        <!-- 注册弹窗 -->
-        <SignupBox
-            :show="showSignupBox"
-            @modelShow="modelSignupShow"
-        ></SignupBox>
         <footer>Copyright © 2020 by HuiSir</footer>
     </div>
 </template>
 
 <script>
-import LoginBox from '@/components/LoginBox'
-import SignupBox from '@/components/SignupBox'
 export default {
     name: 'Startup',
-    components: {
-        LoginBox,
-        SignupBox,
-    },
-    data() {
-        return { showLoginBox: false, showSignupBox: false }
-    },
     methods: {
-        modelLoginShow(val) {
-            this.showLoginBox != val && (this.showLoginBox = val)
-        },
-        modelSignupShow(val) {
-            this.showSignupBox != val && (this.showSignupBox = val)
-        },
         workEdit() {
-            this.$confirm(
-                '请选择已保存到本地的作品（文件后缀为.work）',
-                '选择作品',
-                {
-                    confirmButtonText: '选择文件',
-                    cancelButtonText: '取消',
-                    type: 'warning',
-                }
-            )
+            this.$confirm('请选择已保存的作品（文件后缀为.work）', '选择作品', {
+                confirmButtonText: '选择文件',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
                 .then(() => {
                     //读取文件操作
                     //...
@@ -98,7 +62,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: 0.5s all;
     h1 {
         font-size: 3vw;
         color: #fff;
@@ -114,24 +77,6 @@ export default {
             padding: 1vh 1.5vw !important;
             border-radius: 60px !important;
             font-size: 15px !important;
-        }
-    }
-    .userInfo {
-        position: fixed;
-        right: 20px;
-        top: 20px;
-        color: #fff;
-        font-size: 13px;
-        & > div {
-            transition: 0.5s all;
-            display: inline-block;
-            padding: 2px 10px;
-            margin: 0 5px;
-            background: #cf6552;
-            cursor: pointer;
-            &:hover {
-                background: #df2808;
-            }
         }
     }
     footer {

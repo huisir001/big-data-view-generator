@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-18 14:48:03
+ * @LastEditTime: 2021-02-26 15:07:33
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -14,7 +14,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        redirect: '/EditPanel',
+        redirect: '/Startup',
     },
     {
         path: '/Startup',
@@ -48,14 +48,14 @@ const routes = [
         },
         component: () => import('@/views/Preview'),
     },
-    {
-        path: '/test',
-        name: 'Test',
-        meta: {
-            title: '测试',
-        },
-        component: () => import('@/@vue/big-data/components/BorderBox'),
-    },
+    // {
+    //     path: '/test',
+    //     name: 'Test',
+    //     meta: {
+    //         title: '测试',
+    //     },
+    //     component: () => import('@/@vue/big-data/components/BorderBox'),
+    // },
 ]
 
 const router = new VueRouter({
