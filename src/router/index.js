@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-27 14:48:06
+ * @LastEditTime: 2021-02-27 15:14:43
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -75,6 +75,11 @@ const router = new VueRouter({
 
 // 路由前置钩子
 router.beforeEach((to, from, next) => {
+    // 外站进入直接转Startup
+    if (!to.meta.notLogin && (!from.name || !router.app.$store.state)) {
+        next({ name: 'Startup' })
+        return
+    }
     /* 登陆验证 */
     if (!to.meta.notLogin && !router.app.$store.state.isLogin) {
         //请登录，弹出登陆框
