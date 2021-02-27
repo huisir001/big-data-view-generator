@@ -2,7 +2,7 @@
  * @Description: 入口组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-01-15 11:33:00
+ * @LastEditTime: 2021-02-27 14:46:13
 -->
 <template>
     <div id="app">
@@ -10,8 +10,23 @@
         <keep-alive include="EditPanel">
             <router-view />
         </keep-alive>
+        <!-- 登录弹窗 -->
+        <LoginBox></LoginBox>
+        <!-- 注册弹窗 -->
+        <SignupBox></SignupBox>
     </div>
 </template>
+
+<script>
+import LoginBox from '@/components/LoginBox'
+import SignupBox from '@/components/SignupBox'
+export default {
+    components: {
+        LoginBox,
+        SignupBox,
+    },
+}
+</script>
 
 <style lang="scss">
 #app {

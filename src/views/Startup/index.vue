@@ -2,62 +2,46 @@
  * @Description: 启动页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月24日 18:08:41
- * @LastEditTime: 2021-02-26 17:04:02
+ * @LastEditTime: 2021-02-27 14:46:23
 -->
 <template>
-    <div class="startup" @contextmenu.prevent>
+    <div class="startup"
+         @contextmenu.prevent>
         <h1>大数据视图生成器</h1>
         <div class="btns">
-            <el-button type="primary" @click="$router.push('EditPanel')" round
-                >创 建 大 屏</el-button
-            >
-            <el-button type="primary" @click="$router.push('WorkList')" round
-                >作 品 中 心</el-button
-            >
-            <el-button type="primary" @click="workEdit" round
-                >作 品 编 辑</el-button
-            >
+            <el-button type="primary"
+                       @click="$router.push('EditPanel')"
+                       round>创 建 大 屏</el-button>
+            <el-button type="primary"
+                       @click="$router.push('WorkList')"
+                       round>作 品 中 心</el-button>
+            <el-button type="primary"
+                       @click="workEdit"
+                       round>作 品 编 辑</el-button>
         </div>
         <div class="userInfo">
             <!-- 判断登录状态，显示不同按钮 -->
-            <div v-if="!$store.state.isLogin" @click="showLoginBox = true">
+            <div v-if="!$store.state.isLogin"
+                 @click="$store.commit('setLoginBox', true)">
                 登录
             </div>
-            <div v-if="!$store.state.isLogin" @click="showSignupBox = true">
+            <div v-if="!$store.state.isLogin"
+                 @click="$store.commit('setSignupBox', true)">
                 注册
             </div>
             <div v-if="$store.state.isLogin">退出</div>
         </div>
-        <!-- 登录弹窗 -->
-        <LoginBox :show="showLoginBox" @modelShow="modelLoginShow"></LoginBox>
-        <!-- 注册弹窗 -->
-        <SignupBox
-            :show="showSignupBox"
-            @modelShow="modelSignupShow"
-        ></SignupBox>
         <footer>Copyright © 2020 by HuiSir</footer>
     </div>
 </template>
 
 <script>
-import LoginBox from '@/components/LoginBox'
-import SignupBox from '@/components/SignupBox'
 export default {
     name: 'Startup',
-    components: {
-        LoginBox,
-        SignupBox,
-    },
     data() {
-        return { showLoginBox: false, showSignupBox: false }
+        return {}
     },
     methods: {
-        modelLoginShow(val) {
-            this.showLoginBox != val && (this.showLoginBox = val)
-        },
-        modelSignupShow(val) {
-            this.showSignupBox != val && (this.showSignupBox = val)
-        },
         workEdit() {
             this.$confirm(
                 '请选择已保存到本地的作品（文件后缀为.work）',

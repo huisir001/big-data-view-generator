@@ -152,16 +152,17 @@ $input-bg: #33434f;
 }
 
 //下拉多选
-.el-select-dropdown.is-multiple .el-select-dropdown__item.selected,.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover {
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected,
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover {
     background-color: transparent;
 }
-.el-select__tags{
+.el-select__tags {
     .el-tag.el-tag--info {
-        background-color: #2196F3;
-        border-color: #2196F3;
+        background-color: #2196f3;
+        border-color: #2196f3;
         color: #ffffff;
         .el-tag__close {
-            color: #2196F3;
+            color: #2196f3;
         }
     }
 }
@@ -295,5 +296,13 @@ $font-color: #fff;
             height: 200px;
             resize: none;
         }
+    }
+}
+
+//登陆注册弹窗表单
+.loginForm,
+.signupForm {
+    .el-form-item__label {
+        color: #333;
     }
 }

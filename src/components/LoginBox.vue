@@ -2,44 +2,44 @@
  * @Description: 登录面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 15:27:39
- * @LastEditTime: 2021-02-26 16:52:49
+ * @LastEditTime: 2021-02-27 14:39:54
 -->
 <template>
-    <el-dialog
-        width="350px"
-        title="登录"
-        :visible.sync="modelShow"
-        :show-close="true"
-        :close-on-click-modal="true"
-    >
-        <el-form
-            ref="form"
-            :model="form"
-            size="small"
-            label-width="60px"
-            class="loginForm"
-        >
+    <el-dialog width="350px"
+               title="登录"
+               :visible.sync="$store.state.showLoginBox"
+               :show-close="true"
+               :close-on-click-modal="true">
+        <el-form ref="form"
+                 :model="form"
+                 size="small"
+                 label-width="60px"
+                 class="loginForm">
             <el-row>
                 <el-form-item label="用户名">
-                    <el-input
-                        class="search-input"
-                        v-model="form.username"
-                        clearable
-                    />
+                    <el-input class="search-input"
+                              v-model="form.username"
+                              clearable />
                 </el-form-item>
                 <el-form-item label="密　码">
-                    <el-input
-                        type="password"
-                        class="search-input"
-                        v-model="form.password"
-                        clearable
-                    />
+                    <el-input type="password"
+                              class="search-input"
+                              v-model="form.password"
+                              clearable />
                 </el-form-item>
             </el-row>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-            <span class="forgetPass" @click="forgetPass">忘记密码</span>
-            <el-button type="primary" @click="login('form')">确 定</el-button>
+        <div slot="footer"
+             class="dialog-footer">
+            <div class="links">
+                <span class="forgetPass"
+                      @click="forgetPass">忘记密码</span>
+                <span class="sx">|</span>
+                <span class="signup"
+                      @click="signup">注册</span>
+            </div>
+            <el-button type="primary"
+                       @click="login('form')">确 定</el-button>
         </div>
     </el-dialog>
 </template>
@@ -47,30 +47,14 @@
 <script>
 export default {
     name: 'LoginBox',
-    props: {
-        show: {
-            //是否显示本面板
-            type: Boolean,
-            default: false,
-        },
-    },
     data() {
         return {
-            modelShow: false,
             //表单数据
             form: {
                 username: '',
                 password: '',
             },
         }
-    },
-    watch: {
-        show(val) {
-            this.modelShow = val
-        },
-        modelShow(val) {
-            this.$emit('modelShow', val)
-        },
     },
     methods: {
         //登录
@@ -104,6 +88,10 @@ export default {
 
             //登录成功，用户信息存到store，token存到sessionStorage(浏览器关闭丢失)
         },
+        /* 注册 */
+        signup() {
+            this.$store.commit('setSignupBox', true)
+        },
         /* 忘记密码 */
         forgetPass() {
             this.$message({
@@ -115,21 +103,25 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.loginForm {
-    .el-form-item__label {
-        color: #333;
-    }
-}
-span.forgetPass {
+<style lang="scss" scoped>
+.links {
     color: #999;
     font-size: 13px;
     float: left;
-    cursor: pointer;
     padding: 10px 0;
-    &:hover {
-        text-decoration: underline;
-        color: #409eff;
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    align-items: center;
+    span.sx {
+        font-family: cursive;
+    }
+    span:not(.sx) {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+            color: #409eff;
+        }
     }
 }
 </style>

@@ -2,51 +2,47 @@
  * @Description: 注册弹窗
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 16:27:28
- * @LastEditTime: 2021-02-26 16:49:52
+ * @LastEditTime: 2021-02-27 14:43:27
 -->
 <template>
-    <el-dialog
-        width="350px"
-        title="注册"
-        :visible.sync="modelShow"
-        :show-close="true"
-        :close-on-click-modal="true"
-    >
-        <el-form
-            ref="form"
-            :model="form"
-            size="small"
-            label-width="70px"
-            class="signupForm"
-        >
+    <el-dialog width="350px"
+               title="注册"
+               :visible.sync="$store.state.showSignupBox"
+               :show-close="true"
+               :close-on-click-modal="true">
+        <el-form ref="form"
+                 :model="form"
+                 size="small"
+                 label-width="70px"
+                 class="signupForm">
             <el-row>
                 <el-form-item label="用户名">
-                    <el-input
-                        class="search-input"
-                        v-model="form.username"
-                        clearable
-                    />
+                    <el-input class="search-input"
+                              v-model="form.username"
+                              clearable />
                 </el-form-item>
                 <el-form-item label="密　码">
-                    <el-input
-                        type="password"
-                        class="search-input"
-                        v-model="form.password"
-                        clearable
-                    />
+                    <el-input type="password"
+                              class="search-input"
+                              v-model="form.password"
+                              clearable />
                 </el-form-item>
                 <el-form-item label="确认密码">
-                    <el-input
-                        type="password"
-                        class="search-input"
-                        v-model="form.surePass"
-                        clearable
-                    />
+                    <el-input type="password"
+                              class="search-input"
+                              v-model="form.surePass"
+                              clearable />
                 </el-form-item>
             </el-row>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="login('form')">确 定</el-button>
+        <div slot="footer"
+             class="dialog-footer">
+            <div class="links">
+                <span class="login"
+                      @click="showLoginBox">已有账号，直接登陆</span>
+            </div>
+            <el-button type="primary"
+                       @click="login('form')">确 定</el-button>
         </div>
     </el-dialog>
 </template>
@@ -54,16 +50,8 @@
 <script>
 export default {
     name: 'SignupBox',
-    props: {
-        show: {
-            //是否显示本面板
-            type: Boolean,
-            default: false,
-        },
-    },
     data() {
         return {
-            modelShow: false,
             //表单数据
             form: {
                 username: '',
@@ -71,14 +59,6 @@ export default {
                 surePass: '',
             },
         }
-    },
-    watch: {
-        show(val) {
-            this.modelShow = val
-        },
-        modelShow(val) {
-            this.$emit('modelShow', val)
-        },
     },
     methods: {
         //登录
@@ -117,6 +97,10 @@ export default {
             //     })
             // }
         },
+        showLoginBox() {
+            this.$store.commit('setSignupBox', false)
+            this.$store.commit('setLoginBox', true)
+        },
         /* 忘记密码 */
         forgetPass() {
             this.$message({
@@ -128,10 +112,18 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.signupForm {
-    .el-form-item__label {
-        color: #333;
+<style lang="scss" scoped>
+.dialog-footer .links {
+    color: #999;
+    font-size: 13px;
+    float: left;
+    padding: 10px 0;
+    span {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+            color: #409eff;
+        }
     }
 }
 </style>
