@@ -2,7 +2,7 @@
  * @Description: 可视区
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2021-01-12 18:18:01
+ * @LastEditTime: 2021-02-27 22:17:54
 -->
 <template>
     <!-- 可视区域 -->
@@ -10,17 +10,13 @@
         <!-- 刻度尺 -->
         <Ruler />
         <!-- 工作台 -->
-        <div
-            class="platform"
-            :style="`width:${platformSize[0]}px;height:${platformSize[1]}px;left:${platformPos[0]}px;top:${platformPos[1]}px`"
-        >
+        <div class="platform"
+             :style="`width:${platformSize[0]}px;height:${platformSize[1]}px;left:${platformPos[0]}px;top:${platformPos[1]}px`">
             <!-- 视图面板层 -->
             <Blueprint />
             <!-- 缩略图层 -->
-            <Thumbnail
-                :visualAreaSize="[width, height]"
-                :platformSize="platformSize"
-            />
+            <Thumbnail :visualAreaSize="[width, height]"
+                       :platformSize="platformSize" />
             <!-- 配置项侧栏 -->
             <slot name="options"></slot>
         </div>

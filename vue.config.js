@@ -2,7 +2,7 @@
  * @Description:vue配置文件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:45:17
- * @LastEditTime: 2021-02-07 10:40:34
+ * @LastEditTime: 2021-02-27 19:52:17
  */
 const MYCONFIG = {
     //初始化配置
@@ -13,7 +13,7 @@ const MYCONFIG = {
 module.exports = {
     publicPath: '',
     assetsDir: 'assets',
-    productionSourceMap: false,
+    productionSourceMap: true,
     chainWebpack: (config) => {
         config.plugin('html').tap((args) => {
             //初始化配置
@@ -28,8 +28,8 @@ module.exports = {
     /* 配置代理解决跨域测试 */
     devServer: {
         proxy: {
-            'getSysTime.do': {
-                target: 'http://quan.suning.com', // 接口的域名
+            '/api': {
+                target: 'http://localhost:8080', // 接口的域名
                 changeOrigin: true,
             },
         },

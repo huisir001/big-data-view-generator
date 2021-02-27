@@ -2,7 +2,7 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2021-02-19 15:08:02
+ * @LastEditTime: 2021-02-27 23:05:31
  */
 //延时防抖
 export function debounce(callback, delay) {
@@ -62,4 +62,32 @@ export function colorToRgba(sHex, alpha = 1) {
     } else {
         return sHex
     }
+}
+
+// 点击按钮防抖 1.5秒
+// 注册：Vue.use(clickPreventShake)
+// 使用 v-preventshake="1500"
+export const ClickPreventShake = {
+    install: (Vue) => {
+        Vue.directive('preventshake', {
+            inserted(el, binding) {
+                let time = binding.value || 1500
+                if (typeof time != 'number') {
+                    throw new Error(
+                        '按钮防抖指令传值延时时间（毫秒）必须是数字'
+                    )
+                }
+                el.addEventListener('click', (e) => {
+                    if (!el.disabled) {
+                        el.disabled = true
+                        el.style.cursor = 'not-allowed'
+                        setTimeout(() => {
+                            el.style.cursor = 'pointer'
+                            el.disabled = false
+                        }, time)
+                    }
+                })
+            },
+        })
+    },
 }

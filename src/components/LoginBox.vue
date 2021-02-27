@@ -2,28 +2,29 @@
  * @Description: 登录面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 15:27:39
- * @LastEditTime: 2021-02-27 14:39:54
+ * @LastEditTime: 2021-02-28 00:03:02
 -->
 <template>
     <el-dialog width="350px"
                title="登录"
-               :visible.sync="$store.state.showLoginBox"
+               :visible.sync="showLoginBox"
                :show-close="true"
                :close-on-click-modal="true">
-        <el-form ref="form"
+        <el-form ref="loginForm"
                  :model="form"
+                 :rules="rules"
                  size="small"
-                 label-width="60px"
+                 label-width="70px"
                  class="loginForm">
             <el-row>
-                <el-form-item label="用户名">
-                    <el-input class="search-input"
-                              v-model="form.username"
+                <el-form-item label="用户名"
+                              prop="username">
+                    <el-input v-model="form.username"
                               clearable />
                 </el-form-item>
-                <el-form-item label="密　码">
+                <el-form-item label="密　码"
+                              prop="password">
                     <el-input type="password"
-                              class="search-input"
                               v-model="form.password"
                               clearable />
                 </el-form-item>
@@ -39,14 +40,31 @@
                       @click="signup">注册</span>
             </div>
             <el-button type="primary"
-                       @click="login('form')">确 定</el-button>
+                       @click="doLogin('loginForm')"
+                       v-preventshake="1500">确 定</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script>
+import { Login } from '@/api/user'
 export default {
     name: 'LoginBox',
+    computed: {
+        showLoginBox: {
+            //设置get和set方法便于弹窗组件关闭时能够改变state
+            get() {
+                return this.$store.state.showLoginBox
+            },
+            set(val) {
+                if (!val) {
+                    // 关闭弹窗时要重置表单
+                    this.$refs.loginForm.resetFields()
+                }
+                this.$store.commit('setLoginBox', val)
+            },
+        },
+    },
     data() {
         return {
             //表单数据
@@ -54,39 +72,52 @@ export default {
                 username: '',
                 password: '',
             },
+            rules: {
+                username: [
+                    {
+                        required: true,
+                        message: '请输入用户名',
+                        trigger: 'blur',
+                    },
+                ],
+                password: [
+                    {
+                        required: true,
+                        message: '请输入密码',
+                        trigger: 'blur',
+                    },
+                ],
+            },
         }
     },
     methods: {
         //登录
-        login() {
-            console.log(this.form.username)
+        doLogin(ref) {
+            // 表单验证
+            this.$refs[ref].validate(async (valid) => {
+                if (valid) {
+                    const { form, $store, $message } = this
 
-            //置空
-            this.form = { username: '', password: '' }
+                    // 请求
+                    const { ok, msg, data, token } = await Login(form)
 
-            //校验密码
-            // if (this.form.password !== '111111') {
-            //     this.$message({
-            //         type: 'danger',
-            //         message: '用户名或密码错误!',
-            //     })
-            //     return
-            // }
-            // //校验用户
-            // if (this.form.username === 'admin') {
-            //     this.modelShow = false
-            //     //把登录数据写入到session
-            //     if (window.sessionStorage) {
-            //         sessionStorage.setItem('is_login', 'true')
-            //     }
-            // } else {
-            //     this.$message({
-            //         type: 'danger',
-            //         message: '用户名或密码错误!',
-            //     })
-            // }
-
-            //登录成功，用户信息存到store，token存到sessionStorage(浏览器关闭丢失)
+                    if (ok) {
+                        // 登陆状态
+                        $store.commit('setLoginState', 1)
+                        // 用户信息缓存
+                        $store.commit('setUserInfo', data)
+                        // token缓存(浏览器关闭丢失)
+                        sessionStorage.setItem('_token', token)
+                        // 关闭弹窗
+                        $store.commit('setLoginBox', false)
+                        // 提示
+                        $message({
+                            message: msg,
+                            type: 'success',
+                        })
+                    }
+                }
+            })
         },
         /* 注册 */
         signup() {
