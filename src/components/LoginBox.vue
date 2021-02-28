@@ -2,7 +2,7 @@
  * @Description: 登录面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 15:27:39
- * @LastEditTime: 2021-02-28 19:19:11
+ * @LastEditTime: 2021-02-28 21:57:59
 -->
 <template>
     <el-dialog width="350px"
@@ -118,10 +118,7 @@ export default {
                         this.$refs.loginForm.resetFields()
 
                         // 提示
-                        $message({
-                            message: msg,
-                            type: 'success',
-                        })
+                        $message({ message: msg, type: 'success' })
                     }
                 }
             })

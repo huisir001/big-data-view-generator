@@ -2,7 +2,7 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 14:49:51
- * @LastEditTime: 2021-02-28 18:54:09
+ * @LastEditTime: 2021-02-28 23:24:03
 -->
 <template>
     <div class="works">
@@ -92,6 +92,7 @@
 import { getRanId } from '@/utils/myUtils'
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('system')
+import { CreateWork } from '@/api/work'
 export default {
     name: 'Works',
     data() {
@@ -113,13 +114,26 @@ export default {
             }
             this.dialogNewWorkVisible = true
         },
-        addNewWorkBtn() {
-            const { setPageOptions, newWorkFormVal, $router } = this
-            setPageOptions(newWorkFormVal)
-            this.dialogNewWorkVisible = false
-            this.$store.commit('layer/clearLayers') //清空图层
-            // 进入EditPanel页使用replace以避免浏览器回退历史页面而未保存作品
-            $router.replace({ name: 'EditPanel' })
+        async addNewWorkBtn() {
+            const { setPageOptions, newWorkFormVal, $router, $message } = this
+
+            // 数据库中创建新作品
+            const { ok, data, msg } = await CreateWork({
+                title: newWorkFormVal.title,
+                page_options: JSON.stringify(newWorkFormVal),
+                layers: '[]',
+            })
+
+            if (ok) {
+                // 提示
+                $message({ message: msg, type: 'success' })
+                // 存到store
+                setPageOptions(newWorkFormVal)
+                this.dialogNewWorkVisible = false
+                this.$store.commit('layer/clearLayers') //清空图层
+                // 进入EditPanel页使用replace以避免浏览器回退历史页面而未保存作品
+                $router.replace({ path: `/EditPanel/${data.id}` })
+            }
         },
     },
 }

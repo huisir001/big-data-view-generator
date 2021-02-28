@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-28 19:24:13
+ * @LastEditTime: 2021-02-28 23:13:57
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -27,7 +27,7 @@ const routes = [
         },
     },
     {
-        path: '/EditPanel',
+        path: '/EditPanel/:id',
         name: 'EditPanel',
         component: EditPanel,
         meta: {

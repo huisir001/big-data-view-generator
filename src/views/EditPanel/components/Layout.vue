@@ -2,34 +2,33 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2021-02-20 10:35:15
+ * @LastEditTime: 2021-02-28 23:19:34
 -->
 <template>
     <el-container>
-        <el-aside :class="`aside ${asideShow || 'hide'}`" width="245px">
+        <el-aside :class="`aside ${asideShow || 'hide'}`"
+                  width="245px">
             <h1 :title="pageOptions.title">
                 {{ pageOptions.title }}
             </h1>
             <!-- 侧边栏 -->
-            <el-tabs
-                v-model="asideTabAcName"
-                @tab-click="asideTabClick"
-                :stretch="true"
-            >
-                <el-tab-pane label="可用组件" name="comp">
+            <el-tabs v-model="asideTabAcName"
+                     @tab-click="asideTabClick"
+                     :stretch="true">
+                <el-tab-pane label="可用组件"
+                             name="comp">
                     <slot name="compLibrary"></slot>
                 </el-tab-pane>
-                <el-tab-pane
-                    v-if="layers.length > 0"
-                    label="图层管理"
-                    name="layer"
-                >
+                <el-tab-pane v-if="layers.length > 0"
+                             label="图层管理"
+                             name="layer">
                     <slot name="layerList"></slot>
                 </el-tab-pane>
             </el-tabs>
         </el-aside>
         <el-container class="content">
-            <el-header class="head-box" height="50px">
+            <el-header class="head-box"
+                       height="50px">
                 <!-- 顶栏 -->
                 <slot name="head"></slot>
             </el-header>

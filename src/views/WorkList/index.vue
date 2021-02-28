@@ -2,7 +2,7 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 10:29:54
- * @LastEditTime: 2021-02-28 18:46:42
+ * @LastEditTime: 2021-02-28 20:03:58
 -->
 <template>
     <div class="workList">
@@ -38,9 +38,6 @@ export default {
         Templet,
         Map,
         User,
-    },
-    created() {
-        console.log(this.$route.params.comp)
     },
     data() {
         return {
