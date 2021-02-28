@@ -2,7 +2,7 @@
  * @Description: 登录面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 15:27:39
- * @LastEditTime: 2021-02-28 12:01:56
+ * @LastEditTime: 2021-02-28 19:19:11
 -->
 <template>
     <el-dialog width="350px"
@@ -113,6 +113,9 @@ export default {
 
                         // token缓存(浏览器关闭丢失)
                         sessionStorage.setItem('_token', token)
+
+                        // 重置表单
+                        this.$refs.loginForm.resetFields()
 
                         // 提示
                         $message({

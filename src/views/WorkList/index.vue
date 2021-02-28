@@ -2,36 +2,26 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 10:29:54
- * @LastEditTime: 2021-01-18 10:03:58
+ * @LastEditTime: 2021-02-28 18:46:42
 -->
 <template>
     <div class="workList">
         <div class="header">
             <h1>大数据视图生成器</h1>
             <h2>Big data view generator</h2>
-            <el-menu
-                :default-active="activeComponet"
-                class="topMenu"
-                mode="horizontal"
-                @select="handleTopMenuSelect"
-            >
-                <el-menu-item index="Works"
-                    ><i class="el-icon-menu"></i>我的作品</el-menu-item
-                >
-                <el-menu-item index="Templet"
-                    ><i class="el-icon-s-platform"></i>模板库</el-menu-item
-                >
-                <el-menu-item index="Map"
-                    ><i class="el-icon-location"></i>地图管理</el-menu-item
-                >
-                <el-menu-item index="User"
-                    ><i class="el-icon-s-custom"></i>用户中心</el-menu-item
-                >
+            <el-menu :default-active="$route.params.comp"
+                     class="topMenu"
+                     mode="horizontal"
+                     @select="handleTopMenuSelect">
+                <el-menu-item index="Works"><i class="el-icon-menu"></i>我的作品</el-menu-item>
+                <el-menu-item index="Templet"><i class="el-icon-s-platform"></i>模板库</el-menu-item>
+                <el-menu-item index="Map"><i class="el-icon-location"></i>地图管理</el-menu-item>
+                <el-menu-item index="User"><i class="el-icon-s-custom"></i>用户中心</el-menu-item>
             </el-menu>
             <div class="mask"></div>
         </div>
         <div class="content">
-            <component :is="activeComponet"></component>
+            <component :is="$route.params.comp"></component>
         </div>
     </div>
 </template>
@@ -49,6 +39,9 @@ export default {
         Map,
         User,
     },
+    created() {
+        console.log(this.$route.params.comp)
+    },
     data() {
         return {
             activeComponet: 'Works',
@@ -56,7 +49,8 @@ export default {
     },
     methods: {
         handleTopMenuSelect(key, keyPath) {
-            this.activeComponet = key
+            this.$router.replace(key)
+            // this.activeComponet = key
         },
     },
 }

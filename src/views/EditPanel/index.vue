@@ -2,7 +2,7 @@
  * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2021-01-15 15:05:52
+ * @LastEditTime: 2021-02-28 18:30:10
 -->
 <template>
     <div @contextmenu.prevent>
@@ -57,24 +57,38 @@ export default {
         VisualArea,
         LayerCtxMenu,
     },
+    /* keep-alive缓存路由生命周期钩子 */
+    activated() {
+        // 监听页面关闭和刷新
+        window.onbeforeunload = function (e) {
+            e.returnValue = '您确认离开吗？系统不会保存您所做的任何修改！'
+        }
+        //重新监听dom事件
+        this.$store.dispatch('system/domResetEventListener')
+    },
+    /* 路由跳转钩子 */
     beforeRouteLeave(to, from, next) {
+        // 取消所有事件监听
+        window.onbeforeunload = null
+        this.$store.dispatch('system/domRemoveEventListener')
+        next()
         //判断是否已保存，已保存的话直接销毁页面
         //...待判断是否保存
         //如若未保存则弹出提示
-        this.$confirm('当前工作暂未保存，是否保存?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-        })
-            .then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '保存成功!',
-                })
-                this.$destroy()
-                next()
-            })
-            .catch(() => {})
+        // this.$confirm('当前工作暂未保存，是否保存?', '提示', {
+        //     confirmButtonText: '确定',
+        //     cancelButtonText: '取消',
+        //     type: 'warning',
+        // })
+        //     .then(() => {
+        //         this.$message({
+        //             type: 'success',
+        //             message: '保存成功!',
+        //         })
+        //         this.$destroy()
+        //         next()
+        //     })
+        //     .catch(() => {})
     },
 }
 </script>

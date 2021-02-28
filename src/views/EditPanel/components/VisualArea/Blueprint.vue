@@ -2,29 +2,26 @@
  * @Description: 蓝图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-02-20 11:25:46
+ * @LastEditTime: 2021-02-28 18:55:01
 -->
 <template>
-    <div
-        class="blueprint"
-        :style="blueprintStyle"
-        @contextmenu.prevent="layerCtxMenu"
-    >
+    <div class="blueprint"
+         :style="blueprintStyle"
+         @contextmenu.prevent="layerCtxMenu">
         <!-- 图层渲染(采用动态组件) -->
-        <div
-            v-for="(item, index) in layers"
-            v-show="item.show"
-            :key="index"
-            :class="{
+        <div v-for="(item, index) in layers"
+             v-show="item.show"
+             :key="index"
+             :class="{
                 viewItem: true,
                 act: item.active,
                 locked: item.locked,
                 hover: item.hover,
             }"
-            :data-index="index"
-            @mousedown.prevent="layerClick"
-            @mouseup.prevent="layerClick"
-            :style="`width:${
+             :data-index="index"
+             @mousedown.prevent="layerClick"
+             @mouseup.prevent="layerClick"
+             :style="`width:${
                 layersCache[item.id] ? layersCache[item.id].width : item.width
             }px;height:${
                 layersCache[item.id] ? layersCache[item.id].height : item.height
@@ -32,8 +29,7 @@
                 layersCache[item.id] ? layersCache[item.id].pos[0] : item.pos[0]
             }px;top:${
                 layersCache[item.id] ? layersCache[item.id].pos[1] : item.pos[1]
-            }px;z-index:${item.zIndex};`"
-        >
+            }px;z-index:${item.zIndex};`">
             <!-- 位置标线 -->
             <template v-if="item.active || item.hover">
                 <div class="posLine-x"></div>
@@ -41,22 +37,18 @@
             </template>
             <!-- 缩放锚点 -->
             <template v-if="item.active">
-                <div
-                    v-for="anchor in 8"
-                    :key="anchor"
-                    :class="`anchor anchor-${anchor}`"
-                    :data-index="index"
-                    :data-anchor="anchor"
-                    @mousedown.prevent="anchorClick"
-                    @mouseup.prevent="anchorClick"
-                ></div>
+                <div v-for="anchor in 8"
+                     :key="anchor"
+                     :class="`anchor anchor-${anchor}`"
+                     :data-index="index"
+                     :data-anchor="anchor"
+                     @mousedown.prevent="anchorClick"
+                     @mouseup.prevent="anchorClick"></div>
             </template>
             <!-- 动态组件 -->
-            <component
-                :is="item.type"
-                :options="item.compOptions"
-                style="overflow: hidden"
-            ></component>
+            <component :is="item.type"
+                       :options="item.compOptions"
+                       style="overflow: hidden"></component>
         </div>
     </div>
 </template>

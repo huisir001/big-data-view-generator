@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-02-27 14:30:52
+ * @LastEditTime: 2021-02-28 18:24:20
  */
 export default {
     namespaced: true,
@@ -122,6 +122,23 @@ export default {
                 // e.preventDefault()
                 // return false
             }
+        },
+        //document重新执行所有事件监听
+        domResetEventListener({ state }) {
+            Object.keys(state.domEventFncs).forEach((evType) => {
+                document[evType] = (e) => {
+                    //执行所有方法
+                    state.domEventFncs[evType].forEach((func) => {
+                        func(e)
+                    })
+                }
+            })
+        },
+        // document取消所有事件监听
+        domRemoveEventListener({ state }) {
+            Object.keys(state.domEventFncs).forEach((evType) => {
+                document[evType] = null
+            })
         },
     },
     getters: {

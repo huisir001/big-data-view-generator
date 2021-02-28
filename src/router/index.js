@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-28 13:38:12
+ * @LastEditTime: 2021-02-28 19:24:13
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -35,7 +35,7 @@ const routes = [
         },
     },
     {
-        path: '/WorkList',
+        path: '/WorkList/:comp',
         name: 'WorkList',
         meta: {
             title: '作品管理',
@@ -78,18 +78,17 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
     // 外站进入\第一次打开、刷新网页
     if (!from.name || !router.app.$store.state) {
-        //!to.meta.notLogin &&
         //获取token
         const token = sessionStorage.getItem('_token')
         if (token) {
             // 查询用户信息
-            const userInfo = await GetUserInfo()
+            const { ok, data } = await GetUserInfo()
             // 这里不再判定用户信息是否查到，若有错误会在axios全局配置钩子中处理
             router.app.$store.commit('setStates', {
                 isLogin: 1, // 登陆状态
-                userInfo, // 用户信息缓存
+                userInfo: data, // 用户信息缓存
             })
-            if (!to.meta.notLogin && userInfo.ok == 0) {
+            if (!to.meta.notLogin && ok == 0) {
                 next('/Startup')
             } else {
                 next()

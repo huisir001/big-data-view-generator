@@ -2,106 +2,87 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 14:49:51
- * @LastEditTime: 2021-01-15 16:12:07
+ * @LastEditTime: 2021-02-28 18:54:09
 -->
 <template>
     <div class="works">
         <el-row :gutter="20">
-            <el-col :span="36" :xs="12" :sm="9" :md="6" :lg="4" class="workCol">
-                <el-card
-                    :body-style="{ padding: '0px' }"
-                    style="border: 1px solid #7385eb"
-                >
-                    <div class="addNewWork" @click="addNewWork">
+            <el-col :span="36"
+                    :xs="12"
+                    :sm="9"
+                    :md="6"
+                    :lg="4"
+                    class="workCol">
+                <el-card :body-style="{ padding: '0px' }"
+                         style="border: 1px solid #7385eb">
+                    <div class="addNewWork"
+                         @click="addNewWork">
                         <i class="el-icon-plus"></i>
                         <span>新增可视化</span>
                     </div>
                 </el-card>
             </el-col>
-            <el-col
-                :span="36"
-                :xs="12"
-                :sm="9"
-                :md="6"
-                :lg="4"
-                v-for="(o, index) in 20"
-                :key="o"
-                class="workCol"
-            >
-                <el-card
-                    :body-style="{ padding: '0px' }"
-                    style="border: 1px solid #7385eb"
-                >
+            <el-col :span="36"
+                    :xs="12"
+                    :sm="9"
+                    :md="6"
+                    :lg="4"
+                    v-for="(o, index) in 20"
+                    :key="o"
+                    class="workCol">
+                <el-card :body-style="{ padding: '0px' }"
+                         style="border: 1px solid #7385eb">
                     <div class="workItem">
-                        <img
-                            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                            class="screenshot"
-                        />
+                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                             class="screenshot" />
                         <div class="foot">
                             <h2>页面标题</h2>
                             <p>最后编辑 2020-01-15 23:00</p>
                         </div>
                         <div class="floatBox">
-                            <el-button
-                                type="primary"
-                                class="editBtn"
-                                size="small"
-                                >编辑</el-button
-                            >
+                            <el-button type="primary"
+                                       class="editBtn"
+                                       size="small">编辑</el-button>
                             <div class="iconBtns">
-                                <span
-                                    class="el-icon-monitor"
-                                    title="预览"
-                                ></span>
-                                <span
-                                    class="el-icon-document-copy"
-                                    title="复制"
-                                ></span>
-                                <span
-                                    class="el-icon-delete"
-                                    title="删除"
-                                ></span>
+                                <span class="el-icon-monitor"
+                                      title="预览"></span>
+                                <span class="el-icon-document-copy"
+                                      title="复制"></span>
+                                <span class="el-icon-delete"
+                                      title="删除"></span>
                             </div>
                         </div>
                     </div>
                 </el-card>
             </el-col>
         </el-row>
-        <el-dialog
-            title="新增可视化"
-            width="400px"
-            class="addNewWorkDialog"
-            :modal-append-to-body="true"
-            :visible.sync="dialogNewWorkVisible"
-        >
+        <el-dialog title="新增可视化"
+                   width="400px"
+                   class="addNewWorkDialog"
+                   :modal-append-to-body="true"
+                   :visible.sync="dialogNewWorkVisible">
             <el-form :model="newWorkFormVal">
-                <el-form-item label="页面名称" label-width="70px">
-                    <el-input
-                        v-model="newWorkFormVal.title"
-                        placeholder="请输入页面名称"
-                        autocomplete="off"
-                    ></el-input>
+                <el-form-item label="页面名称"
+                              label-width="70px">
+                    <el-input v-model="newWorkFormVal.title"
+                              placeholder="请输入页面名称"
+                              autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="页面尺寸" label-width="70px">
-                    <el-input-number
-                        v-model="newWorkFormVal.screenSize[0]"
-                        controls-position="right"
-                        style="width: 49%"
-                    ></el-input-number>
-                    <el-input-number
-                        v-model="newWorkFormVal.screenSize[1]"
-                        controls-position="right"
-                        style="width: 49%; margin-left: 2%"
-                    ></el-input-number>
+                <el-form-item label="页面尺寸"
+                              label-width="70px">
+                    <el-input-number v-model="newWorkFormVal.screenSize[0]"
+                                     controls-position="right"
+                                     style="width: 49%"></el-input-number>
+                    <el-input-number v-model="newWorkFormVal.screenSize[1]"
+                                     controls-position="right"
+                                     style="width: 49%; margin-left: 2%"></el-input-number>
                 </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogNewWorkVisible = false"
-                    >取 消</el-button
-                >
-                <el-button type="primary" @click="addNewWorkBtn"
-                    >确 定</el-button
-                >
+            <div slot="footer"
+                 class="dialog-footer">
+                <el-button @click="dialogNewWorkVisible = false">取 消</el-button>
+                <el-button type="primary"
+                           @click="addNewWorkBtn">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -137,7 +118,8 @@ export default {
             setPageOptions(newWorkFormVal)
             this.dialogNewWorkVisible = false
             this.$store.commit('layer/clearLayers') //清空图层
-            $router.replace('EditPanel')
+            // 进入EditPanel页使用replace以避免浏览器回退历史页面而未保存作品
+            $router.replace({ name: 'EditPanel' })
         },
     },
 }

@@ -2,20 +2,43 @@
  * @Description: axios初始化和全局配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 13:16:24
- * @LastEditTime: 2021-02-28 13:00:40
+ * @LastEditTime: 2021-02-28 19:48:30
  */
-import { Message } from 'element-ui' //提示信息
+import { Message, Loading } from 'element-ui' //提示信息
 import axios from 'axios'
 import Store from '@/store'
 
 //初始化
 let Axios = axios.create({
     baseURL: process.env.VUE_APP_BASEAPI, //api路径
-    headers: { token: sessionStorage.getItem('_token') },
+    // headers: {},
     // timeout: 1000,      //超时
 })
 
-//全局配置
+//请求前钩子
+Axios.interceptors.request.use(
+    (config) => {
+        // 加载loading
+        Axios.loading = Loading.service({
+            text: 'Loading',
+            // spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.4)',
+        })
+        // 由于执行请求时token可能已经改变，故每次请求前都要重新获取token
+        const Token = sessionStorage.getItem('_token')
+        if (Token) {
+            // 判断是否存在token，如果存在的话，则每个http header都加上token
+            config.headers['token'] = Token
+        }
+        return config
+    },
+    (error) => {
+        Axios.loading.close() // 关闭loading
+        console.error(error)
+    }
+)
+
+//响应后钩子
 Axios.interceptors.response.use(
     (response) => {
         // 对响应数据做些事
@@ -31,10 +54,13 @@ Axios.interceptors.response.use(
             Message.error(response.data.msg)
             console.error('[Request error]: ' + response.data.msg)
         }
+        // 关闭loading
+        Axios.loading.close()
         return response.data
     },
     (error) => {
         const { status, data } = error.response
+        Axios.loading.close() // 关闭loading
         Message.error(data.msg) //错误提示
         console.error(error)
         // 若这里响应码为403，则改变登陆状态，弹出登录框
