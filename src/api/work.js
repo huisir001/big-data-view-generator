@@ -2,7 +2,7 @@
  * @Description: 作品管理
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-28 21:36:38
- * @LastEditTime: 2021-02-28 23:23:11
+ * @LastEditTime: 2021-02-28 23:46:03
  */
 import Axios from '@/utils/axios'
 const Prefix = '/api/work'

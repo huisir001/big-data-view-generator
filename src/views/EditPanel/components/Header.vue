@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-02-28 23:31:20
+ * @LastEditTime: 2021-02-28 23:46:31
 -->
 <template>
     <div class="header">
@@ -46,17 +46,18 @@ export default {
         ...mapMutations(['setAsideShow']),
         async saveCurWork() {
             //保存
-            const { $route, pageOptions, $store } = this
-            const updateRes = await UpdateWork({
+            const { $route, pageOptions, $store, $message } = this
+            const { ok, msg } = await UpdateWork({
                 id: $route.params.id,
                 title: pageOptions.title,
                 page_options: $store.getters['system/pageOptionsStr'],
                 layers: $store.getters['layer/layerString'],
             })
 
-            console.log(JSON.parse($store.getters['layer/layerString']))
-
-            console.log(updateRes)
+            if (ok) {
+                // 提示
+                $message({ message: msg, type: 'success' })
+            }
         },
         openPreview() {
             //缓存图层信息
