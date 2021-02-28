@@ -2,7 +2,7 @@
  * @Description: 注册弹窗
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 16:27:28
- * @LastEditTime: 2021-02-27 23:46:19
+ * @LastEditTime: 2021-02-28 13:01:34
 -->
 <template>
     <el-dialog width="350px"
@@ -68,7 +68,7 @@ export default {
                     // 关闭弹窗时要重置表单
                     this.$refs.signupForm.resetFields()
                 }
-                this.$store.commit('setSignupBox', val)
+                this.$store.commit('setStates', { showSignupBox: val })
             },
         },
     },
@@ -144,7 +144,10 @@ export default {
 
                     if (ok) {
                         // 关闭弹窗
-                        $store.commit('setSignupBox', false)
+                        $store.commit('setStates', {
+                            showSignupBox: false,
+                        })
+
                         // 提示
                         $message({
                             message: msg,
@@ -155,9 +158,10 @@ export default {
             })
         },
         showLoginBox() {
-            const { $store } = this
-            $store.commit('setSignupBox', false)
-            $store.commit('setLoginBox', true)
+            this.$store.commit('setStates', {
+                showSignupBox: false,
+                showLoginBox: true,
+            })
         },
         /* 忘记密码 */
         forgetPass() {

@@ -2,7 +2,7 @@
  * @Description: 登录面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 15:27:39
- * @LastEditTime: 2021-02-28 00:03:02
+ * @LastEditTime: 2021-02-28 12:01:56
 -->
 <template>
     <el-dialog width="350px"
@@ -37,7 +37,7 @@
                       @click="forgetPass">忘记密码</span>
                 <span class="sx">|</span>
                 <span class="signup"
-                      @click="signup">注册</span>
+                      @click="$store.commit('setStates', {showSignupBox:true})">注册</span>
             </div>
             <el-button type="primary"
                        @click="doLogin('loginForm')"
@@ -61,7 +61,9 @@ export default {
                     // 关闭弹窗时要重置表单
                     this.$refs.loginForm.resetFields()
                 }
-                this.$store.commit('setLoginBox', val)
+                this.$store.commit('setStates', {
+                    showLoginBox: val,
+                })
             },
         },
     },
@@ -102,14 +104,16 @@ export default {
                     const { ok, msg, data, token } = await Login(form)
 
                     if (ok) {
-                        // 登陆状态
-                        $store.commit('setLoginState', 1)
-                        // 用户信息缓存
-                        $store.commit('setUserInfo', data)
+                        // 状态设置
+                        $store.commit('setStates', {
+                            isLogin: 1, // 登陆状态
+                            userInfo: data, // 用户信息缓存
+                            showLoginBox: false, // 关闭弹窗
+                        })
+
                         // token缓存(浏览器关闭丢失)
                         sessionStorage.setItem('_token', token)
-                        // 关闭弹窗
-                        $store.commit('setLoginBox', false)
+
                         // 提示
                         $message({
                             message: msg,
@@ -118,10 +122,6 @@ export default {
                     }
                 }
             })
-        },
-        /* 注册 */
-        signup() {
-            this.$store.commit('setSignupBox', true)
         },
         /* 忘记密码 */
         forgetPass() {

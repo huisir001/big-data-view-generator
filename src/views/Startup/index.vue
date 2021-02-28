@@ -2,7 +2,7 @@
  * @Description: 启动页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月24日 18:08:41
- * @LastEditTime: 2021-02-27 14:46:23
+ * @LastEditTime: 2021-02-28 12:01:22
 -->
 <template>
     <div class="startup"
@@ -22,11 +22,11 @@
         <div class="userInfo">
             <!-- 判断登录状态，显示不同按钮 -->
             <div v-if="!$store.state.isLogin"
-                 @click="$store.commit('setLoginBox', true)">
+                 @click="$store.commit('setStates', {showLoginBox:true})">
                 登录
             </div>
             <div v-if="!$store.state.isLogin"
-                 @click="$store.commit('setSignupBox', true)">
+                 @click="$store.commit('setStates', {showSignupBox:true})">
                 注册
             </div>
             <div v-if="$store.state.isLogin">退出</div>

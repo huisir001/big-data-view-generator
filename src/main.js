@@ -2,7 +2,7 @@
  * @Description: 主入口
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-27 22:52:21
+ * @LastEditTime: 2021-02-28 10:44:50
  */
 import Vue from 'vue'
 import App from './App.vue'

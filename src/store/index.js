@@ -2,7 +2,7 @@
  * @Description: 状态层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-27 23:48:28
+ * @LastEditTime: 2021-02-28 12:04:47
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -19,17 +19,11 @@ export default new Vuex.Store({
         userInfo: null,
     },
     mutations: {
-        setLoginState(state, val) {
-            state.isLogin = val
-        },
-        setLoginBox(state, bool) {
-            state.showLoginBox = bool
-        },
-        setSignupBox(state, bool) {
-            state.showSignupBox = bool
-        },
-        setUserInfo(state, val) {
-            state.userInfo = val
+        /* 修改状态 */
+        setStates(state, obj) {
+            Object.keys(obj).forEach((key) => {
+                state[key] = obj[key]
+            })
         },
     },
     actions: {},

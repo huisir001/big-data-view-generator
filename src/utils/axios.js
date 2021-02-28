@@ -2,16 +2,17 @@
  * @Description: axios初始化和全局配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 13:16:24
- * @LastEditTime: 2021-02-28 00:04:14
+ * @LastEditTime: 2021-02-28 13:00:40
  */
 import { Message } from 'element-ui' //提示信息
 import axios from 'axios'
+import Store from '@/store'
 
 //初始化
 let Axios = axios.create({
     baseURL: process.env.VUE_APP_BASEAPI, //api路径
+    headers: { token: sessionStorage.getItem('_token') },
     // timeout: 1000,      //超时
-    // headers: {'Content-Type':'application/x-www-form-urlencoded'}  //header
 })
 
 //全局配置
@@ -33,11 +34,20 @@ Axios.interceptors.response.use(
         return response.data
     },
     (error) => {
-        Message.error(error.response.data.msg)
+        const { status, data } = error.response
+        Message.error(data.msg) //错误提示
         console.error(error)
         // 若这里响应码为403，则改变登陆状态，弹出登录框
-
-        return error.response.data
+        if (status == 403) {
+            Store.commit('setStates', {
+                isLogin: 0, // 登陆状态
+                userInfo: null, // 用户信息缓存
+                showLoginBox: true, // 打开登陆弹窗
+            })
+            //删除token
+            sessionStorage.removeItem('_token')
+        }
+        return data
     }
 )
 

@@ -2,12 +2,13 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-27 15:14:43
+ * @LastEditTime: 2021-02-28 13:38:12
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Startup from '@/views/Startup'
 import EditPanel from '@/views/EditPanel'
+import { GetUserInfo } from '@/api/user'
 
 Vue.use(VueRouter)
 
@@ -74,16 +75,46 @@ const router = new VueRouter({
 })
 
 // 路由前置钩子
-router.beforeEach((to, from, next) => {
-    // 外站进入直接转Startup
-    if (!to.meta.notLogin && (!from.name || !router.app.$store.state)) {
-        next({ name: 'Startup' })
+router.beforeEach(async (to, from, next) => {
+    // 外站进入\第一次打开、刷新网页
+    if (!from.name || !router.app.$store.state) {
+        //!to.meta.notLogin &&
+        //获取token
+        const token = sessionStorage.getItem('_token')
+        if (token) {
+            // 查询用户信息
+            const userInfo = await GetUserInfo()
+            // 这里不再判定用户信息是否查到，若有错误会在axios全局配置钩子中处理
+            router.app.$store.commit('setStates', {
+                isLogin: 1, // 登陆状态
+                userInfo, // 用户信息缓存
+            })
+            if (!to.meta.notLogin && userInfo.ok == 0) {
+                next('/Startup')
+            } else {
+                next()
+            }
+        } else {
+            //没有token 设置状态
+            router.app.$store.commit('setStates', {
+                isLogin: 0, // 登陆状态
+                userInfo: null, // 用户信息缓存
+            })
+            //直接转Startup
+            if (!to.meta.notLogin) {
+                next('/Startup')
+            } else {
+                next()
+            }
+        }
         return
     }
     /* 登陆验证 */
     if (!to.meta.notLogin && !router.app.$store.state.isLogin) {
         //请登录，弹出登陆框
-        router.app.$store.commit('setLoginBox', true)
+        router.app.$store.commit('setStates', {
+            showLoginBox: true,
+        })
     } else {
         next()
     }
