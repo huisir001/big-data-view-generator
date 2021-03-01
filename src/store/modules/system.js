@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-02-28 23:10:02
+ * @LastEditTime: 2021-03-01 16:46:36
  */
 export default {
     namespaced: true,
@@ -40,6 +40,18 @@ export default {
             state.pageOptions = {
                 ...state.pageOptions,
                 ...data,
+            }
+        },
+        clearPageOptions(state) {
+            //清空
+            state.pageOptions = {
+                title: '',
+                screenSize: [1920, 1080],
+                bgColor: 'rgba(0, 0, 0, 0)',
+                useBgImage: false,
+                showGrid: false,
+                bgImage: '',
+                pid: '',
             }
         },
         setAsideShow(state) {

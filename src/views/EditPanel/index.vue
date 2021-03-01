@@ -2,7 +2,7 @@
  * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2021-02-28 18:30:10
+ * @LastEditTime: 2021-03-01 16:35:42
 -->
 <template>
     <div @contextmenu.prevent>
@@ -46,6 +46,7 @@ import {
     VisualArea,
     LayerCtxMenu,
 } from './components'
+import { FindById } from '@/api/work'
 export default {
     name: 'EditPanel',
     components: {
@@ -58,13 +59,24 @@ export default {
         LayerCtxMenu,
     },
     /* keep-alive缓存路由生命周期钩子 */
-    activated() {
+    async activated() {
+        const { $store, $route } = this
+
         // 监听页面关闭和刷新
         window.onbeforeunload = function (e) {
             e.returnValue = '您确认离开吗？系统不会保存您所做的任何修改！'
         }
         //重新监听dom事件
-        this.$store.dispatch('system/domResetEventListener')
+        $store.dispatch('system/domResetEventListener')
+
+        //查询当前作品信息
+        const { ok, data } = await FindById($route.params.id)
+        if (ok) {
+            const { page_options, layers } = data
+            // 存到store
+            $store.commit('system/setPageOptions', JSON.parse(page_options)) //页面信息
+            $store.commit('layer/saveLayers', JSON.parse(layers)) //缓存图层
+        }
     },
     /* 路由跳转钩子 */
     beforeRouteLeave(to, from, next) {

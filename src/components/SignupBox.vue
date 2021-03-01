@@ -2,53 +2,62 @@
  * @Description: 注册弹窗
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-02-26 16:27:28
- * @LastEditTime: 2021-02-28 13:01:34
+ * @LastEditTime: 2021-03-01 13:32:29
 -->
 <template>
-    <el-dialog width="350px"
-               title="注册"
-               :visible.sync="showSignupBox"
-               :show-close="true"
-               :close-on-click-modal="true">
-        <el-form ref="signupForm"
-                 :model="form"
-                 :rules="rules"
-                 size="small"
-                 label-width="80px"
-                 class="signupForm">
+    <el-dialog
+        width="350px"
+        title="注册"
+        :visible.sync="showSignupBox"
+        :show-close="true"
+        :close-on-click-modal="true"
+    >
+        <el-form
+            ref="signupForm"
+            :model="form"
+            :rules="rules"
+            size="small"
+            label-width="80px"
+            class="signupForm"
+        >
             <el-row>
-                <el-form-item label="用户名"
-                              prop="username">
-                    <el-input v-model="form.username"
-                              clearable />
+                <el-form-item label="用户名" prop="username">
+                    <el-input v-model="form.username" clearable />
                 </el-form-item>
-                <el-form-item label="密　码"
-                              prop="password"
-                              required>
-                    <el-input type="password"
-                              v-model="form.password"
-                              clearable />
+                <el-form-item label="密　码" prop="password" required>
+                    <el-input
+                        type="password"
+                        v-model="form.password"
+                        clearable
+                    />
                 </el-form-item>
-                <el-form-item label="确认密码"
-                              prop="surePass"
-                              required>
-                    <el-input type="password"
-                              v-model="form.surePass"
-                              clearable />
+                <el-form-item label="确认密码" prop="surePass" required>
+                    <el-input
+                        type="password"
+                        v-model="form.surePass"
+                        clearable
+                    />
                 </el-form-item>
-                <el-form-item><span style="font-size:12px;color:#409eff;">注：请牢记密码，忘记暂不可找回！</span></el-form-item>
+                <el-form-item
+                    ><span style="font-size: 12px; color: #409eff"
+                        >注：请牢记密码，忘记暂不可找回！</span
+                    ></el-form-item
+                >
             </el-row>
         </el-form>
-        <div slot="footer"
-             class="dialog-footer">
+        <div slot="footer" class="dialog-footer">
             <div class="links">
-                <span class="login"
-                      @click="showLoginBox">已有账号，直接登陆</span>
+                <span class="login" @click="showLoginBox"
+                    >已有账号，直接登陆</span
+                >
             </div>
             <!-- 确定按钮点击防抖 延时1500ms -->
-            <el-button type="primary"
-                       @click="doSignup('signupForm')"
-                       v-preventshake="1500">确 定</el-button>
+            <el-button
+                type="primary"
+                @click="doSignup('signupForm')"
+                v-preventshake="1500"
+                >确 定</el-button
+            >
         </div>
     </el-dialog>
 </template>
@@ -102,7 +111,9 @@ export default {
                             } else {
                                 if (this.form.surePass !== '') {
                                     // 唤起`确认密码`验证
-                                    this.$refs.form.validateField('surePass')
+                                    this.$refs.signupForm.validateField(
+                                        'surePass'
+                                    )
                                 }
                                 callback()
                             }

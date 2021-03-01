@@ -2,7 +2,7 @@
  * @Description:vue配置文件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:45:17
- * @LastEditTime: 2021-02-27 19:52:17
+ * @LastEditTime: 2021-03-01 18:23:12
  */
 const MYCONFIG = {
     //初始化配置
@@ -30,6 +30,10 @@ module.exports = {
         proxy: {
             '/api': {
                 target: 'http://localhost:8080', // 接口的域名
+                changeOrigin: true,
+            },
+            '/file': {
+                target: 'http://localhost:8080', // file的域名
                 changeOrigin: true,
             },
         },

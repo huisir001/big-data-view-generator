@@ -2,97 +2,135 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 14:49:51
- * @LastEditTime: 2021-02-28 23:24:03
+ * @LastEditTime: 2021-03-01 18:34:45
 -->
 <template>
     <div class="works">
         <el-row :gutter="20">
-            <el-col :span="36"
-                    :xs="12"
-                    :sm="9"
-                    :md="6"
-                    :lg="4"
-                    class="workCol">
-                <el-card :body-style="{ padding: '0px' }"
-                         style="border: 1px solid #7385eb">
-                    <div class="addNewWork"
-                         @click="addNewWork">
+            <el-col :span="36" :xs="12" :sm="9" :md="6" :lg="4" class="workCol">
+                <el-card
+                    :body-style="{ padding: '0px' }"
+                    style="border: 1px solid #7385eb"
+                >
+                    <div class="addNewWork" @click="addNewWork">
                         <i class="el-icon-plus"></i>
                         <span>新增可视化</span>
                     </div>
                 </el-card>
             </el-col>
-            <el-col :span="36"
-                    :xs="12"
-                    :sm="9"
-                    :md="6"
-                    :lg="4"
-                    v-for="(o, index) in 20"
-                    :key="o"
-                    class="workCol">
-                <el-card :body-style="{ padding: '0px' }"
-                         style="border: 1px solid #7385eb">
+            <el-col
+                :span="36"
+                :xs="12"
+                :sm="9"
+                :md="6"
+                :lg="4"
+                v-for="(item, index) in works"
+                :key="index"
+                class="workCol"
+            >
+                <el-card
+                    :body-style="{ padding: '0px' }"
+                    style="border: 1px solid #7385eb"
+                >
                     <div class="workItem">
-                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                             class="screenshot" />
+                        <img
+                            :src="
+                                item.screenshot
+                                    ? `/file/visit/${item.screenshot}`
+                                    : kongWorkPic
+                            "
+                            class="screenshot"
+                        />
                         <div class="foot">
-                            <h2>页面标题</h2>
-                            <p>最后编辑 2020-01-15 23:00</p>
+                            <h2>{{ item.title }}</h2>
+                            <p>
+                                最后编辑
+                                {{
+                                    formatDate(
+                                        new Date(item.update_time),
+                                        'yyyy-MM-dd hh:mm:ss'
+                                    )
+                                }}
+                            </p>
                         </div>
                         <div class="floatBox">
-                            <el-button type="primary"
-                                       class="editBtn"
-                                       size="small">编辑</el-button>
+                            <el-button
+                                type="primary"
+                                class="editBtn"
+                                size="small"
+                                @click="editWorkBtn(item.id)"
+                                >编辑</el-button
+                            >
                             <div class="iconBtns">
-                                <span class="el-icon-monitor"
-                                      title="预览"></span>
-                                <span class="el-icon-document-copy"
-                                      title="复制"></span>
-                                <span class="el-icon-delete"
-                                      title="删除"></span>
+                                <span
+                                    class="el-icon-monitor"
+                                    title="预览"
+                                    @click="previewWorkBtn(item.id)"
+                                ></span>
+                                <span
+                                    class="el-icon-document-copy"
+                                    title="复制"
+                                    @click="copyWorkBtn(item.id)"
+                                ></span>
+                                <span
+                                    class="el-icon-delete"
+                                    title="删除"
+                                    @click="delWorkBtn(item.id)"
+                                ></span>
                             </div>
                         </div>
                     </div>
                 </el-card>
             </el-col>
         </el-row>
-        <el-dialog title="新增可视化"
-                   width="400px"
-                   class="addNewWorkDialog"
-                   :modal-append-to-body="true"
-                   :visible.sync="dialogNewWorkVisible">
+
+        <!-- 新增弹窗 -->
+        <el-dialog
+            title="新增可视化"
+            width="400px"
+            class="addNewWorkDialog"
+            :modal-append-to-body="true"
+            :visible.sync="dialogNewWorkVisible"
+        >
             <el-form :model="newWorkFormVal">
-                <el-form-item label="页面名称"
-                              label-width="70px">
-                    <el-input v-model="newWorkFormVal.title"
-                              placeholder="请输入页面名称"
-                              autocomplete="off"></el-input>
+                <el-form-item label="页面名称" label-width="70px">
+                    <el-input
+                        v-model="newWorkFormVal.title"
+                        placeholder="请输入页面名称"
+                        autocomplete="off"
+                    ></el-input>
                 </el-form-item>
-                <el-form-item label="页面尺寸"
-                              label-width="70px">
-                    <el-input-number v-model="newWorkFormVal.screenSize[0]"
-                                     controls-position="right"
-                                     style="width: 49%"></el-input-number>
-                    <el-input-number v-model="newWorkFormVal.screenSize[1]"
-                                     controls-position="right"
-                                     style="width: 49%; margin-left: 2%"></el-input-number>
+                <el-form-item label="页面尺寸" label-width="70px">
+                    <el-input-number
+                        v-model="newWorkFormVal.screenSize[0]"
+                        controls-position="right"
+                        style="width: 49%"
+                    ></el-input-number>
+                    <el-input-number
+                        v-model="newWorkFormVal.screenSize[1]"
+                        controls-position="right"
+                        style="width: 49%; margin-left: 2%"
+                    ></el-input-number>
                 </el-form-item>
             </el-form>
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button @click="dialogNewWorkVisible = false">取 消</el-button>
-                <el-button type="primary"
-                           @click="addNewWorkBtn">确 定</el-button>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogNewWorkVisible = false"
+                    >取 消</el-button
+                >
+                <el-button type="primary" @click="addNewWorkBtn"
+                    >确 定</el-button
+                >
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
-import { getRanId } from '@/utils/myUtils'
+import { getRanId, formatDate } from '@/utils/myUtils'
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('system')
-import { CreateWork } from '@/api/work'
+import { CreateWork, FindByUserid, FindById } from '@/api/work'
+import kongWorkPic from '@/assets/img/kong_work.png'
 export default {
     name: 'Works',
     data() {
@@ -101,6 +139,16 @@ export default {
             newWorkFormVal: {
                 screenSize: [1920, 1080],
             },
+            formatDate,
+            kongWorkPic,
+            works: [],
+        }
+    },
+    async created() {
+        // 请求用户作品列表
+        const { ok, data } = await FindByUserid()
+        if (ok) {
+            this.works = data
         }
     },
     methods: {
@@ -115,7 +163,13 @@ export default {
             this.dialogNewWorkVisible = true
         },
         async addNewWorkBtn() {
-            const { setPageOptions, newWorkFormVal, $router, $message } = this
+            const {
+                setPageOptions,
+                newWorkFormVal,
+                $router,
+                $message,
+                $store,
+            } = this
 
             // 数据库中创建新作品
             const { ok, data, msg } = await CreateWork({
@@ -127,12 +181,24 @@ export default {
             if (ok) {
                 // 提示
                 $message({ message: msg, type: 'success' })
-                // 存到store
-                setPageOptions(newWorkFormVal)
                 this.dialogNewWorkVisible = false
-                this.$store.commit('layer/clearLayers') //清空图层
+                $store.commit('system/clearPageOptions') //清空page信息
+                $store.commit('layer/clearLayers') //清空图层，避免残影
                 // 进入EditPanel页使用replace以避免浏览器回退历史页面而未保存作品
                 $router.replace({ path: `/EditPanel/${data.id}` })
+            }
+        },
+        /* 编辑按钮 */
+        async editWorkBtn(workId) {
+            const { setPageOptions, $store, $router } = this
+
+            //查询作品信息
+            const { ok, data } = await FindById(workId)
+
+            if (ok) {
+                $store.commit('system/clearPageOptions') //清空page信息
+                $store.commit('layer/clearLayers') //清空图层，避免残影
+                $router.replace({ path: `/EditPanel/${workId}` })
             }
         },
     },

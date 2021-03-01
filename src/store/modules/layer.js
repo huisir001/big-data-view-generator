@@ -2,7 +2,7 @@
  * @Description: 视图面板图层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月14日 10:10:38
- * @LastEditTime: 2021-02-19 17:00:14
+ * @LastEditTime: 2021-03-01 16:23:53
  */
 import { getRanId } from '@/utils/myUtils'
 
@@ -13,6 +13,10 @@ export default {
         copyLayer: null, //已复制图层（剪贴板）
     },
     mutations: {
+        // 缓存所有图层信息
+        saveLayers(state, layers) {
+            state.layers = layers
+        },
         //修改某个图层
         setLayer(state, layer) {
             state.layers.forEach((item) => {

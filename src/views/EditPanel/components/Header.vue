@@ -2,31 +2,35 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-02-28 23:46:31
+ * @LastEditTime: 2021-03-01 18:49:45
 -->
 <template>
     <div class="header">
         <!-- 左侧菜单 -->
         <div class="left">
             <!-- 抽屉按钮 -->
-            <i :class="[
+            <i
+                :class="[
                     asideShow ? 'el-icon-s-fold' : 'el-icon-s-unfold',
                     'aside-take-btn',
                 ]"
-               @click="setAsideShow"></i>
+                @click="setAsideShow"
+            ></i>
         </div>
         <!-- 右侧菜单 -->
         <div class="right">
-            <span @click="saveCurWork"
-                  style="cursor: pointer"> 保存 </span>
-            <span @click="$router.replace('/WorkList/Works')"
-                  style="cursor: pointer">
+            <span @click="saveCurWork" style="cursor: pointer"> 保存 </span>
+            <span
+                @click="$router.replace('/WorkList/Works')"
+                style="cursor: pointer"
+            >
                 作品中心
             </span>
-            <span @click="openPreview"
-                  style="cursor: pointer"> 预览 </span>
+            <span @click="openPreview" style="cursor: pointer"> 预览 </span>
             配置栏
-            <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
+            <el-switch
+                v-model="$store.state.system.optionPanelShow"
+            ></el-switch>
         </div>
     </div>
 </template>
@@ -34,6 +38,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('system')
 import { UpdateWork } from '@/api/work'
+import html2canvas from 'html2canvas'
 export default {
     name: 'Header',
     data() {
@@ -44,20 +49,42 @@ export default {
     },
     methods: {
         ...mapMutations(['setAsideShow']),
-        async saveCurWork() {
-            //保存
-            const { $route, pageOptions, $store, $message } = this
-            const { ok, msg } = await UpdateWork({
-                id: $route.params.id,
-                title: pageOptions.title,
-                page_options: $store.getters['system/pageOptionsStr'],
-                layers: $store.getters['layer/layerString'],
+        saveCurWork() {
+            //取消图层选定
+            const activeLayers = this.$store.getters['layer/activeLayers']
+            activeLayers.forEach((item) => {
+                item.active = false //取消选定
+                this.$store.commit('layer/setLayer', item)
             })
 
-            if (ok) {
-                // 提示
-                $message({ message: msg, type: 'success' })
-            }
+            // 等待取消图层选定视图更新之后再执行
+            this.$nextTick(async () => {
+                // 截图
+                const dom = document.querySelector('.blueprint')
+                const screenshotCancas = await html2canvas(dom, {
+                    useCORS: true,
+                    scale: 300 / dom.clientWidth,
+                })
+
+                const screenshot = screenshotCancas
+                    ? screenshotCancas.toDataURL('image/png', 1)
+                    : ''
+
+                //保存
+                const { $route, pageOptions, $store, $message } = this
+                const { ok, msg } = await UpdateWork({
+                    id: $route.params.id,
+                    title: pageOptions.title,
+                    page_options: $store.getters['system/pageOptionsStr'],
+                    layers: $store.getters['layer/layerString'],
+                    screenshot,
+                })
+
+                if (ok) {
+                    // 提示
+                    $message({ message: msg, type: 'success' })
+                }
+            })
         },
         openPreview() {
             //缓存图层信息
