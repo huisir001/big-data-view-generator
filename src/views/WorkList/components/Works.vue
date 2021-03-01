@@ -2,45 +2,43 @@
  * @Description: 作品列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-13 14:49:51
- * @LastEditTime: 2021-03-01 18:34:45
+ * @LastEditTime: 2021-03-01 23:18:34
 -->
 <template>
     <div class="works">
         <el-row :gutter="20">
-            <el-col :span="36" :xs="12" :sm="9" :md="6" :lg="4" class="workCol">
-                <el-card
-                    :body-style="{ padding: '0px' }"
-                    style="border: 1px solid #7385eb"
-                >
-                    <div class="addNewWork" @click="addNewWork">
+            <el-col :span="36"
+                    :xs="12"
+                    :sm="9"
+                    :md="6"
+                    :lg="4"
+                    class="workCol">
+                <el-card :body-style="{ padding: '0px' }"
+                         style="border: 1px solid #7385eb">
+                    <div class="addNewWork"
+                         @click="addNewWork">
                         <i class="el-icon-plus"></i>
                         <span>新增可视化</span>
                     </div>
                 </el-card>
             </el-col>
-            <el-col
-                :span="36"
-                :xs="12"
-                :sm="9"
-                :md="6"
-                :lg="4"
-                v-for="(item, index) in works"
-                :key="index"
-                class="workCol"
-            >
-                <el-card
-                    :body-style="{ padding: '0px' }"
-                    style="border: 1px solid #7385eb"
-                >
+            <el-col :span="36"
+                    :xs="12"
+                    :sm="9"
+                    :md="6"
+                    :lg="4"
+                    v-for="(item, index) in works"
+                    :key="index"
+                    class="workCol">
+                <el-card :body-style="{ padding: '0px' }"
+                         style="border: 1px solid #7385eb">
                     <div class="workItem">
-                        <img
-                            :src="
+                        <img :src="
                                 item.screenshot
                                     ? `/file/visit/${item.screenshot}`
                                     : kongWorkPic
                             "
-                            class="screenshot"
-                        />
+                             class="screenshot" />
                         <div class="foot">
                             <h2>{{ item.title }}</h2>
                             <p>
@@ -54,29 +52,20 @@
                             </p>
                         </div>
                         <div class="floatBox">
-                            <el-button
-                                type="primary"
-                                class="editBtn"
-                                size="small"
-                                @click="editWorkBtn(item.id)"
-                                >编辑</el-button
-                            >
+                            <el-button type="primary"
+                                       class="editBtn"
+                                       size="small"
+                                       @click="editWorkBtn(item.id)">编辑</el-button>
                             <div class="iconBtns">
-                                <span
-                                    class="el-icon-monitor"
-                                    title="预览"
-                                    @click="previewWorkBtn(item.id)"
-                                ></span>
-                                <span
-                                    class="el-icon-document-copy"
-                                    title="复制"
-                                    @click="copyWorkBtn(item.id)"
-                                ></span>
-                                <span
-                                    class="el-icon-delete"
-                                    title="删除"
-                                    @click="delWorkBtn(item.id)"
-                                ></span>
+                                <span class="el-icon-monitor"
+                                      title="共享"
+                                      @click="copyShareLink(item.id)"></span>
+                                <span class="el-icon-document-copy"
+                                      title="复制"
+                                      @click="copyWorkBtn(item.id)"></span>
+                                <span class="el-icon-delete"
+                                      title="删除"
+                                      @click="delWorkBtn(item.id,index)"></span>
                             </div>
                         </div>
                     </div>
@@ -85,41 +74,33 @@
         </el-row>
 
         <!-- 新增弹窗 -->
-        <el-dialog
-            title="新增可视化"
-            width="400px"
-            class="addNewWorkDialog"
-            :modal-append-to-body="true"
-            :visible.sync="dialogNewWorkVisible"
-        >
+        <el-dialog title="新增可视化"
+                   width="400px"
+                   class="addNewWorkDialog"
+                   :modal-append-to-body="true"
+                   :visible.sync="dialogNewWorkVisible">
             <el-form :model="newWorkFormVal">
-                <el-form-item label="页面名称" label-width="70px">
-                    <el-input
-                        v-model="newWorkFormVal.title"
-                        placeholder="请输入页面名称"
-                        autocomplete="off"
-                    ></el-input>
+                <el-form-item label="页面名称"
+                              label-width="70px">
+                    <el-input v-model="newWorkFormVal.title"
+                              placeholder="请输入页面名称"
+                              autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="页面尺寸" label-width="70px">
-                    <el-input-number
-                        v-model="newWorkFormVal.screenSize[0]"
-                        controls-position="right"
-                        style="width: 49%"
-                    ></el-input-number>
-                    <el-input-number
-                        v-model="newWorkFormVal.screenSize[1]"
-                        controls-position="right"
-                        style="width: 49%; margin-left: 2%"
-                    ></el-input-number>
+                <el-form-item label="页面尺寸"
+                              label-width="70px">
+                    <el-input-number v-model="newWorkFormVal.screenSize[0]"
+                                     controls-position="right"
+                                     style="width: 49%"></el-input-number>
+                    <el-input-number v-model="newWorkFormVal.screenSize[1]"
+                                     controls-position="right"
+                                     style="width: 49%; margin-left: 2%"></el-input-number>
                 </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogNewWorkVisible = false"
-                    >取 消</el-button
-                >
-                <el-button type="primary" @click="addNewWorkBtn"
-                    >确 定</el-button
-                >
+            <div slot="footer"
+                 class="dialog-footer">
+                <el-button @click="dialogNewWorkVisible = false">取 消</el-button>
+                <el-button type="primary"
+                           @click="addNewWorkBtn">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -127,9 +108,13 @@
 
 <script>
 import { getRanId, formatDate } from '@/utils/myUtils'
-import { createNamespacedHelpers } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('system')
-import { CreateWork, FindByUserid, FindById } from '@/api/work'
+import {
+    CreateWork,
+    FindByUserid,
+    FindById,
+    RemoveById,
+    CopyById,
+} from '@/api/work'
 import kongWorkPic from '@/assets/img/kong_work.png'
 export default {
     name: 'Works',
@@ -152,7 +137,6 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['setPageOptions']),
         addNewWork() {
             const ranId = getRanId(4)
             this.newWorkFormVal = {
@@ -163,13 +147,7 @@ export default {
             this.dialogNewWorkVisible = true
         },
         async addNewWorkBtn() {
-            const {
-                setPageOptions,
-                newWorkFormVal,
-                $router,
-                $message,
-                $store,
-            } = this
+            const { newWorkFormVal, $router, $message, $store } = this
 
             // 数据库中创建新作品
             const { ok, data, msg } = await CreateWork({
@@ -190,7 +168,7 @@ export default {
         },
         /* 编辑按钮 */
         async editWorkBtn(workId) {
-            const { setPageOptions, $store, $router } = this
+            const { $store, $router } = this
 
             //查询作品信息
             const { ok, data } = await FindById(workId)
@@ -200,6 +178,46 @@ export default {
                 $store.commit('layer/clearLayers') //清空图层，避免残影
                 $router.replace({ path: `/EditPanel/${workId}` })
             }
+        },
+        /* 共享按钮 */
+        copyShareLink(id) {
+            prompt('Ctrl+C复制地址：', location.origin + '#/View/' + id)
+        },
+        /* 复制 */
+        copyWorkBtn(workId) {
+            // 询问
+            this.$confirm('确认复制？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+                .then(async () => {
+                    const { ok, msg, data } = await CopyById(workId)
+
+                    if (ok) {
+                        this.works.unshift(data) //新增
+                        this.$message({ message: msg, type: 'success' })
+                    }
+                })
+                .catch(() => null)
+        },
+        /* 删除 */
+        delWorkBtn(workId, index) {
+            // 询问
+            this.$confirm('您确认删除吗？删除不可恢复。', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+                .then(async () => {
+                    const { ok, msg } = await RemoveById(workId)
+
+                    if (ok) {
+                        this.works.splice(index, 1) //删除视图
+                        this.$message({ message: msg, type: 'success' })
+                    }
+                })
+                .catch(() => null)
         },
     },
 }
