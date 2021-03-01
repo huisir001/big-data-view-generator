@@ -2,7 +2,7 @@
  * @Description: 图层配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月21日 16:27:27
- * @LastEditTime: 2021-01-25 14:42:17
+ * @LastEditTime: 2021-03-01 09:39:46
 -->
 <template>
     <div class="layerOptionsBox">
@@ -49,8 +49,8 @@
 import { createNamespacedHelpers } from 'vuex'
 import FormItems from './inc/FormItems' //图层配置栏-表单项组件
 import layerFormCats from '@/config/layerFormCats'
-// import { debounce } from '@/utils/myUtils'
 const { mapGetters } = createNamespacedHelpers('layer')
+import compList from '@/config/compList' //组件库配置
 export default {
     name: 'LayerOptions',
     components: {
@@ -58,6 +58,7 @@ export default {
     },
     data() {
         return {
+            compList,
             layerFormCats,
             cpActiveName: 0, //折叠面板当前激活项
             collapseLoading: false,
@@ -76,7 +77,7 @@ export default {
 
             /* 控制数据配置表单项显隐 */
             if (curLayer.compOptions) {
-                curLayer.formControlOptions.forEach((item) => {
+                this.curformControlOptions.forEach((item) => {
                     //switch切换
                     if (
                         item.compType == 'switch' &&
@@ -84,7 +85,7 @@ export default {
                         curLayer.compOptions[item.key] ==
                             !oldCurLayer.compOptions[item.key]
                     ) {
-                        curLayer.formControlOptions.forEach((optionItem) => {
+                        this.curformControlOptions.forEach((optionItem) => {
                             if (
                                 item.displayItems.t &&
                                 item.displayItems.t.includes(optionItem.key)
@@ -109,7 +110,7 @@ export default {
                         curLayer.compOptions[item.key] !=
                             oldCurLayer.compOptions[item.key]
                     ) {
-                        curLayer.formControlOptions.forEach((optionItem) => {
+                        this.curformControlOptions.forEach((optionItem) => {
                             const curDisplayItems = item.options.find(
                                 (o) => o.value == curLayer.compOptions[item.key]
                             ).displayItems
@@ -162,7 +163,10 @@ export default {
             }
         },
         curformControlOptions() {
-            return this.activeLayers[0].formControlOptions
+            const curLayer = this.activeLayers[0]
+            return this.compList
+                .find((c) => c.id == curLayer.catId)
+                .list.find((l) => l.type == curLayer.type).formControlOptions
         },
         curCollapseOptions() {
             return this.cpActiveName === ''

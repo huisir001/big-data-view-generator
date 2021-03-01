@@ -2,7 +2,7 @@
  * @Description: 组件库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:31:45
- * @LastEditTime: 2021-01-25 10:08:49
+ * @LastEditTime: 2021-03-01 10:05:28
 -->
 <template>
     <div class="compLibrary">
@@ -107,9 +107,10 @@ export default {
                     const { x: cx, y: cy } = cloneItem.getBoundingClientRect() //克隆元素位置
                     const { x: vx, y: vy } = blueprintDomRect //视图操作面板位置
                     const getAttr = (attrStr) => cloneItem.getAttribute(attrStr) //获取属性值
-                    const curCompListItem = this.compList.find(
+                    const _comp = this.compList.find(
                         (item) => item.category == getAttr('data-category')
-                    ).list[getAttr('data-index')]
+                    )
+                    const curCompListItem = _comp.list[getAttr('data-index')]
 
                     //新增
                     addLayer({
@@ -123,7 +124,7 @@ export default {
                         compOptions: JSON.parse(
                             JSON.stringify(curCompListItem.compOptions) //字符串中转，防止对象引用而影响数据修改后引用对象随之修改的bug
                         ), //组件实际参数
-                        formControlOptions: curCompListItem.formControlOptions, //控制面板表单参数
+                        catId: _comp.id,
                     })
                 }
                 // 移除克隆dom
