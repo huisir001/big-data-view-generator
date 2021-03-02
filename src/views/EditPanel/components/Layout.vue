@@ -13,7 +13,6 @@
             </h1>
             <!-- 侧边栏 -->
             <el-tabs v-model="asideTabAcName"
-                     @tab-click="asideTabClick"
                      :stretch="true">
                 <el-tab-pane label="可用组件"
                              name="comp">
@@ -67,11 +66,6 @@ export default {
             if (layers.length == 0) {
                 this.asideTabAcName = 'comp'
             }
-        },
-    },
-    methods: {
-        asideTabClick() {
-            // console.log(1)
         },
     },
 }
