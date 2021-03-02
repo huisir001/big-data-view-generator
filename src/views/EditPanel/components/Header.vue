@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-02 22:41:07
+ * @LastEditTime: 2021-03-03 00:53:42
 -->
 <template>
     <div class="header">
@@ -38,6 +38,7 @@ const { mapState, mapMutations } = createNamespacedHelpers('system')
 import { UpdateWork } from '@/api/work'
 import html2canvas from 'html2canvas'
 import { exportStr2File } from '@/utils/myUtils'
+import { GetViewhtml } from '@/api/other'
 export default {
     name: 'Header',
     data() {
@@ -159,7 +160,26 @@ export default {
             }
         },
         // 生成html
-        buildHtml() {},
+        async buildHtml() {
+            const { pageOptions, $store, $message } = this
+            const htmlStr = await GetViewhtml()
+            // loading
+            const loading = this.$loading({
+                text: '生成中...',
+                background: 'rgba(0, 0, 0, 0.4)',
+            })
+            exportStr2File(
+                pageOptions.title + '.html',
+                htmlStr
+                    .replace('$title', pageOptions.title)
+                    .replace('$layers', $store.getters['layer/layerString'])
+                    .replace(
+                        '$pageOptions',
+                        $store.getters['system/pageOptionsStr']
+                    )
+            )
+            loading.close()
+        },
         goHome() {
             const {
                 $confirm,
