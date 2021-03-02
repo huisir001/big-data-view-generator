@@ -2,7 +2,7 @@
  * @Description: 布局组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-09 11:51:40
- * @LastEditTime: 2021-02-28 23:19:34
+ * @LastEditTime: 2021-03-02 22:24:00
 -->
 <template>
     <el-container>
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         asideTabClick() {
-            console.log(1)
+            // console.log(1)
         },
     },
 }

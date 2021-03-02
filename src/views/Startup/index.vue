@@ -2,7 +2,7 @@
  * @Description: 启动页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月24日 18:08:41
- * @LastEditTime: 2021-03-02 22:12:29
+ * @LastEditTime: 2021-03-02 22:34:41
 -->
 <template>
     <div class="startup"
@@ -210,6 +210,7 @@ export default {
 .startup {
     width: 100%;
     height: 100%;
+    min-width: 480px;
     background-image: url(../../assets/img/startup.jpg);
     background-position: center top;
     background-size: cover;

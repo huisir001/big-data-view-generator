@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-02 21:32:23
+ * @LastEditTime: 2021-03-02 22:41:07
 -->
 <template>
     <div class="header">
@@ -60,6 +60,7 @@ export default {
                 `pageOptions`,
                 this.$store.getters['system/pageOptionsStr']
             )
+            //打开新窗口
             let routeData = this.$router.resolve({ path: '/Preview' })
             window.open(routeData.href, '_blank') //打开新窗口
         },

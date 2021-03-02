@@ -2,38 +2,38 @@
  * @Description: 预览页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月25日 18:27:45
- * @LastEditTime: 2021-01-25 17:41:22
+ * @LastEditTime: 2021-03-02 22:38:16
 -->
 <template>
     <div class="container">
-        <div
-            class="preview"
-            :style="{
+        <div class="preview"
+             :style="{
                 width: pageOptions.screenSize[0] + 'px',
                 height: pageOptions.screenSize[1] + 'px',
                 transform,
-            }"
-        >
+                backgroundImage:
+                    pageOptions.showGrid || !pageOptions.useBgImage
+                        ? 'none'
+                        : `url(${pageOptions.bgImage})`,
+                backgroundColor: pageOptions.showGrid
+                    ? 'transparent'
+                    : pageOptions.bgColor,
+            }">
             <!-- 图层渲染(采用动态组件) -->
-            <div
-                v-for="(item, index) in layers"
-                v-show="item.show"
-                :key="index"
-                class="viewItem"
-                :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`"
-            >
+            <div v-for="(item, index) in layers"
+                 v-show="item.show"
+                 :key="index"
+                 class="viewItem"
+                 :style="`width:${item.width}px;height:${item.height}px;left:${item.pos[0]}px;top:${item.pos[1]}px;z-index:${item.zIndex};`">
                 <!-- 动态组件 -->
-                <component
-                    :is="item.type"
-                    :options="item.compOptions"
-                ></component>
+                <component :is="item.type"
+                           :options="item.compOptions"></component>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
 import autoResize from '@/mixin/autoResize'
 
 export default {
@@ -153,7 +153,7 @@ export default {
                 clientWidth / this.pageOptions.screenSize[0],
                 clientHeight / this.pageOptions.screenSize[1],
             ])
-            //this.transform = `scale(${scale}) translate(-50%,-50%)`
+            this.transform = `scale(${scale}) translate(-50%,-50%)`
         },
     },
 }
@@ -167,7 +167,6 @@ export default {
         position: absolute;
         left: 50%;
         top: 50%;
-        background-image: url(../../assets/img/bg.jpg);
         background-position: center top;
         background-size: cover;
         background-repeat: no-repeat;
