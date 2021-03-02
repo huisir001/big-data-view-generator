@@ -2,7 +2,7 @@
  * @Description: 启动页
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月24日 18:08:41
- * @LastEditTime: 2021-03-02 10:29:27
+ * @LastEditTime: 2021-03-02 17:05:26
 -->
 <template>
     <div class="startup" @contextmenu.prevent>
@@ -140,9 +140,10 @@ export default {
                 $router.replace({ path: `/EditPanel/${data.id}` })
             }
         },
-        /* 作品编辑 */
+        /* 作品.work文件编辑（仅离线版本使用） */
         workEdit() {
-            this.$confirm(
+            const { $confirm, $loading, $message, $store, $router } = this
+            $confirm(
                 '请选择已保存到本地的作品（文件后缀为.work）',
                 '选择作品',
                 {
@@ -152,18 +153,57 @@ export default {
                 }
             )
                 .then(() => {
-                    //读取文件操作
-                    //...
                     //loading
-                    this.$loading({
-                        text: '读取中',
-                        spinner: 'el-icon-loading',
+                    const loading = $loading({
+                        text: '读取中...',
                         background: 'rgba(0, 0, 0, 0.7)',
                     })
+
+                    // 模拟文件上传
+                    var fileDom = document.createElementNS(
+                        'http://www.w3.org/1999/xhtml',
+                        'input'
+                    )
+                    fileDom.type = 'file'
+                    var ev = document.createEvent('MouseEvents')
+                    ev.initMouseEvent('click')
+                    fileDom.dispatchEvent(ev)
+                    // 获取文件信息
+                    fileDom.onchange = (e) => {
+                        const file = e.path[0].files[0]
+                        // 读取文件信息
+                        if (window.FileReader) {
+                            var fr = new FileReader()
+                            fr.onloadend = (e) => {
+                                //读取完成回调
+                                const { page_options, layers } = JSON.parse(
+                                    e.target.result
+                                )
+                                // 存到store
+                                $store.commit(
+                                    'system/setPageOptions',
+                                    page_options
+                                ) //页面信息
+                                $store.commit('layer/saveLayers', layers) //缓存图层
+                                // 关闭loading
+                                loading.close()
+                                //跳转编辑页
+                                $router.replace({
+                                    path: `/EditPanel`,
+                                })
+                            }
+                            //执行读取
+                            fr.readAsText(file)
+                        } else {
+                            loading.close()
+                            $message.error('当前浏览器不支持读取文件！')
+                        }
+                    }
+
                     //跳转传参
                     // this.$router.replace('EditPanel')
                 })
-                .catch(() => {})
+                .catch(() => null)
         },
     },
 }
@@ -233,11 +273,11 @@ export default {
     footer {
         position: fixed;
         bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
         color: #ccc;
         font-size: 15px;
         line-height: 2;
+        width: 100%;
+        text-align: center;
     }
 }
 </style>

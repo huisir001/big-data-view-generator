@@ -2,7 +2,7 @@
  * @Description: axios初始化和全局配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 13:16:24
- * @LastEditTime: 2021-03-01 14:37:11
+ * @LastEditTime: 2021-03-02 15:55:21
  */
 import { Message, Loading } from 'element-ui' //提示信息
 import axios from 'axios'
@@ -59,7 +59,7 @@ Axios.interceptors.response.use(
         return response.data
     },
     (error) => {
-        const { status, data } = error.response
+        const { status, data, statusText } = error.response
         Axios.loading.close() // 关闭loading
         console.error(error)
         // 若这里响应码为403，则改变登陆状态，弹出登录框
@@ -73,7 +73,11 @@ Axios.interceptors.response.use(
             sessionStorage.removeItem('_token')
         }
         setTimeout(() => {
-            Message.error(data.msg) //错误提示
+            if (data) {
+                Message.error(data.msg) //错误提示
+            } else {
+                Message.error(`${status}: ${statusText}`) //错误提示
+            }
         }, 100)
         return data
     }

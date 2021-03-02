@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-02 10:23:54
+ * @LastEditTime: 2021-03-02 18:20:14
 -->
 <template>
     <div class="header">
@@ -24,9 +24,8 @@
                 <span @click="saveCurWork">保存</span>
                 <span @click="saveToLocal">保存到本地</span>
                 <span @click="buildHtml">生成HTML</span>
-                <span @click="$router.replace('/WorkList/Works')">
-                    作品中心
-                </span>
+                <span @click="open('#/WorkList/Works')">作品中心</span>
+                <span @click="goHome">回到首页</span>
             </div>
             <div class="pzl">
                 <span>配置栏</span>
@@ -42,6 +41,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('system')
 import { UpdateWork } from '@/api/work'
 import html2canvas from 'html2canvas'
+import { exportStr2File } from '@/utils/myUtils'
 export default {
     name: 'Header',
     data() {
@@ -52,10 +52,34 @@ export default {
     },
     methods: {
         ...mapMutations(['setAsideShow']),
-        saveCurWork() {
+        // 预览
+        openPreview() {
+            //缓存图层信息
+            sessionStorage.setItem(
+                `layers`,
+                this.$store.getters['layer/layerString']
+            )
+            //缓存页面信息
+            sessionStorage.setItem(
+                `pageOptions`,
+                this.$store.getters['system/pageOptionsStr']
+            )
+            let routeData = this.$router.resolve({ path: '/Preview' })
+            window.open(routeData.href, '_blank') //打开新窗口
+        },
+        // 新标题打开页面
+        open(e) {
+            window.open(e)
+        },
+
+        /* 
+            # 保存数据到数据库
+            > response,reject回调参数在封装promise时可用
+        */
+        saveCurWork(resolve, reject) {
             // loading
-            this.$loading({
-                text: 'Loading',
+            const loading = this.$loading({
+                text: '保存中...',
                 background: 'rgba(0, 0, 0, 0.4)',
             })
 
@@ -79,6 +103,9 @@ export default {
                     ? screenshotCancas.toDataURL('image/png', 1)
                     : ''
 
+                //关闭loading
+                loading.close()
+
                 //保存
                 const { $route, pageOptions, $store, $message } = this
                 const { ok, msg } = await UpdateWork({
@@ -90,28 +117,78 @@ export default {
                 })
 
                 if (ok) {
+                    if (resolve && typeof resolve == 'function') {
+                        resolve(true)
+                    }
                     // 提示
                     $message({ message: msg, type: 'success' })
+                } else {
+                    if (reject && typeof reject == 'function') reject()
                 }
             })
         },
-        // 保存到本地.work文件
-        saveToLocal() {},
+
+        /* 
+            # 保存当前作品到本地.work文件
+            > response,reject回调参数在封装promise时可用
+            > 仅用于离线版本保存到本地
+            > 图片将作为base64字符串保存，故保存文件可能略大
+        */
+        saveToLocal(resolve, reject) {
+            // loading
+            const loading = this.$loading({
+                text: '生成文件...',
+                background: 'rgba(0, 0, 0, 0.4)',
+            })
+            try {
+                const { pageOptions, $store, $message } = this
+                const workInfo = {
+                    page_options: pageOptions,
+                    layers: $store.state.layer.layers,
+                }
+                exportStr2File(
+                    pageOptions.title + '.work',
+                    JSON.stringify(workInfo)
+                )
+                if (resolve && typeof resolve == 'function') {
+                    resolve(true)
+                }
+                loading.close()
+            } catch (e) {
+                console.error(e)
+                if (reject && typeof reject == 'function') {
+                    reject(e)
+                }
+            }
+        },
         // 生成html
         buildHtml() {},
-        openPreview() {
-            //缓存图层信息
-            sessionStorage.setItem(
-                `layers`,
-                this.$store.getters['layer/layerString']
-            )
-            //缓存页面信息
-            sessionStorage.setItem(
-                `pageOptions`,
-                this.$store.getters['system/pageOptionsStr']
-            )
-            let routeData = this.$router.resolve({ path: '/Preview' })
-            window.open(routeData.href, '_blank') //打开新窗口
+        goHome() {
+            const {
+                $confirm,
+                $message,
+                $router,
+                saveCurWork,
+                saveToLocal,
+            } = this
+            //如若未保存则弹出提示
+            $confirm('是否保存当前作品?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+                .then(async () => {
+                    const res = await new Promise((resolve, reject) => {
+                        // saveCurWork(resolve, reject) //保存到数据库（在线版本）
+                        saveToLocal(resolve, reject) //保存到本地文件（离线版本）
+                    })
+                    if (res) {
+                        setTimeout(() => {
+                            $router.replace('/Startup')
+                        }, 200)
+                    }
+                })
+                .catch(() => {})
         },
     },
 }

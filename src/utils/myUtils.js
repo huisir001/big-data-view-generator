@@ -2,8 +2,9 @@
  * @Description: 项目工具库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-03 17:10:28
- * @LastEditTime: 2021-03-01 15:01:32
+ * @LastEditTime: 2021-03-02 18:07:43
  */
+
 //延时防抖
 export function debounce(callback, delay) {
     let timeout
@@ -132,4 +133,54 @@ export const ClickPreventShake = {
             },
         })
     },
+}
+
+//将字符串转存为文件下载
+export const exportStr2File = (name, data) => {
+    var urlObject = window.URL || window.webkitURL || window
+    var export_blob = new Blob([data])
+    var save_link = document.createElementNS(
+        'http://www.w3.org/1999/xhtml',
+        'a'
+    )
+    save_link.href = urlObject.createObjectURL(export_blob)
+    save_link.download = name
+    var ev = document.createEvent('MouseEvents')
+    ev.initMouseEvent(
+        'click',
+        true,
+        false,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+    )
+    save_link.dispatchEvent(ev)
+}
+
+//将File对象转为base64（一般为图片）
+export const blob2Base64 = (blob) => {
+    return new Promise((resolve, reject) => {
+        try {
+            // 转为base64
+            var fr = new FileReader()
+            //读取完成回调
+            fr.onloadend = (e) => {
+                //转为base64
+                resolve(e.target.result)
+            }
+            //执行读取
+            fr.readAsDataURL(blob)
+        } catch (error) {
+            reject(error)
+        }
+    })
 }

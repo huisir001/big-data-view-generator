@@ -2,7 +2,7 @@
  * @Description: 图库
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2021-01-12 16:21:53
- * @LastEditTime: 2021-01-12 18:10:09
+ * @LastEditTime: 2021-03-02 18:18:07
 -->
 <template>
     <div class="gallery">
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { blob2Base64 } from '@/utils/myUtils'
 export default {
     name: 'Gallery',
     props: ['type'],
@@ -63,9 +64,14 @@ export default {
             this.dialogImageUrl = file.url
             this.dialogVisible = true
         },
-        handleSelect(file) {
-            console.log(file)
-            this.$emit('handleSelect', file.url)
+        async handleSelect(file) {
+            // console.log(file)
+            const { raw, url } = file
+            // this.$emit('handleSelect', url)  //blob路径
+
+            const base64Url = await blob2Base64(raw)
+
+            this.$emit('handleSelect', base64Url)
         },
     },
 }
