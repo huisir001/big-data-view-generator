@@ -9,7 +9,8 @@ body{
     -moz-osx-font-smoothing: grayscale;
     color: $defaultFontColor;
     background-color: $bgColor;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     * {
         box-sizing: border-box;
         outline: none;

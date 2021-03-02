@@ -2,7 +2,7 @@
  * @Description: 入口组件
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-02-27 14:46:13
+ * @LastEditTime: 2021-03-02 10:29:59
 -->
 <template>
     <div id="app">
@@ -32,6 +32,6 @@ export default {
 #app {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    min-width: 1000px;
 }
 </style>

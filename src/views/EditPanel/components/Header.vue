@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-01 18:49:45
+ * @LastEditTime: 2021-03-02 10:23:54
 -->
 <template>
     <div class="header">
@@ -19,18 +19,21 @@
         </div>
         <!-- 右侧菜单 -->
         <div class="right">
-            <span @click="saveCurWork" style="cursor: pointer"> 保存 </span>
-            <span
-                @click="$router.replace('/WorkList/Works')"
-                style="cursor: pointer"
-            >
-                作品中心
-            </span>
-            <span @click="openPreview" style="cursor: pointer"> 预览 </span>
-            配置栏
-            <el-switch
-                v-model="$store.state.system.optionPanelShow"
-            ></el-switch>
+            <div class="btns">
+                <span @click="openPreview">预览</span>
+                <span @click="saveCurWork">保存</span>
+                <span @click="saveToLocal">保存到本地</span>
+                <span @click="buildHtml">生成HTML</span>
+                <span @click="$router.replace('/WorkList/Works')">
+                    作品中心
+                </span>
+            </div>
+            <div class="pzl">
+                <span>配置栏</span>
+                <el-switch
+                    v-model="$store.state.system.optionPanelShow"
+                ></el-switch>
+            </div>
         </div>
     </div>
 </template>
@@ -50,6 +53,12 @@ export default {
     methods: {
         ...mapMutations(['setAsideShow']),
         saveCurWork() {
+            // loading
+            this.$loading({
+                text: 'Loading',
+                background: 'rgba(0, 0, 0, 0.4)',
+            })
+
             //取消图层选定
             const activeLayers = this.$store.getters['layer/activeLayers']
             activeLayers.forEach((item) => {
@@ -86,6 +95,10 @@ export default {
                 }
             })
         },
+        // 保存到本地.work文件
+        saveToLocal() {},
+        // 生成html
+        buildHtml() {},
         openPreview() {
             //缓存图层信息
             sessionStorage.setItem(
@@ -119,6 +132,30 @@ export default {
             font-size: 18px;
             line-height: 50px;
             cursor: pointer;
+        }
+    }
+    .right {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        .btns {
+            display: inline-block;
+            margin-right: 10px;
+            span {
+                cursor: pointer;
+                margin: 0 5px;
+                background: #4a6583;
+                padding: 3px 8px;
+                border-radius: 3px;
+                &:hover {
+                    background: #409eff;
+                }
+            }
+        }
+        .pzl {
+            display: inline-block;
+            span {
+                margin-right: 5px;
+            }
         }
     }
 }
