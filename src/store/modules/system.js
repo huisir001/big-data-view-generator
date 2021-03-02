@@ -2,7 +2,7 @@
  * @Description: 系统层
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-10 11:32:19
- * @LastEditTime: 2021-03-01 16:46:36
+ * @LastEditTime: 2021-03-02 22:00:51
  */
 export default {
     namespaced: true,
@@ -90,10 +90,13 @@ export default {
         },
         setBlueprintDomRect(state) {
             //更新视图操作面板实际参数
-            const { width, height, x, y } = document
-                .querySelector('.blueprint')
-                .getBoundingClientRect()
-            state.blueprintDomRect = { width, height, x, y }
+            //try避免切换路由后找不到dom
+            try {
+                const { width, height, x, y } = document
+                    .querySelector('.blueprint')
+                    .getBoundingClientRect()
+                state.blueprintDomRect = { width, height, x, y }
+            } catch (error) {}
         },
         //更新按键
         setCurkeydownCodes(state, keyCode) {

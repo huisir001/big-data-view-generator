@@ -2,20 +2,18 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-02 18:20:14
+ * @LastEditTime: 2021-03-02 21:32:23
 -->
 <template>
     <div class="header">
         <!-- 左侧菜单 -->
         <div class="left">
             <!-- 抽屉按钮 -->
-            <i
-                :class="[
+            <i :class="[
                     asideShow ? 'el-icon-s-fold' : 'el-icon-s-unfold',
                     'aside-take-btn',
                 ]"
-                @click="setAsideShow"
-            ></i>
+               @click="setAsideShow"></i>
         </div>
         <!-- 右侧菜单 -->
         <div class="right">
@@ -29,9 +27,7 @@
             </div>
             <div class="pzl">
                 <span>配置栏</span>
-                <el-switch
-                    v-model="$store.state.system.optionPanelShow"
-                ></el-switch>
+                <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
             </div>
         </div>
     </div>
@@ -188,7 +184,9 @@ export default {
                         }, 200)
                     }
                 })
-                .catch(() => {})
+                .catch(() => {
+                    $router.replace('/Startup')
+                })
         },
     },
 }
