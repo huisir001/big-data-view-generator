@@ -2,7 +2,7 @@
  * @Description: axios初始化和全局配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 13:16:24
- * @LastEditTime: 2021-03-03 00:46:52
+ * @LastEditTime: 2021-03-03 10:07:57
  */
 import { Message, Loading } from 'element-ui' //提示信息
 import axios from 'axios'
@@ -24,12 +24,6 @@ Axios.interceptors.request.use(
             // spinner: 'el-icon-loading',
             background: 'rgba(0, 0, 0, 0.4)',
         })
-        // 由于执行请求时token可能已经改变，故每次请求前都要重新获取token
-        const Token = sessionStorage.getItem('_token')
-        if (Token) {
-            // 判断是否存在token，如果存在的话，则每个http header都加上token
-            config.headers['token'] = Token
-        }
         return config
     },
     (error) => {
@@ -67,16 +61,6 @@ Axios.interceptors.response.use(
         const { status, data, statusText } = error.response
         Axios.loading.close() // 关闭loading
         console.error(error)
-        // 若这里响应码为403，则改变登陆状态，弹出登录框
-        if (status == 403) {
-            Store.commit('setStates', {
-                isLogin: 0, // 登陆状态
-                userInfo: null, // 用户信息缓存
-                showLoginBox: true, // 打开登陆弹窗
-            })
-            //删除token
-            sessionStorage.removeItem('_token')
-        }
         setTimeout(() => {
             if (data) {
                 Message.error(data.msg) //错误提示

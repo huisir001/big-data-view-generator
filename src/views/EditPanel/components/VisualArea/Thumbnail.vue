@@ -2,7 +2,7 @@
  * @Description: 缩略图/导览图
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月10日 09:33:27
- * @LastEditTime: 2021-02-18 10:49:22
+ * @LastEditTime: 2021-03-03 11:05:42
 -->
 <template>
     <div class="thumbnail" :style="thumbnailStyle">

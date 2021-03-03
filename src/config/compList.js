@@ -2,7 +2,7 @@
  * @Description: 左侧栏组件库列表
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-23 10:33:00
- * @LastEditTime: 2021-02-18 17:22:59
+ * @LastEditTime: 2021-03-03 10:58:30
  */
 import {
     coBarChart,

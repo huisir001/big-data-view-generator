@@ -2,7 +2,7 @@
  * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2021-03-02 21:45:37
+ * @LastEditTime: 2021-03-03 11:36:09
 -->
 <template>
     <div @contextmenu.prevent>
@@ -46,7 +46,6 @@ import {
     VisualArea,
     LayerCtxMenu,
 } from './components'
-import { FindById } from '@/api/work'
 export default {
     name: 'EditPanel',
     components: {
@@ -58,7 +57,7 @@ export default {
         VisualArea,
         LayerCtxMenu,
     },
-    /* keep-alive缓存路由生命周期钩子 */
+    /* keep-alive缓存路由生命周期钩子,若为路由直接切换，则不执行beforeCreate等钩子 */
     async activated() {
         const { $store, $route } = this
 
@@ -68,39 +67,20 @@ export default {
         }
         //重新监听dom事件
         $store.dispatch('system/domResetEventListener')
-
-        //查询当前作品信息
-        const { ok, data } = await FindById($route.params.id)
-        if (ok) {
-            const { page_options, layers } = data
-            // 存到store
-            $store.commit('system/setPageOptions', JSON.parse(page_options)) //页面信息
-            $store.commit('layer/saveLayers', JSON.parse(layers)) //缓存图层
-        }
     },
     /* 路由跳转钩子 */
     beforeRouteLeave(to, from, next) {
         // 取消所有事件监听
         window.onbeforeunload = null
         this.$store.dispatch('system/domRemoveEventListener')
-        next()
-        //判断是否已保存，已保存的话直接销毁页面
-        //...待判断是否保存
-        //如若未保存则弹出提示
-        // this.$confirm('当前工作暂未保存，是否保存?', '提示', {
-        //     confirmButtonText: '确定',
-        //     cancelButtonText: '取消',
-        //     type: 'warning',
-        // })
-        //     .then(() => {
-        //         this.$message({
-        //             type: 'success',
-        //             message: '保存成功!',
-        //         })
-        //         this.$destroy()
-        //         next()
-        //     })
-        //     .catch(() => {})
+
+        // 路由跳转后清空数据
+        this.$store.commit('system/clearPageOptions') //清空page信息
+        this.$store.commit('layer/clearLayers') //清空图层，避免残影
+
+        if (to.name != 'EditPanel') {
+            next()
+        }
     },
 }
 </script>

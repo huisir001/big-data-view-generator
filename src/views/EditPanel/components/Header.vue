@@ -2,32 +2,34 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-03 00:53:42
+ * @LastEditTime: 2021-03-03 10:54:02
 -->
 <template>
     <div class="header">
         <!-- 左侧菜单 -->
         <div class="left">
             <!-- 抽屉按钮 -->
-            <i :class="[
+            <i
+                :class="[
                     asideShow ? 'el-icon-s-fold' : 'el-icon-s-unfold',
                     'aside-take-btn',
                 ]"
-               @click="setAsideShow"></i>
+                @click="setAsideShow"
+            ></i>
         </div>
         <!-- 右侧菜单 -->
         <div class="right">
             <div class="btns">
                 <span @click="openPreview">预览</span>
-                <span @click="saveCurWork">保存</span>
                 <span @click="saveToLocal">保存到本地</span>
                 <span @click="buildHtml">生成HTML</span>
-                <span @click="open('#/WorkList/Works')">作品中心</span>
                 <span @click="goHome">回到首页</span>
             </div>
             <div class="pzl">
                 <span>配置栏</span>
-                <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
+                <el-switch
+                    v-model="$store.state.system.optionPanelShow"
+                ></el-switch>
             </div>
         </div>
     </div>
@@ -35,8 +37,6 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('system')
-import { UpdateWork } from '@/api/work'
-import html2canvas from 'html2canvas'
 import { exportStr2File } from '@/utils/myUtils'
 import { GetViewhtml } from '@/api/other'
 export default {
@@ -64,66 +64,6 @@ export default {
             //打开新窗口
             let routeData = this.$router.resolve({ path: '/Preview' })
             window.open(routeData.href, '_blank') //打开新窗口
-        },
-        // 新标题打开页面
-        open(e) {
-            window.open(e)
-        },
-
-        /* 
-            # 保存数据到数据库
-            > response,reject回调参数在封装promise时可用
-        */
-        saveCurWork(resolve, reject) {
-            // loading
-            const loading = this.$loading({
-                text: '保存中...',
-                background: 'rgba(0, 0, 0, 0.4)',
-            })
-
-            //取消图层选定
-            const activeLayers = this.$store.getters['layer/activeLayers']
-            activeLayers.forEach((item) => {
-                item.active = false //取消选定
-                this.$store.commit('layer/setLayer', item)
-            })
-
-            // 等待取消图层选定视图更新之后再执行
-            this.$nextTick(async () => {
-                // 截图
-                const dom = document.querySelector('.blueprint')
-                const screenshotCancas = await html2canvas(dom, {
-                    useCORS: true,
-                    scale: 300 / dom.clientWidth,
-                })
-
-                const screenshot = screenshotCancas
-                    ? screenshotCancas.toDataURL('image/png', 1)
-                    : ''
-
-                //关闭loading
-                loading.close()
-
-                //保存
-                const { $route, pageOptions, $store, $message } = this
-                const { ok, msg } = await UpdateWork({
-                    id: $route.params.id,
-                    title: pageOptions.title,
-                    page_options: $store.getters['system/pageOptionsStr'],
-                    layers: $store.getters['layer/layerString'],
-                    screenshot,
-                })
-
-                if (ok) {
-                    if (resolve && typeof resolve == 'function') {
-                        resolve(true)
-                    }
-                    // 提示
-                    $message({ message: msg, type: 'success' })
-                } else {
-                    if (reject && typeof reject == 'function') reject()
-                }
-            })
         },
 
         /* 
@@ -181,22 +121,16 @@ export default {
             loading.close()
         },
         goHome() {
-            const {
-                $confirm,
-                $message,
-                $router,
-                saveCurWork,
-                saveToLocal,
-            } = this
+            const { $confirm, $router, saveToLocal } = this
             //如若未保存则弹出提示
             $confirm('是否保存当前作品?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+                distinguishCancelAndClose: true, //区分取消和关闭按钮
+                confirmButtonText: '保存后返回',
+                cancelButtonText: '直接返回',
                 type: 'warning',
             })
                 .then(async () => {
                     const res = await new Promise((resolve, reject) => {
-                        // saveCurWork(resolve, reject) //保存到数据库（在线版本）
                         saveToLocal(resolve, reject) //保存到本地文件（离线版本）
                     })
                     if (res) {
@@ -205,8 +139,11 @@ export default {
                         }, 200)
                     }
                 })
-                .catch(() => {
-                    $router.replace('/Startup')
+                .catch((e) => {
+                    if (e == 'cancel') {
+                        //取消时直接返回
+                        $router.replace('/Startup')
+                    }
                 })
         },
     },

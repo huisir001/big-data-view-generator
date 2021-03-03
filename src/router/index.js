@@ -2,13 +2,12 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-03-02 17:05:51
+ * @LastEditTime: 2021-03-03 11:29:09
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Startup from '@/views/Startup'
 import EditPanel from '@/views/EditPanel'
-import BeforeEach from './beforeEach'
 
 Vue.use(VueRouter)
 
@@ -23,25 +22,15 @@ const routes = [
         component: Startup,
         meta: {
             title: '启动页',
-            notLogin: true, //无需登陆
         },
     },
     {
-        // path: '/EditPanel/:id',
         path: '/EditPanel',
         name: 'EditPanel',
         component: EditPanel,
         meta: {
             title: '编辑面板',
         },
-    },
-    {
-        path: '/WorkList/:comp',
-        name: 'WorkList',
-        meta: {
-            title: '作品管理',
-        },
-        component: () => import('@/views/WorkList'),
     },
     {
         path: '/Preview',
@@ -51,23 +40,6 @@ const routes = [
         },
         component: () => import('@/views/Preview'),
     },
-    // {
-    //     path: '/workview/:id', //动态路由，传入作品id
-    //     name: 'WorkView',
-    //     meta: {
-    //         title: '作品共享',
-    //          notLogin:true
-    //     },
-    //     component: () => import('@/views/WorkView'),
-    // },
-    // {
-    //     path: '/test',
-    //     name: 'Test',
-    //     meta: {
-    //         title: '测试',
-    //     },
-    //     component: () => import('@/@vue/big-data/components/BorderBox'),
-    // },
 ]
 
 const router = new VueRouter({
@@ -75,7 +47,30 @@ const router = new VueRouter({
     routes,
 })
 
-// 路由前置钩子
-BeforeEach(router)
+// 路由执行钩子
+router.beforeEach(async (to, from, next) => {
+    // 外站进入\第一次打开、刷新网页
+    if (!from.name && to.name != 'Startup' && to.name != 'Preview') {
+        next('/Startup')
+        return
+    } else if (
+        to.name == 'EditPanel' &&
+        !router.app.$store.state.system.pageOptions.pid
+    ) {
+        //没有pid时候回首页
+        next('/Startup')
+    } else if (to.name == 'Preview') {
+        const PreviewLayers = sessionStorage.getItem(`layers`),
+            PreviewPageOptions = sessionStorage.getItem(`pageOptions`)
+        if (!PreviewLayers || !PreviewPageOptions) {
+            // 预览页没有数据
+            next('/Startup')
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
+})
 
 export default router
