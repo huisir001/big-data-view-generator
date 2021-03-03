@@ -2,32 +2,35 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-03 00:53:42
+ * @LastEditTime: 2021-03-03 13:47:07
 -->
 <template>
     <div class="header">
         <!-- 左侧菜单 -->
         <div class="left">
             <!-- 抽屉按钮 -->
-            <i :class="[
+            <i
+                :class="[
                     asideShow ? 'el-icon-s-fold' : 'el-icon-s-unfold',
                     'aside-take-btn',
                 ]"
-               @click="setAsideShow"></i>
+                @click="setAsideShow"
+            ></i>
         </div>
         <!-- 右侧菜单 -->
         <div class="right">
             <div class="btns">
                 <span @click="openPreview">预览</span>
                 <span @click="saveCurWork">保存</span>
-                <span @click="saveToLocal">保存到本地</span>
                 <span @click="buildHtml">生成HTML</span>
                 <span @click="open('#/WorkList/Works')">作品中心</span>
                 <span @click="goHome">回到首页</span>
             </div>
             <div class="pzl">
                 <span>配置栏</span>
-                <el-switch v-model="$store.state.system.optionPanelShow"></el-switch>
+                <el-switch
+                    v-model="$store.state.system.optionPanelShow"
+                ></el-switch>
             </div>
         </div>
     </div>
@@ -126,43 +129,13 @@ export default {
             })
         },
 
-        /* 
-            # 保存当前作品到本地.work文件
-            > response,reject回调参数在封装promise时可用
-            > 仅用于离线版本保存到本地
-            > 图片将作为base64字符串保存，故保存文件可能略大
-        */
-        saveToLocal(resolve, reject) {
-            // loading
-            const loading = this.$loading({
-                text: '生成文件...',
-                background: 'rgba(0, 0, 0, 0.4)',
-            })
-            try {
-                const { pageOptions, $store, $message } = this
-                const workInfo = {
-                    page_options: pageOptions,
-                    layers: $store.state.layer.layers,
-                }
-                exportStr2File(
-                    pageOptions.title + '.work',
-                    JSON.stringify(workInfo)
-                )
-                if (resolve && typeof resolve == 'function') {
-                    resolve(true)
-                }
-                loading.close()
-            } catch (e) {
-                console.error(e)
-                if (reject && typeof reject == 'function') {
-                    reject(e)
-                }
-            }
-        },
         // 生成html
         async buildHtml() {
             const { pageOptions, $store, $message } = this
             const htmlStr = await GetViewhtml()
+            if (!htmlStr) {
+                return
+            }
             // loading
             const loading = this.$loading({
                 text: '生成中...',
@@ -181,23 +154,17 @@ export default {
             loading.close()
         },
         goHome() {
-            const {
-                $confirm,
-                $message,
-                $router,
-                saveCurWork,
-                saveToLocal,
-            } = this
+            const { $confirm, $message, $router, saveCurWork } = this
             //如若未保存则弹出提示
             $confirm('是否保存当前作品?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+                distinguishCancelAndClose: true, //区分取消和关闭按钮
+                confirmButtonText: '保存后返回',
+                cancelButtonText: '直接返回',
                 type: 'warning',
             })
                 .then(async () => {
                     const res = await new Promise((resolve, reject) => {
-                        // saveCurWork(resolve, reject) //保存到数据库（在线版本）
-                        saveToLocal(resolve, reject) //保存到本地文件（离线版本）
+                        saveCurWork(resolve, reject) //保存到数据库（在线版本）
                     })
                     if (res) {
                         setTimeout(() => {
@@ -205,8 +172,11 @@ export default {
                         }, 200)
                     }
                 })
-                .catch(() => {
-                    $router.replace('/Startup')
+                .catch((e) => {
+                    if (e == 'cancel') {
+                        //取消时直接返回
+                        $router.replace('/Startup')
+                    }
                 })
         },
     },

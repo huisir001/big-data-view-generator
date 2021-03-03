@@ -2,7 +2,7 @@
  * @Description: 编辑操作面板
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月9日 17:08:29
- * @LastEditTime: 2021-03-02 21:45:37
+ * @LastEditTime: 2021-03-03 13:49:56
 -->
 <template>
     <div @contextmenu.prevent>
@@ -60,7 +60,7 @@ export default {
     },
     /* keep-alive缓存路由生命周期钩子 */
     async activated() {
-        const { $store, $route } = this
+        const { $store, $route, $router } = this
 
         // 监听页面关闭和刷新
         window.onbeforeunload = function (e) {
@@ -76,6 +76,9 @@ export default {
             // 存到store
             $store.commit('system/setPageOptions', JSON.parse(page_options)) //页面信息
             $store.commit('layer/saveLayers', JSON.parse(layers)) //缓存图层
+        } else {
+            // 如果查不到当前作品返回首页
+            $router.replace({ name: 'Startup' })
         }
     },
     /* 路由跳转钩子 */
@@ -84,23 +87,6 @@ export default {
         window.onbeforeunload = null
         this.$store.dispatch('system/domRemoveEventListener')
         next()
-        //判断是否已保存，已保存的话直接销毁页面
-        //...待判断是否保存
-        //如若未保存则弹出提示
-        // this.$confirm('当前工作暂未保存，是否保存?', '提示', {
-        //     confirmButtonText: '确定',
-        //     cancelButtonText: '取消',
-        //     type: 'warning',
-        // })
-        //     .then(() => {
-        //         this.$message({
-        //             type: 'success',
-        //             message: '保存成功!',
-        //         })
-        //         this.$destroy()
-        //         next()
-        //     })
-        //     .catch(() => {})
     },
 }
 </script>

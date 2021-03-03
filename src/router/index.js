@@ -2,7 +2,7 @@
  * @Description: 路由
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-04 15:14:43
- * @LastEditTime: 2021-03-02 17:05:51
+ * @LastEditTime: 2021-03-03 13:43:25
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -27,8 +27,7 @@ const routes = [
         },
     },
     {
-        // path: '/EditPanel/:id',
-        path: '/EditPanel',
+        path: '/EditPanel/:id',
         name: 'EditPanel',
         component: EditPanel,
         meta: {
@@ -59,14 +58,6 @@ const routes = [
     //          notLogin:true
     //     },
     //     component: () => import('@/views/WorkView'),
-    // },
-    // {
-    //     path: '/test',
-    //     name: 'Test',
-    //     meta: {
-    //         title: '测试',
-    //     },
-    //     component: () => import('@/@vue/big-data/components/BorderBox'),
     // },
 ]
 

@@ -2,7 +2,7 @@
  * @Description: resize及DOM样式变动监听器
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-09-02 17:32:53
- * @LastEditTime: 2021-03-02 22:00:07
+ * @LastEditTime: 2021-03-03 13:32:15
  */
 import {
     debounce, //防抖
@@ -18,6 +18,10 @@ export default {
             debounceInitWHFun: null, //防抖回调
             domObserver: null, //dom监听器
         }
+    },
+    /* EditPanel为keep-alive缓存路由，只执行此钩子 */
+    activated() {
+        this.autoResizeMixinInit() //初始化
     },
     mounted() {
         this.autoResizeMixinInit() //初始化
