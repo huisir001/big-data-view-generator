@@ -2,11 +2,10 @@
  * @Description: axios初始化和全局配置
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020-08-06 13:16:24
- * @LastEditTime: 2021-03-03 10:07:57
+ * @LastEditTime: 2021-03-03 13:11:04
  */
 import { Message, Loading } from 'element-ui' //提示信息
 import axios from 'axios'
-import Store from '@/store'
 
 //初始化
 let Axios = axios.create({
@@ -58,6 +57,11 @@ Axios.interceptors.response.use(
         return response.data
     },
     (error) => {
+        if (!error.response) {
+            Axios.loading.close() // 关闭loading
+            Message.error('请确保在服务器环境运行此系统！') //错误提示
+            return
+        }
         const { status, data, statusText } = error.response
         Axios.loading.close() // 关闭loading
         console.error(error)

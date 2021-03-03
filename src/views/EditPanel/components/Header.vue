@@ -2,7 +2,7 @@
  * @Description: 头部
  * @Autor: HuiSir<273250950@qq.com>
  * @Date: 2020年9月22日 11:58:59
- * @LastEditTime: 2021-03-03 10:54:02
+ * @LastEditTime: 2021-03-03 13:07:40
 -->
 <template>
     <div class="header">
@@ -103,6 +103,9 @@ export default {
         async buildHtml() {
             const { pageOptions, $store, $message } = this
             const htmlStr = await GetViewhtml()
+            if (!htmlStr) {
+                return
+            }
             // loading
             const loading = this.$loading({
                 text: '生成中...',
